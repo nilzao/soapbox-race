@@ -4,7 +4,7 @@
   <persistence-unit name="persistenceUnit">
     <properties>
       <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
-      <property name="hibernate.hbm2ddl.auto" value="update" />
+      <!-- <property name="hibernate.hbm2ddl.auto" value="update" /> -->
       <property name="hibernate.show_sql" value="false" />
       <!-- <property name="hibernate.connection.url" value="jdbc:h2:tcp://localhost/~/workspaces/nfsw/db/soapbox" /> -->
       <property name="hibernate.connection.url" value="jdbc:h2:./db/soapbox" />
