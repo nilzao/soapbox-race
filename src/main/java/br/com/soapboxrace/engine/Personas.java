@@ -24,7 +24,25 @@ public class Personas extends Router {
 	}
 
 	public String inventory() {
-		return "<InventoryTrans/>";
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("<InventoryTrans>\n");
+		stringBuilder.append("<InventoryItems>\n");
+		stringBuilder.append("<InventoryItemTrans>\n");
+		stringBuilder.append("<EntitlementTag>nosshot</EntitlementTag>\n");
+		stringBuilder.append("<ExpirationDate i:nil=\"true\" />\n");
+		stringBuilder.append("<Hash>-1681514783</Hash>\n");
+		stringBuilder.append("<InventoryId>1842996427</InventoryId>\n");
+		stringBuilder.append("<ProductId>DO NOT USE ME</ProductId>\n");
+		stringBuilder.append("<RemainingUseCount>100</RemainingUseCount>\n");
+		stringBuilder.append("<ResellPrice>0.00000</ResellPrice>\n");
+		stringBuilder.append("<Status>ACTIVE</Status>\n");
+		stringBuilder.append("<StringHash>0x9bc61ee1</StringHash>\n");
+		stringBuilder.append("<VirtualItemType>powerup</VirtualItemType>\n");
+		stringBuilder.append("</InventoryItemTrans>\n");
+		stringBuilder.append("</InventoryItems>\n");
+		stringBuilder.append("</InventoryTrans>");
+		String inventoryStr = stringBuilder.toString();
+		return inventoryStr;
 	}
 
 	public String defaultcar() {

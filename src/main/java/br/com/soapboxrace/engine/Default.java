@@ -173,4 +173,5 @@ public class Default extends Router {
 	public String addfriendrequest() {
 		return "";
 	}
+	
 }

@@ -1,12 +1,25 @@
 package br.com.soapboxrace.xmpp;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
 
 public class XmppSrv {
+
+	private static HashMap<Integer, XmppTalk> xmppClients = new HashMap<Integer, XmppTalk>();
+
+	public static void addXmppClient(int personaId, XmppTalk xmppClient) {
+		xmppClients.put(personaId, xmppClient);
+	}
+
+	public static void sendMsg(int personaId, String msg) {
+		xmppClients.get(personaId).write(msg);
+	}
+
+	public static void removeXmppClient(int personaId) {
+		xmppClients.remove(personaId);
+	}
 
 	public static void main(String[] args) throws Exception {
 		new XmppSrv();
@@ -20,11 +33,10 @@ public class XmppSrv {
 		public void run() {
 			try {
 				System.out.println("Xmpp server is running.");
-				int clientNumber = 0;
 				ServerSocket listener = new ServerSocket(5222);
 				try {
 					while (true) {
-						new Capitalizer(listener.accept(), clientNumber++).start();
+						new Capitalizer(listener.accept()).start();
 					}
 				} finally {
 					listener.close();
@@ -37,43 +49,30 @@ public class XmppSrv {
 
 	private static class Capitalizer extends Thread {
 		private Socket socket;
-		private int clientNumber;
+		private XmppTalk xmppTalk;
 
-		public Capitalizer(Socket socket, int clientNumber) {
+		public Capitalizer(Socket socket) {
 			this.socket = socket;
-			this.clientNumber = clientNumber;
-			System.out.println("New connection with client# " + clientNumber + " at " + socket);
+			xmppTalk = new XmppTalk(this.socket);
+			System.out.println("New connection at " + socket);
 		}
 
 		public void run() {
 			try {
-				BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-				// PrintWriter out = new PrintWriter(socket.getOutputStream(),
-				// true);
-
-				// out.println("Hello, you are client #" + clientNumber + ".");
-				// out.println("Enter a line with only a period to quit\n");
-
+				new XmppHandShake(xmppTalk);
 				while (true) {
-					String input = in.readLine();
-					if (input == null) {
+					String input = xmppTalk.read();
+					if (input == null || input.contains("</stream:stream>")) {
 						break;
 					}
-					if (input.contains("</stream")) {
-						System.out.println("disconnect!");
-						break;
-					}
-					System.out.println(input);
 				}
-			} catch (IOException e) {
-				System.out.println("Error handling client# " + clientNumber + ": " + e);
 			} finally {
 				try {
 					socket.close();
 				} catch (IOException e) {
 					System.out.println("Couldn't close a socket, what's going on?");
 				}
-				System.out.println("Connection with client# " + clientNumber + " closed");
+				System.out.println("Connection with client closed");
 			}
 		}
 
