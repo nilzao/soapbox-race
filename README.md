@@ -18,6 +18,12 @@ Tools
 - inst2xsd (xmlbeans ubuntu package)
 
 
+
+###to run the server use:
+
+###java -Djsse.enableCBCProtection=false -jar soapbox-race-version-jarname.jar
+
+
 to use the client run:
 
 

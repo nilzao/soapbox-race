@@ -65,4 +65,12 @@ public class Router {
 		Router.loggedPersonaId = loggedPersonaId;
 	}
 
+	String getSecurityToken() {
+		return getHeader("securityToken");
+	}
+
+	Long getUserId() {
+		return Long.valueOf(getHeader("userId"));
+	}
+
 }

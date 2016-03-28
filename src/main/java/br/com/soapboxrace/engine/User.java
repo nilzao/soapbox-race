@@ -8,14 +8,6 @@ public class User extends Router {
 
 	private UserBO userBO = new UserBO();
 
-	String getSecurityToken() {
-		return getHeader("securityToken");
-	}
-
-	Long getUserId() {
-		return Long.valueOf(getHeader("userId"));
-	}
-
 	Long getPersonaId() {
 		return Long.valueOf(getParam("personaId"));
 	}
