@@ -25,7 +25,9 @@ public class User extends Router {
 
 	public String secureLoginPersona() {
 		Long personaId = getPersonaId();
-		super.setLoggedPersonaId(personaId);
+		String securityToken = getSecurityToken();
+		Long userId = getUserId();
+		userBO.secureLoginPersona(securityToken, userId, personaId);
 		return "";
 	}
 

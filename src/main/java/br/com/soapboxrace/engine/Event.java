@@ -18,7 +18,7 @@ public class Event extends Router {
 	}
 
 	public String bust() {
-		PursuitEventResultType bust = (PursuitEventResultType) eventBO.bust(super.getLoggedPersonaId());
+		PursuitEventResultType bust = (PursuitEventResultType) eventBO.bust(getLoggedPersonaId());
 		return MarshalXML.marshal(bust);
 	}
 

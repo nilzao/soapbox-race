@@ -1,5 +1,6 @@
 package br.com.soapboxrace.bo;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -11,14 +12,22 @@ import br.com.soapboxrace.jaxb.ProfileDataType;
 import br.com.soapboxrace.jaxb.UserInfoType;
 import br.com.soapboxrace.jaxb.UserType;
 import br.com.soapboxrace.jpa.PersonaEntity;
+import br.com.soapboxrace.jpa.SessionEntity;
 import br.com.soapboxrace.jpa.UserEntity;
 
 public class UserBO {
 
+	private ConnectionDB connectionDB = new ConnectionDB();
+
+	private String md5() {
+		return "9e80b14c371af10bb4432acf8d06f7ed";
+	}
+
 	public UserInfoType getPermanentSession(Long userId, String securityToken) {
 		UserInfoType userInfo = new UserInfoType();
 		UserType userType = new UserType();
-		userType.setSecurityToken("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb");
+		String md5 = md5();
+		userType.setSecurityToken(md5());
 		userType.setFullGameAccess("false");
 		// userType.setStarterPackEntitlementTag("NFSW_STARTER_PACK_B");
 		userType.setUserId(userId.intValue());
@@ -30,7 +39,6 @@ public class UserBO {
 		PersonasType personasType = new PersonasType();
 		List<ProfileDataType> profileData = personasType.getProfileData();
 
-		new ConnectionDB();
 		EntityManager manager = ConnectionDB.getManager();
 		TypedQuery<PersonaEntity> query = manager
 				.createQuery("SELECT obj FROM PersonaEntity obj WHERE obj.user = :user", PersonaEntity.class);
@@ -55,7 +63,29 @@ public class UserBO {
 			profileDataType.setPercentToLevel(0);
 		}
 		userInfo.setPersonas(personasType);
+
+		SessionEntity sessionEntity = new SessionEntity();
+		Date expirationDate = new Date();
+		long time = expirationDate.getTime();
+		expirationDate.setTime(time + 300000L);
+		sessionEntity.setExpiration(expirationDate);
+		sessionEntity.setToken(md5);
+		sessionEntity.setUserId(userId);
+		connectionDB.persist(sessionEntity);
+
 		return userInfo;
+	}
+
+	public void secureLoginPersona(String securityToken, Long userId, Long personaId) {
+		SessionEntity sessionEntity = new SessionEntity();
+		sessionEntity.setToken(securityToken);
+		sessionEntity.setUserId(userId);
+
+		List<?> find = connectionDB.find(sessionEntity);
+		sessionEntity = (SessionEntity) find.get(0);
+
+		sessionEntity.setPersonaId(personaId);
+		connectionDB.merge(sessionEntity);
 	}
 
 }

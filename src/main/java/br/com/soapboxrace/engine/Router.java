@@ -6,9 +6,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.eclipse.jetty.server.Request;
 
-public class Router {
+import br.com.soapboxrace.bo.SessionBO;
 
-	private static Long loggedPersonaId;
+public class Router {
 
 	private String target;
 
@@ -16,7 +16,7 @@ public class Router {
 
 	private Request baseRequest;
 
-	public String getTarget() {
+	protected String getTarget() {
 		return target;
 	}
 
@@ -24,8 +24,16 @@ public class Router {
 		this.target = target;
 	}
 
-	public HttpServletRequest getRequest() {
+	protected HttpServletRequest getRequest() {
 		return request;
+	}
+
+	protected String getParam(String param) {
+		return baseRequest.getParameter(param);
+	}
+
+	protected String getHeader(String param) {
+		return request.getHeader(param);
 	}
 
 	public void setRequest(HttpServletRequest request) {
@@ -34,14 +42,6 @@ public class Router {
 
 	public void setBaseRequest(Request baseRequest) {
 		this.baseRequest = baseRequest;
-	}
-
-	public String getParam(String param) {
-		return baseRequest.getParameter(param);
-	}
-
-	public String getHeader(String param) {
-		return request.getHeader(param);
 	}
 
 	protected String readInputStream() {
@@ -57,19 +57,16 @@ public class Router {
 		return buffer.toString();
 	}
 
-	public static Long getLoggedPersonaId() {
-		return loggedPersonaId;
+	protected Long getLoggedPersonaId() {
+		SessionBO sessionBO = new SessionBO();
+		return sessionBO.getLoggedPersonaId(getSecurityToken(), getUserId());
 	}
 
-	public static void setLoggedPersonaId(Long loggedPersonaId) {
-		Router.loggedPersonaId = loggedPersonaId;
-	}
-
-	String getSecurityToken() {
+	protected String getSecurityToken() {
 		return getHeader("securityToken");
 	}
 
-	Long getUserId() {
+	protected Long getUserId() {
 		return Long.valueOf(getHeader("userId"));
 	}
 
