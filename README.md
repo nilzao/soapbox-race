@@ -41,3 +41,5 @@ for user3:
 
 soapbox.exe US http://localhost:1337/soapbox/Engine.svc a 3
 
+
+for more users, insert userid in table user
