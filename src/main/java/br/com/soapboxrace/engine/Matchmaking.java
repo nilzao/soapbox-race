@@ -25,6 +25,7 @@ public class Matchmaking extends Router {
 	}
 
 	public String joinqueueevent() {
+		matchmakingBO.joinqueueevent(getUserId().intValue(), getLoggedPersonaId().intValue());
 		return "";
 	}
 
@@ -37,6 +38,14 @@ public class Matchmaking extends Router {
 	}
 
 	public String joinqueueracenow() {
+		return "";
+	}
+
+	public String acceptinvite() {
+		return "";
+	}
+
+	public String declineinvite() {
 		return "";
 	}
 }

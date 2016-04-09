@@ -19,4 +19,14 @@ public class MatchmakingBO {
 		return sessionInfoType;
 	}
 
+	public void joinqueueevent(int userId, int personaId) {
+		// XmppLobby xmppLobby = new XmppLobby(userId, personaId);
+		// xmppLobby.joinQueueEvent();
+	}
+
+	public void acceptinvite(int userId, int personaId) {
+		// XmppLobby xmppLobby = new XmppLobby(userId, personaId);
+		// xmppLobby.acceptInvite();
+	}
+
 }
