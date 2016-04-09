@@ -19,6 +19,7 @@ import org.eclipse.jetty.server.handler.gzip.GzipHttpOutputInterceptor;
 import br.com.soapboxrace.db.ConnectionDB;
 import br.com.soapboxrace.engine.KeepAlive;
 import br.com.soapboxrace.engine.Router;
+import br.com.soapboxrace.engine.Session;
 import br.com.soapboxrace.xmpp.XmppSrv;
 
 public class HttpSrv extends GzipHandler {
@@ -115,6 +116,9 @@ public class HttpSrv extends GzipHandler {
 	}
 
 	public static void main(String[] args) {
+		if (args.length > 0) {
+			Session.setIp(args[0]);
+		}
 		new ConnectionDB();
 		new XmppSrv();
 		try {

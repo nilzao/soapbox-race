@@ -21,7 +21,11 @@ Tools
 
 ###to run the server use:
 
-###java -Djsse.enableCBCProtection=false -jar soapbox-race-version-jarname.jar
+###java -Djsse.enableCBCProtection=false -jar soapbox-race-version-jarname.jar your-ip-to-host-xmpp (optional)
+
+example:
+
+###java -Djsse.enableCBCProtection=false -jar soapbox-race-version-jarname.jar 127.0.0.1
 
 
 to use the client run:

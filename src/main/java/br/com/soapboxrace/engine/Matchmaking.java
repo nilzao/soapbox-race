@@ -46,9 +46,7 @@ public class Matchmaking extends Router {
 		String lobbyInviteIdStr = getParam("lobbyInviteId");
 		Long lobbyInviteId = Long.valueOf(lobbyInviteIdStr);
 		LobbyInfoType acceptinvite = matchmakingBO.acceptinvite(getLoggedPersonaId(), lobbyInviteId);
-		String marshal = MarshalXML.marshal(acceptinvite);
-		System.out.println(marshal);
-		return marshal;
+		return MarshalXML.marshal(acceptinvite);
 	}
 
 	public String declineinvite() {

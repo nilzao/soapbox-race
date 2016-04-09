@@ -2,6 +2,8 @@ package br.com.soapboxrace.engine;
 
 public class Session extends Router {
 
+	private static String ip = "127.0.0.1";
+
 	public String getChatInfo() {
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("<chatServer>\n");
@@ -47,12 +49,19 @@ public class Session extends Router {
 		stringBuilder.append("      <shortName>GN</shortName>\n");
 		stringBuilder.append("    </chatRoom>\n");
 		stringBuilder.append("  </Rooms>\n");
-		stringBuilder.append("  <ip>127.0.0.1</ip>\n");
+		stringBuilder.append("  <ip>");
+		stringBuilder.append(ip);
+		stringBuilder.append("</ip>\n");
 		stringBuilder.append("  <port>5222</port>\n");
 		stringBuilder.append("  <prefix>nfsw</prefix>\n");
 		stringBuilder.append("</chatServer>");
 		String xmlTmp = stringBuilder.toString();
+		System.out.println(xmlTmp);
 		return xmlTmp;
+	}
+
+	public static void setIp(String ip) {
+		Session.ip = ip;
 	}
 
 }
