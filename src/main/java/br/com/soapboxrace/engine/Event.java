@@ -22,4 +22,7 @@ public class Event extends Router {
 		return MarshalXML.marshal(bust);
 	}
 
+	public String abort() {
+		return "";
+	}
 }

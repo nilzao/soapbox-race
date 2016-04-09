@@ -1,6 +1,7 @@
 package br.com.soapboxrace.engine;
 
 import br.com.soapboxrace.bo.MatchmakingBO;
+import br.com.soapboxrace.jaxb.LobbyInfoType;
 import br.com.soapboxrace.jaxb.SessionInfoType;
 import br.com.soapboxrace.jaxb.util.MarshalXML;
 
@@ -25,7 +26,7 @@ public class Matchmaking extends Router {
 	}
 
 	public String joinqueueevent() {
-		matchmakingBO.joinqueueevent(getUserId().intValue(), getLoggedPersonaId().intValue());
+		matchmakingBO.joinqueueevent(getLoggedPersonaId(), getEventId());
 		return "";
 	}
 
@@ -42,7 +43,12 @@ public class Matchmaking extends Router {
 	}
 
 	public String acceptinvite() {
-		return "";
+		String lobbyInviteIdStr = getParam("lobbyInviteId");
+		Long lobbyInviteId = Long.valueOf(lobbyInviteIdStr);
+		LobbyInfoType acceptinvite = matchmakingBO.acceptinvite(getLoggedPersonaId(), lobbyInviteId);
+		String marshal = MarshalXML.marshal(acceptinvite);
+		System.out.println(marshal);
+		return marshal;
 	}
 
 	public String declineinvite() {
