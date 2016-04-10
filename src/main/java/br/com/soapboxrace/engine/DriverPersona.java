@@ -1,5 +1,7 @@
 package br.com.soapboxrace.engine;
 
+import java.util.List;
+
 import br.com.soapboxrace.bo.DriverPersonaBO;
 import br.com.soapboxrace.jaxb.ArrayOfstringType;
 import br.com.soapboxrace.jaxb.PersonaIdArrayType;
@@ -108,10 +110,11 @@ public class DriverPersona extends Router {
 	public String getPersonaBaseFromList() {
 		PersonaIdArrayType personaIdArrayType = new PersonaIdArrayType();
 		String xmlTmp = readInputStream();
+		xmlTmp = xmlTmp.replace(":long", "");
 		personaIdArrayType = (PersonaIdArrayType) UnmarshalXML.unMarshal(xmlTmp, personaIdArrayType);
 		PersonaIdsType personaIds = personaIdArrayType.getPersonaIds();
-		long idPersona = Long.valueOf(personaIds.getLong());
-		return MarshalXML.marshal(driverPersonaBO.getPersonaBaseFromList(idPersona));
+		List<Long> personasIds = personaIds.getArray();
+		return MarshalXML.marshal(driverPersonaBO.getPersonaBaseFromList(personasIds));
 	}
 
 	public String updatePersonaPresence() {
@@ -131,4 +134,16 @@ public class DriverPersona extends Router {
 	public String getPersonaPresenceByName() {
 		return "";
 	}
+
+	public static void main(String[] args) {
+		String xmlTmp = "<PersonaIdArray xmlns=\"http://schemas.datacontract.org/2004/07/Victory.TransferObjects.DriverPersona\" "
+				+ "xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">"
+				+ "<PersonaIds xmlns:array=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\">"
+				+ "<array:long>102</array:long>" + "</PersonaIds></PersonaIdArray>";
+		xmlTmp = xmlTmp.replace(":long", "");
+		PersonaIdArrayType personaIdArrayType = new PersonaIdArrayType();
+		personaIdArrayType = (PersonaIdArrayType) UnmarshalXML.unMarshal(xmlTmp, personaIdArrayType);
+		System.out.println(personaIdArrayType);
+	}
+
 }

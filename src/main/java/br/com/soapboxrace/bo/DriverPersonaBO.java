@@ -76,20 +76,23 @@ public class DriverPersonaBO {
 		return profileDataType;
 	}
 
-	public ArrayOfPersonaBaseType getPersonaBaseFromList(long idPersona) {
-		PersonaEntity personaEntity = (PersonaEntity) connectionDB.findById(new PersonaEntity(), idPersona);
+	public ArrayOfPersonaBaseType getPersonaBaseFromList(List<Long> idPersona) {
 		ArrayOfPersonaBaseType arrayOfPersonaBaseType = new ArrayOfPersonaBaseType();
-		PersonaBaseType personaBaseType = new PersonaBaseType();
-		personaBaseType.setIconIndex(personaEntity.getIconIndex());
-		personaBaseType.setLevel(personaEntity.getLevel());
-		personaBaseType.setName(personaEntity.getName());
-		personaBaseType.setPersonaId(personaEntity.getId().intValue());
-		personaBaseType.setMotto("");
-		personaBaseType.setPresence(1);
-		personaBaseType.setUserId(personaEntity.getUser().getId().intValue());
-		personaBaseType.setScore(55);
-		personaBaseType.setBadges("");
-		arrayOfPersonaBaseType.setPersonaBase(personaBaseType);
+		List<PersonaBaseType> personaBase = arrayOfPersonaBaseType.getPersonaBase();
+		for (Long idPersonaTmp : idPersona) {
+			PersonaEntity personaEntity = (PersonaEntity) connectionDB.findById(new PersonaEntity(), idPersonaTmp);
+			PersonaBaseType personaBaseType = new PersonaBaseType();
+			personaBaseType.setIconIndex(personaEntity.getIconIndex());
+			personaBaseType.setLevel(personaEntity.getLevel());
+			personaBaseType.setName(personaEntity.getName());
+			personaBaseType.setPersonaId(personaEntity.getId().intValue());
+			personaBaseType.setMotto("");
+			personaBaseType.setPresence(2);
+			personaBaseType.setUserId(personaEntity.getUser().getId().intValue());
+			personaBaseType.setScore(55);
+			personaBaseType.setBadges("");
+			personaBase.add(personaBaseType);
+		}
 		return arrayOfPersonaBaseType;
 	}
 }

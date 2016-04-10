@@ -55,9 +55,7 @@ public class Session extends Router {
 		stringBuilder.append("  <port>5222</port>\n");
 		stringBuilder.append("  <prefix>nfsw</prefix>\n");
 		stringBuilder.append("</chatServer>");
-		String xmlTmp = stringBuilder.toString();
-		System.out.println(xmlTmp);
-		return xmlTmp;
+		return stringBuilder.toString();
 	}
 
 	public static void setIp(String ip) {
