@@ -16,7 +16,7 @@ public class LobbyEntrantInfoType {
 	@XmlElement(name = "Level")
 	protected int level = 1;
 	@XmlElement(name = "PersonaId")
-	protected int personaId;
+	protected long personaId;
 	@XmlElement(name = "State", required = true)
 	protected String state = "InLobby";
 
@@ -24,40 +24,40 @@ public class LobbyEntrantInfoType {
 		return gridIndex;
 	}
 
-	public void setGridIndex(int value) {
-		this.gridIndex = value;
+	public void setGridIndex(int gridIndex) {
+		this.gridIndex = gridIndex;
 	}
 
 	public int getHeat() {
 		return heat;
 	}
 
-	public void setHeat(int value) {
-		this.heat = value;
+	public void setHeat(int heat) {
+		this.heat = heat;
 	}
 
 	public int getLevel() {
 		return level;
 	}
 
-	public void setLevel(int value) {
-		this.level = value;
+	public void setLevel(int level) {
+		this.level = level;
 	}
 
-	public int getPersonaId() {
+	public long getPersonaId() {
 		return personaId;
 	}
 
-	public void setPersonaId(int value) {
-		this.personaId = value;
+	public void setPersonaId(long personaId) {
+		this.personaId = personaId;
 	}
 
 	public String getState() {
 		return state;
 	}
 
-	public void setState(String value) {
-		this.state = value;
+	public void setState(String state) {
+		this.state = state;
 	}
 
 }

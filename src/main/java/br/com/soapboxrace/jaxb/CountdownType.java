@@ -11,22 +11,22 @@ import javax.xml.bind.annotation.XmlType;
 public class CountdownType {
 
 	@XmlElement(name = "EventId")
-	protected int eventId;
+	protected long eventId;
 	@XmlElement(name = "IsWaiting", required = true)
 	protected boolean isWaiting = false;
 	@XmlElement(name = "LobbyCountdownInMilliseconds")
-	protected int lobbyCountdownInMilliseconds = 10000;
+	protected long lobbyCountdownInMilliseconds = 10000;
 	@XmlElement(name = "LobbyId")
-	protected int lobbyId = 12345678;
+	protected long lobbyId = 12345678;
 	@XmlElement(name = "LobbyStuckDurationInMilliseconds")
-	protected int lobbyStuckDurationInMilliseconds = 2000;
+	protected long lobbyStuckDurationInMilliseconds = 2000;
 
-	public int getEventId() {
+	public long getEventId() {
 		return eventId;
 	}
 
-	public void setEventId(int value) {
-		this.eventId = value;
+	public void setEventId(long eventId) {
+		this.eventId = eventId;
 	}
 
 	public boolean isWaiting() {
@@ -37,28 +37,28 @@ public class CountdownType {
 		this.isWaiting = isWaiting;
 	}
 
-	public int getLobbyCountdownInMilliseconds() {
+	public long getLobbyCountdownInMilliseconds() {
 		return lobbyCountdownInMilliseconds;
 	}
 
-	public void setLobbyCountdownInMilliseconds(int value) {
-		this.lobbyCountdownInMilliseconds = value;
+	public void setLobbyCountdownInMilliseconds(long lobbyCountdownInMilliseconds) {
+		this.lobbyCountdownInMilliseconds = lobbyCountdownInMilliseconds;
 	}
 
-	public int getLobbyId() {
+	public long getLobbyId() {
 		return lobbyId;
 	}
 
-	public void setLobbyId(int value) {
-		this.lobbyId = value;
+	public void setLobbyId(long lobbyId) {
+		this.lobbyId = lobbyId;
 	}
 
-	public int getLobbyStuckDurationInMilliseconds() {
+	public long getLobbyStuckDurationInMilliseconds() {
 		return lobbyStuckDurationInMilliseconds;
 	}
 
-	public void setLobbyStuckDurationInMilliseconds(int value) {
-		this.lobbyStuckDurationInMilliseconds = value;
+	public void setLobbyStuckDurationInMilliseconds(long lobbyStuckDurationInMilliseconds) {
+		this.lobbyStuckDurationInMilliseconds = lobbyStuckDurationInMilliseconds;
 	}
 
 }

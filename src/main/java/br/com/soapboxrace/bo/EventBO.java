@@ -26,7 +26,7 @@ public class EventBO {
 		pursuitEventResult.setExitPath("ExitToFreeroam");
 		pursuitEventResult.setInviteLifetimeInMilliseconds(0);
 		pursuitEventResult.setLobbyInviteId(0);
-		pursuitEventResult.setPersonaId(personaId.intValue());
+		pursuitEventResult.setPersonaId(personaId);
 		pursuitEventResult.setHeat(1);
 
 		FinalRewardsType finalRewardsType = new FinalRewardsType();
@@ -57,7 +57,7 @@ public class EventBO {
 		pursuitEventResult.setExitPath("ExitToFreeroam");
 		pursuitEventResult.setInviteLifetimeInMilliseconds(0);
 		pursuitEventResult.setLobbyInviteId(0);
-		pursuitEventResult.setPersonaId(personaId.intValue());
+		pursuitEventResult.setPersonaId(personaId);
 		pursuitEventResult.setHeat(1);
 
 		FinalRewardsType finalRewardsType = new FinalRewardsType();

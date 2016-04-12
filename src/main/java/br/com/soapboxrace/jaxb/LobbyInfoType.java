@@ -17,36 +17,36 @@ public class LobbyInfoType {
 	@XmlElement(name = "Entrants", required = true)
 	protected EntrantsType entrants;
 	@XmlElement(name = "EventId")
-	protected int eventId;
+	protected long eventId;
 	@XmlElement(name = "IsInviteEnabled", required = true)
 	protected boolean isInviteEnabled = false;
 	@XmlElement(name = "LobbyId")
-	protected int lobbyId = 12345678;
+	protected long lobbyId;
 	@XmlElement(name = "LobbyInviteId")
-	protected int lobbyInviteId = 12345678;
+	protected long lobbyInviteId;
 
 	public CountdownType getCountdown() {
 		return countdown;
 	}
 
-	public void setCountdown(CountdownType value) {
-		this.countdown = value;
+	public void setCountdown(CountdownType countdown) {
+		this.countdown = countdown;
 	}
 
 	public EntrantsType getEntrants() {
 		return entrants;
 	}
 
-	public void setEntrants(EntrantsType value) {
-		this.entrants = value;
+	public void setEntrants(EntrantsType entrants) {
+		this.entrants = entrants;
 	}
 
-	public int getEventId() {
+	public long getEventId() {
 		return eventId;
 	}
 
-	public void setEventId(int value) {
-		this.eventId = value;
+	public void setEventId(long eventId) {
+		this.eventId = eventId;
 	}
 
 	public boolean isInviteEnabled() {
@@ -57,20 +57,20 @@ public class LobbyInfoType {
 		this.isInviteEnabled = isInviteEnabled;
 	}
 
-	public int getLobbyId() {
+	public long getLobbyId() {
 		return lobbyId;
 	}
 
-	public void setLobbyId(int value) {
-		this.lobbyId = value;
+	public void setLobbyId(long lobbyId) {
+		this.lobbyId = lobbyId;
 	}
 
-	public int getLobbyInviteId() {
+	public long getLobbyInviteId() {
 		return lobbyInviteId;
 	}
 
-	public void setLobbyInviteId(int value) {
-		this.lobbyInviteId = value;
+	public void setLobbyInviteId(long lobbyInviteId) {
+		this.lobbyInviteId = lobbyInviteId;
 	}
 
 }

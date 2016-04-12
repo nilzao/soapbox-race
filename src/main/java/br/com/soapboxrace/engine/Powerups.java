@@ -23,7 +23,7 @@ public class Powerups extends Router {
 		stringBuilder.append("<subject>1</subject>");
 		stringBuilder.append("</message>");
 		String msg = stringBuilder.toString();
-		XmppSrv.sendMsg(getLoggedPersonaId().intValue(), msg);
+		XmppSrv.sendMsg(getLoggedPersonaId(), msg);
 		return "";
 	}
 }

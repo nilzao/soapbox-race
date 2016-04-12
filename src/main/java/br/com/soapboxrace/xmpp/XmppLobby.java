@@ -7,9 +7,9 @@ import br.com.soapboxrace.xmpp.jaxb.ResponseType;
 
 public class XmppLobby {
 
-	private int personaId;
+	private long personaId;
 
-	public XmppLobby(int personaId) {
+	public XmppLobby(long personaId) {
 		this.personaId = personaId;
 	}
 

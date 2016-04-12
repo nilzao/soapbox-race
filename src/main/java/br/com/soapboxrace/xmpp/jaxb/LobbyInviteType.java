@@ -11,38 +11,38 @@ import javax.xml.bind.annotation.XmlType;
 public class LobbyInviteType {
 
 	@XmlElement(name = "EventId")
-	protected int eventId;
+	protected long eventId;
 	@XmlElement(name = "InviteLifetimeInMilliseconds")
-	protected int inviteLifetimeInMilliseconds = 10000;
+	protected long inviteLifetimeInMilliseconds = 10000;
 	@XmlElement(name = "InvitedByPersonaId")
-	protected int invitedByPersonaId = 0;
+	protected long invitedByPersonaId = 0;
 	@XmlElement(name = "IsPrivate", required = true)
 	protected boolean isPrivate = false;
 	@XmlElement(name = "LobbyInviteId")
-	protected int lobbyInviteId;
+	protected long lobbyInviteId;
 
-	public int getEventId() {
+	public long getEventId() {
 		return eventId;
 	}
 
-	public void setEventId(int value) {
-		this.eventId = value;
+	public void setEventId(long eventId) {
+		this.eventId = eventId;
 	}
 
-	public int getInviteLifetimeInMilliseconds() {
+	public long getInviteLifetimeInMilliseconds() {
 		return inviteLifetimeInMilliseconds;
 	}
 
-	public void setInviteLifetimeInMilliseconds(int value) {
-		this.inviteLifetimeInMilliseconds = value;
+	public void setInviteLifetimeInMilliseconds(long inviteLifetimeInMilliseconds) {
+		this.inviteLifetimeInMilliseconds = inviteLifetimeInMilliseconds;
 	}
 
-	public int getInvitedByPersonaId() {
+	public long getInvitedByPersonaId() {
 		return invitedByPersonaId;
 	}
 
-	public void setInvitedByPersonaId(int value) {
-		this.invitedByPersonaId = value;
+	public void setInvitedByPersonaId(long invitedByPersonaId) {
+		this.invitedByPersonaId = invitedByPersonaId;
 	}
 
 	public boolean isPrivate() {
@@ -53,12 +53,12 @@ public class LobbyInviteType {
 		this.isPrivate = isPrivate;
 	}
 
-	public int getLobbyInviteId() {
+	public long getLobbyInviteId() {
 		return lobbyInviteId;
 	}
 
-	public void setLobbyInviteId(int value) {
-		this.lobbyInviteId = value;
+	public void setLobbyInviteId(long lobbyInviteId) {
+		this.lobbyInviteId = lobbyInviteId;
 	}
 
 }

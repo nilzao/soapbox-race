@@ -15,9 +15,9 @@ public class InventoryItemTransType {
 	@XmlElement(name = "ExpirationDate", required = true)
 	protected String expirationDate;
 	@XmlElement(name = "Hash")
-	protected int hash;
+	protected long hash;
 	@XmlElement(name = "InventoryId")
-	protected int inventoryId;
+	protected long inventoryId;
 	@XmlElement(name = "ProductId", required = true)
 	protected String productId;
 	@XmlElement(name = "RemainingUseCount")
@@ -35,80 +35,80 @@ public class InventoryItemTransType {
 		return entitlementTag;
 	}
 
-	public void setEntitlementTag(String value) {
-		this.entitlementTag = value;
+	public void setEntitlementTag(String entitlementTag) {
+		this.entitlementTag = entitlementTag;
 	}
 
 	public String getExpirationDate() {
 		return expirationDate;
 	}
 
-	public void setExpirationDate(String value) {
-		this.expirationDate = value;
+	public void setExpirationDate(String expirationDate) {
+		this.expirationDate = expirationDate;
 	}
 
-	public int getHash() {
+	public long getHash() {
 		return hash;
 	}
 
-	public void setHash(int value) {
-		this.hash = value;
+	public void setHash(long hash) {
+		this.hash = hash;
 	}
 
-	public int getInventoryId() {
+	public long getInventoryId() {
 		return inventoryId;
 	}
 
-	public void setInventoryId(int value) {
-		this.inventoryId = value;
+	public void setInventoryId(long inventoryId) {
+		this.inventoryId = inventoryId;
 	}
 
 	public String getProductId() {
 		return productId;
 	}
 
-	public void setProductId(String value) {
-		this.productId = value;
+	public void setProductId(String productId) {
+		this.productId = productId;
 	}
 
 	public int getRemainingUseCount() {
 		return remainingUseCount;
 	}
 
-	public void setRemainingUseCount(int value) {
-		this.remainingUseCount = value;
+	public void setRemainingUseCount(int remainingUseCount) {
+		this.remainingUseCount = remainingUseCount;
 	}
 
 	public float getResellPrice() {
 		return resellPrice;
 	}
 
-	public void setResellPrice(float value) {
-		this.resellPrice = value;
+	public void setResellPrice(float resellPrice) {
+		this.resellPrice = resellPrice;
 	}
 
 	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(String value) {
-		this.status = value;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public String getStringHash() {
 		return stringHash;
 	}
 
-	public void setStringHash(String value) {
-		this.stringHash = value;
+	public void setStringHash(String stringHash) {
+		this.stringHash = stringHash;
 	}
 
 	public String getVirtualItemType() {
 		return virtualItemType;
 	}
 
-	public void setVirtualItemType(String value) {
-		this.virtualItemType = value;
+	public void setVirtualItemType(String virtualItemType) {
+		this.virtualItemType = virtualItemType;
 	}
 
 }

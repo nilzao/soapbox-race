@@ -21,84 +21,84 @@ public class PersonaBaseType {
 	@XmlElement(name = "Name", required = true)
 	protected String name;
 	@XmlElement(name = "PersonaId")
-	protected int personaId;
+	protected long personaId;
 	@XmlElement(name = "Presence")
 	protected int presence;
 	@XmlElement(name = "Score")
 	protected int score;
 	@XmlElement(name = "UserId")
-	protected int userId;
+	protected long userId;
 
 	public String getBadges() {
 		return badges;
 	}
 
-	public void setBadges(String value) {
-		this.badges = value;
+	public void setBadges(String badges) {
+		this.badges = badges;
 	}
 
 	public int getIconIndex() {
 		return iconIndex;
 	}
 
-	public void setIconIndex(int value) {
-		this.iconIndex = value;
+	public void setIconIndex(int iconIndex) {
+		this.iconIndex = iconIndex;
 	}
 
 	public int getLevel() {
 		return level;
 	}
 
-	public void setLevel(int value) {
-		this.level = value;
+	public void setLevel(int level) {
+		this.level = level;
 	}
 
 	public String getMotto() {
 		return motto;
 	}
 
-	public void setMotto(String value) {
-		this.motto = value;
+	public void setMotto(String motto) {
+		this.motto = motto;
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public void setName(String value) {
-		this.name = value;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public int getPersonaId() {
+	public long getPersonaId() {
 		return personaId;
 	}
 
-	public void setPersonaId(int value) {
-		this.personaId = value;
+	public void setPersonaId(long personaId) {
+		this.personaId = personaId;
 	}
 
 	public int getPresence() {
 		return presence;
 	}
 
-	public void setPresence(int value) {
-		this.presence = value;
+	public void setPresence(int presence) {
+		this.presence = presence;
 	}
 
 	public int getScore() {
 		return score;
 	}
 
-	public void setScore(int value) {
-		this.score = value;
+	public void setScore(int score) {
+		this.score = score;
 	}
 
-	public int getUserId() {
+	public long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(int value) {
-		this.userId = value;
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 
 }

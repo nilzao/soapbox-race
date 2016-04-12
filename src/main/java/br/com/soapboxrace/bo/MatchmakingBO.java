@@ -32,7 +32,7 @@ public class MatchmakingBO {
 
 		SessionInfoType sessionInfoType = new SessionInfoType();
 		sessionInfoType.setSessionId(1000000000);
-		sessionInfoType.setEventId(eventId.intValue());
+		sessionInfoType.setEventId(eventId);
 		sessionInfoType.setChallenge(challengeType);
 		return sessionInfoType;
 	}
@@ -112,10 +112,10 @@ public class MatchmakingBO {
 	private void sendJoinEvent(Long personaId, LobbyEntity lobbyEntity) {
 		LobbyInviteType lobbyInviteType = new LobbyInviteType();
 		Long eventId = lobbyEntity.getEvent().getEventId();
-		lobbyInviteType.setEventId(eventId.intValue());
+		lobbyInviteType.setEventId(eventId);
 		Long lobbyId = lobbyEntity.getId();
-		lobbyInviteType.setLobbyInviteId(lobbyId.intValue());
-		XmppLobby xmppLobby = new XmppLobby(personaId.intValue());
+		lobbyInviteType.setLobbyInviteId(lobbyId);
+		XmppLobby xmppLobby = new XmppLobby(personaId);
 		xmppLobby.joinQueueEvent(lobbyInviteType);
 	}
 
@@ -123,10 +123,10 @@ public class MatchmakingBO {
 		Object objLobbyEntity = connectionDB.findById(new LobbyEntity(), lobbyInviteId);
 		LobbyEntity lobbyEntity = (LobbyEntity) objLobbyEntity;
 		Long eventIdLong = lobbyEntity.getEvent().getEventId();
-		
+
 		CountdownType countdownType = new CountdownType();
-		int eventId = eventIdLong.intValue();
-		countdownType.setLobbyId(lobbyInviteId.intValue());
+		long eventId = eventIdLong;
+		countdownType.setLobbyId(lobbyInviteId);
 		countdownType.setEventId(eventId);
 
 		EntrantsType entrantsType = new EntrantsType();
@@ -135,7 +135,7 @@ public class MatchmakingBO {
 		List<LobbyEntrantEntity> entrants = lobbyEntity.getEntrants();
 		for (LobbyEntrantEntity lobbyEntrantEntity : entrants) {
 			LobbyEntrantInfoType lobbyEntrantInfoType = new LobbyEntrantInfoType();
-			lobbyEntrantInfoType.setPersonaId(lobbyEntrantEntity.getPersona().getId().intValue());
+			lobbyEntrantInfoType.setPersonaId(lobbyEntrantEntity.getPersona().getId());
 			lobbyEntrantInfoType.setLevel(lobbyEntrantEntity.getPersona().getLevel());
 			lobbyEntrantInfo.add(lobbyEntrantInfoType);
 		}
@@ -144,8 +144,8 @@ public class MatchmakingBO {
 		lobbyInfoType.setCountdown(countdownType);
 		lobbyInfoType.setEntrants(entrantsType);
 		lobbyInfoType.setEventId(eventId);
-		lobbyInfoType.setLobbyInviteId(lobbyInviteId.intValue());
-		lobbyInfoType.setLobbyId(lobbyInviteId.intValue());
+		lobbyInfoType.setLobbyInviteId(lobbyInviteId);
+		lobbyInfoType.setLobbyId(lobbyInviteId);
 
 		return lobbyInfoType;
 	}

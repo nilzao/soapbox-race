@@ -7,13 +7,13 @@ import java.util.HashMap;
 
 public class XmppSrv {
 
-	private static HashMap<Integer, XmppTalk> xmppClients = new HashMap<Integer, XmppTalk>();
+	private static HashMap<Long, XmppTalk> xmppClients = new HashMap<Long, XmppTalk>();
 
-	public static void addXmppClient(int personaId, XmppTalk xmppClient) {
+	public static void addXmppClient(long personaId, XmppTalk xmppClient) {
 		xmppClients.put(personaId, xmppClient);
 	}
 
-	public static void sendMsg(int personaId, String msg) {
+	public static void sendMsg(long personaId, String msg) {
 		xmppClients.get(personaId).write(msg);
 	}
 

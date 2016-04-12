@@ -69,7 +69,7 @@ public class MessageType {
 		this.to = value;
 	}
 
-	public void setToPersonaId(Integer personaId) {
+	public void setToPersonaId(Long personaId) {
 		this.to = "nfsw." + personaId.toString() + "@127.0.0.1";
 	}
 
