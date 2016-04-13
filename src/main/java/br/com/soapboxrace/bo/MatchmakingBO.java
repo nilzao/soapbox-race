@@ -1,5 +1,6 @@
 package br.com.soapboxrace.bo;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -45,11 +46,15 @@ public class MatchmakingBO {
 	public void joinqueueevent(Long personaId, Long eventId) {
 		EntityManager manager = ConnectionDB.getManager();
 		TypedQuery<LobbyEntity> query = manager.createQuery(
-				"SELECT obj FROM LobbyEntity obj WHERE obj.event = :event and obj.lobbyCountdownInMilliseconds >= 10000",
+				"SELECT obj FROM LobbyEntity obj WHERE obj.event = :event and obj.lobbyDateTimeStart between :dateTime1 and :dateTime2",
 				LobbyEntity.class);
 		EventDefinitionEntity eventEntity = new EventDefinitionEntity();
 		eventEntity.setEventId(eventId);
 		query.setParameter("event", eventEntity);
+		Date now = new Date();
+		Date past = new Date(now.getTime() - 75000);
+		query.setParameter("dateTime1", past);
+		query.setParameter("dateTime2", now);
 		List<LobbyEntity> lobbys = query.getResultList();
 
 		Object objPersonaEntity = connectionDB.findById(new PersonaEntity(), personaId);
@@ -109,6 +114,17 @@ public class MatchmakingBO {
 		return false;
 	}
 
+	private void sendJoinMsg(Long personaId, List<LobbyEntrantEntity> lobbyEntrants) {
+		for (LobbyEntrantEntity lobbyEntrantEntity : lobbyEntrants) {
+			if (personaId != lobbyEntrantEntity.getPersona().getId()) {
+				lobbyEntrantEntity.setHeat(1);
+				lobbyEntrantEntity.setLevel(lobbyEntrantEntity.getPersona().getLevel());
+				XmppLobby xmppLobby = new XmppLobby(lobbyEntrantEntity.getPersona().getId());
+				xmppLobby.sendJoinMsg(lobbyEntrantEntity);
+			}
+		}
+	}
+
 	private void sendJoinEvent(Long personaId, LobbyEntity lobbyEntity) {
 		LobbyInviteType lobbyInviteType = new LobbyInviteType();
 		Long eventId = lobbyEntity.getEvent().getEventId();
@@ -128,11 +144,13 @@ public class MatchmakingBO {
 		long eventId = eventIdLong;
 		countdownType.setLobbyId(lobbyInviteId);
 		countdownType.setEventId(eventId);
+		countdownType.setLobbyCountdownInMilliseconds(lobbyEntity.getLobbyCountdownInMilliseconds());
 
 		EntrantsType entrantsType = new EntrantsType();
 		List<LobbyEntrantInfoType> lobbyEntrantInfo = entrantsType.getLobbyEntrantInfo();
 
 		List<LobbyEntrantEntity> entrants = lobbyEntity.getEntrants();
+		sendJoinMsg(personaId, entrants);
 		for (LobbyEntrantEntity lobbyEntrantEntity : entrants) {
 			LobbyEntrantInfoType lobbyEntrantInfoType = new LobbyEntrantInfoType();
 			lobbyEntrantInfoType.setPersonaId(lobbyEntrantEntity.getPersona().getId());

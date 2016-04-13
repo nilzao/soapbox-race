@@ -2,6 +2,7 @@ package br.com.soapboxrace.jpa;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @Table(name = "LOBBY")
@@ -35,12 +38,16 @@ public class LobbyEntity implements Serializable {
 
 	private boolean isWaiting = false;
 
-	private int lobbyCountdownInMilliseconds = 10000;
+	@Transient
+	private long lobbyCountdownInMilliseconds = 90000;
 
-	private int lobbyStuckDurationInMilliseconds = 2000;
+	private long lobbyStuckDurationInMilliseconds = 2000;
 
 	@OneToMany(mappedBy = "lobby", targetEntity = LobbyEntrantEntity.class, cascade = CascadeType.MERGE)
 	private List<LobbyEntrantEntity> entrants;
+
+	@XmlTransient
+	private Date lobbyDateTimeStart = new Date();
 
 	public long getId() {
 		return id;
@@ -74,20 +81,26 @@ public class LobbyEntity implements Serializable {
 		this.isWaiting = isWaiting;
 	}
 
-	public int getLobbyCountdownInMilliseconds() {
-		return lobbyCountdownInMilliseconds;
-	}
-
-	public void setLobbyCountdownInMilliseconds(int lobbyCountdownInMilliseconds) {
-		this.lobbyCountdownInMilliseconds = lobbyCountdownInMilliseconds;
-	}
-
-	public int getLobbyStuckDurationInMilliseconds() {
+	public long getLobbyStuckDurationInMilliseconds() {
 		return lobbyStuckDurationInMilliseconds;
 	}
 
-	public void setLobbyStuckDurationInMilliseconds(int lobbyStuckDurationInMilliseconds) {
+	public void setLobbyStuckDurationInMilliseconds(long lobbyStuckDurationInMilliseconds) {
 		this.lobbyStuckDurationInMilliseconds = lobbyStuckDurationInMilliseconds;
+	}
+
+	public long getLobbyCountdownInMilliseconds() {
+		if (lobbyDateTimeStart != null) {
+			Date now = new Date();
+			Long time = now.getTime() - lobbyDateTimeStart.getTime();
+			time = 90000L - time;
+			return time;
+		}
+		return lobbyCountdownInMilliseconds;
+	}
+
+	public void setLobbyCountdownInMilliseconds(long lobbyCountdownInMilliseconds) {
+		this.lobbyCountdownInMilliseconds = lobbyCountdownInMilliseconds;
 	}
 
 	public List<LobbyEntrantEntity> getEntrants() {
@@ -103,6 +116,14 @@ public class LobbyEntity implements Serializable {
 			this.entrants = new ArrayList<LobbyEntrantEntity>();
 		}
 		return entrants.add(e);
+	}
+
+	public Date getLobbyDateTimeStart() {
+		return lobbyDateTimeStart;
+	}
+
+	public void setLobbyDateTimeStart(Date lobbyDateTimeStart) {
+		this.lobbyDateTimeStart = lobbyDateTimeStart;
 	}
 
 }
