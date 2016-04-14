@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlType;
 @Entity
 @Table(name = "LOBBYENTRANT")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "LobbyEntrantInfoType", propOrder = { "gridIndex", "heat", "level", "personaId", "state" })
+@XmlType(name = "LobbyEntrantInfoType", propOrder = { "gridIndex", "heat", "level", "personaId", "state", "lobbyId" })
 public class LobbyEntrantEntity {
 
 	@XmlTransient
@@ -39,15 +39,21 @@ public class LobbyEntrantEntity {
 
 	@Transient
 	@XmlElement(name = "PersonaId")
-	protected int personaId;
+	protected long personaId;
 
 	@ManyToOne
+	@XmlTransient
 	@JoinColumn(name = "PERSONAID", referencedColumnName = "ID")
 	private PersonaEntity persona;
 
 	@ManyToOne
+	@XmlTransient
 	@JoinColumn(name = "LOBBYID", referencedColumnName = "ID")
 	private LobbyEntity lobby;
+
+	@Transient
+	@XmlElement(name = "LobbyId")
+	private Long lobbyId;
 
 	@Transient
 	@XmlElement(name = "State", required = true)
@@ -85,11 +91,11 @@ public class LobbyEntrantEntity {
 		this.level = level;
 	}
 
-	public int getPersonaId() {
+	public long getPersonaId() {
 		return personaId;
 	}
 
-	public void setPersonaId(int personaId) {
+	public void setPersonaId(long personaId) {
 		this.personaId = personaId;
 	}
 
@@ -115,6 +121,14 @@ public class LobbyEntrantEntity {
 
 	public void setState(String state) {
 		this.state = state;
+	}
+
+	public Long getLobbyId() {
+		return lobbyId;
+	}
+
+	public void setLobbyId(Long lobbyId) {
+		this.lobbyId = lobbyId;
 	}
 
 }

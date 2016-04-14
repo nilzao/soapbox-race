@@ -43,6 +43,7 @@ public class LobbyEntity implements Serializable {
 
 	private long lobbyStuckDurationInMilliseconds = 2000;
 
+	@XmlTransient
 	@OneToMany(mappedBy = "lobby", targetEntity = LobbyEntrantEntity.class, cascade = CascadeType.MERGE)
 	private List<LobbyEntrantEntity> entrants;
 
@@ -93,7 +94,7 @@ public class LobbyEntity implements Serializable {
 		if (lobbyDateTimeStart != null) {
 			Date now = new Date();
 			Long time = now.getTime() - lobbyDateTimeStart.getTime();
-			time = 90000L - time;
+			time = 60000L - time;
 			return time;
 		}
 		return lobbyCountdownInMilliseconds;

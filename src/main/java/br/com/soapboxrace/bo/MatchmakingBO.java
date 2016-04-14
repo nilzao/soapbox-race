@@ -52,7 +52,7 @@ public class MatchmakingBO {
 		eventEntity.setEventId(eventId);
 		query.setParameter("event", eventEntity);
 		Date now = new Date();
-		Date past = new Date(now.getTime() - 75000);
+		Date past = new Date(now.getTime() - 45000);
 		query.setParameter("dateTime1", past);
 		query.setParameter("dateTime2", now);
 		List<LobbyEntity> lobbys = query.getResultList();
@@ -119,6 +119,8 @@ public class MatchmakingBO {
 			if (personaId != lobbyEntrantEntity.getPersona().getId()) {
 				lobbyEntrantEntity.setHeat(1);
 				lobbyEntrantEntity.setLevel(lobbyEntrantEntity.getPersona().getLevel());
+				lobbyEntrantEntity.setLobbyId(lobbyEntrantEntity.getLobby().getId());
+				lobbyEntrantEntity.setPersonaId(personaId);
 				XmppLobby xmppLobby = new XmppLobby(lobbyEntrantEntity.getPersona().getId());
 				xmppLobby.sendJoinMsg(lobbyEntrantEntity);
 			}

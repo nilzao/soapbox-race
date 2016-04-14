@@ -31,12 +31,6 @@ public class XmppLobby {
 	}
 
 	public void sendJoinMsg(LobbyEntrantEntity lobbyEntrantEntity) {
-		System.out.println("-------------------------------------");
-		System.out.println(this.personaId);
-		System.out.println(lobbyEntrantEntity.getPersona().getName());
-		System.out.println(lobbyEntrantEntity.getLobby());
-		System.out.println("-------------------------------------");
-		lobbyEntrantEntity.setPersonaId(lobbyEntrantEntity.getPersona().getId().intValue());
 		ResponseTypeEntrantAdd responseType = new ResponseTypeEntrantAdd();
 		responseType.setLobbyInvite(lobbyEntrantEntity);
 		MessageType messageType = new MessageType();
