@@ -41,6 +41,7 @@ public class LobbyEntity implements Serializable {
 	@Transient
 	private long lobbyCountdownInMilliseconds = 60000;
 
+	@Transient
 	private long lobbyStuckDurationInMilliseconds = 5000;
 
 	@XmlTransient
