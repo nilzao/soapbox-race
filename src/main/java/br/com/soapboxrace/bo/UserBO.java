@@ -68,11 +68,16 @@ public class UserBO {
 		Date expirationDate = new Date();
 		long time = expirationDate.getTime();
 		expirationDate.setTime(time + 300000L);
-		sessionEntity.setExpiration(expirationDate);
 		sessionEntity.setToken(md5);
 		sessionEntity.setUserId(userId);
-		connectionDB.persist(sessionEntity);
-
+		List<?> find = connectionDB.find(sessionEntity);
+		sessionEntity.setExpiration(expirationDate);
+		if(find.size() == 0){
+			connectionDB.persist(sessionEntity);
+		} else {
+			sessionEntity = (SessionEntity) find.get(0);
+			connectionDB.merge(sessionEntity);
+		}
 		return userInfo;
 	}
 
