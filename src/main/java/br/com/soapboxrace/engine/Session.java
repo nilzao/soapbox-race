@@ -13,41 +13,6 @@ public class Session extends Router {
 		stringBuilder.append("      <longName>TXT_CHAT_LANG_ENGLISH</longName>\n");
 		stringBuilder.append("      <shortName>EN</shortName>\n");
 		stringBuilder.append("    </chatRoom>\n");
-		stringBuilder.append("    <chatRoom>\n");
-		stringBuilder.append("      <channelCount>2</channelCount>\n");
-		stringBuilder.append("      <longName>TXT_CHAT_LANG_GERMAN</longName>\n");
-		stringBuilder.append("      <shortName>DE</shortName>\n");
-		stringBuilder.append("    </chatRoom>\n");
-		stringBuilder.append("    <chatRoom>\n");
-		stringBuilder.append("      <channelCount>2</channelCount>\n");
-		stringBuilder.append("      <longName>TXT_CHAT_LANG_FRENCH</longName>\n");
-		stringBuilder.append("      <shortName>FR</shortName>\n");
-		stringBuilder.append("    </chatRoom>\n");
-		stringBuilder.append("    <chatRoom>\n");
-		stringBuilder.append("      <channelCount>2</channelCount>\n");
-		stringBuilder.append("      <longName>TXT_CHAT_LANG_SPANISH</longName>\n");
-		stringBuilder.append("      <shortName>ES</shortName>\n");
-		stringBuilder.append("    </chatRoom>\n");
-		stringBuilder.append("    <chatRoom>\n");
-		stringBuilder.append("      <channelCount>2</channelCount>\n");
-		stringBuilder.append("      <longName>TXT_CHAT_LANG_POLISH</longName>\n");
-		stringBuilder.append("      <shortName>PL</shortName>\n");
-		stringBuilder.append("    </chatRoom>\n");
-		stringBuilder.append("    <chatRoom>\n");
-		stringBuilder.append("      <channelCount>2</channelCount>\n");
-		stringBuilder.append("      <longName>TXT_CHAT_LANG_BRAZILIANPORTUGUESE</longName>\n");
-		stringBuilder.append("      <shortName>BR</shortName>\n");
-		stringBuilder.append("    </chatRoom>\n");
-		stringBuilder.append("    <chatRoom>\n");
-		stringBuilder.append("      <channelCount>2</channelCount>\n");
-		stringBuilder.append("      <longName>TXT_CHAT_LANG_RUSSIAN</longName>\n");
-		stringBuilder.append("      <shortName>RU</shortName>\n");
-		stringBuilder.append("    </chatRoom>\n");
-		stringBuilder.append("    <chatRoom>\n");
-		stringBuilder.append("      <channelCount>2</channelCount>\n");
-		stringBuilder.append("      <longName>TXT_CHAT_LANG_GENERAL</longName>\n");
-		stringBuilder.append("      <shortName>GN</shortName>\n");
-		stringBuilder.append("    </chatRoom>\n");
 		stringBuilder.append("  </Rooms>\n");
 		stringBuilder.append("  <ip>");
 		stringBuilder.append(ip);
@@ -60,6 +25,10 @@ public class Session extends Router {
 
 	public static void setIp(String ip) {
 		Session.ip = ip;
+	}
+
+	public static String getIp() {
+		return ip;
 	}
 
 }
