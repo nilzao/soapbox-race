@@ -13,52 +13,52 @@ import org.hibernate.jpa.HibernatePersistenceProvider;
 
 public class ConnectionDB {
 
-	private static EntityManager manager;
+	private static final EntityManagerFactory emf;
+	private static final ThreadLocal<EntityManager> threadLocal;
 
-	public ConnectionDB() {
-		if (manager == null) {
-			HibernatePersistenceProvider hibernatePersistenceProvider = new HibernatePersistenceProvider();
-			EntityManagerFactory createEntityManagerFactory = hibernatePersistenceProvider
-					.createEntityManagerFactory("persistenceUnit", null);
-			manager = createEntityManagerFactory.createEntityManager();
-		}
-		// EntityManagerFactory factory =
-		// Persistence.createEntityManagerFactory("persistenceUnit");
-		// manager = factory.createEntityManager();
+	static {
+		HibernatePersistenceProvider hibernatePersistenceProvider = new HibernatePersistenceProvider();
+		emf = hibernatePersistenceProvider.createEntityManagerFactory("persistenceUnit", null);
+		threadLocal = new ThreadLocal<EntityManager>();
 	}
 
 	public static EntityManager getManager() {
-		return manager;
+		EntityManager em = threadLocal.get();
+		if (em == null) {
+			em = emf.createEntityManager();
+			threadLocal.set(em);
+		}
+		return em;
 	}
 
 	public void persist(Object entity) {
-		EntityTransaction tx = manager.getTransaction();
+		EntityTransaction tx = getManager().getTransaction();
 		tx.begin();
-		manager.persist(entity);
+		getManager().persist(entity);
 		tx.commit();
 	}
 
 	public Object merge(Object entity) {
-		EntityTransaction tx = manager.getTransaction();
+		EntityTransaction tx = getManager().getTransaction();
 		tx.begin();
-		Object merge = manager.merge(entity);
+		Object merge = getManager().merge(entity);
 		tx.commit();
 		return merge;
 	}
 
 	public void remove(Object entity) {
-		EntityTransaction tx = manager.getTransaction();
+		EntityTransaction tx = getManager().getTransaction();
 		tx.begin();
-		manager.remove(entity);
+		getManager().remove(entity);
 		tx.commit();
 	}
 
 	public Object findById(Object entity, Long id) {
-		return manager.find(entity.getClass(), id);
+		return getManager().find(entity.getClass(), id);
 	}
 
 	public List<?> find(Object entity) {
-		Session sessao = (Session) manager.getDelegate();
+		Session sessao = (Session) getManager().getDelegate();
 		Example example = Example.create(entity);
 		example.excludeZeroes();
 		Criteria criteria = sessao.createCriteria(entity.getClass());

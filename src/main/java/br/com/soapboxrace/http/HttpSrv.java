@@ -77,7 +77,9 @@ public class HttpSrv extends GzipHandler {
 			out.setInterceptor(new GzipHttpOutputInterceptor(this, GzipHttpOutputInterceptor.VARY_ACCEPT_ENCODING,
 					baseRequest.getHttpChannel(), out.getInterceptor()));
 			response.setContentType("application/xml;charset=utf-8");
-			if (!target.contains("accept")) {
+			if (target.contains("accept")) {
+				response.addHeader("Keep-Alive", "timeout=70");
+			} else {
 				response.setHeader("connection", "close");
 			}
 			response.setStatus(200);

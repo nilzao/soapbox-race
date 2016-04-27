@@ -39,9 +39,10 @@ public class LobbyEntity implements Serializable {
 	private boolean isWaiting = false;
 
 	@Transient
-	private long lobbyCountdownInMilliseconds = 90000;
+	private long lobbyCountdownInMilliseconds = 60000;
 
-	private long lobbyStuckDurationInMilliseconds = 2000;
+	@Transient
+	private long lobbyStuckDurationInMilliseconds = 5000;
 
 	@XmlTransient
 	@OneToMany(mappedBy = "lobby", targetEntity = LobbyEntrantEntity.class, cascade = CascadeType.MERGE)
