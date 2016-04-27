@@ -172,4 +172,10 @@ public class PersonaBO {
 		return ownedCar;
 	}
 
+	public void changeDefaultCar(long idPersona, int newIndex) {
+		PersonaEntity personaEntity = (PersonaEntity) connectionDB.findById(new PersonaEntity(), idPersona);
+		personaEntity.setCurCarIndex(newIndex);
+		connectionDB.merge(personaEntity);
+	}
+	
 }

@@ -27,6 +27,10 @@ public class Router {
 	protected HttpServletRequest getRequest() {
 		return request;
 	}
+	
+	protected Request getBaseRequest() {
+		return baseRequest;
+	}
 
 	protected String getParam(String param) {
 		return baseRequest.getParameter(param);
