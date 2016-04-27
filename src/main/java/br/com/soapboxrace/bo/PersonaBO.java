@@ -46,6 +46,7 @@ public class PersonaBO {
 		if (ownedCars.size() > 0) {
 			carsOwnedByPersonaList.setOwnedCarList(ownedCars);
 		}
+		carSlotInfoTrans.setDefaultOwnedCarIndex(personaEntity.getCurCarIndex());
 		carSlotInfoTrans.setOwnedCarSlotsCount(1);
 
 		ArrayList<ProductEntity> productList = new ArrayList<ProductEntity>();
