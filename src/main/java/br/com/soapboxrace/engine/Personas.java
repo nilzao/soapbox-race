@@ -47,8 +47,15 @@ public class Personas extends Router {
 
 	public String defaultcar() {
 		long personaId = getPersonaId();
-		OwnedCarEntity ownedCarEntity = personaBO.defaultcar(personaId);
-		return MarshalXML.marshal(ownedCarEntity);
+		
+		if (getTarget().matches("/nfsw/Engine.svc/personas/(.*)/defaultcar/(.*)")) {
+			// dirty way but whatever, it works
+			personaBO.changeDefaultCar(personaId, Integer.valueOf(getTarget().split("/")[6]));
+			return "";
+		} else {
+			OwnedCarEntity ownedCarEntity = personaBO.defaultcar(personaId);
+			return MarshalXML.marshal(ownedCarEntity);
+		}
 	}
 
 	public String baskets() {

@@ -13,7 +13,7 @@ public class CarSlotInfoTrans {
 	private CarsOwnedByPersonaList carsOwnedByPersonaList = new CarsOwnedByPersonaList();
 
 	@XmlElement(name = "DefaultOwnedCarIndex")
-	private int defaultOwnedCarIndex = 0;
+	private int defaultOwnedCarIndex;
 
 	@XmlElement(name = "ObtainableSlots")
 	private ObtainableSlotsList obtainableSlots;

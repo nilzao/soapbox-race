@@ -46,6 +46,7 @@ public class PersonaBO {
 		if (ownedCars.size() > 0) {
 			carsOwnedByPersonaList.setOwnedCarList(ownedCars);
 		}
+		carSlotInfoTrans.setDefaultOwnedCarIndex(personaEntity.getCurCarIndex());
 		carSlotInfoTrans.setOwnedCarSlotsCount(1);
 
 		ArrayList<ProductEntity> productList = new ArrayList<ProductEntity>();
@@ -172,4 +173,10 @@ public class PersonaBO {
 		return ownedCar;
 	}
 
+	public void changeDefaultCar(long idPersona, int newIndex) {
+		PersonaEntity personaEntity = (PersonaEntity) connectionDB.findById(new PersonaEntity(), idPersona);
+		personaEntity.setCurCarIndex(newIndex);
+		connectionDB.merge(personaEntity);
+	}
+	
 }

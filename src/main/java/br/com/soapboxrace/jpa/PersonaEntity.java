@@ -82,6 +82,9 @@ public class PersonaEntity implements Serializable {
 
 	@Column(name = "NAME", length = 50)
 	private String name;
+	
+	@Column(name = "CURCARINDEX", nullable = false)
+	private Integer curCarIndex;
 
 	// "userId" (column "USERID") is not defined by itself because used as FK in
 	// a link
@@ -208,6 +211,17 @@ public class PersonaEntity implements Serializable {
 		return this.name;
 	}
 
+	// --- DATABASE MAPPING : CURCARINDEX ( INTEGER )
+	public void setCurCarIndex(Integer newIndex) {
+		this.curCarIndex = newIndex;
+	}
+
+	public Integer getCurCarIndex() {
+		return this.curCarIndex;
+	}
+
+	//
+	
 	public void setUser(UserEntity user) {
 		this.user = user;
 	}
@@ -258,6 +272,8 @@ public class PersonaEntity implements Serializable {
 		sb.append(score);
 		sb.append("|");
 		sb.append(name);
+		sb.append("|");
+		sb.append(curCarIndex);
 		return sb.toString();
 	}
 

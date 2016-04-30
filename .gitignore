@@ -18,3 +18,5 @@ hs_err_pid*
 target/
 .tern-project
 www/
+/TelosysTools/
+/telosys-tools.cfg
