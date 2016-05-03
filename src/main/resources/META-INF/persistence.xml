@@ -8,7 +8,7 @@
       <property name="hibernate.c3p0.max_statements" value="100" />
       <property name="hibernate.c3p0.acquire_increment" value="1" />
 
-      <property name="hibernate.hbm2ddl.auto" value="update" />
+      <!-- <property name="hibernate.hbm2ddl.auto" value="update" /> -->
       <property name="hibernate.show_sql" value="false" />
 
       <!-- mysql -->
