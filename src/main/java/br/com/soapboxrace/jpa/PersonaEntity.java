@@ -1,7 +1,6 @@
 package br.com.soapboxrace.jpa;
 
 import java.io.Serializable;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +26,7 @@ public class PersonaEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID", nullable = false)
 	private Long id;
 
@@ -61,7 +60,7 @@ public class PersonaEntity implements Serializable {
 	@Column(name = "NAME", length = 50)
 	private String name;
 
-	@Column(name = "CURCARINDEX", nullable = false)
+	@Column(name = "CURCARINDEX")
 	private Integer curCarIndex = 0;
 
 	@OneToMany(mappedBy = "persona", targetEntity = OwnedCarEntity.class, cascade = { CascadeType.MERGE,

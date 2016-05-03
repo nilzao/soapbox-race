@@ -27,7 +27,7 @@ public class LobbyEntity implements Serializable {
 	private static final long serialVersionUID = -7685436026786063561L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected long id;
 
 	protected boolean isInviteEnabled = false;

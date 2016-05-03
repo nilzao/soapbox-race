@@ -22,7 +22,7 @@ public class CustomPaintEntity {
 
 	@XmlTransient
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected long id;
 
 	@XmlTransient

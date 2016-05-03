@@ -54,7 +54,7 @@ public class OwnedCarEntity implements Serializable {
 	protected int heat;
 	@XmlElement(name = "Id")
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected long id;
 	@XmlElement(name = "OwnershipType", required = true)
 	protected String ownershipType;

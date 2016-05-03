@@ -23,7 +23,7 @@ public class ProductEntity implements Serializable {
 	private static final long serialVersionUID = -3662485319709500345L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@XmlTransient
 	private long id;
 

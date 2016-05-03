@@ -22,7 +22,7 @@ public class CustomVinylEntity {
 
 	@XmlTransient
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
 	@XmlTransient

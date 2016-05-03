@@ -46,7 +46,7 @@ public class CustomCarEntity implements Serializable {
 
 	@XmlElement(name = "Id")
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected long id;
 
 	@XmlElement(name = "IsPreset", required = true)
