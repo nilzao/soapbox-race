@@ -84,7 +84,7 @@ public class PersonaEntity implements Serializable {
 	private String name;
 	
 	@Column(name = "CURCARINDEX", nullable = false)
-	private Integer curCarIndex;
+	private Integer curCarIndex = 0;
 
 	// "userId" (column "USERID") is not defined by itself because used as FK in
 	// a link
