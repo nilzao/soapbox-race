@@ -27,10 +27,6 @@ public class Router {
 	protected HttpServletRequest getRequest() {
 		return request;
 	}
-	
-	protected Request getBaseRequest() {
-		return baseRequest;
-	}
 
 	protected String getParam(String param) {
 		return baseRequest.getParameter(param);
@@ -71,7 +67,11 @@ public class Router {
 	}
 
 	protected Long getUserId() {
-		return Long.valueOf(getHeader("userId"));
+		String header = getHeader("userId");
+		if (header == null) {
+			header = "0";
+		}
+		return Long.valueOf(header);
 	}
 
 }
