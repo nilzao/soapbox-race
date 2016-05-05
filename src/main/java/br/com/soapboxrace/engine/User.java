@@ -26,12 +26,15 @@ public class User extends Router {
 	public String secureLoginPersona() {
 		Long personaId = getPersonaId();
 		String securityToken = getSecurityToken();
-		Long userId = getUserId();
+		Long userId = Long.valueOf(getParam("userId"));
 		userBO.secureLoginPersona(securityToken, userId, personaId);
 		return "";
 	}
 
 	public String secureLogoutPersona() {
+		String securityToken = getSecurityToken();
+		Long userId = Long.valueOf(getParam("userId"));
+		userBO.secureLoginPersona(securityToken, userId, 0L);
 		return "";
 	}
 

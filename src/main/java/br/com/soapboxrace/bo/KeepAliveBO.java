@@ -18,11 +18,13 @@ public class KeepAliveBO {
 		List<?> find = connectionDB.find(sessionEntity);
 		sessionEntity = (SessionEntity) find.get(0);
 
-		Date expirationDate = new Date();
-		long time = expirationDate.getTime();
-		expirationDate.setTime(time + 300000L);
-		sessionEntity.setExpiration(expirationDate);
-		connectionDB.merge(sessionEntity);
+		if (sessionEntity.getPersonaId() != 0) {
+			Date expirationDate = new Date();
+			long time = expirationDate.getTime();
+			expirationDate.setTime(time + 300000L);
+			sessionEntity.setExpiration(expirationDate);
+			connectionDB.merge(sessionEntity);
+		}
 	}
 
 }

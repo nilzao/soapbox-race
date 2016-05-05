@@ -32,32 +32,60 @@ public class ConnectionDB {
 	}
 
 	public void persist(Object entity) {
-		EntityTransaction tx = getManager().getTransaction();
-		tx.begin();
-		getManager().persist(entity);
-		tx.commit();
+		EntityTransaction tx = null;
+		try {
+			tx = getManager().getTransaction();
+			tx.begin();
+			getManager().persist(entity);
+			tx.commit();
+		} catch (Exception e) {
+			if (tx != null && tx.isActive()) {
+				tx.rollback();
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public Object merge(Object entity) {
-		EntityTransaction tx = getManager().getTransaction();
-		tx.begin();
-		Object merge = getManager().merge(entity);
-		tx.commit();
+		EntityTransaction tx = null;
+		Object merge = null;
+		try {
+			tx = getManager().getTransaction();
+			tx.begin();
+			merge = getManager().merge(entity);
+			tx.commit();
+		} catch (Exception e) {
+			if (tx != null && tx.isActive()) {
+				tx.rollback();
+				e.printStackTrace();
+			}
+		}
 		return merge;
 	}
 
 	public void remove(Object entity) {
-		EntityTransaction tx = getManager().getTransaction();
-		tx.begin();
-		getManager().remove(entity);
-		tx.commit();
+		EntityTransaction tx = null;
+		try {
+			tx = getManager().getTransaction();
+			tx.begin();
+			getManager().remove(entity);
+			tx.commit();
+		} catch (Exception e) {
+			if (tx != null && tx.isActive()) {
+				tx.rollback();
+				e.printStackTrace();
+			}
+		}
+
 	}
 
 	public Object findById(Object entity, Long id) {
+		getManager().clear();
 		return getManager().find(entity.getClass(), id);
 	}
 
 	public List<?> find(Object entity) {
+		getManager().clear();
 		Session sessao = (Session) getManager().getDelegate();
 		Example example = Example.create(entity);
 		example.excludeZeroes();

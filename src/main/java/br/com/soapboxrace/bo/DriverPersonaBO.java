@@ -3,6 +3,11 @@ package br.com.soapboxrace.bo;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+
 import br.com.soapboxrace.db.ConnectionDB;
 import br.com.soapboxrace.jaxb.ArrayOfPersonaBaseType;
 import br.com.soapboxrace.jaxb.ArrayOfstringType;
@@ -58,6 +63,11 @@ public class DriverPersonaBO {
 	public void deletePersona(long idPersona) {
 		ConnectionDB connectionDB = new ConnectionDB();
 		PersonaEntity personaEntity = (PersonaEntity) connectionDB.findById(new PersonaEntity(), idPersona);
+		EntityManager manager = ConnectionDB.getManager();
+		Session delegate = (Session) manager.getDelegate();
+		Query query = delegate.createQuery("DELETE from LobbyEntrantEntity obj WHERE obj.persona = :persona ");
+		query.setParameter("persona", personaEntity);
+		query.executeUpdate();
 		connectionDB.remove(personaEntity);
 	}
 
