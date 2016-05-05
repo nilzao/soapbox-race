@@ -6,6 +6,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
+import org.hibernate.Hibernate;
+
 import br.com.soapboxrace.db.ConnectionDB;
 import br.com.soapboxrace.engine.Session;
 import br.com.soapboxrace.jaxb.ChallengeType;
@@ -61,6 +63,9 @@ public class MatchmakingBO {
 		query.setParameter("dateTime1", past);
 		query.setParameter("dateTime2", now);
 		List<LobbyEntity> lobbys = query.getResultList();
+		for (LobbyEntity lobbyEntity : lobbys) {
+			Hibernate.initialize(lobbyEntity.getEntrants());
+		}
 
 		Object objPersonaEntity = connectionDB.findById(new PersonaEntity(), personaId);
 		PersonaEntity personaEntity = (PersonaEntity) objPersonaEntity;
