@@ -12,7 +12,7 @@ public class EventsBO {
 
 	private ConnectionDB connectDb = new ConnectionDB();
 
-	public EventsPacketType availableatlevel() {
+	public EventsPacketType availableatlevel(Long userId, String securityToken) {
 		EventsPacketType eventsPacketType = new EventsPacketType();
 		EventsType eventsType = new EventsType();
 		List<?> events = connectDb.find(new EventDefinitionEntity());

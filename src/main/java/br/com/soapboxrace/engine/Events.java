@@ -9,7 +9,9 @@ public class Events extends Router {
 	EventsBO eventsBO = new EventsBO();
 
 	public String availableatlevel() {
-		EventsPacketType availableatlevel = eventsBO.availableatlevel();
+		Long userId = getUserId();
+		String securityToken = getSecurityToken();
+		EventsPacketType availableatlevel = eventsBO.availableatlevel(userId, securityToken);
 		return MarshalXML.marshal(availableatlevel);
 	}
 
