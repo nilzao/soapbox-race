@@ -170,7 +170,7 @@ public class MatchmakingBO {
 			lobbyEntrantInfoType.setPersonaId(lobbyEntrantEntity.getPersona().getId());
 			lobbyEntrantInfoType.setLevel(lobbyEntrantEntity.getPersona().getLevel());
 			lobbyEntrantInfo.add(lobbyEntrantInfoType);
-			if (lobbyEntrantEntity.getPersona().getId() == personaId) {
+			if (lobbyEntrantEntity.getPersona().getId().equals(personaId)) {
 				personaInside = true;
 			}
 		}
