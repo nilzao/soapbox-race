@@ -34,9 +34,10 @@ public class ConnectionDB {
 	public void persist(Object entity) {
 		EntityTransaction tx = null;
 		try {
-			tx = getManager().getTransaction();
+			EntityManager manager = getManager();
+			tx = manager.getTransaction();
 			tx.begin();
-			getManager().persist(entity);
+			manager.persist(entity);
 			tx.commit();
 		} catch (Exception e) {
 			if (tx != null && tx.isActive()) {
@@ -50,9 +51,10 @@ public class ConnectionDB {
 		EntityTransaction tx = null;
 		Object merge = null;
 		try {
-			tx = getManager().getTransaction();
+			EntityManager manager = getManager();
+			tx = manager.getTransaction();
 			tx.begin();
-			merge = getManager().merge(entity);
+			merge = manager.merge(entity);
 			tx.commit();
 		} catch (Exception e) {
 			if (tx != null && tx.isActive()) {
@@ -66,9 +68,10 @@ public class ConnectionDB {
 	public void remove(Object entity) {
 		EntityTransaction tx = null;
 		try {
-			tx = getManager().getTransaction();
+			EntityManager manager = getManager();
+			tx = manager.getTransaction();
 			tx.begin();
-			getManager().remove(entity);
+			manager.remove(entity);
 			tx.commit();
 		} catch (Exception e) {
 			if (tx != null && tx.isActive()) {
@@ -80,13 +83,15 @@ public class ConnectionDB {
 	}
 
 	public Object findById(Object entity, Long id) {
-		getManager().clear();
-		return getManager().find(entity.getClass(), id);
+		EntityManager manager = getManager();
+		manager.clear();
+		return manager.find(entity.getClass(), id);
 	}
 
 	public List<?> find(Object entity) {
-		getManager().clear();
-		Session sessao = (Session) getManager().getDelegate();
+		EntityManager manager = getManager();
+		manager.clear();
+		Session sessao = (Session) manager.getDelegate();
 		Example example = Example.create(entity);
 		example.excludeZeroes();
 		Criteria criteria = sessao.createCriteria(entity.getClass());
