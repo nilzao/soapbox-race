@@ -98,6 +98,19 @@ public class PersonaBO {
 		inventoryItemTransType.setEntitlementTag("NOTHING");
 		inventoryItemTransType.setProductId("ANYTHING");
 		inventoryItemTransType.setStringHash("0x31928b50");
+		// "Fail_MaxAllowedPurchasesForThisProduct"
+		// "Fail_InsufficientPerformancePartInventory"
+		// "Fail_BoostTransactionsAreDisabled"
+		// "Fail_LockedProductNotAccessibleToThisUser"
+		// "Fail_PersonaNotRightLevel"
+		// "Fail_ItemNotAvailableStandalone"
+		// "Fail_InvalidPerformanceUpgrade"
+		// "Fail_MaxStackOrRentalLimit"
+		// "Fail_InsufficientCarSlots"
+		// "Fail_InsufficientFunds"
+		// "Fail_InvalidBasket"
+		// "Success"
+		commerceResultTransType.setStatus("Fail_InsufficientFunds");
 		commerceResultTransType.setCommerceItems("");
 		commerceResultTransType.setInvalidBasket("");
 		inventoryItemsType.setInventoryItemTrans(inventoryItemTransType);
@@ -163,20 +176,33 @@ public class PersonaBO {
 	}
 
 	public OwnedCarEntity defaultcar(long idPersona) {
-		EntityManager manager = ConnectionDB.getManager();
-		TypedQuery<OwnedCarEntity> query = manager
-				.createQuery("SELECT obj FROM OwnedCarEntity obj WHERE obj.persona = :persona", OwnedCarEntity.class);
-		PersonaEntity personaEntity = new PersonaEntity();
+		PersonaEntity personaEntity = (PersonaEntity) connectionDB.findById(new PersonaEntity(), idPersona);
 		personaEntity.setId(idPersona);
-		query.setParameter("persona", personaEntity);
-		OwnedCarEntity ownedCar = query.getSingleResult();
-		return ownedCar;
+		List<OwnedCarEntity> ownedCarList = getOwnedCarList(personaEntity);
+		return ownedCarList.get(personaEntity.getCurCarIndex());
 	}
 
-	public void changeDefaultCar(long idPersona, int newIndex) {
+	public void changeDefaultCar(long idPersona, long defaultCarId) {
 		PersonaEntity personaEntity = (PersonaEntity) connectionDB.findById(new PersonaEntity(), idPersona);
-		personaEntity.setCurCarIndex(newIndex);
+		List<OwnedCarEntity> ownedCarList = getOwnedCarList(personaEntity);
+		int i = 0;
+		for (OwnedCarEntity ownedCarEntity : ownedCarList) {
+			if (ownedCarEntity.getId() == defaultCarId) {
+				break;
+			}
+			i++;
+		}
+		personaEntity.setCurCarIndex(i);
 		connectionDB.merge(personaEntity);
 	}
-	
+
+	private List<OwnedCarEntity> getOwnedCarList(PersonaEntity personaEntity) {
+		EntityManager manager = ConnectionDB.getManager();
+		TypedQuery<OwnedCarEntity> query = manager.createQuery(
+				"SELECT obj FROM OwnedCarEntity obj WHERE obj.persona = :persona order by obj.id",
+				OwnedCarEntity.class);
+		query.setParameter("persona", personaEntity);
+		return query.getResultList();
+	}
+
 }
