@@ -5,9 +5,11 @@ import java.util.List;
 import br.com.soapboxrace.jaxb.LobbyEntrantInfoType;
 import br.com.soapboxrace.jaxb.util.MarshalXML;
 import br.com.soapboxrace.jpa.LobbyEntrantEntity;
+import br.com.soapboxrace.xmpp.jaxb.CryptoTicketsType;
 import br.com.soapboxrace.xmpp.jaxb.LobbyInviteType;
 import br.com.soapboxrace.xmpp.jaxb.LobbyLaunchedType;
 import br.com.soapboxrace.xmpp.jaxb.MessageType;
+import br.com.soapboxrace.xmpp.jaxb.P2PCryptoTicketType;
 import br.com.soapboxrace.xmpp.jaxb.ResponseType;
 import br.com.soapboxrace.xmpp.jaxb.ResponseTypeEntrantAdd;
 import br.com.soapboxrace.xmpp.jaxb.ResponseTypeLobbyLaunched;
@@ -50,10 +52,18 @@ public class XmppLobby {
 		}
 	}
 
-	public static void sendRelay(LobbyLaunchedType lobbyLaunched) {
+	public static void sendRelay(LobbyLaunchedType lobbyLaunched, CryptoTicketsType cryptoTicketsType) {
 		List<LobbyEntrantInfoType> lobbyEntrantInfo = lobbyLaunched.getEntrants().getLobbyEntrantInfo();
 		for (LobbyEntrantInfoType lobbyEntrantInfoType : lobbyEntrantInfo) {
 			long personaId = lobbyEntrantInfoType.getPersonaId();
+			CryptoTicketsType cryptoTicketsTypeTmp = new CryptoTicketsType();
+			List<P2PCryptoTicketType> p2pCryptoTicket = cryptoTicketsType.getP2PCryptoTicket();
+			for (P2PCryptoTicketType p2pCryptoTicketType : p2pCryptoTicket) {
+				if (personaId != p2pCryptoTicketType.getPersonaId()) {
+					cryptoTicketsTypeTmp.getP2PCryptoTicket().add(p2pCryptoTicketType);
+				}
+			}
+			lobbyLaunched.setCryptoTickets(cryptoTicketsTypeTmp);
 			ResponseTypeLobbyLaunched responseType = new ResponseTypeLobbyLaunched();
 			responseType.setLobbyInvite(lobbyLaunched);
 			MessageType messageType = new MessageType();

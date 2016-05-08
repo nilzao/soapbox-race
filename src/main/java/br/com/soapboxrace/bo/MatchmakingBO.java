@@ -227,7 +227,7 @@ public class MatchmakingBO {
 			int i = 0;
 			for (LobbyEntrantEntity lobbyEntrantEntity : entrants) {
 				P2PCryptoTicketType p2pCryptoTicketType = new P2PCryptoTicketType();
-				p2pCryptoTicketType.setPersonaId(lobbyEntrantEntity.getPersonaId());
+				p2pCryptoTicketType.setPersonaId(lobbyEntrantEntity.getPersona().getId());
 				p2pCryptoTicketType.setSessionKey("AAAAAAAAAAAAAAAAAAAAAA==");
 				p2pCryptoTicket.add(p2pCryptoTicketType);
 
@@ -236,6 +236,7 @@ public class MatchmakingBO {
 				lobbyEntrantInfoType.setLevel(lobbyEntrantEntity.getPersona().getLevel());
 				lobbyEntrantInfoType.setHeat(1);
 				lobbyEntrantInfoType.setGridIndex(i++);
+				lobbyEntrantInfoType.setState("Unknown");
 				lobbyEntrantInfo.add(lobbyEntrantInfoType);
 			}
 			EventSessionType eventSessionType = new EventSessionType();
@@ -256,7 +257,7 @@ public class MatchmakingBO {
 			lobbyLaunched.setEntrants(entrantsType);
 
 			lobbyLaunched.setEventSession(eventSessionType);
-			XmppLobby.sendRelay(lobbyLaunched);
+			XmppLobby.sendRelay(lobbyLaunched, cryptoTicketsType);
 		}
 	}
 
