@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 import br.com.soapboxrace.db.ConnectionDB;
+import br.com.soapboxrace.definition.ShoppingCartPurchaseResult;
 import br.com.soapboxrace.jaxb.CarSlotInfoTrans;
 import br.com.soapboxrace.jaxb.CarsOwnedByPersonaList;
 import br.com.soapboxrace.jaxb.CommerceResultTransType;
@@ -98,19 +99,7 @@ public class PersonaBO {
 		inventoryItemTransType.setEntitlementTag("NOTHING");
 		inventoryItemTransType.setProductId("ANYTHING");
 		inventoryItemTransType.setStringHash("0x31928b50");
-		// "Fail_MaxAllowedPurchasesForThisProduct"
-		// "Fail_InsufficientPerformancePartInventory"
-		// "Fail_BoostTransactionsAreDisabled"
-		// "Fail_LockedProductNotAccessibleToThisUser"
-		// "Fail_PersonaNotRightLevel"
-		// "Fail_ItemNotAvailableStandalone"
-		// "Fail_InvalidPerformanceUpgrade"
-		// "Fail_MaxStackOrRentalLimit"
-		// "Fail_InsufficientCarSlots"
-		// "Fail_InsufficientFunds"
-		// "Fail_InvalidBasket"
-		// "Success"
-		commerceResultTransType.setStatus("Fail_InsufficientFunds");
+		commerceResultTransType.setStatus(ShoppingCartPurchaseResult.aFail_insufficientfunds);
 		commerceResultTransType.setCommerceItems("");
 		commerceResultTransType.setInvalidBasket("");
 		inventoryItemsType.setInventoryItemTrans(inventoryItemTransType);
