@@ -38,7 +38,7 @@ public class DriverPersonaBO {
 		userEntity.setId(userId);
 
 		PersonaEntity personaEntity = new PersonaEntity();
-		personaEntity.setCash(BigDecimal.valueOf(200000L));
+		personaEntity.setCash(200000);
 		personaEntity.setName(name);
 		personaEntity.setIconIndex(iconIndex);
 		personaEntity.setUser(userEntity);
@@ -53,7 +53,7 @@ public class DriverPersonaBO {
 
 		ProfileDataType profileDataType = new ProfileDataType();
 		profileDataType.setName(personaEntity.getName());
-		profileDataType.setCash(personaEntity.getCash().intValue());
+		profileDataType.setCash(personaEntity.getCash());
 		profileDataType.setIconIndex(personaEntity.getIconIndex());
 		profileDataType.setPersonaId(personaEntity.getId().intValue());
 		profileDataType.setLevel(personaEntity.getLevel());
@@ -74,7 +74,7 @@ public class DriverPersonaBO {
 	public ProfileDataType getPersonaInfo(long idPersona) {
 		PersonaEntity personaEntity = (PersonaEntity) connectionDB.findById(new PersonaEntity(), idPersona);
 		ProfileDataType profileDataType = new ProfileDataType();
-		profileDataType.setCash(personaEntity.getCash().intValue());
+		profileDataType.setCash(personaEntity.getCash());
 		profileDataType.setIconIndex(personaEntity.getIconIndex());
 		profileDataType.setLevel(personaEntity.getLevel());
 		profileDataType.setMotto("");
