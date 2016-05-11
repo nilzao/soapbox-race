@@ -12,17 +12,17 @@
       <property name="hibernate.show_sql" value="false" />
 
       <!-- mysql -->
-      <!-- <property name="hibernate.connection.url" value="jdbc:mysql://localhost/SOAPBOX?serverTimezone=UTC&amp;useSSL=false&amp;requireSSL=false" /> -->
-      <!-- <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" /> -->
-      <!-- <property name="javax.persistence.jdbc.user" value="root" /> -->
-      <!-- <property name="javax.persistence.jdbc.password" value="123" /> -->
-      <!-- <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" /> -->
+      <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/soapbox?serverTimezone=UTC&amp;useSSL=false&amp;requireSSL=false" />
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
+      <property name="javax.persistence.jdbc.user" value="root" />
+      <property name="javax.persistence.jdbc.password" value="" />
+      <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
 
-      <!-- h2 -->
-      <!-- <property name="hibernate.connection.url" value="jdbc:h2:tcp://localhost/~/workspaces/nfsw/soapbox-race/db/soapbox" /> -->
+      <!-- h2
+      <property name="hibernate.connection.url" value="jdbc:h2:tcp://localhost/~/workspaces/nfsw/soapbox-race/db/soapbox" />
       <property name="hibernate.connection.url" value="jdbc:h2:./db/soapbox" />
       <property name="hibernate.connection.driver_class" value="org.h2.Driver" />
-      <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
+      <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" /> -->
 
       <property name="hibernate.default_schema" value="SOAPBOX" />
     </properties>

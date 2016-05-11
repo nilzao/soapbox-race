@@ -45,16 +45,21 @@
       <artifactId>jetty-server</artifactId>
       <version>9.3.0.v20150612</version>
     </dependency>
-    <dependency>
+    <!-- <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
       <version>1.4.191</version>
+    </dependency> -->
+    <dependency>
+		<groupId>mysql</groupId>
+		<artifactId>mysql-connector-java</artifactId>
+		<version>6.0.2</version>
     </dependency>
-    <!-- <dependency> -->
-    <!-- <groupId>mysql</groupId> -->
-    <!-- <artifactId>mysql-connector-java</artifactId> -->
-    <!-- <version>6.0.2</version> -->
-    <!-- </dependency> -->
+	<dependency>
+		<groupId>org.eclipse.persistence</groupId>
+		<artifactId>org.eclipse.persistence.moxy</artifactId>
+		<version>2.6.3</version>
+	</dependency>
     <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
