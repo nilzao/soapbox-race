@@ -2,13 +2,10 @@ package br.com.soapboxrace.jpa;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -65,11 +62,6 @@ public class ProductEntity implements Serializable {
 	protected String webIcon;
 	@XmlElement(name = "WebLocation", required = true)
 	protected String webLocation;
-
-	@XmlTransient
-	@OneToOne(mappedBy = "product", targetEntity = OwnedCarEntity.class, cascade = { CascadeType.MERGE,
-			CascadeType.DETACH }, fetch = FetchType.LAZY)
-	private OwnedCarEntity ownedCar;
 
 	@XmlTransient
 	protected String categoryName;
@@ -240,14 +232,6 @@ public class ProductEntity implements Serializable {
 
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
-	}
-
-	public OwnedCarEntity getOwnedCar() {
-		return ownedCar;
-	}
-
-	public void setOwnedCar(OwnedCarEntity ownedCar) {
-		this.ownedCar = ownedCar;
 	}
 
 }
