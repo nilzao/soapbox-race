@@ -1,155 +1,108 @@
 package br.com.soapboxrace.jpa;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.persistence.Access;
-import javax.persistence.AccessType;
-import javax.persistence.CascadeType;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
-import br.com.soapboxrace.jaxb.CustomPaintTransList;
-import br.com.soapboxrace.jaxb.CustomVinylTransList;
-import br.com.soapboxrace.jaxb.PerformancePartTransList;
-import br.com.soapboxrace.jaxb.SkillModPartTransList;
-import br.com.soapboxrace.jaxb.VisualPartTransList;
+import br.com.soapboxrace.definition.convert;
+import br.com.soapboxrace.jaxb.CustomCarType;
+import br.com.soapboxrace.jaxb.PaintsType;
+import br.com.soapboxrace.jaxb.PerformancePartsType;
+import br.com.soapboxrace.jaxb.SkillModPartsType;
+import br.com.soapboxrace.jaxb.VinylsType;
+import br.com.soapboxrace.jaxb.VisualPartsType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "CustomCarType", propOrder = { "baseCar", "carClassHash", "id", "isPreset", "level", "name",
-		"customPaintTransList", "performancePartTransList", "physicsProfileHash", "rating", "resalePrice",
-		"rideHeightDrop", "skillModPartTransList", "skillModSlotCount", "version", "customVinylTransList",
-		"visualPartTransList" })
+@XmlType(name = "CustomCarType", propOrder = { "baseCarId", "carClassHash", "isPreset", "level", "name", "apiId",
+		"paints", "performanceParts", "physicsProfileHash", "rating", "resalePrice", "skillModParts", "skillModSlotCount", "vinyls",
+		"visualParts" })
 @Entity
 @Table(name = "CUSTOMCAR")
+@XmlRootElement(name = "CustomCar")
 public class CustomCarEntity implements Serializable {
-
-	private static final long serialVersionUID = 716946554730878667L;
-
-	@XmlElement(name = "BaseCar")
-	protected int baseCar;
+	private static final long serialVersionUID = 1L;
+	
+	@XmlElement(name = "BaseCar", required = true)
+	protected long baseCarId;
 	@XmlElement(name = "CarClassHash")
 	protected int carClassHash;
-
-	@XmlElement(name = "Id")
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected long id;
-
-	@XmlElement(name = "IsPreset", required = true)
+	@XmlElement(name = "IsPreset")
 	protected boolean isPreset;
 	@XmlElement(name = "Level")
 	protected int level;
-	@XmlElement(name = "Name", required = true)
+	@XmlElement(name = "Name")
 	protected String name;
-
-	@Access(AccessType.PROPERTY)
-	@OneToMany(mappedBy = "customCar", targetEntity = CustomPaintEntity.class, cascade = { CascadeType.MERGE,
-			CascadeType.DETACH, CascadeType.REMOVE })
-	@XmlTransient
-	protected List<CustomPaintEntity> customPaintList;
-
-	@Transient
-	@XmlElement(name = "Paints", required = true)
-	protected CustomPaintTransList customPaintTransList = new CustomPaintTransList();
-
-	@XmlTransient
-	@OneToMany(mappedBy = "customCar", targetEntity = PerformancePartEntity.class, cascade = { CascadeType.MERGE,
-			CascadeType.DETACH, CascadeType.REMOVE })
-	protected List<PerformancePartEntity> performancePartList;
-
-	@Transient
-	@XmlElement(name = "PerformanceParts", required = true)
-	protected PerformancePartTransList performancePartTransList = new PerformancePartTransList();
-
+	@XmlElement(name = "Id", required = true)
+	protected long apiId;
+	@Convert(converter = convert.PaintsConverter.class)
+	@XmlElement(name = "Paints")
+	protected PaintsType paints;
+	@Convert(converter = convert.PerformancePartsConverter.class)
+	@XmlElement(name = "PerformanceParts")
+	protected PerformancePartsType performanceParts;
 	@XmlElement(name = "PhysicsProfileHash")
-	protected int physicsProfileHash;
+	protected long physicsProfileHash;
 	@XmlElement(name = "Rating")
 	protected int rating;
 	@XmlElement(name = "ResalePrice")
 	protected int resalePrice;
-	@XmlElement(name = "RideHeightDrop")
-	protected int rideHeightDrop;
-
-	@XmlTransient
-	@OneToMany(mappedBy = "customCar", targetEntity = SkillModPartEntity.class, cascade = { CascadeType.MERGE,
-			CascadeType.DETACH, CascadeType.REMOVE })
-	protected List<SkillModPartEntity> skillModPartList;
-
-	@XmlElement(name = "SkillModParts", required = true)
-	@Transient
-	protected SkillModPartTransList skillModPartTransList = new SkillModPartTransList();
-
+	@Convert(converter = convert.SkillModPartsConverter.class)
+	@XmlElement(name = "SkillModParts")
+	protected SkillModPartsType skillModParts;
 	@XmlElement(name = "SkillModSlotCount")
-	protected int skillModSlotCount;
-	@XmlElement(name = "Version", required = true)
-	protected int version;
-
-	@XmlTransient
-	@OneToMany(mappedBy = "customCar", targetEntity = CustomVinylEntity.class, cascade = { CascadeType.MERGE,
-			CascadeType.DETACH, CascadeType.REMOVE })
-	protected List<CustomVinylEntity> customVinylList;
-
-	@Transient
-	@XmlElement(name = "Vinyls", required = true)
-	protected CustomVinylTransList customVinylTransList = new CustomVinylTransList();
-
-	@XmlTransient
-	@OneToMany(mappedBy = "customCar", targetEntity = VisualPartEntity.class)
-	protected List<VisualPartEntity> visualPartList;
-
-	@Transient
+	protected Short skillModSlotCount;
+	@Convert(converter = convert.VinylsConverter.class)
+	@XmlElement(name = "Vinyls")
+	protected VinylsType vinyls;
+	@Convert(converter = convert.VisualPartsConverter.class)
 	@XmlElement(name = "VisualParts")
-	protected VisualPartTransList visualPartTransList = new VisualPartTransList();
+	protected VisualPartsType visualParts;
+
+	@XmlTransient
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	protected long id;
 
 	@XmlTransient
 	@ManyToOne
-	@JoinColumn(name = "IDOWNEDCAR", referencedColumnName = "ID")
-	private OwnedCarEntity ownedCar;
+	@JoinColumn(name = "IdParentOwnedCarTrans", referencedColumnName = "UniqueCarId")
+	private OwnedCarEntity parentOwnedCarTrans;
 
-	public int getBaseCar() {
-		return baseCar;
+	public void setBaseCarId(long value) {
+		this.baseCarId = value;
 	}
 
-	public void setBaseCar(int value) {
-		this.baseCar = value;
-	}
-
-	public int getCarClassHash() {
-		return carClassHash;
+	public long getBaseCarId() {
+		return this.baseCarId;
 	}
 
 	public void setCarClassHash(int value) {
 		this.carClassHash = value;
 	}
 
-	public long getId() {
-		return id;
+	public int getCarClassHash() {
+		return this.carClassHash;
 	}
 
-	public void setId(long value) {
-		this.id = value;
-	}
-
-	public boolean isPreset() {
+	public boolean getIsPreset() {
 		return isPreset;
 	}
 
-	public void setPreset(boolean isPreset) {
-		this.isPreset = isPreset;
+	public void setPreset(boolean value) {
+		this.isPreset = value;
 	}
 
 	public int getLevel() {
@@ -168,220 +121,108 @@ public class CustomCarEntity implements Serializable {
 		this.name = value;
 	}
 
-	public int getPhysicsProfileHash() {
-		return physicsProfileHash;
+	public void setApiId(long value) {
+		this.apiId = value;
 	}
 
-	public void setPhysicsProfileHash(int value) {
+	public long getApiId() {
+		return this.apiId;
+	}
+
+	public void setPaints(PaintsType value) {
+		this.paints = value;
+	}
+
+	public PaintsType getPaints() {
+		return this.paints;
+	}
+
+	public void setPerformanceParts(PerformancePartsType value) {
+		this.performanceParts = value;
+	}
+
+	public PerformancePartsType getPerformanceParts() {
+		return this.performanceParts;
+	}
+
+	public void setPhysicsProfileHash(long value) {
 		this.physicsProfileHash = value;
 	}
 
-	public int getRating() {
-		return rating;
+	public long getPhysicsProfileHash() {
+		return this.physicsProfileHash;
 	}
 
 	public void setRating(int value) {
 		this.rating = value;
 	}
 
-	public int getResalePrice() {
-		return resalePrice;
+	public int getRating() {
+		return this.rating;
 	}
 
 	public void setResalePrice(int value) {
 		this.resalePrice = value;
 	}
 
-	public int getRideHeightDrop() {
-		return rideHeightDrop;
+	public int getResalePrice() {
+		return this.resalePrice;
 	}
 
-	public void setRideHeightDrop(int value) {
-		this.rideHeightDrop = value;
+	public void setSkillModParts(SkillModPartsType value) {
+		this.skillModParts = value;
 	}
 
-	public int getSkillModSlotCount() {
+	public SkillModPartsType getSkillModParts() {
+		return this.skillModParts;
+	}
+	
+	public Short getSkillModSlotCount() {
 		return skillModSlotCount;
 	}
 
-	public void setSkillModSlotCount(int value) {
-		this.skillModSlotCount = value;
+	public void setSkillModSlotCount(Short skillModSlotCount) {
+		this.skillModSlotCount = skillModSlotCount;
 	}
 
-	public int getVersion() {
-		return version;
+	public void setVinyls(VinylsType value) {
+		this.vinyls = value;
 	}
 
-	public void setVersion(int value) {
-		this.version = value;
+	public VinylsType getVinyls() {
+		return this.vinyls;
 	}
 
-	public List<PerformancePartEntity> getPerformancePartList() {
-		if (performancePartTransList.getPerformancePartList() != null) {
-			return performancePartTransList.getPerformancePartList();
-		}
-		if (performancePartList == null) {
-			performancePartList = new ArrayList<PerformancePartEntity>();
-		}
-		return performancePartList;
+	public void setVisualParts(VisualPartsType value) {
+		this.visualParts = value;
 	}
 
-	public void setPerformancePartList(List<PerformancePartEntity> performancePartList) {
-		performancePartTransList.setPerformancePartList(performancePartList);
-		this.performancePartList = performancePartList;
+	public VisualPartsType getVisualParts() {
+		return this.visualParts;
 	}
 
-	public List<SkillModPartEntity> getSkillModPartList() {
-		if (skillModPartTransList.getSkillModPartList() != null) {
-			return skillModPartTransList.getSkillModPartList();
-		}
-		if (skillModPartList == null) {
-			skillModPartList = new ArrayList<SkillModPartEntity>();
-		}
-		return skillModPartList;
+	public OwnedCarEntity getParentOwnedCarTrans() {
+		return this.parentOwnedCarTrans;
 	}
 
-	public void setSkillModPartList(List<SkillModPartEntity> skillModPartList) {
-		skillModPartTransList.setSkillModPartList(skillModPartList);
-		this.skillModPartList = skillModPartList;
+	public void setParentOwnedCarTrans(OwnedCarEntity newParent) {
+		this.parentOwnedCarTrans = newParent;
 	}
 
-	public List<CustomVinylEntity> getCustomVinylList() {
-		if (customVinylTransList.getCustomVinylList() != null) {
-			return customVinylTransList.getCustomVinylList();
-		}
-		if (customVinylList == null) {
-			customVinylList = new ArrayList<CustomVinylEntity>();
-		}
-		return customVinylList;
+	public CustomCarType getCustomCarType() {
+		CustomCarType result = new CustomCarType();
+		result.setApiId(this.getApiId());
+		result.setBaseCarId(this.getBaseCarId());
+		result.setCarClassHash(this.getCarClassHash());
+		result.setPaints(this.getPaints());
+		result.setPerformanceParts(this.getPerformanceParts());
+		result.setPhysicsProfileHash(this.getPhysicsProfileHash());
+		result.setRating(this.getRating());
+		result.setResalePrice(this.getResalePrice());
+		result.setSkillModParts(this.getSkillModParts());
+		result.setSkillModSlotCount((short)5);
+		result.setVinyls(this.getVinyls());
+		result.setVisualParts(this.getVisualParts());
+		return result;
 	}
-
-	public void setCustomVinylList(List<CustomVinylEntity> customVinylList) {
-		customVinylTransList.setCustomVinylList(customVinylList);
-		this.customVinylList = customVinylList;
-	}
-
-	public List<VisualPartEntity> getVisualPartList() {
-		if (visualPartTransList.getVisualPartList() != null) {
-			return visualPartTransList.getVisualPartList();
-		}
-		if (visualPartList == null) {
-			visualPartList = new ArrayList<VisualPartEntity>();
-		}
-		return visualPartList;
-	}
-
-	public void setVisualPartList(List<VisualPartEntity> visualPartList) {
-		setVisualPartTransList(visualPartTransList);
-		this.visualPartList = visualPartList;
-	}
-
-	public OwnedCarEntity getOwnedCar() {
-		return ownedCar;
-	}
-
-	public void setOwnedCar(OwnedCarEntity ownedCar) {
-		this.ownedCar = ownedCar;
-	}
-
-	public boolean add(CustomPaintEntity e) {
-		if (customPaintList == null) {
-			customPaintList = new ArrayList<CustomPaintEntity>();
-		}
-		boolean add = customPaintList.add(e);
-		customPaintTransList.setCustomPaintList(customPaintList);
-		return add;
-	}
-
-	public boolean add(PerformancePartEntity e) {
-		if (performancePartList == null) {
-			performancePartList = new ArrayList<PerformancePartEntity>();
-		}
-		boolean add = performancePartList.add(e);
-		performancePartTransList.setPerformancePartList(performancePartList);
-		return add;
-	}
-
-	public boolean add(SkillModPartEntity e) {
-		if (skillModPartList == null) {
-			skillModPartList = new ArrayList<SkillModPartEntity>();
-		}
-		boolean add = skillModPartList.add(e);
-		skillModPartTransList.setSkillModPartList(skillModPartList);
-		return add;
-	}
-
-	public boolean add(CustomVinylEntity e) {
-		if (customVinylList == null) {
-			customVinylList = new ArrayList<CustomVinylEntity>();
-		}
-		boolean add = customVinylList.add(e);
-		customVinylTransList.setCustomVinylList(customVinylList);
-		return add;
-	}
-
-	public boolean add(VisualPartEntity e) {
-		if (visualPartList == null) {
-			visualPartList = new ArrayList<VisualPartEntity>();
-		}
-		boolean add = visualPartList.add(e);
-		visualPartTransList.setVisualPartList(visualPartList);
-		return add;
-	}
-
-	public CustomPaintTransList getCustomPaintTransList() {
-		return customPaintTransList;
-	}
-
-	public void setCustomPaintTransList(CustomPaintTransList customPaintTransList) {
-		this.customPaintTransList = customPaintTransList;
-	}
-
-	public List<CustomPaintEntity> getCustomPaintList() {
-		if (customPaintTransList.getCustomPaintList() != null) {
-			return customPaintTransList.getCustomPaintList();
-		}
-		if (customPaintList == null) {
-			customPaintList = new ArrayList<CustomPaintEntity>();
-		}
-		return customPaintList;
-	}
-
-	public void setCustomPaintList(List<CustomPaintEntity> customPaintList) {
-		customPaintTransList.setCustomPaintList(customPaintList);
-		this.customPaintList = customPaintList;
-	}
-
-	public PerformancePartTransList getPerformancePartTransList() {
-		return performancePartTransList;
-	}
-
-	public void setPerformancePartTransList(PerformancePartTransList performancePartTransList) {
-		this.performancePartTransList = performancePartTransList;
-	}
-
-	public SkillModPartTransList getSkillModPartTransList() {
-		return skillModPartTransList;
-	}
-
-	public void setSkillModPartTransList(SkillModPartTransList skillModPartTransList) {
-		this.skillModPartTransList = skillModPartTransList;
-	}
-
-	public CustomVinylTransList getCustomVinylTransList() {
-		return customVinylTransList;
-	}
-
-	public void setCustomVinylTransList(CustomVinylTransList customVinylTransList) {
-		this.customVinylTransList = customVinylTransList;
-	}
-
-	public VisualPartTransList getVisualPartTransList() {
-		return visualPartTransList;
-	}
-
-	public void setVisualPartTransList(VisualPartTransList visualPartTransList) {
-		this.visualPartTransList = visualPartTransList;
-	}
-
 }
