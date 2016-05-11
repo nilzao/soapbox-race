@@ -4,6 +4,8 @@ import br.com.soapboxrace.bo.PersonaBO;
 import br.com.soapboxrace.jaxb.BasketTransType;
 import br.com.soapboxrace.jaxb.CarSlotInfoTrans;
 import br.com.soapboxrace.jaxb.CommerceResultTransType;
+import br.com.soapboxrace.jaxb.CommerceSessionResultTransType;
+import br.com.soapboxrace.jaxb.CommerceSessionTransType;
 import br.com.soapboxrace.jaxb.util.MarshalXML;
 import br.com.soapboxrace.jaxb.util.UnmarshalXML;
 import br.com.soapboxrace.jpa.OwnedCarEntity;
@@ -29,7 +31,8 @@ public class Personas extends Router {
 
 	public String carslots() {
 		CarSlotInfoTrans carslots = personaBO.carslots(getPersonaId());
-		return MarshalXML.marshal(carslots);
+		return MarshalXML.marshal(carslots);// .replaceAll("&gt;",
+											// ">").replaceAll("&lt;", "<");
 	}
 
 	public String inventory() {
@@ -63,6 +66,18 @@ public class Personas extends Router {
 		}
 		OwnedCarEntity ownedCarEntity = personaBO.defaultcar(personaId);
 		return MarshalXML.marshal(ownedCarEntity);
+	}
+
+	public String commerce() {
+		String commerceXml = readInputStream();
+		CommerceSessionTransType commerceSessionTransType = new CommerceSessionTransType();
+		commerceSessionTransType = (CommerceSessionTransType) UnmarshalXML.unMarshal(commerceXml,
+				commerceSessionTransType);
+		// String[] productIds = new String[] {"0", "1", "2"};
+		// commerceSessionTransType.getBasket().getItems().getBasketItemTrans().getProductId();
+		CommerceSessionResultTransType commerceSessionResultTrans = personaBO.commerce(getPersonaId(),
+				commerceSessionTransType.getUpdatedCar());
+		return MarshalXML.marshal(commerceSessionResultTrans);
 	}
 
 	public String baskets() {

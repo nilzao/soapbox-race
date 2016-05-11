@@ -8,31 +8,26 @@ import javax.persistence.TypedQuery;
 
 import br.com.soapboxrace.db.ConnectionDB;
 import br.com.soapboxrace.definition.ShoppingCartPurchaseResult;
+import br.com.soapboxrace.definition.convert;
 import br.com.soapboxrace.jaxb.CarSlotInfoTrans;
 import br.com.soapboxrace.jaxb.CarsOwnedByPersonaList;
 import br.com.soapboxrace.jaxb.CommerceResultTransType;
+import br.com.soapboxrace.jaxb.CommerceSessionResultTransType;
 import br.com.soapboxrace.jaxb.InventoryItemTransType;
 import br.com.soapboxrace.jaxb.InventoryItemsType;
 import br.com.soapboxrace.jaxb.ObtainableSlotsList;
 import br.com.soapboxrace.jaxb.PurchasedCarsType;
+import br.com.soapboxrace.jaxb.UpdatedCarType;
 import br.com.soapboxrace.jaxb.WalletTransType;
 import br.com.soapboxrace.jaxb.WalletsType;
-import br.com.soapboxrace.jpa.CustomCarEntity;
-import br.com.soapboxrace.jpa.CustomPaintEntity;
-import br.com.soapboxrace.jpa.CustomVinylEntity;
 import br.com.soapboxrace.jpa.OwnedCarEntity;
-import br.com.soapboxrace.jpa.PerformancePartEntity;
 import br.com.soapboxrace.jpa.PersonaEntity;
 import br.com.soapboxrace.jpa.ProductEntity;
-import br.com.soapboxrace.jpa.SkillModPartEntity;
-import br.com.soapboxrace.jpa.VisualPartEntity;
 
 public class PersonaBO {
-
 	private ConnectionDB connectionDB = new ConnectionDB();
 
 	public CarSlotInfoTrans carslots(long idPersona) {
-
 		EntityManager manager = ConnectionDB.getManager();
 		TypedQuery<OwnedCarEntity> query = manager
 				.createQuery("SELECT obj FROM OwnedCarEntity obj WHERE obj.persona = :persona", OwnedCarEntity.class);
@@ -79,6 +74,43 @@ public class PersonaBO {
 		return carSlotInfoTrans;
 	}
 
+	public CommerceSessionResultTransType commerce(long idPersona,
+			UpdatedCarType updatedCar /* String[] productIds */) {
+		// TODO: Economy input, currency calculation, and manual processing of basket items.
+
+		PersonaEntity personaEntity = (PersonaEntity) connectionDB.findById(new PersonaEntity(), idPersona);
+		CommerceSessionResultTransType commerceSessionResultTransType = new CommerceSessionResultTransType();
+
+		// -- Wallet
+		WalletTransType walletTransType = new WalletTransType();
+		walletTransType.setBalance(personaEntity.getCash());
+		walletTransType.setCurrency("CASH");
+
+		WalletsType walletsType = new WalletsType();
+		walletsType.setWalletTrans(walletTransType);
+
+		commerceSessionResultTransType.setWallets(walletsType);
+
+		// -- Modify the car on DB
+		OwnedCarEntity currentCar = defaultcar(personaEntity.getId());
+		currentCar.getCustomCar().setVinyls(updatedCar.getCustomCar().getVinyls());
+		currentCar.getCustomCar().setPaints(updatedCar.getCustomCar().getPaints());
+		currentCar.getCustomCar().setPerformanceParts(updatedCar.getCustomCar().getPerformanceParts());
+		currentCar.getCustomCar().setSkillModParts(updatedCar.getCustomCar().getSkillModParts());
+		currentCar.getCustomCar().setVisualParts(updatedCar.getCustomCar().getVisualParts());
+		connectionDB.merge(currentCar);
+
+		// -- Set the response car
+		commerceSessionResultTransType.setUpdatedCar(convert.fromOwnedCarToUpdatedCar(currentCar));
+
+		// Currently not important, so we just fill in dummy response
+		commerceSessionResultTransType.setInvalidBasket("");
+		commerceSessionResultTransType.setInventoryItems(new InventoryItemsType());
+		commerceSessionResultTransType.setStatus(ShoppingCartPurchaseResult.aSuccess);
+
+		return commerceSessionResultTransType;
+	}
+
 	public CommerceResultTransType basket(long idPersona, String productId) {
 		CommerceResultTransType commerceResultTransType = new CommerceResultTransType();
 		WalletsType walletsType = new WalletsType();
@@ -108,58 +140,18 @@ public class PersonaBO {
 		List<?> find = connectionDB.find(productEntity);
 		if (find.size() > 0) {
 			productEntity = (ProductEntity) find.get(0);
-			OwnedCarEntity ownedCar = productEntity.getOwnedCar();
-			CustomCarEntity customCarEntity = ownedCar.getCustomCarList().get(0);
-			purchasedCarsType.setOwnedCarTrans(productEntity.getOwnedCar());
+			OwnedCarEntity ownedCar = new OwnedCarEntity();
+			purchasedCarsType.setOwnedCarTrans(ownedCar);
 			commerceResultTransType.setPurchasedCars(purchasedCarsType);
 			commerceResultTransType.setStatus("Success");
 
 			EntityManager manager = ConnectionDB.getManager();
 
-			List<CustomPaintEntity> customPaintList = customCarEntity.getCustomPaintList();
-			for (CustomPaintEntity customPaintEntity : customPaintList) {
-				manager.detach(customPaintEntity);
-				customPaintEntity.setId(0L);
-				customPaintEntity.setCustomCar(customCarEntity);
-			}
-			List<CustomVinylEntity> customVinylList = customCarEntity.getCustomVinylList();
-			for (CustomVinylEntity customVinylEntity : customVinylList) {
-				manager.detach(customVinylEntity);
-				customVinylEntity.setId(0L);
-				customVinylEntity.setCustomCar(customCarEntity);
-			}
-			List<SkillModPartEntity> skillModPartList = customCarEntity.getSkillModPartList();
-			for (SkillModPartEntity skillModPartEntity : skillModPartList) {
-				manager.detach(skillModPartEntity);
-				skillModPartEntity.setId(0L);
-				skillModPartEntity.setCustomCar(customCarEntity);
-			}
-			List<PerformancePartEntity> performancePartList = customCarEntity.getPerformancePartList();
-			for (PerformancePartEntity performancePartEntity : performancePartList) {
-				manager.detach(performancePartEntity);
-				performancePartEntity.setId(0L);
-				performancePartEntity.setCustomCar(customCarEntity);
-			}
-			List<VisualPartEntity> visualPartList = customCarEntity.getVisualPartList();
-			for (VisualPartEntity visualPartEntity : visualPartList) {
-				manager.detach(visualPartEntity);
-				visualPartEntity.setId(0L);
-				visualPartEntity.setCustomCar(customCarEntity);
-			}
-
 			PersonaEntity personaEntity = (PersonaEntity) connectionDB.findById(new PersonaEntity(), idPersona);
 			manager.detach(ownedCar);
-			ownedCar.setId(0);
-			ownedCar.setCustomCarList(null);
-			ownedCar.setProduct(null);
+			ownedCar.setUniqueCarId(0);
 			ownedCar.setPersona(personaEntity);
 			connectionDB.persist(ownedCar);
-
-			manager.detach(customCarEntity);
-			customCarEntity.setId(0);
-			customCarEntity.setOwnedCar(ownedCar);
-			ownedCar.add(customCarEntity);
-			connectionDB.merge(customCarEntity);
 		}
 		return commerceResultTransType;
 	}
@@ -176,7 +168,7 @@ public class PersonaBO {
 		List<OwnedCarEntity> ownedCarList = getOwnedCarList(personaEntity);
 		int i = 0;
 		for (OwnedCarEntity ownedCarEntity : ownedCarList) {
-			if (ownedCarEntity.getId() == defaultCarId) {
+			if (ownedCarEntity.getUniqueCarId() == defaultCarId) {
 				break;
 			}
 			i++;
@@ -193,5 +185,4 @@ public class PersonaBO {
 		query.setParameter("persona", personaEntity);
 		return query.getResultList();
 	}
-
 }
