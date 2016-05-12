@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Paths;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -90,7 +91,6 @@ public class HttpSrv extends GzipHandler {
 				System.out.println("          LIDO DE ARQUIVO XML");
 				System.out.println("=======================================");
 			}
-
 			response.getOutputStream().write(content.getBytes());
 			response.getOutputStream().flush();
 		} catch (Exception e) {
@@ -118,6 +118,10 @@ public class HttpSrv extends GzipHandler {
 	}
 
 	public static void main(String[] args) {
+		Locale newLocale = new Locale("en", "GB");
+		Locale.setDefault(newLocale);
+		System.setProperty("javax.xml.bind.context.factory", "org.eclipse.persistence.jaxb.JAXBContextFactory");
+		
 		if (args.length > 0) {
 			Session.setIp(args[0]);
 		}

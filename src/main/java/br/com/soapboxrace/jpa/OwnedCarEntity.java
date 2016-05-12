@@ -12,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -22,48 +21,52 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "OwnedCarTransType", propOrder = { "customCarList", "durability", "expirationDate", "heat", "id",
-		"ownershipType" })
+@XmlType(name = "OwnedCarTransType", propOrder = { "customCar",
+		"durability", "expirationDate", "heatLevel", "uniqueCarId", "ownershipType" })
 @Entity
 @Table(name = "OWNEDCAR")
 @XmlRootElement(name = "OwnedCarTrans")
 public class OwnedCarEntity implements Serializable {
 
-	private static final long serialVersionUID = -907326566908852312L;
-
-	@XmlElement(name = "CustomCar", required = true)
-	@OneToMany(mappedBy = "ownedCar", targetEntity = CustomCarEntity.class, cascade = { CascadeType.MERGE,
-			CascadeType.DETACH, CascadeType.REMOVE })
-	private List<CustomCarEntity> customCarList;
+	private static final long serialVersionUID = 1L;
 
 	@XmlTransient
 	@ManyToOne
-	@JoinColumn(name = "IDPERSONA", referencedColumnName = "ID")
+	@JoinColumn(name = "PersonaId", referencedColumnName = "ID")
 	private PersonaEntity persona;
 
-	@XmlTransient
-	@OneToOne
-	@JoinColumn(name = "IDPRODUCT", referencedColumnName = "ID")
-	private ProductEntity product;
-
-	@XmlElement(name = "Durability")
-	protected int durability;
+	@XmlElement(name = "CustomCar", required = true)
+	@OneToMany(mappedBy = "parentOwnedCarTrans", targetEntity = CustomCarEntity.class, cascade = { CascadeType.MERGE,
+			CascadeType.DETACH, CascadeType.REMOVE })
+	protected List<CustomCarEntity> customCar;
+	@XmlElement(name = "Durability", required = true)
+	protected short durability;
 	@XmlElement(name = "ExpirationDate", required = true)
 	protected String expirationDate;
-	@XmlElement(name = "Heat")
-	protected int heat;
-	@XmlElement(name = "Id")
+	@XmlElement(name = "Heat", required = true)
+	protected short heatLevel;
+	@XmlElement(name = "Id", required = true)
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected long id;
+	protected long uniqueCarId;
 	@XmlElement(name = "OwnershipType", required = true)
 	protected String ownershipType;
 
-	public int getDurability() {
+	public CustomCarEntity getCustomCar(){
+		return this.customCar.get(0);
+	}
+	
+	public void setCustomCar(CustomCarEntity value) {
+		List<CustomCarEntity> dummyList = new ArrayList<CustomCarEntity>();
+		dummyList.add(value);
+		this.customCar = dummyList;
+	}
+	
+	public short getDurability() {
 		return durability;
 	}
 
-	public void setDurability(int value) {
+	public void setDurability(short value) {
 		this.durability = value;
 	}
 
@@ -75,20 +78,20 @@ public class OwnedCarEntity implements Serializable {
 		this.expirationDate = value;
 	}
 
-	public int getHeat() {
-		return heat;
+	public short getHeatLevel() {
+		return heatLevel;
 	}
 
-	public void setHeat(int value) {
-		this.heat = value;
+	public void setHeatLevel(short value) {
+		this.heatLevel = value;
 	}
 
-	public long getId() {
-		return id;
+	public long getUniqueCarId() {
+		return uniqueCarId;
 	}
 
-	public void setId(long value) {
-		this.id = value;
+	public void setUniqueCarId(long value) {
+		this.uniqueCarId = value;
 	}
 
 	public String getOwnershipType() {
@@ -99,21 +102,6 @@ public class OwnedCarEntity implements Serializable {
 		this.ownershipType = value;
 	}
 
-	public List<CustomCarEntity> getCustomCarList() {
-		return customCarList;
-	}
-
-	public void setCustomCarList(List<CustomCarEntity> customCarList) {
-		this.customCarList = customCarList;
-	}
-
-	public boolean add(CustomCarEntity e) {
-		if (customCarList == null) {
-			customCarList = new ArrayList<CustomCarEntity>();
-		}
-		return customCarList.add(e);
-	}
-
 	public PersonaEntity getPersona() {
 		return persona;
 	}
@@ -121,13 +109,4 @@ public class OwnedCarEntity implements Serializable {
 	public void setPersona(PersonaEntity persona) {
 		this.persona = persona;
 	}
-
-	public ProductEntity getProduct() {
-		return product;
-	}
-
-	public void setProduct(ProductEntity product) {
-		this.product = product;
-	}
-
 }

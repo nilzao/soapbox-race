@@ -29,7 +29,7 @@ public class UserBO {
 		String md5 = md5();
 		userType.setSecurityToken(md5());
 		userType.setFullGameAccess("false");
-		// userType.setStarterPackEntitlementTag("NFSW_STARTER_PACK_B");
+		userType.setStarterPackEntitlementTag("NFSW_STARTER_PACK_B");
 		userType.setUserId(userId.intValue());
 		userType.setIsComplete("false");
 		userType.setRemoteUserId(10001);
@@ -50,7 +50,7 @@ public class UserBO {
 		for (PersonaEntity personaEntity : resultList) {
 			ProfileDataType profileDataType = new ProfileDataType();
 			profileDataType.setName(personaEntity.getName());
-			profileDataType.setCash(personaEntity.getCash().intValue());
+			profileDataType.setCash(personaEntity.getCash());
 			profileDataType.setLevel(personaEntity.getLevel());
 			profileDataType.setPersonaId(personaEntity.getId().intValue());
 			profileDataType.setIconIndex(personaEntity.getIconIndex());
@@ -59,8 +59,8 @@ public class UserBO {
 			profileDataType.setRating(0);
 			profileDataType.setRepAtCurrentLevel(0);
 			// profileDataType.setCcar("");
-			profileData.add(profileDataType);
 			profileDataType.setPercentToLevel(0);
+			profileData.add(profileDataType);
 		}
 		userInfo.setPersonas(personasType);
 

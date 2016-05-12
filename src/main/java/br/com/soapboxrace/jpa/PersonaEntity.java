@@ -31,7 +31,7 @@ public class PersonaEntity implements Serializable {
 	private Long id;
 
 	@Column(name = "CASH")
-	private BigDecimal cash;
+	private Integer cash;
 
 	@Column(name = "ICONINDEX")
 	private Integer iconIndex;
@@ -79,11 +79,11 @@ public class PersonaEntity implements Serializable {
 		return this.id;
 	}
 
-	public void setCash(BigDecimal cash) {
+	public void setCash(Integer cash) {
 		this.cash = cash;
 	}
 
-	public BigDecimal getCash() {
+	public Integer getCash() {
 		return this.cash;
 	}
 
