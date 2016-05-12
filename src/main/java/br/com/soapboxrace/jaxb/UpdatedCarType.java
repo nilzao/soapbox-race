@@ -12,7 +12,7 @@ import br.com.soapboxrace.jaxb.CustomCarType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "UpdatedCarType", propOrder = { "customCar",
-		"durability", "expirationDate", "heatLevel", "uniqueCarId" })
+		"durability", "expirationDate", "heatLevel", "uniqueCarId", "ownershipType" })
 @XmlRootElement(name = "UpdatedCar")
 public class UpdatedCarType {
 

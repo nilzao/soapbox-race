@@ -35,7 +35,7 @@ public class ProductEntity implements Serializable {
 	@XmlElement(name = "DurationMinute")
 	protected int durationMinute;
 	@XmlElement(name = "Hash")
-	protected int hash;
+	protected long hash;
 	@XmlElement(name = "Icon", required = true)
 	protected String icon;
 	@XmlElement(name = "Level")
@@ -114,11 +114,11 @@ public class ProductEntity implements Serializable {
 		this.durationMinute = durationMinute;
 	}
 
-	public int getHash() {
+	public long getHash() {
 		return hash;
 	}
 
-	public void setHash(int hash) {
+	public void setHash(long hash) {
 		this.hash = hash;
 	}
 
