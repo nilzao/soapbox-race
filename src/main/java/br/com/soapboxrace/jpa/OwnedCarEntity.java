@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,6 +20,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
+
+import br.com.soapboxrace.jaxb.OwnedCarTransType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "OwnedCarTransType", propOrder = { "customCar",
@@ -36,8 +39,9 @@ public class OwnedCarEntity implements Serializable {
 	private PersonaEntity persona;
 
 	@XmlElement(name = "CustomCar", required = true)
-	@OneToMany(mappedBy = "parentOwnedCarTrans", targetEntity = CustomCarEntity.class, cascade = { CascadeType.MERGE,
-			CascadeType.DETACH, CascadeType.REMOVE })
+	@OneToMany(mappedBy = "parentOwnedCarTrans", targetEntity = CustomCarEntity.class, 
+		cascade = { CascadeType.MERGE, CascadeType.DETACH, CascadeType.REMOVE },
+		fetch = FetchType.EAGER)
 	protected List<CustomCarEntity> customCar;
 	@XmlElement(name = "Durability", required = true)
 	protected short durability;
@@ -108,5 +112,16 @@ public class OwnedCarEntity implements Serializable {
 
 	public void setPersona(PersonaEntity persona) {
 		this.persona = persona;
+	}
+	
+	public OwnedCarTransType getOwnedCarTransType() {
+		OwnedCarTransType result = new OwnedCarTransType();
+		result.setCustomCar(getCustomCar().getCustomCarType());
+		result.setDurability(getDurability());
+		result.setExpirationDate(getExpirationDate());
+		result.setHeatLevel(getHeatLevel());
+		result.setOwnershipType(getOwnershipType());
+		result.setUniqueCarId(getUniqueCarId());
+		return result;
 	}
 }

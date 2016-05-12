@@ -2,6 +2,7 @@ package br.com.soapboxrace.jpa;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -77,7 +78,7 @@ public class CustomCarEntity implements Serializable {
 	protected long id;
 
 	@XmlTransient
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REMOVE})
 	@JoinColumn(name = "IdParentOwnedCarTrans", referencedColumnName = "UniqueCarId")
 	private OwnedCarEntity parentOwnedCarTrans;
 
