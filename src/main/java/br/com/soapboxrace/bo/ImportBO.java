@@ -5,11 +5,13 @@ import java.nio.file.Paths;
 import java.util.List;
 
 import br.com.soapboxrace.db.ConnectionDB;
+import br.com.soapboxrace.jaxb.ArrayOfProductTransList;
 import br.com.soapboxrace.jaxb.EventsPacketType;
 import br.com.soapboxrace.jaxb.EventsType;
 import br.com.soapboxrace.jaxb.util.UnmarshalXML;
 import br.com.soapboxrace.jpa.EventDefinitionEntity;
 import br.com.soapboxrace.jpa.OwnedCarEntity;
+import br.com.soapboxrace.jpa.ProductEntity;
 
 public class ImportBO {
 
@@ -17,7 +19,7 @@ public class ImportBO {
 
 	public static void main(String[] args) throws Exception {
 		ImportBO importBO = new ImportBO();
-		importBO.importAvailabeAtLevel();
+		importBO.importParts();
 	}
 
 	public void importCars() throws Exception {
@@ -63,4 +65,45 @@ public class ImportBO {
 		}
 	}
 
+	public void importParts() throws Exception {
+		Files.walk(Paths.get("D:/_EclipseProjects/soapbox-race/db/fillers")).forEach(filePath -> {
+			if (Files.isRegularFile(filePath)) {
+				byte[] encoded;
+				try {
+					String categoryName = filePath.getFileName().toString();
+					if (categoryName.startsWith("products")) {
+						categoryName = categoryName.replace(".xml", "");
+						categoryName = categoryName.replace("productsInCategory_", "");
+						
+						System.out.println("doing: " + categoryName);
+	
+						encoded = Files.readAllBytes(Paths.get(filePath.toString()));
+						String xmlStr = new String(encoded, "UTF-8");
+						xmlStr = xmlStr.replace(" i:nil=\"true\"", "");
+						
+						if (xmlStr.length() < 200) return;
+
+						ArrayOfProductTransList array = (ArrayOfProductTransList) UnmarshalXML.unMarshal(xmlStr, new ArrayOfProductTransList());
+						List<ProductEntity> listofarray = array.getProductTrans();
+						if (!listofarray.isEmpty() && listofarray.size() > 0) {
+							for (ProductEntity pro : listofarray) {
+								//System.out.println("in process productId: " + pro.getProductId());
+								pro.setCategoryName(categoryName);
+								//pro.setDescription("");
+								//pro.setLongDescription("");
+								connectionDB.merge(pro);
+							}
+							System.err.println("done: " + categoryName);
+						} else {
+							System.err.println("empty: " + categoryName + "\r\n");
+						}
+					}
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});		
+		System.err.println("finished all");
+	}
 }
