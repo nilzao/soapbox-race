@@ -4,15 +4,156 @@ CREATE database `SOAPBOX`
   DEFAULT CHARACTER SET utf8
   DEFAULT COLLATE utf8_general_ci;
 
-CREATE TABLE SOAPBOX.CUSTOMCAR (id bigint not null auto_increment, BaseCarId bigint, CarClassHash int, IsPreset boolean, Level int, Name text, ApiId bigint, Paints mediumtext, PerformanceParts text, PhysicsProfileHash bigint, Rating int, ResalePrice int, SkillModParts text, SkillModSlotCount smallint, Vinyls mediumtext, VisualParts text, IdParentOwnedCarTrans bigint, PRIMARY KEY (id), INDEX FK1x37o50wbwj5o7wj99ouj91om (IdParentOwnedCarTrans)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-CREATE TABLE SOAPBOX.EVENTDEFINITION (eventId bigint NOT NULL, carClassHash int, coins int, engagePointX float, engagePointY double, engagePointZ double, eventLocalization int, eventModeDescriptionLocalization int, eventModeIcon varchar(255) COLLATE utf8_unicode_ci, eventModeId int, eventModeLocalization int, isEnabled varchar(255) COLLATE utf8_unicode_ci, isLocked varchar(255) COLLATE utf8_unicode_ci, laps int, length int, maxClassRating int, maxEntrants int, maxLevel int, minClassRating int, minEntrants int, minLevel int, regionLocalization int, rewardMode1 int, rewardMode2 int, rewardMode3 int, timeLimit int, trackLayoutMap varchar(255) COLLATE utf8_unicode_ci, trackLocalization int, PRIMARY KEY (eventId)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-CREATE TABLE SOAPBOX.LOBBY (id bigint NOT NULL AUTO_INCREMENT, isInviteEnabled bit NOT NULL, isWaiting bit NOT NULL, lobbyDateTimeStart datetime, EVENTID bigint, PRIMARY KEY (id), INDEX FKkp0v4ai7na2gt3wb07sgqptjk (EVENTID)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-CREATE TABLE SOAPBOX.LOBBYENTRANT (id bigint NOT NULL AUTO_INCREMENT, LOBBYID bigint, PERSONAID bigint, PRIMARY KEY (id), INDEX FKb16m56d4hbm4dsnhrjkbg5ihu (LOBBYID), INDEX FK18nhfrj2phl91fsmt3t9oegcr (PERSONAID)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-CREATE TABLE SOAPBOX.OWNEDCAR (Durability smallint, ExpirationDate text, HeatLevel smallint, UniqueCarId bigint NOT NULL auto_increment, OwnershipType text, PersonaId bigint, PRIMARY KEY (UniqueCarId), INDEX FKqgmirqm1js3v66oxvwungafsx (PersonaId)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-CREATE TABLE SOAPBOX.PERSONA (ID bigint NOT NULL AUTO_INCREMENT, CASH int, CURCARINDEX int, ICONINDEX int, LEVEL int, MOTTO longtext COLLATE utf8_unicode_ci, NAME varchar(50) COLLATE utf8_unicode_ci, PERCENTTOLEVEL decimal(19,2), RATING decimal(19,2), REP decimal(19,2), REPATCURRENTLEVEL decimal(19,2), SCORE decimal(19,2), USERID bigint, PRIMARY KEY (ID), INDEX FKon9k3f1y35051t3y7x6ogd6k7 (USERID)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-CREATE TABLE SOAPBOX.PRODUCT (id bigint NOT NULL AUTO_INCREMENT, bundleItems varchar(255) COLLATE utf8_unicode_ci, categoryId varchar(255) COLLATE utf8_unicode_ci, categoryName varchar(255) COLLATE utf8_unicode_ci, currency varchar(255) COLLATE utf8_unicode_ci, description mediumtext COLLATE utf8_unicode_ci, durationMinute int NOT NULL, hash bigint NOT NULL, icon varchar(255) COLLATE utf8_unicode_ci, level int NOT NULL, longDescription mediumtext COLLATE utf8_unicode_ci, price float NOT NULL, priority int NOT NULL, productId varchar(255) COLLATE utf8_unicode_ci, productTitle varchar(255) COLLATE utf8_unicode_ci, productType varchar(255) COLLATE utf8_unicode_ci, secondaryIcon varchar(255) COLLATE utf8_unicode_ci, useCount int NOT NULL, visualStyle varchar(255) COLLATE utf8_unicode_ci, webIcon varchar(255) COLLATE utf8_unicode_ci, webLocation varchar(255) COLLATE utf8_unicode_ci, PRIMARY KEY (id)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-CREATE TABLE SOAPBOX.SESSION (id bigint NOT NULL AUTO_INCREMENT, eventSession bigint NOT NULL, expiration datetime, personaId bigint NOT NULL, token varchar(255) COLLATE utf8_unicode_ci, userId bigint NOT NULL, PRIMARY KEY (id)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-CREATE TABLE SOAPBOX.USER (ID bigint NOT NULL AUTO_INCREMENT, EMAIL varchar(200) COLLATE utf8_unicode_ci, PASSWORD varchar(32) COLLATE utf8_unicode_ci, PRIMARY KEY (ID)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE SOAPBOX.BASKETDEFINITION (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    ProductId TEXT,
+    OwnedCarTrans MEDIUMTEXT,
+    PRIMARY KEY (id)
+)  ENGINE=INNODB;
+
+CREATE TABLE SOAPBOX.CUSTOMCAR (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    BaseCarId BIGINT,
+    CarClassHash INT,
+    IsPreset BOOLEAN,
+    Level INT,
+    Name TEXT,
+    ApiId BIGINT,
+    Paints MEDIUMTEXT,
+    PerformanceParts TEXT,
+    PhysicsProfileHash BIGINT,
+    Rating INT,
+    ResalePrice INT,
+    SkillModParts TEXT,
+    SkillModSlotCount SMALLINT,
+    Vinyls MEDIUMTEXT,
+    VisualParts TEXT,
+    IdParentOwnedCarTrans BIGINT,
+    PRIMARY KEY (id),
+    INDEX FK1x37o50wbwj5o7wj99ouj91om (IdParentOwnedCarTrans)
+)  ENGINE=INNODB;
+
+CREATE TABLE SOAPBOX.EVENTDEFINITION (
+    eventId BIGINT NOT NULL,
+    carClassHash INT,
+    coins INT,
+    engagePointX FLOAT,
+    engagePointY DOUBLE,
+    engagePointZ DOUBLE,
+    eventLocalization INT,
+    eventModeDescriptionLocalization INT,
+    eventModeIcon VARCHAR(255) COLLATE UTF8_UNICODE_CI,
+    eventModeId INT,
+    eventModeLocalization INT,
+    isEnabled VARCHAR(255) COLLATE UTF8_UNICODE_CI,
+    isLocked VARCHAR(255) COLLATE UTF8_UNICODE_CI,
+    laps INT,
+    length INT,
+    maxClassRating INT,
+    maxEntrants INT,
+    maxLevel INT,
+    minClassRating INT,
+    minEntrants INT,
+    minLevel INT,
+    regionLocalization INT,
+    rewardMode1 INT,
+    rewardMode2 INT,
+    rewardMode3 INT,
+    timeLimit INT,
+    trackLayoutMap VARCHAR(255) COLLATE UTF8_UNICODE_CI,
+    trackLocalization INT,
+    PRIMARY KEY (eventId)
+)  ENGINE=INNODB;
+
+CREATE TABLE SOAPBOX.LOBBY (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    isInviteEnabled BIT NOT NULL,
+    isWaiting BIT NOT NULL,
+    lobbyDateTimeStart DATETIME,
+    EVENTID BIGINT,
+    PRIMARY KEY (id),
+    INDEX FKkp0v4ai7na2gt3wb07sgqptjk (EVENTID)
+)  ENGINE=INNODB;
+
+CREATE TABLE SOAPBOX.LOBBYENTRANT (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    LOBBYID BIGINT,
+    PERSONAID BIGINT,
+    PRIMARY KEY (id),
+    INDEX FKb16m56d4hbm4dsnhrjkbg5ihu (LOBBYID),
+    INDEX FK18nhfrj2phl91fsmt3t9oegcr (PERSONAID)
+)  ENGINE=INNODB;
+
+CREATE TABLE SOAPBOX.OWNEDCAR (
+    Durability SMALLINT,
+    ExpirationDate TEXT,
+    HeatLevel SMALLINT,
+    UniqueCarId BIGINT NOT NULL AUTO_INCREMENT,
+    OwnershipType TEXT,
+    PersonaId BIGINT,
+    PRIMARY KEY (UniqueCarId),
+    INDEX FKqgmirqm1js3v66oxvwungafsx (PersonaId)
+)  ENGINE=INNODB;
+
+CREATE TABLE SOAPBOX.PERSONA (
+    ID BIGINT NOT NULL AUTO_INCREMENT,
+    CASH INT,
+    CURCARINDEX INT,
+    ICONINDEX INT,
+    LEVEL INT,
+    MOTTO LONGTEXT COLLATE UTF8_UNICODE_CI,
+    NAME VARCHAR(50) COLLATE UTF8_UNICODE_CI,
+    PERCENTTOLEVEL DECIMAL(19 , 2 ),
+    RATING DECIMAL(19 , 2 ),
+    REP DECIMAL(19 , 2 ),
+    REPATCURRENTLEVEL DECIMAL(19 , 2 ),
+    SCORE DECIMAL(19 , 2 ),
+    USERID BIGINT,
+    PRIMARY KEY (ID),
+    INDEX FKon9k3f1y35051t3y7x6ogd6k7 (USERID)
+)  ENGINE=INNODB;
+
+CREATE TABLE SOAPBOX.PRODUCT (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    bundleItems VARCHAR(255) COLLATE UTF8_UNICODE_CI,
+    categoryId VARCHAR(255) COLLATE UTF8_UNICODE_CI,
+    categoryName VARCHAR(255) COLLATE UTF8_UNICODE_CI,
+    currency VARCHAR(255) COLLATE UTF8_UNICODE_CI,
+    description MEDIUMTEXT COLLATE UTF8_UNICODE_CI,
+    durationMinute INT NOT NULL,
+    hash BIGINT NOT NULL,
+    icon VARCHAR(255) COLLATE UTF8_UNICODE_CI,
+    level INT NOT NULL,
+    longDescription MEDIUMTEXT COLLATE UTF8_UNICODE_CI,
+    price FLOAT NOT NULL,
+    priority INT NOT NULL,
+    productId VARCHAR(255) COLLATE UTF8_UNICODE_CI,
+    productTitle VARCHAR(255) COLLATE UTF8_UNICODE_CI,
+    productType VARCHAR(255) COLLATE UTF8_UNICODE_CI,
+    secondaryIcon VARCHAR(255) COLLATE UTF8_UNICODE_CI,
+    useCount INT NOT NULL,
+    visualStyle VARCHAR(255) COLLATE UTF8_UNICODE_CI,
+    webIcon VARCHAR(255) COLLATE UTF8_UNICODE_CI,
+    webLocation VARCHAR(255) COLLATE UTF8_UNICODE_CI,
+    PRIMARY KEY (id)
+)  ENGINE=INNODB;
+
+CREATE TABLE SOAPBOX.SESSION (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    eventSession BIGINT NOT NULL,
+    expiration DATETIME,
+    personaId BIGINT NOT NULL,
+    token VARCHAR(255) COLLATE UTF8_UNICODE_CI,
+    userId BIGINT NOT NULL,
+    PRIMARY KEY (id)
+)  ENGINE=INNODB;
+
+CREATE TABLE SOAPBOX.USER (
+    ID BIGINT NOT NULL AUTO_INCREMENT,
+    EMAIL VARCHAR(200) COLLATE UTF8_UNICODE_CI,
+    PASSWORD VARCHAR(32) COLLATE UTF8_UNICODE_CI,
+    PRIMARY KEY (ID)
+)  ENGINE=INNODB;
 
 ALTER TABLE SOAPBOX.CUSTOMCAR ADD CONSTRAINT FK1x37o50wbwj5o7wj99ouj91om FOREIGN KEY (IdParentOwnedCarTrans) REFERENCES SOAPBOX.OWNEDCAR (UniqueCarId);
 ALTER TABLE SOAPBOX.LOBBY ADD CONSTRAINT FKkp0v4ai7na2gt3wb07sgqptjk FOREIGN KEY (EVENTID) REFERENCES SOAPBOX.EVENTDEFINITION (eventId);
