@@ -2,6 +2,7 @@ package br.com.soapboxrace.jpa;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,14 +28,14 @@ import br.com.soapboxrace.jaxb.VisualPartsType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "CustomCarType", propOrder = { "baseCarId", "carClassHash", "isPreset", "level", "name", "apiId",
-		"paints", "performanceParts", "physicsProfileHash", "rating", "resalePrice", "skillModParts", "skillModSlotCount", "vinyls",
-		"visualParts" })
+		"paints", "performanceParts", "physicsProfileHash", "rating", "resalePrice", "skillModParts",
+		"skillModSlotCount", "vinyls", "visualParts" })
 @Entity
 @Table(name = "CUSTOMCAR")
 @XmlRootElement(name = "CustomCar")
 public class CustomCarEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@XmlElement(name = "BaseCar", required = true)
 	protected long baseCarId;
 	@XmlElement(name = "CarClassHash")
@@ -77,7 +78,7 @@ public class CustomCarEntity implements Serializable {
 	protected long id;
 
 	@XmlTransient
-	@ManyToOne
+	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.DETACH, CascadeType.REMOVE })
 	@JoinColumn(name = "IdParentOwnedCarTrans", referencedColumnName = "UniqueCarId")
 	private OwnedCarEntity parentOwnedCarTrans;
 
@@ -176,7 +177,7 @@ public class CustomCarEntity implements Serializable {
 	public SkillModPartsType getSkillModParts() {
 		return this.skillModParts;
 	}
-	
+
 	public Short getSkillModSlotCount() {
 		return skillModSlotCount;
 	}
@@ -220,7 +221,7 @@ public class CustomCarEntity implements Serializable {
 		result.setRating(this.getRating());
 		result.setResalePrice(this.getResalePrice());
 		result.setSkillModParts(this.getSkillModParts());
-		result.setSkillModSlotCount((short)5);
+		result.setSkillModSlotCount((short) 5);
 		result.setVinyls(this.getVinyls());
 		result.setVisualParts(this.getVisualParts());
 		return result;

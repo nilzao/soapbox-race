@@ -8,13 +8,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-import br.com.soapboxrace.jaxb.CustomCarType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "UpdatedCarType", propOrder = { "customCar",
-		"durability", "expirationDate", "heatLevel", "uniqueCarId", "ownershipType" })
-@XmlRootElement(name = "UpdatedCar")
-public class UpdatedCarType {
+@XmlType(name = "OwnedCarTransType", propOrder = { "customCar", "durability", "expirationDate", "heatLevel",
+		"uniqueCarId", "ownershipType" })
+@XmlRootElement(name = "OwnedCarTrans")
+public class OwnedCarTransType {
 
 	@XmlElement(name = "CustomCar")
 	protected CustomCarType customCar;
@@ -31,14 +30,14 @@ public class UpdatedCarType {
 	@XmlElement(name = "OwnershipType")
 	protected String ownershipType;
 
-	public CustomCarType getCustomCar(){
+	public CustomCarType getCustomCar() {
 		return this.customCar;
 	}
-	
+
 	public void setCustomCar(CustomCarType value) {
 		this.customCar = value;
 	}
-	
+
 	public short getDurability() {
 		return durability;
 	}

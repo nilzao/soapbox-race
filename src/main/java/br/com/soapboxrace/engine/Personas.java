@@ -31,8 +31,7 @@ public class Personas extends Router {
 
 	public String carslots() {
 		CarSlotInfoTrans carslots = personaBO.carslots(getPersonaId());
-		return MarshalXML.marshal(carslots);// .replaceAll("&gt;",
-											// ">").replaceAll("&lt;", "<");
+		return MarshalXML.marshal(carslots);
 	}
 
 	public String inventory() {

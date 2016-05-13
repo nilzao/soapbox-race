@@ -5,20 +5,18 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import br.com.soapboxrace.jpa.OwnedCarEntity;
-
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "PurchasedCarsType", propOrder = { "ownedCarTrans" })
+@XmlType(name = "PurchasedCarsType")
 public class PurchasedCarsType {
 
 	@XmlElement(name = "OwnedCarTrans", required = true)
-	protected OwnedCarEntity ownedCarTrans;
+	protected OwnedCarTransType ownedCarTrans;
 
-	public OwnedCarEntity getOwnedCarTrans() {
+	public OwnedCarTransType getOwnedCarTrans() {
 		return ownedCarTrans;
 	}
 
-	public void setOwnedCarTrans(OwnedCarEntity ownedCarTrans) {
+	public void setOwnedCarTrans(OwnedCarTransType ownedCarTrans) {
 		this.ownedCarTrans = ownedCarTrans;
 	}
 

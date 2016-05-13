@@ -13,6 +13,7 @@ import br.com.soapboxrace.jaxb.CarSlotInfoTrans;
 import br.com.soapboxrace.jaxb.CarsOwnedByPersonaList;
 import br.com.soapboxrace.jaxb.CommerceResultTransType;
 import br.com.soapboxrace.jaxb.CommerceSessionResultTransType;
+import br.com.soapboxrace.jaxb.CustomCarType;
 import br.com.soapboxrace.jaxb.InventoryItemTransType;
 import br.com.soapboxrace.jaxb.InventoryItemsType;
 import br.com.soapboxrace.jaxb.ObtainableSlotsList;
@@ -20,6 +21,8 @@ import br.com.soapboxrace.jaxb.PurchasedCarsType;
 import br.com.soapboxrace.jaxb.UpdatedCarType;
 import br.com.soapboxrace.jaxb.WalletTransType;
 import br.com.soapboxrace.jaxb.WalletsType;
+import br.com.soapboxrace.jpa.BasketDefinitionEntity;
+import br.com.soapboxrace.jpa.CustomCarEntity;
 import br.com.soapboxrace.jpa.OwnedCarEntity;
 import br.com.soapboxrace.jpa.PersonaEntity;
 import br.com.soapboxrace.jpa.ProductEntity;
@@ -45,38 +48,26 @@ public class PersonaBO {
 		carSlotInfoTrans.setDefaultOwnedCarIndex(personaEntity.getCurCarIndex());
 		carSlotInfoTrans.setOwnedCarSlotsCount(1);
 
-		ArrayList<ProductEntity> productList = new ArrayList<ProductEntity>();
-		ProductEntity productEntity = new ProductEntity();
-		productEntity.setBundleItems("");
-		productEntity.setCategoryId("");
-		productEntity.setCurrency("CASH");
-		productEntity.setDescription("New car slot !!");
-		productEntity.setDurationMinute(0);
-		productEntity.setHash(-1143680669);
-		productEntity.setIcon("128_cash");
-		productEntity.setLevel(12);
-		productEntity.setLongDescription("New car slot !!");
-		productEntity.setPrice(1);
-		productEntity.setPriority(0);
-		productEntity.setProductId("NFSW-NA:044EC294");
-		productEntity.setProductTitle("New car slot !!");
-		productEntity.setProductType("CARSLOT");
-		productEntity.setSecondaryIcon("");
-		productEntity.setUseCount(1);
-		productEntity.setVisualStyle("");
-		productEntity.setWebIcon("");
-		productEntity.setWebLocation("");
-		productList.add(productEntity);
-
+		// -- Add product data for purchasing car slots in the car dealer
+		// (yea it's managed in carslots for some reason...)
 		ObtainableSlotsList obtainableSlotsList = new ObtainableSlotsList();
+
+		ArrayList<ProductEntity> productList = new ArrayList<ProductEntity>();
+		ProductEntity carSlotProductData = new ProductEntity();
+		carSlotProductData.setProductId("SRV-CARSLOT");
+		carSlotProductData = (ProductEntity) connectionDB.find(carSlotProductData).get(0);
+		productList.add(carSlotProductData);
 		obtainableSlotsList.setProductList(productList);
+
 		carSlotInfoTrans.setObtainableSlots(obtainableSlotsList);
+
 		return carSlotInfoTrans;
 	}
 
 	public CommerceSessionResultTransType commerce(long idPersona,
 			UpdatedCarType updatedCar /* String[] productIds */) {
-		// TODO: Economy input, currency calculation, and manual processing of basket items.
+		// TODO: Economy input, currency calculation, and manual processing of
+		// basket items.
 
 		PersonaEntity personaEntity = (PersonaEntity) connectionDB.findById(new PersonaEntity(), idPersona);
 		CommerceSessionResultTransType commerceSessionResultTransType = new CommerceSessionResultTransType();
@@ -112,46 +103,72 @@ public class PersonaBO {
 	}
 
 	public CommerceResultTransType basket(long idPersona, String productId) {
+		// TODO: Economy input, currency calculation, and car slot checking.
+		PersonaEntity personaEntity = (PersonaEntity) connectionDB.findById(new PersonaEntity(), idPersona);
 		CommerceResultTransType commerceResultTransType = new CommerceResultTransType();
-		WalletsType walletsType = new WalletsType();
-		WalletTransType walletTransType = new WalletTransType();
-		walletTransType.setCurrency("CASH");
-		walletsType.setWalletTrans(walletTransType);
-		commerceResultTransType.setWallets(walletsType);
 		PurchasedCarsType purchasedCarsType = new PurchasedCarsType();
-		ProductEntity productEntity = new ProductEntity();
-		productEntity.setProductId(productId);
-		InventoryItemsType inventoryItemsType = new InventoryItemsType();
+
+		// -- Wallet
+		WalletTransType walletTransType = new WalletTransType();
+		walletTransType.setBalance(personaEntity.getCash());
+		walletTransType.setCurrency("CASH");
+
+		WalletsType walletsType = new WalletsType();
+		walletsType.setWalletTrans(walletTransType);
+
+		commerceResultTransType.setWallets(walletsType);
+
+		// -- Set the look-up car
+		BasketDefinitionEntity basketDefinition = new BasketDefinitionEntity();
+		basketDefinition.setProductId(productId);
+
+		// Currently not important, so we just fill in dummy response
 		InventoryItemTransType inventoryItemTransType = new InventoryItemTransType();
-		inventoryItemTransType.setStatus("ACTIVE");
-		inventoryItemTransType.setVirtualItemType("presetcar");
-		inventoryItemTransType.setExpirationDate("");
-		inventoryItemTransType.setHash(831687504);
-		inventoryItemTransType.setInventoryId(1234567);
-		inventoryItemTransType.setEntitlementTag("NOTHING");
-		inventoryItemTransType.setProductId("ANYTHING");
-		inventoryItemTransType.setStringHash("0x31928b50");
-		commerceResultTransType.setStatus(ShoppingCartPurchaseResult.aFail_insufficientfunds);
+		InventoryItemsType inventoryItemsType = new InventoryItemsType();
+		inventoryItemsType.setInventoryItemTrans(inventoryItemTransType);
+
 		commerceResultTransType.setCommerceItems("");
 		commerceResultTransType.setInvalidBasket("");
-		inventoryItemsType.setInventoryItemTrans(inventoryItemTransType);
 		commerceResultTransType.setInventoryItems(inventoryItemsType);
-		commerceResultTransType.setPurchasedCars(new PurchasedCarsType());
-		List<?> find = connectionDB.find(productEntity);
+
+		// -- Set up empty response in case query returns null
+		commerceResultTransType.setPurchasedCars(purchasedCarsType);
+		commerceResultTransType.setStatus(ShoppingCartPurchaseResult.aFail_itemnotavail);
+
+		List<?> find = connectionDB.find(basketDefinition);
 		if (find.size() > 0) {
-			productEntity = (ProductEntity) find.get(0);
-			OwnedCarEntity ownedCar = new OwnedCarEntity();
-			purchasedCarsType.setOwnedCarTrans(ownedCar);
+			basketDefinition = (BasketDefinitionEntity) find.get(0);
+			CustomCarType customCar = basketDefinition.getOwnedCarTrans().getCustomCar();
+
+			OwnedCarEntity ownedCarEntity = new OwnedCarEntity();
+			CustomCarEntity customCarEntity = new CustomCarEntity();
+			customCarEntity.setApiId(customCar.getApiId());
+			customCarEntity.setBaseCarId(customCar.getBaseCarId());
+			customCarEntity.setCarClassHash(customCar.getCarClassHash());
+			customCarEntity.setPaints(customCar.getPaints());
+			customCarEntity.setPerformanceParts(customCar.getPerformanceParts());
+			customCarEntity.setPhysicsProfileHash(customCar.getPhysicsProfileHash());
+			customCarEntity.setRating(customCar.getRating());
+			customCarEntity.setResalePrice(customCar.getResalePrice());
+			customCarEntity.setSkillModParts(customCar.getSkillModParts());
+			customCarEntity.setSkillModSlotCount((short) 5);
+			customCarEntity.setVinyls(customCar.getVinyls());
+			customCarEntity.setVisualParts(customCar.getVisualParts());
+			customCarEntity.setParentOwnedCarTrans(ownedCarEntity);
+
+			ownedCarEntity.setCustomCar(customCarEntity);
+			ownedCarEntity.setDurability((short) 100);
+			ownedCarEntity.setExpirationDate(null);
+			ownedCarEntity.setHeatLevel((short) 0);
+			ownedCarEntity.setOwnershipType("PresetCar");
+			ownedCarEntity.setPersona(personaEntity);
+
+			connectionDB.persist(ownedCarEntity);
+			connectionDB.merge(customCarEntity);
+
+			purchasedCarsType.setOwnedCarTrans(ownedCarEntity.getOwnedCarTransType());
 			commerceResultTransType.setPurchasedCars(purchasedCarsType);
-			commerceResultTransType.setStatus("Success");
-
-			EntityManager manager = ConnectionDB.getManager();
-
-			PersonaEntity personaEntity = (PersonaEntity) connectionDB.findById(new PersonaEntity(), idPersona);
-			manager.detach(ownedCar);
-			ownedCar.setUniqueCarId(0);
-			ownedCar.setPersona(personaEntity);
-			connectionDB.persist(ownedCar);
+			commerceResultTransType.setStatus(ShoppingCartPurchaseResult.aSuccess);
 		}
 		return commerceResultTransType;
 	}
