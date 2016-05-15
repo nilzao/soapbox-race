@@ -1,22 +1,5 @@
 roadmap, priority order
 
-
-- implement xmpp lobby logic to start race with 2 or more players
-
-- make udp race server with hello and ping packets
-
-- upgrade udp race server with session
-
-- upgrade udp race server with playable packets
-
-- upgrade udp race server with packet ping sync
-
-- make udp freeroam server with hello and ping packets
-
-- upgrade udp freeroam server with other cars packets
-
-- upgrade udp freeroam server with fixed position from other cars
-
 - all powerups usable
 
 - implement xmpp powerup packets called from other players inside race or freeroam session
@@ -34,6 +17,13 @@ roadmap, priority order
 - paint shop
 
 - vinyl shop
+
+
+===============================
+
+freeroam
+
+- start a new project
 
 ===============================
 
