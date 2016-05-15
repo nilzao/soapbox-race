@@ -99,7 +99,10 @@ public class PersonaBO {
 		PersonaEntity personaEntity = personaDao.findById(idPersona);
 		personaEntity.setId(idPersona);
 		List<OwnedCarEntity> ownedCarList = ownedCarDao.findByIdPersona(idPersona);
-		return ownedCarList.get(personaEntity.getCurCarIndex());
+		if (ownedCarList.size() > 0) {
+			return ownedCarList.get(personaEntity.getCurCarIndex());
+		}
+		return null;
 	}
 
 	public void changeDefaultCar(long idPersona, long defaultCarId) {

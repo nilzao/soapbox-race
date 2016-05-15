@@ -65,7 +65,10 @@ public class Personas extends Router {
 			return "";
 		}
 		OwnedCarEntity ownedCarEntity = personaBO.defaultcar(personaId);
-		return MarshalXML.marshal(ownedCarEntity);
+		if (ownedCarEntity != null) {
+			return MarshalXML.marshal(ownedCarEntity);
+		}
+		return "";
 	}
 
 	public String commerce() {
