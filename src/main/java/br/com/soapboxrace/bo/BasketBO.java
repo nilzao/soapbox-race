@@ -2,7 +2,10 @@ package br.com.soapboxrace.bo;
 
 import java.util.List;
 
-import br.com.soapboxrace.db.ConnectionDB;
+import br.com.soapboxrace.dao.BasketDefinitionDao;
+import br.com.soapboxrace.dao.CustomCarDao;
+import br.com.soapboxrace.dao.OwnedCarDao;
+import br.com.soapboxrace.dao.PersonaDao;
 import br.com.soapboxrace.definition.ShoppingCartPurchaseResult;
 import br.com.soapboxrace.jaxb.CommerceResultTransType;
 import br.com.soapboxrace.jaxb.CustomCarType;
@@ -18,11 +21,14 @@ import br.com.soapboxrace.jpa.PersonaEntity;
 
 public class BasketBO {
 
-	private ConnectionDB connectionDB = new ConnectionDB();
+	private PersonaDao personaDao = new PersonaDao();
+	private BasketDefinitionDao basketDefinitionDao = new BasketDefinitionDao();
+	private CustomCarDao customCarDao = new CustomCarDao();
+	private OwnedCarDao ownedCarDao = new OwnedCarDao();
 
 	public CommerceResultTransType basket(long idPersona, String productId) {
 		// TODO: Economy input, currency calculation, and car slot checking.
-		PersonaEntity personaEntity = (PersonaEntity) connectionDB.findById(PersonaEntity.class, idPersona);
+		PersonaEntity personaEntity = personaDao.findById(idPersona);
 		CommerceResultTransType commerceResultTransType = new CommerceResultTransType();
 		PurchasedCarsType purchasedCarsType = new PurchasedCarsType();
 
@@ -53,9 +59,10 @@ public class BasketBO {
 		commerceResultTransType.setPurchasedCars(purchasedCarsType);
 		commerceResultTransType.setStatus(ShoppingCartPurchaseResult.aFail_itemnotavail);
 
-		List<?> find = connectionDB.find(basketDefinition);
-		if (find.size() > 0) {
-			basketDefinition = (BasketDefinitionEntity) find.get(0);
+		List<BasketDefinitionEntity> baskets = basketDefinitionDao.find(basketDefinition);
+
+		if (baskets.size() > 0) {
+			basketDefinition = baskets.get(0);
 			CustomCarType customCar = basketDefinition.getOwnedCarTrans().getCustomCar();
 
 			OwnedCarEntity ownedCarEntity = new OwnedCarEntity();
@@ -81,8 +88,8 @@ public class BasketBO {
 			ownedCarEntity.setOwnershipType("PresetCar");
 			ownedCarEntity.setPersona(personaEntity);
 
-			connectionDB.persist(ownedCarEntity);
-			connectionDB.merge(customCarEntity);
+			ownedCarDao.save(ownedCarEntity);
+			customCarDao.save(customCarEntity);
 
 			purchasedCarsType.setOwnedCarTrans(ownedCarEntity.getOwnedCarTransType());
 			commerceResultTransType.setPurchasedCars(purchasedCarsType);

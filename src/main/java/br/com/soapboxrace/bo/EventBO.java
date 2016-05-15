@@ -1,6 +1,6 @@
 package br.com.soapboxrace.bo;
 
-import br.com.soapboxrace.db.ConnectionDB;
+import br.com.soapboxrace.dao.PersonaDao;
 import br.com.soapboxrace.jaxb.AccoladesType;
 import br.com.soapboxrace.jaxb.FinalRewardsType;
 import br.com.soapboxrace.jaxb.OriginalRewardsType;
@@ -9,14 +9,14 @@ import br.com.soapboxrace.jpa.PersonaEntity;
 
 public class EventBO {
 
-	private ConnectionDB connectDb = new ConnectionDB();
+	private PersonaDao personaDao = new PersonaDao();
 
 	public PursuitEventResultType arbitration(Long personaId, String arbitrationXml) {
-		PersonaEntity personaEntity = (PersonaEntity) connectDb.findById(PersonaEntity.class, personaId);
+		PersonaEntity personaEntity = personaDao.findById(personaId);
 		Integer level = personaEntity.getLevel();
 		if (level == 1) {
 			personaEntity.setLevel(2);
-			connectDb.merge(personaEntity);
+			personaDao.save(personaEntity);
 		}
 
 		PursuitEventResultType pursuitEventResult = new PursuitEventResultType();

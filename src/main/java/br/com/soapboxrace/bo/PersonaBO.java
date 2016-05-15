@@ -3,10 +3,9 @@ package br.com.soapboxrace.bo;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-
-import br.com.soapboxrace.db.ConnectionDB;
+import br.com.soapboxrace.dao.OwnedCarDao;
+import br.com.soapboxrace.dao.PersonaDao;
+import br.com.soapboxrace.dao.ProductDao;
 import br.com.soapboxrace.definition.ShoppingCartPurchaseResult;
 import br.com.soapboxrace.definition.convert;
 import br.com.soapboxrace.jaxb.CarSlotInfoTrans;
@@ -22,16 +21,15 @@ import br.com.soapboxrace.jpa.PersonaEntity;
 import br.com.soapboxrace.jpa.ProductEntity;
 
 public class PersonaBO {
-	private ConnectionDB connectionDB = new ConnectionDB();
+
+	private OwnedCarDao ownedCarDao = new OwnedCarDao();
+
+	private PersonaDao personaDao = new PersonaDao();
+
+	private ProductDao productDao = new ProductDao();
 
 	public CarSlotInfoTrans carslots(long idPersona) {
-		EntityManager manager = ConnectionDB.getManager();
-		TypedQuery<OwnedCarEntity> query = manager
-				.createQuery("SELECT obj FROM OwnedCarEntity obj WHERE obj.persona = :persona", OwnedCarEntity.class);
-		PersonaEntity personaEntity = new PersonaEntity();
-		personaEntity.setId(idPersona);
-		query.setParameter("persona", personaEntity);
-		List<OwnedCarEntity> ownedCars = query.getResultList();
+		List<OwnedCarEntity> ownedCars = ownedCarDao.findByIdPersona(idPersona);
 
 		CarSlotInfoTrans carSlotInfoTrans = new CarSlotInfoTrans();
 		CarsOwnedByPersonaList carsOwnedByPersonaList = new CarsOwnedByPersonaList();
@@ -39,7 +37,7 @@ public class PersonaBO {
 		if (ownedCars.size() > 0) {
 			carsOwnedByPersonaList.setOwnedCarList(ownedCars);
 		}
-		carSlotInfoTrans.setDefaultOwnedCarIndex(personaEntity.getCurCarIndex());
+		carSlotInfoTrans.setDefaultOwnedCarIndex(personaDao.findById(idPersona).getCurCarIndex());
 		carSlotInfoTrans.setOwnedCarSlotsCount(1);
 
 		// -- Add product data for purchasing car slots in the car dealer
@@ -47,9 +45,8 @@ public class PersonaBO {
 		ObtainableSlotsList obtainableSlotsList = new ObtainableSlotsList();
 
 		ArrayList<ProductEntity> productList = new ArrayList<ProductEntity>();
-		ProductEntity carSlotProductData = new ProductEntity();
-		carSlotProductData.setProductId("SRV-CARSLOT");
-		carSlotProductData = (ProductEntity) connectionDB.find(carSlotProductData).get(0);
+		ProductEntity carSlotProductData = productDao.findByProductId("SRV-CARSLOT");
+
 		productList.add(carSlotProductData);
 		obtainableSlotsList.setProductList(productList);
 
@@ -63,7 +60,8 @@ public class PersonaBO {
 		// TODO: Economy input, currency calculation, and manual processing of
 		// basket items.
 
-		PersonaEntity personaEntity = (PersonaEntity) connectionDB.findById(PersonaEntity.class, idPersona);
+		PersonaEntity personaEntity = personaDao.findById(idPersona);
+
 		CommerceSessionResultTransType commerceSessionResultTransType = new CommerceSessionResultTransType();
 
 		// -- Wallet
@@ -83,7 +81,8 @@ public class PersonaBO {
 		currentCar.getCustomCar().setPerformanceParts(updatedCar.getCustomCar().getPerformanceParts());
 		currentCar.getCustomCar().setSkillModParts(updatedCar.getCustomCar().getSkillModParts());
 		currentCar.getCustomCar().setVisualParts(updatedCar.getCustomCar().getVisualParts());
-		connectionDB.merge(currentCar);
+
+		ownedCarDao.save(currentCar);
 
 		// -- Set the response car
 		commerceSessionResultTransType.setUpdatedCar(convert.fromOwnedCarToUpdatedCar(currentCar));
@@ -97,15 +96,15 @@ public class PersonaBO {
 	}
 
 	public OwnedCarEntity defaultcar(long idPersona) {
-		PersonaEntity personaEntity = (PersonaEntity) connectionDB.findById(PersonaEntity.class, idPersona);
+		PersonaEntity personaEntity = personaDao.findById(idPersona);
 		personaEntity.setId(idPersona);
-		List<OwnedCarEntity> ownedCarList = getOwnedCarList(personaEntity);
+		List<OwnedCarEntity> ownedCarList = ownedCarDao.findByIdPersona(idPersona);
 		return ownedCarList.get(personaEntity.getCurCarIndex());
 	}
 
 	public void changeDefaultCar(long idPersona, long defaultCarId) {
-		PersonaEntity personaEntity = (PersonaEntity) connectionDB.findById(PersonaEntity.class, idPersona);
-		List<OwnedCarEntity> ownedCarList = getOwnedCarList(personaEntity);
+		PersonaEntity personaEntity = personaDao.findById(idPersona);
+		List<OwnedCarEntity> ownedCarList = ownedCarDao.findByIdPersona(idPersona);
 		int i = 0;
 		for (OwnedCarEntity ownedCarEntity : ownedCarList) {
 			if (ownedCarEntity.getUniqueCarId() == defaultCarId) {
@@ -114,15 +113,7 @@ public class PersonaBO {
 			i++;
 		}
 		personaEntity.setCurCarIndex(i);
-		connectionDB.merge(personaEntity);
+		personaDao.save(personaEntity);
 	}
 
-	private List<OwnedCarEntity> getOwnedCarList(PersonaEntity personaEntity) {
-		EntityManager manager = ConnectionDB.getManager();
-		TypedQuery<OwnedCarEntity> query = manager.createQuery(
-				"SELECT obj FROM OwnedCarEntity obj WHERE obj.persona = :persona order by obj.id",
-				OwnedCarEntity.class);
-		query.setParameter("persona", personaEntity);
-		return query.getResultList();
-	}
 }
