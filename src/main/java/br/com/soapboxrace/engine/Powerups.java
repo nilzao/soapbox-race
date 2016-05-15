@@ -3,6 +3,14 @@ package br.com.soapboxrace.engine;
 import br.com.soapboxrace.xmpp.XmppSrv;
 
 public class Powerups extends Router {
+	private Long getPowerupHash() {
+		long powerupHash = 0L;
+		String[] targetSplitted = getTarget().split("/");
+		if (targetSplitted.length == 6) {
+			powerupHash = Long.valueOf(targetSplitted[5]);
+		}
+		return powerupHash;
+	}
 
 	public String activated() {
 		StringBuilder stringBuilder = new StringBuilder();
@@ -13,7 +21,9 @@ public class Powerups extends Router {
 		stringBuilder.append("&lt;response status='1' ticket='0'&gt;");
 		stringBuilder.append("&lt;PowerupActivated &gt;");
 		stringBuilder.append("&lt;Count&gt;1&lt;/Count&gt;");
-		stringBuilder.append("&lt;Id&gt;-1681514783&lt;/Id&gt;");
+		stringBuilder.append("&lt;Id&gt;");
+		stringBuilder.append(getPowerupHash());
+		stringBuilder.append("&lt;/Id&gt;");
 		stringBuilder.append("&lt;PersonaId&gt;");
 		stringBuilder.append(getLoggedPersonaId());
 		stringBuilder.append("&lt;/PersonaId&gt;");
