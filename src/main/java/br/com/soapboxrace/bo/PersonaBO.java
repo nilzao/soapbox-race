@@ -104,8 +104,15 @@ public class PersonaBO {
 		PersonaEntity personaEntity = personaDao.findById(idPersona);
 		personaEntity.setId(idPersona);
 		List<OwnedCarEntity> ownedCarList = ownedCarDao.findByIdPersona(idPersona);
+		Integer curCarIndex = personaEntity.getCurCarIndex();
 		if (ownedCarList.size() > 0) {
-			return ownedCarList.get(personaEntity.getCurCarIndex());
+			if (curCarIndex >= ownedCarList.size()) {
+				curCarIndex--;
+				OwnedCarEntity ownedCarEntity = ownedCarList.get(curCarIndex);
+				changeDefaultCar(idPersona, ownedCarEntity.getId());
+			}
+			OwnedCarEntity ownedCarEntity = ownedCarList.get(curCarIndex);
+			return ownedCarEntity;
 		}
 		return null;
 	}
@@ -122,6 +129,11 @@ public class PersonaBO {
 		}
 		personaEntity.setCurCarIndex(i);
 		personaDao.save(personaEntity);
+	}
+
+	public OwnedCarEntity deleteCar(long idPersona, long carId) {
+		ownedCarDao.del(carId);
+		return defaultcar(idPersona);
 	}
 
 }

@@ -34,4 +34,9 @@ public class OwnedCarDao extends SoapboxDao {
 		}
 		return ownedCars;
 	}
+
+	public void del(Long id) {
+		OwnedCarEntity entity = findById(id);
+		super.del(entity);
+	}
 }
