@@ -1,7 +1,6 @@
 package br.com.soapboxrace.bo;
 
 import br.com.soapboxrace.dao.BasketDefinitionDao;
-import br.com.soapboxrace.dao.CustomCarDao;
 import br.com.soapboxrace.dao.OwnedCarDao;
 import br.com.soapboxrace.dao.PersonaDao;
 import br.com.soapboxrace.definition.ShoppingCartPurchaseResult;
@@ -21,8 +20,8 @@ public class BasketBO {
 
 	private PersonaDao personaDao = new PersonaDao();
 	private BasketDefinitionDao basketDefinitionDao = new BasketDefinitionDao();
-	private CustomCarDao customCarDao = new CustomCarDao();
 	private OwnedCarDao ownedCarDao = new OwnedCarDao();
+	PersonaBO personaBO = new PersonaBO();
 
 	public CommerceResultTransType basket(long idPersona, String productId) {
 		// TODO: Economy input, currency calculation, and car slot checking.
@@ -81,8 +80,8 @@ public class BasketBO {
 			ownedCarEntity.setOwnershipType("PresetCar");
 			ownedCarEntity.setPersona(personaEntity);
 
-			ownedCarDao.save(ownedCarEntity);
-			customCarDao.save(customCarEntity);
+			ownedCarEntity = (OwnedCarEntity) ownedCarDao.save(ownedCarEntity);
+			personaBO.changeDefaultCar(idPersona, ownedCarEntity.getId());
 
 			purchasedCarsType.setOwnedCarTrans(ownedCarEntity.getOwnedCarTransType());
 			commerceResultTransType.setPurchasedCars(purchasedCarsType);
