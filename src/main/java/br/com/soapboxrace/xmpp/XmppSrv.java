@@ -14,7 +14,14 @@ public class XmppSrv {
 	}
 
 	public static void sendMsg(long personaId, String msg) {
-		xmppClients.get(personaId).write(msg);
+		XmppTalk xmppTalk = xmppClients.get(personaId);
+		if (xmppTalk != null) {
+			xmppTalk.write(msg);
+		} else {
+			System.out.println("error sending xmpp packet");
+			System.out.println("personaId: [" + personaId + "]");
+			System.out.println("msg: [" + msg + "]");
+		}
 	}
 
 	public static void removeXmppClient(int personaId) {
