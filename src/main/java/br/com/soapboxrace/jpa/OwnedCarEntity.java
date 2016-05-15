@@ -39,7 +39,7 @@ public class OwnedCarEntity implements ISoapBoxEntity {
 
 	@XmlElement(name = "CustomCar", required = true)
 	@OneToMany(mappedBy = "parentOwnedCarTrans", targetEntity = CustomCarEntity.class, cascade = { CascadeType.MERGE,
-			CascadeType.DETACH, CascadeType.REMOVE }, fetch = FetchType.EAGER)
+			CascadeType.DETACH, CascadeType.REMOVE }, fetch = FetchType.LAZY)
 	protected List<CustomCarEntity> customCar;
 	@XmlElement(name = "Durability", required = true)
 	protected short durability;
