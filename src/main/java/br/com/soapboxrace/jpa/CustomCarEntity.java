@@ -1,7 +1,5 @@
 package br.com.soapboxrace.jpa;
 
-import java.io.Serializable;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -33,8 +31,9 @@ import br.com.soapboxrace.jaxb.VisualPartsType;
 @Entity
 @Table(name = "CUSTOMCAR")
 @XmlRootElement(name = "CustomCar")
-public class CustomCarEntity implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class CustomCarEntity implements ISoapBoxEntity {
+
+	private static final long serialVersionUID = -5031050484246275477L;
 
 	@XmlElement(name = "BaseCar", required = true)
 	protected long baseCarId;
@@ -226,4 +225,13 @@ public class CustomCarEntity implements Serializable {
 		result.setVisualParts(this.getVisualParts());
 		return result;
 	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 }

@@ -11,6 +11,8 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Example;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 
+import br.com.soapboxrace.jpa.ISoapBoxEntity;
+
 public class ConnectionDB {
 
 	private static final EntityManagerFactory emf;
@@ -31,7 +33,7 @@ public class ConnectionDB {
 		return em;
 	}
 
-	public void persist(Object entity) {
+	public void persist(ISoapBoxEntity entity) {
 		EntityTransaction tx = null;
 		try {
 			EntityManager manager = getManager();
@@ -47,7 +49,7 @@ public class ConnectionDB {
 		}
 	}
 
-	public Object merge(Object entity) {
+	public Object merge(ISoapBoxEntity entity) {
 		EntityTransaction tx = null;
 		Object merge = null;
 		try {
@@ -65,7 +67,7 @@ public class ConnectionDB {
 		return merge;
 	}
 
-	public void remove(Object entity) {
+	public void remove(ISoapBoxEntity entity) {
 		EntityTransaction tx = null;
 		try {
 			EntityManager manager = getManager();
@@ -82,13 +84,13 @@ public class ConnectionDB {
 
 	}
 
-	public Object findById(Object entity, Long id) {
+	public Object findById(Class<? extends ISoapBoxEntity> entityClass, Long id) {
 		EntityManager manager = getManager();
 		manager.clear();
-		return manager.find(entity.getClass(), id);
+		return manager.find(entityClass, id);
 	}
 
-	public List<?> find(Object entity) {
+	public List<?> find(ISoapBoxEntity entity) {
 		EntityManager manager = getManager();
 		manager.clear();
 		Session sessao = (Session) manager.getDelegate();

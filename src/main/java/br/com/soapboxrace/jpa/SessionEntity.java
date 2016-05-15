@@ -10,7 +10,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "SESSION")
-public class SessionEntity {
+public class SessionEntity implements ISoapBoxEntity {
+
+	private static final long serialVersionUID = -2085857427427352203L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,11 +25,11 @@ public class SessionEntity {
 
 	private Date expiration;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

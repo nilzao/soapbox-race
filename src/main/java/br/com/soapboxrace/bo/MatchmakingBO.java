@@ -67,7 +67,7 @@ public class MatchmakingBO {
 			Hibernate.initialize(lobbyEntity.getEntrants());
 		}
 
-		Object objPersonaEntity = connectionDB.findById(new PersonaEntity(), personaId);
+		Object objPersonaEntity = connectionDB.findById(PersonaEntity.class, personaId);
 		PersonaEntity personaEntity = (PersonaEntity) objPersonaEntity;
 
 		if (lobbys.size() == 0) {
@@ -149,7 +149,7 @@ public class MatchmakingBO {
 	}
 
 	public LobbyInfoType acceptinvite(Long personaId, Long lobbyInviteId) {
-		Object objLobbyEntity = connectionDB.findById(new LobbyEntity(), lobbyInviteId);
+		Object objLobbyEntity = connectionDB.findById(LobbyEntity.class, lobbyInviteId);
 		LobbyEntity lobbyEntity = (LobbyEntity) objLobbyEntity;
 		Long eventIdLong = lobbyEntity.getEvent().getEventId();
 
@@ -176,7 +176,7 @@ public class MatchmakingBO {
 		}
 		if (!personaInside) {
 			LobbyEntrantEntity lobbyEntrantEntity = new LobbyEntrantEntity();
-			Object objPersona = connectionDB.findById(new PersonaEntity(), personaId);
+			Object objPersona = connectionDB.findById(PersonaEntity.class, personaId);
 			PersonaEntity personaEntity = (PersonaEntity) objPersona;
 			lobbyEntrantEntity.setPersona(personaEntity);
 			lobbyEntrantEntity.setPersonaId(personaEntity.getId());
@@ -217,7 +217,7 @@ public class MatchmakingBO {
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
-			LobbyEntity lobbyEntity = (LobbyEntity) connectionDB.findById(new LobbyEntity(), lobbyId);
+			LobbyEntity lobbyEntity = (LobbyEntity) connectionDB.findById(LobbyEntity.class, lobbyId);
 			List<LobbyEntrantEntity> entrants = lobbyEntity.getEntrants();
 			LobbyLaunchedType lobbyLaunched = new LobbyLaunchedType();
 			EntrantsType entrantsType = new EntrantsType();

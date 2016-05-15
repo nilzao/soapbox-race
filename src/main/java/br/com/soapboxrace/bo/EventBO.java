@@ -12,7 +12,7 @@ public class EventBO {
 	private ConnectionDB connectDb = new ConnectionDB();
 
 	public PursuitEventResultType arbitration(Long personaId, String arbitrationXml) {
-		PersonaEntity personaEntity = (PersonaEntity) connectDb.findById(new PersonaEntity(), personaId);
+		PersonaEntity personaEntity = (PersonaEntity) connectDb.findById(PersonaEntity.class, personaId);
 		Integer level = personaEntity.getLevel();
 		if (level == 1) {
 			personaEntity.setLevel(2);

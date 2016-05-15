@@ -1,6 +1,5 @@
 package br.com.soapboxrace.jpa;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,11 +18,8 @@ import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @Table(name = "LOBBY")
-public class LobbyEntity implements Serializable {
+public class LobbyEntity implements ISoapBoxEntity {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -7685436026786063561L;
 
 	@Id
@@ -51,11 +47,11 @@ public class LobbyEntity implements Serializable {
 	@XmlTransient
 	private Date lobbyDateTimeStart = new Date();
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

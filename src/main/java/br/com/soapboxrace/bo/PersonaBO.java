@@ -63,7 +63,7 @@ public class PersonaBO {
 		// TODO: Economy input, currency calculation, and manual processing of
 		// basket items.
 
-		PersonaEntity personaEntity = (PersonaEntity) connectionDB.findById(new PersonaEntity(), idPersona);
+		PersonaEntity personaEntity = (PersonaEntity) connectionDB.findById(PersonaEntity.class, idPersona);
 		CommerceSessionResultTransType commerceSessionResultTransType = new CommerceSessionResultTransType();
 
 		// -- Wallet
@@ -97,14 +97,14 @@ public class PersonaBO {
 	}
 
 	public OwnedCarEntity defaultcar(long idPersona) {
-		PersonaEntity personaEntity = (PersonaEntity) connectionDB.findById(new PersonaEntity(), idPersona);
+		PersonaEntity personaEntity = (PersonaEntity) connectionDB.findById(PersonaEntity.class, idPersona);
 		personaEntity.setId(idPersona);
 		List<OwnedCarEntity> ownedCarList = getOwnedCarList(personaEntity);
 		return ownedCarList.get(personaEntity.getCurCarIndex());
 	}
 
 	public void changeDefaultCar(long idPersona, long defaultCarId) {
-		PersonaEntity personaEntity = (PersonaEntity) connectionDB.findById(new PersonaEntity(), idPersona);
+		PersonaEntity personaEntity = (PersonaEntity) connectionDB.findById(PersonaEntity.class, idPersona);
 		List<OwnedCarEntity> ownedCarList = getOwnedCarList(personaEntity);
 		int i = 0;
 		for (OwnedCarEntity ownedCarEntity : ownedCarList) {

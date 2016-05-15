@@ -62,7 +62,7 @@ public class DriverPersonaBO {
 
 	public void deletePersona(long idPersona) {
 		ConnectionDB connectionDB = new ConnectionDB();
-		PersonaEntity personaEntity = (PersonaEntity) connectionDB.findById(new PersonaEntity(), idPersona);
+		PersonaEntity personaEntity = (PersonaEntity) connectionDB.findById(PersonaEntity.class, idPersona);
 		EntityManager manager = ConnectionDB.getManager();
 		Session delegate = (Session) manager.getDelegate();
 		Query query = delegate.createQuery("DELETE from LobbyEntrantEntity obj WHERE obj.persona = :persona ");
@@ -72,7 +72,7 @@ public class DriverPersonaBO {
 	}
 
 	public ProfileDataType getPersonaInfo(long idPersona) {
-		PersonaEntity personaEntity = (PersonaEntity) connectionDB.findById(new PersonaEntity(), idPersona);
+		PersonaEntity personaEntity = (PersonaEntity) connectionDB.findById(PersonaEntity.class, idPersona);
 		ProfileDataType profileDataType = new ProfileDataType();
 		profileDataType.setCash(personaEntity.getCash());
 		profileDataType.setIconIndex(personaEntity.getIconIndex());
@@ -90,7 +90,7 @@ public class DriverPersonaBO {
 		ArrayOfPersonaBaseType arrayOfPersonaBaseType = new ArrayOfPersonaBaseType();
 		List<PersonaBaseType> personaBase = arrayOfPersonaBaseType.getPersonaBase();
 		for (Long idPersonaTmp : idPersona) {
-			PersonaEntity personaEntity = (PersonaEntity) connectionDB.findById(new PersonaEntity(), idPersonaTmp);
+			PersonaEntity personaEntity = (PersonaEntity) connectionDB.findById(PersonaEntity.class, idPersonaTmp);
 			PersonaBaseType personaBaseType = new PersonaBaseType();
 			personaBaseType.setIconIndex(personaEntity.getIconIndex());
 			personaBaseType.setLevel(personaEntity.getLevel());

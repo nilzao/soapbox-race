@@ -1,6 +1,5 @@
 package br.com.soapboxrace.jpa;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,9 +28,9 @@ import br.com.soapboxrace.jaxb.OwnedCarTransType;
 @Entity
 @Table(name = "OWNEDCAR")
 @XmlRootElement(name = "OwnedCarTrans")
-public class OwnedCarEntity implements Serializable {
+public class OwnedCarEntity implements ISoapBoxEntity {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 6298043520507324814L;
 
 	@XmlTransient
 	@ManyToOne
@@ -94,6 +93,14 @@ public class OwnedCarEntity implements Serializable {
 	}
 
 	public void setUniqueCarId(long value) {
+		this.uniqueCarId = value;
+	}
+
+	public Long getId() {
+		return uniqueCarId;
+	}
+
+	public void setId(Long value) {
 		this.uniqueCarId = value;
 	}
 

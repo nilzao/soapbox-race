@@ -18,7 +18,9 @@ import javax.xml.bind.annotation.XmlType;
 @Table(name = "LOBBYENTRANT")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "LobbyEntrantInfoType", propOrder = { "gridIndex", "heat", "level", "personaId", "state", "lobbyId" })
-public class LobbyEntrantEntity {
+public class LobbyEntrantEntity implements ISoapBoxEntity {
+
+	private static final long serialVersionUID = 6047517296440542597L;
 
 	@XmlTransient
 	@Id
@@ -59,11 +61,11 @@ public class LobbyEntrantEntity {
 	@XmlElement(name = "State", required = true)
 	protected String state = "InLobby";
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

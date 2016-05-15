@@ -22,7 +22,7 @@ public class BasketBO {
 
 	public CommerceResultTransType basket(long idPersona, String productId) {
 		// TODO: Economy input, currency calculation, and car slot checking.
-		PersonaEntity personaEntity = (PersonaEntity) connectionDB.findById(new PersonaEntity(), idPersona);
+		PersonaEntity personaEntity = (PersonaEntity) connectionDB.findById(PersonaEntity.class, idPersona);
 		CommerceResultTransType commerceResultTransType = new CommerceResultTransType();
 		PurchasedCarsType purchasedCarsType = new PurchasedCarsType();
 
