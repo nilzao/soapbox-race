@@ -1,5 +1,6 @@
 package br.com.soapboxrace.engine;
 
+import br.com.soapboxrace.bo.BasketBO;
 import br.com.soapboxrace.bo.PersonaBO;
 import br.com.soapboxrace.jaxb.BasketTransType;
 import br.com.soapboxrace.jaxb.CarSlotInfoTrans;
@@ -84,7 +85,8 @@ public class Personas extends Router {
 		BasketTransType basketTransType = new BasketTransType();
 		basketTransType = (BasketTransType) UnmarshalXML.unMarshal(basketXml, basketTransType);
 		String productId = basketTransType.getItems().getBasketItemTrans().getProductId();
-		CommerceResultTransType commerceResultTrans = personaBO.basket(getPersonaId(), productId);
+		BasketBO basketBO = new BasketBO();
+		CommerceResultTransType commerceResultTrans = basketBO.basket(getPersonaId(), productId);
 		return MarshalXML.marshal(commerceResultTrans);
 	}
 
