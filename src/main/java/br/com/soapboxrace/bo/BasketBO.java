@@ -1,7 +1,5 @@
 package br.com.soapboxrace.bo;
 
-import java.util.List;
-
 import br.com.soapboxrace.dao.BasketDefinitionDao;
 import br.com.soapboxrace.dao.CustomCarDao;
 import br.com.soapboxrace.dao.OwnedCarDao;
@@ -42,10 +40,6 @@ public class BasketBO {
 
 		commerceResultTransType.setWallets(walletsType);
 
-		// -- Set the look-up car
-		BasketDefinitionEntity basketDefinition = new BasketDefinitionEntity();
-		basketDefinition.setProductId(productId);
-
 		// Currently not important, so we just fill in dummy response
 		InventoryItemTransType inventoryItemTransType = new InventoryItemTransType();
 		InventoryItemsType inventoryItemsType = new InventoryItemsType();
@@ -59,10 +53,9 @@ public class BasketBO {
 		commerceResultTransType.setPurchasedCars(purchasedCarsType);
 		commerceResultTransType.setStatus(ShoppingCartPurchaseResult.aFail_itemnotavail);
 
-		List<BasketDefinitionEntity> baskets = basketDefinitionDao.find(basketDefinition);
+		BasketDefinitionEntity basketDefinition = basketDefinitionDao.findByProductId(productId);
 
-		if (baskets.size() > 0) {
-			basketDefinition = baskets.get(0);
+		if (basketDefinition != null) {
 			CustomCarType customCar = basketDefinition.getOwnedCarTrans().getCustomCar();
 
 			OwnedCarEntity ownedCarEntity = new OwnedCarEntity();
