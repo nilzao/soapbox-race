@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 import br.com.soapboxrace.db.SoapboxDao;
+import br.com.soapboxrace.jpa.ISoapBoxEntity;
 import br.com.soapboxrace.jpa.PersonaEntity;
 import br.com.soapboxrace.jpa.UserEntity;
 
@@ -18,6 +19,12 @@ public class PersonaDao extends SoapboxDao {
 	}
 
 	public boolean existsByName(String name) {
+		PersonaEntity personaEntity = new PersonaEntity();
+		personaEntity.setName(name);
+		List<ISoapBoxEntity> find = find(personaEntity);
+		if (find.size() > 0) {
+			return true;
+		}
 		return false;
 	}
 
