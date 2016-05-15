@@ -1,9 +1,11 @@
 package br.com.soapboxrace.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.soapboxrace.db.SoapboxDao;
 import br.com.soapboxrace.jpa.EventDefinitionEntity;
+import br.com.soapboxrace.jpa.ISoapBoxEntity;
 
 public class EventDefinitionDao extends SoapboxDao {
 
@@ -14,7 +16,12 @@ public class EventDefinitionDao extends SoapboxDao {
 	}
 
 	public List<EventDefinitionEntity> getAll() {
-		return null;
+		List<ISoapBoxEntity> find = super.find(new EventDefinitionEntity());
+		ArrayList<EventDefinitionEntity> eventDefinitionList = new ArrayList<EventDefinitionEntity>();
+		for (ISoapBoxEntity eventDefTmp : find) {
+			eventDefinitionList.add((EventDefinitionEntity) eventDefTmp);
+		}
+		return eventDefinitionList;
 	}
 
 }
