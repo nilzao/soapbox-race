@@ -16,13 +16,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
-import br.com.soapboxrace.definition.convert;
 import br.com.soapboxrace.jaxb.CustomCarType;
 import br.com.soapboxrace.jaxb.PaintsType;
 import br.com.soapboxrace.jaxb.PerformancePartsType;
 import br.com.soapboxrace.jaxb.SkillModPartsType;
 import br.com.soapboxrace.jaxb.VinylsType;
 import br.com.soapboxrace.jaxb.VisualPartsType;
+import br.com.soapboxrace.jaxb.convert.PaintsConverter;
+import br.com.soapboxrace.jaxb.convert.PerformancePartsConverter;
+import br.com.soapboxrace.jaxb.convert.SkillModPartsConverter;
+import br.com.soapboxrace.jaxb.convert.VinylsConverter;
+import br.com.soapboxrace.jaxb.convert.VisualPartsConverter;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "CustomCarType", propOrder = { "baseCarId", "carClassHash", "isPreset", "level", "name", "apiId",
@@ -47,10 +51,10 @@ public class CustomCarEntity implements ISoapBoxEntity {
 	protected String name;
 	@XmlElement(name = "Id", required = true)
 	protected long apiId;
-	@Convert(converter = convert.PaintsConverter.class)
+	@Convert(converter = PaintsConverter.class)
 	@XmlElement(name = "Paints")
 	protected PaintsType paints;
-	@Convert(converter = convert.PerformancePartsConverter.class)
+	@Convert(converter = PerformancePartsConverter.class)
 	@XmlElement(name = "PerformanceParts")
 	protected PerformancePartsType performanceParts;
 	@XmlElement(name = "PhysicsProfileHash")
@@ -59,15 +63,15 @@ public class CustomCarEntity implements ISoapBoxEntity {
 	protected int rating;
 	@XmlElement(name = "ResalePrice")
 	protected int resalePrice;
-	@Convert(converter = convert.SkillModPartsConverter.class)
+	@Convert(converter = SkillModPartsConverter.class)
 	@XmlElement(name = "SkillModParts")
 	protected SkillModPartsType skillModParts;
 	@XmlElement(name = "SkillModSlotCount")
 	protected Short skillModSlotCount;
-	@Convert(converter = convert.VinylsConverter.class)
+	@Convert(converter = VinylsConverter.class)
 	@XmlElement(name = "Vinyls")
 	protected VinylsType vinyls;
-	@Convert(converter = convert.VisualPartsConverter.class)
+	@Convert(converter = VisualPartsConverter.class)
 	@XmlElement(name = "VisualParts")
 	protected VisualPartsType visualParts;
 

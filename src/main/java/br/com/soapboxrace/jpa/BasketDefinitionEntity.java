@@ -8,8 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import br.com.soapboxrace.definition.convert.OwnedCarTransConverter;
 import br.com.soapboxrace.jaxb.OwnedCarTransType;
+import br.com.soapboxrace.jaxb.convert.OwnedCarTransConverter;
 
 @Entity
 @Table(name = "BASKETDEFINITION")

@@ -7,7 +7,6 @@ import br.com.soapboxrace.dao.OwnedCarDao;
 import br.com.soapboxrace.dao.PersonaDao;
 import br.com.soapboxrace.dao.ProductDao;
 import br.com.soapboxrace.definition.ShoppingCartPurchaseResult;
-import br.com.soapboxrace.definition.convert;
 import br.com.soapboxrace.jaxb.CarSlotInfoTrans;
 import br.com.soapboxrace.jaxb.CarsOwnedByPersonaList;
 import br.com.soapboxrace.jaxb.CommerceSessionResultTransType;
@@ -85,7 +84,13 @@ public class PersonaBO {
 		ownedCarDao.save(currentCar);
 
 		// -- Set the response car
-		commerceSessionResultTransType.setUpdatedCar(convert.fromOwnedCarToUpdatedCar(currentCar));
+		UpdatedCarType responseCar = new UpdatedCarType();
+		responseCar.setCustomCar(currentCar.getCustomCar().getCustomCarType());
+		responseCar.setDurability(currentCar.getDurability());
+		responseCar.setHeatLevel((short) 1);
+		responseCar.setOwnershipType("CustomizedCar");
+		responseCar.setUniqueCarId(currentCar.getUniqueCarId());
+		commerceSessionResultTransType.setUpdatedCar(responseCar);
 
 		// Currently not important, so we just fill in dummy response
 		commerceSessionResultTransType.setInvalidBasket("");
