@@ -1,23 +1,14 @@
 roadmap, priority order
 
-- all powerups usable
+- powerups shop
 
-- implement xmpp powerup packets called from other players inside race or freeroam session
-
-- car dealer (buy / sell / default car)
-
-- change car
-
-- performance shop
-
-- skill workshop
-
-- aftermarket shop
-
-- paint shop
+- performance shop (sell)
 
 - vinyl shop
 
+- implement xmpp powerup packets called from other players inside race or freeroam session
+
+- rip off all @Convert stuff, and put full xml inside db (performance + simplify code + easy edit for newbies)
 
 ===============================
 
@@ -37,3 +28,8 @@ other things not on roadmap yet:
 - treasure hunt
 - chat
 - race ranking
+- news
+- achievements
+- carlots (buy/limit)
+- insurance
+- repair 
