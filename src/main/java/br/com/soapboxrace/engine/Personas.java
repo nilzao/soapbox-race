@@ -95,8 +95,14 @@ public class Personas extends Router {
 
 	public String cars() {
 		String serialNumber = getParam("serialNumber");
-		Long carId = Long.valueOf(serialNumber);
-		OwnedCarEntity defaultCar = personaBO.deleteCar(getPersonaId(), carId);
-		return MarshalXML.marshal(defaultCar);
+		if (serialNumber != null) {
+			Long carId = Long.valueOf(serialNumber);
+			OwnedCarEntity defaultCar = personaBO.deleteCar(getPersonaId(), carId);
+			return MarshalXML.marshal(defaultCar);
+		}
+		String ownedCarTransXml = readInputStream();
+		System.out.println("TODO: sell performance shop");
+		System.out.println(ownedCarTransXml);
+		return "";
 	}
 }
