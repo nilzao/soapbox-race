@@ -59,7 +59,8 @@ public class Router {
 
 	protected Long getLoggedPersonaId() {
 		SessionBO sessionBO = new SessionBO();
-		return sessionBO.getLoggedPersonaId(getSecurityToken(), getUserId());
+		Long loggedPersonaId = sessionBO.getLoggedPersonaId(getSecurityToken(), getUserId());
+		return loggedPersonaId;
 	}
 
 	protected String getSecurityToken() {
