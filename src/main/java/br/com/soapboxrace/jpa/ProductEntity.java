@@ -1,7 +1,5 @@
 package br.com.soapboxrace.jpa;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,7 +13,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "PRODUCT")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class ProductEntity implements Serializable {
+public class ProductEntity implements ISoapBoxEntity {
 
 	private static final long serialVersionUID = -3662485319709500345L;
 
@@ -66,11 +64,11 @@ public class ProductEntity implements Serializable {
 	@XmlTransient
 	protected String categoryName;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

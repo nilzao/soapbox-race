@@ -1,6 +1,5 @@
 package br.com.soapboxrace.jpa;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +20,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 @Entity
 @Table(name = "PERSONA")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class PersonaEntity implements Serializable {
+public class PersonaEntity implements ISoapBoxEntity {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 3130318632367993129L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

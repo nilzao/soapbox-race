@@ -59,7 +59,16 @@ public class Router {
 
 	protected Long getLoggedPersonaId() {
 		SessionBO sessionBO = new SessionBO();
-		return sessionBO.getLoggedPersonaId(getSecurityToken(), getUserId());
+		Long loggedPersonaId = sessionBO.getLoggedPersonaId(getSecurityToken(), getUserId());
+		if(loggedPersonaId == 0){
+			System.out.println("==================================");
+			System.out.println("debug personaId");
+			System.out.println("userId [" + getUserId() + "]");
+			System.out.println("securitToken [" + getSecurityToken() + "]");
+			System.out.println("loggedPersonaId [" + loggedPersonaId + "]");
+			System.out.println("==================================");
+		}
+		return loggedPersonaId;
 	}
 
 	protected String getSecurityToken() {

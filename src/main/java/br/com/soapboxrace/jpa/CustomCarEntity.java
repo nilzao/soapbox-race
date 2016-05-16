@@ -1,7 +1,5 @@
 package br.com.soapboxrace.jpa;
 
-import java.io.Serializable;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -18,13 +16,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
-import br.com.soapboxrace.definition.convert;
 import br.com.soapboxrace.jaxb.CustomCarType;
 import br.com.soapboxrace.jaxb.PaintsType;
 import br.com.soapboxrace.jaxb.PerformancePartsType;
 import br.com.soapboxrace.jaxb.SkillModPartsType;
 import br.com.soapboxrace.jaxb.VinylsType;
 import br.com.soapboxrace.jaxb.VisualPartsType;
+import br.com.soapboxrace.jaxb.convert.PaintsConverter;
+import br.com.soapboxrace.jaxb.convert.PerformancePartsConverter;
+import br.com.soapboxrace.jaxb.convert.SkillModPartsConverter;
+import br.com.soapboxrace.jaxb.convert.VinylsConverter;
+import br.com.soapboxrace.jaxb.convert.VisualPartsConverter;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "CustomCarType", propOrder = { "baseCarId", "carClassHash", "isPreset", "level", "name", "apiId",
@@ -33,8 +35,9 @@ import br.com.soapboxrace.jaxb.VisualPartsType;
 @Entity
 @Table(name = "CUSTOMCAR")
 @XmlRootElement(name = "CustomCar")
-public class CustomCarEntity implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class CustomCarEntity implements ISoapBoxEntity {
+
+	private static final long serialVersionUID = -5031050484246275477L;
 
 	@XmlElement(name = "BaseCar", required = true)
 	protected long baseCarId;
@@ -48,10 +51,10 @@ public class CustomCarEntity implements Serializable {
 	protected String name;
 	@XmlElement(name = "Id", required = true)
 	protected long apiId;
-	@Convert(converter = convert.PaintsConverter.class)
+	@Convert(converter = PaintsConverter.class)
 	@XmlElement(name = "Paints")
 	protected PaintsType paints;
-	@Convert(converter = convert.PerformancePartsConverter.class)
+	@Convert(converter = PerformancePartsConverter.class)
 	@XmlElement(name = "PerformanceParts")
 	protected PerformancePartsType performanceParts;
 	@XmlElement(name = "PhysicsProfileHash")
@@ -60,15 +63,15 @@ public class CustomCarEntity implements Serializable {
 	protected int rating;
 	@XmlElement(name = "ResalePrice")
 	protected int resalePrice;
-	@Convert(converter = convert.SkillModPartsConverter.class)
+	@Convert(converter = SkillModPartsConverter.class)
 	@XmlElement(name = "SkillModParts")
 	protected SkillModPartsType skillModParts;
 	@XmlElement(name = "SkillModSlotCount")
 	protected Short skillModSlotCount;
-	@Convert(converter = convert.VinylsConverter.class)
+	@Convert(converter = VinylsConverter.class)
 	@XmlElement(name = "Vinyls")
 	protected VinylsType vinyls;
-	@Convert(converter = convert.VisualPartsConverter.class)
+	@Convert(converter = VisualPartsConverter.class)
 	@XmlElement(name = "VisualParts")
 	protected VisualPartsType visualParts;
 
@@ -226,4 +229,13 @@ public class CustomCarEntity implements Serializable {
 		result.setVisualParts(this.getVisualParts());
 		return result;
 	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 }

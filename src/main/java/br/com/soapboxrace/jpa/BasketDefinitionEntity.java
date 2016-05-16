@@ -1,7 +1,5 @@
 package br.com.soapboxrace.jpa;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -10,19 +8,27 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import br.com.soapboxrace.definition.convert.OwnedCarTransConverter;
 import br.com.soapboxrace.jaxb.OwnedCarTransType;
+import br.com.soapboxrace.jaxb.convert.OwnedCarTransConverter;
 
 @Entity
 @Table(name = "BASKETDEFINITION")
-public class BasketDefinitionEntity implements Serializable {
+public class BasketDefinitionEntity implements ISoapBoxEntity {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 5314835854384144787L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
 	private Long id;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	@Column(name = "ProductId")
 	private String productId;

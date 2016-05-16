@@ -3,12 +3,7 @@ package br.com.soapboxrace.bo;
 import java.math.BigDecimal;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-
-import org.hibernate.Query;
-import org.hibernate.Session;
-
-import br.com.soapboxrace.db.ConnectionDB;
+import br.com.soapboxrace.dao.PersonaDao;
 import br.com.soapboxrace.jaxb.ArrayOfPersonaBaseType;
 import br.com.soapboxrace.jaxb.ArrayOfstringType;
 import br.com.soapboxrace.jaxb.PersonaBaseType;
@@ -18,16 +13,11 @@ import br.com.soapboxrace.jpa.UserEntity;
 
 public class DriverPersonaBO {
 
-	private ConnectionDB connectionDB = new ConnectionDB();
+	private PersonaDao personaDao = new PersonaDao();
 
 	public ArrayOfstringType reserveName(String name) {
-		ConnectionDB connectionDB = new ConnectionDB();
-		PersonaEntity personaEntity = new PersonaEntity();
-		personaEntity.setName(name);
-		List<?> find = connectionDB.find(personaEntity);
-
 		ArrayOfstringType arrayOfstringType = new ArrayOfstringType();
-		if (find.size() > 0) {
+		if (personaDao.existsByName(name)) {
 			arrayOfstringType.setString("NONE");
 		}
 		return arrayOfstringType;
@@ -49,7 +39,7 @@ public class DriverPersonaBO {
 		personaEntity.setScore(BigDecimal.ZERO);
 		personaEntity.setLevel(1);
 
-		personaEntity = (PersonaEntity) connectionDB.merge(personaEntity);
+		personaEntity = personaDao.save(personaEntity);
 
 		ProfileDataType profileDataType = new ProfileDataType();
 		profileDataType.setName(personaEntity.getName());
@@ -61,18 +51,12 @@ public class DriverPersonaBO {
 	}
 
 	public void deletePersona(long idPersona) {
-		ConnectionDB connectionDB = new ConnectionDB();
-		PersonaEntity personaEntity = (PersonaEntity) connectionDB.findById(new PersonaEntity(), idPersona);
-		EntityManager manager = ConnectionDB.getManager();
-		Session delegate = (Session) manager.getDelegate();
-		Query query = delegate.createQuery("DELETE from LobbyEntrantEntity obj WHERE obj.persona = :persona ");
-		query.setParameter("persona", personaEntity);
-		query.executeUpdate();
-		connectionDB.remove(personaEntity);
+		PersonaEntity personaEntity = personaDao.findById(idPersona);
+		personaDao.del(personaEntity);
 	}
 
 	public ProfileDataType getPersonaInfo(long idPersona) {
-		PersonaEntity personaEntity = (PersonaEntity) connectionDB.findById(new PersonaEntity(), idPersona);
+		PersonaEntity personaEntity = personaDao.findById(idPersona);
 		ProfileDataType profileDataType = new ProfileDataType();
 		profileDataType.setCash(personaEntity.getCash());
 		profileDataType.setIconIndex(personaEntity.getIconIndex());
@@ -86,11 +70,11 @@ public class DriverPersonaBO {
 		return profileDataType;
 	}
 
-	public ArrayOfPersonaBaseType getPersonaBaseFromList(List<Long> idPersona) {
+	public ArrayOfPersonaBaseType getPersonaBaseFromList(List<Long> idsPersona) {
 		ArrayOfPersonaBaseType arrayOfPersonaBaseType = new ArrayOfPersonaBaseType();
 		List<PersonaBaseType> personaBase = arrayOfPersonaBaseType.getPersonaBase();
-		for (Long idPersonaTmp : idPersona) {
-			PersonaEntity personaEntity = (PersonaEntity) connectionDB.findById(new PersonaEntity(), idPersonaTmp);
+		for (Long idPersonaTmp : idsPersona) {
+			PersonaEntity personaEntity = personaDao.findById(idPersonaTmp);
 			PersonaBaseType personaBaseType = new PersonaBaseType();
 			personaBaseType.setIconIndex(personaEntity.getIconIndex());
 			personaBaseType.setLevel(personaEntity.getLevel());

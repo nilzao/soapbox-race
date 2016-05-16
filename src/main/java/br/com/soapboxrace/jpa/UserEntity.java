@@ -1,16 +1,20 @@
 package br.com.soapboxrace.jpa;
 
-import java.io.Serializable;
-
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "USER")
-public class UserEntity implements Serializable {
+public class UserEntity implements ISoapBoxEntity {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -6748416062022703056L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -3,12 +3,8 @@ package br.com.soapboxrace.bo;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-
-import org.hibernate.Hibernate;
-
-import br.com.soapboxrace.db.ConnectionDB;
+import br.com.soapboxrace.dao.LobbyDao;
+import br.com.soapboxrace.dao.PersonaDao;
 import br.com.soapboxrace.engine.Session;
 import br.com.soapboxrace.jaxb.ChallengeType;
 import br.com.soapboxrace.jaxb.CountdownType;
@@ -29,7 +25,8 @@ import br.com.soapboxrace.xmpp.jaxb.P2PCryptoTicketType;
 
 public class MatchmakingBO {
 
-	private ConnectionDB connectionDB = new ConnectionDB();
+	private LobbyDao lobbyDao = new LobbyDao();
+	private PersonaDao personaDao = new PersonaDao();
 
 	public SessionInfoType launchevent(Long eventId) {
 		ChallengeType challengeType = new ChallengeType();
@@ -51,33 +48,21 @@ public class MatchmakingBO {
 	}
 
 	public void joinqueueevent(Long personaId, Long eventId) {
-		EntityManager manager = ConnectionDB.getManager();
-		TypedQuery<LobbyEntity> query = manager.createQuery(
-				"SELECT obj FROM LobbyEntity obj WHERE obj.event = :event and obj.lobbyDateTimeStart between :dateTime1 and :dateTime2",
-				LobbyEntity.class);
-		EventDefinitionEntity eventEntity = new EventDefinitionEntity();
-		eventEntity.setEventId(eventId);
-		query.setParameter("event", eventEntity);
+		PersonaEntity personaEntity = personaDao.findById(personaId);
 		Date now = new Date();
 		Date past = new Date(now.getTime() - 45000);
-		query.setParameter("dateTime1", past);
-		query.setParameter("dateTime2", now);
-		List<LobbyEntity> lobbys = query.getResultList();
-		for (LobbyEntity lobbyEntity : lobbys) {
-			Hibernate.initialize(lobbyEntity.getEntrants());
-		}
-
-		Object objPersonaEntity = connectionDB.findById(new PersonaEntity(), personaId);
-		PersonaEntity personaEntity = (PersonaEntity) objPersonaEntity;
+		List<LobbyEntity> lobbys = lobbyDao.findByEventStarted(eventId, now, past);
 
 		if (lobbys.size() == 0) {
-			createLobby(personaEntity, eventEntity);
+			createLobby(personaEntity, eventId);
 		} else {
 			joinLobby(personaEntity, lobbys);
 		}
 	}
 
-	private void createLobby(PersonaEntity personaEntity, EventDefinitionEntity eventEntity) {
+	private void createLobby(PersonaEntity personaEntity, Long eventId) {
+		EventDefinitionEntity eventEntity = new EventDefinitionEntity();
+		eventEntity.setId(eventId);
 		LobbyEntity lobbyEntity = new LobbyEntity();
 		lobbyEntity.setEvent(eventEntity);
 
@@ -87,7 +72,7 @@ public class MatchmakingBO {
 		lobbyEntrantEntity.setLobby(lobbyEntity);
 		lobbyEntity.add(lobbyEntrantEntity);
 
-		lobbyEntity = (LobbyEntity) connectionDB.merge(lobbyEntity);
+		lobbyEntity = lobbyDao.save(lobbyEntity);
 
 		sendJoinEvent(personaEntity.getId(), lobbyEntity);
 		new LobbyCountDown(lobbyEntity.getId()).start();
@@ -149,8 +134,7 @@ public class MatchmakingBO {
 	}
 
 	public LobbyInfoType acceptinvite(Long personaId, Long lobbyInviteId) {
-		Object objLobbyEntity = connectionDB.findById(new LobbyEntity(), lobbyInviteId);
-		LobbyEntity lobbyEntity = (LobbyEntity) objLobbyEntity;
+		LobbyEntity lobbyEntity = lobbyDao.findById(lobbyInviteId);
 		Long eventIdLong = lobbyEntity.getEvent().getEventId();
 
 		CountdownType countdownType = new CountdownType();
@@ -176,15 +160,14 @@ public class MatchmakingBO {
 		}
 		if (!personaInside) {
 			LobbyEntrantEntity lobbyEntrantEntity = new LobbyEntrantEntity();
-			Object objPersona = connectionDB.findById(new PersonaEntity(), personaId);
-			PersonaEntity personaEntity = (PersonaEntity) objPersona;
+			PersonaEntity personaEntity = personaDao.findById(personaId);
 			lobbyEntrantEntity.setPersona(personaEntity);
 			lobbyEntrantEntity.setPersonaId(personaEntity.getId());
 			lobbyEntrantEntity.setLevel(personaEntity.getLevel());
 			lobbyEntrantEntity.setLobby(lobbyEntity);
 			lobbyEntrantEntity.setLobbyId(lobbyEntrantEntity.getId());
 			lobbyEntity.getEntrants().add(lobbyEntrantEntity);
-			connectionDB.merge(lobbyEntity);
+			lobbyDao.save(lobbyEntity);
 			LobbyEntrantInfoType lobbyEntrantInfoType = new LobbyEntrantInfoType();
 			lobbyEntrantInfoType.setPersonaId(lobbyEntrantEntity.getPersona().getId());
 			lobbyEntrantInfoType.setLevel(lobbyEntrantEntity.getPersona().getLevel());
@@ -205,7 +188,7 @@ public class MatchmakingBO {
 
 		private Long lobbyId;
 
-		private ConnectionDB connectionDB = new ConnectionDB();
+		private LobbyDao lobbyDao = new LobbyDao();
 
 		public LobbyCountDown(Long lobbyId) {
 			this.lobbyId = lobbyId;
@@ -217,7 +200,7 @@ public class MatchmakingBO {
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
-			LobbyEntity lobbyEntity = (LobbyEntity) connectionDB.findById(new LobbyEntity(), lobbyId);
+			LobbyEntity lobbyEntity = lobbyDao.findById(lobbyId);
 			List<LobbyEntrantEntity> entrants = lobbyEntity.getEntrants();
 			LobbyLaunchedType lobbyLaunched = new LobbyLaunchedType();
 			EntrantsType entrantsType = new EntrantsType();

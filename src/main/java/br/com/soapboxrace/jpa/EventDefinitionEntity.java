@@ -25,7 +25,9 @@ import br.com.soapboxrace.jaxb.RewardModesType;
 		"trackLocalization" })
 @Entity
 @Table(name = "EVENTDEFINITION")
-public class EventDefinitionEntity {
+public class EventDefinitionEntity implements ISoapBoxEntity {
+
+	private static final long serialVersionUID = -8986500193422498612L;
 
 	@XmlElement(name = "EventId")
 	@Id
@@ -132,6 +134,14 @@ public class EventDefinitionEntity {
 	}
 
 	public void setEventId(long eventId) {
+		this.eventId = eventId;
+	}
+
+	public Long getId() {
+		return eventId;
+	}
+
+	public void setId(Long eventId) {
 		this.eventId = eventId;
 	}
 

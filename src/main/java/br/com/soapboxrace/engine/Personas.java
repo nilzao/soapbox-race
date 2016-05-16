@@ -1,5 +1,6 @@
 package br.com.soapboxrace.engine;
 
+import br.com.soapboxrace.bo.BasketBO;
 import br.com.soapboxrace.bo.PersonaBO;
 import br.com.soapboxrace.jaxb.BasketTransType;
 import br.com.soapboxrace.jaxb.CarSlotInfoTrans;
@@ -64,7 +65,10 @@ public class Personas extends Router {
 			return "";
 		}
 		OwnedCarEntity ownedCarEntity = personaBO.defaultcar(personaId);
-		return MarshalXML.marshal(ownedCarEntity);
+		if (ownedCarEntity != null) {
+			return MarshalXML.marshal(ownedCarEntity);
+		}
+		return "";
 	}
 
 	public String commerce() {
@@ -84,11 +88,21 @@ public class Personas extends Router {
 		BasketTransType basketTransType = new BasketTransType();
 		basketTransType = (BasketTransType) UnmarshalXML.unMarshal(basketXml, basketTransType);
 		String productId = basketTransType.getItems().getBasketItemTrans().getProductId();
-		CommerceResultTransType commerceResultTrans = personaBO.basket(getPersonaId(), productId);
+		BasketBO basketBO = new BasketBO();
+		CommerceResultTransType commerceResultTrans = basketBO.basket(getPersonaId(), productId);
 		return MarshalXML.marshal(commerceResultTrans);
 	}
 
 	public String cars() {
+		String serialNumber = getParam("serialNumber");
+		if (serialNumber != null) {
+			Long carId = Long.valueOf(serialNumber);
+			OwnedCarEntity defaultCar = personaBO.deleteCar(getPersonaId(), carId);
+			return MarshalXML.marshal(defaultCar);
+		}
+		String ownedCarTransXml = readInputStream();
+		System.out.println("TODO: sell performance shop");
+		System.out.println(ownedCarTransXml);
 		return "";
 	}
 }

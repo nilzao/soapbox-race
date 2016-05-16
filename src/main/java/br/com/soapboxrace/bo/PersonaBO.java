@@ -3,41 +3,32 @@ package br.com.soapboxrace.bo;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-
-import br.com.soapboxrace.db.ConnectionDB;
+import br.com.soapboxrace.dao.OwnedCarDao;
+import br.com.soapboxrace.dao.PersonaDao;
+import br.com.soapboxrace.dao.ProductDao;
 import br.com.soapboxrace.definition.ShoppingCartPurchaseResult;
-import br.com.soapboxrace.definition.convert;
 import br.com.soapboxrace.jaxb.CarSlotInfoTrans;
 import br.com.soapboxrace.jaxb.CarsOwnedByPersonaList;
-import br.com.soapboxrace.jaxb.CommerceResultTransType;
 import br.com.soapboxrace.jaxb.CommerceSessionResultTransType;
-import br.com.soapboxrace.jaxb.CustomCarType;
-import br.com.soapboxrace.jaxb.InventoryItemTransType;
 import br.com.soapboxrace.jaxb.InventoryItemsType;
 import br.com.soapboxrace.jaxb.ObtainableSlotsList;
-import br.com.soapboxrace.jaxb.PurchasedCarsType;
 import br.com.soapboxrace.jaxb.UpdatedCarType;
 import br.com.soapboxrace.jaxb.WalletTransType;
 import br.com.soapboxrace.jaxb.WalletsType;
-import br.com.soapboxrace.jpa.BasketDefinitionEntity;
-import br.com.soapboxrace.jpa.CustomCarEntity;
 import br.com.soapboxrace.jpa.OwnedCarEntity;
 import br.com.soapboxrace.jpa.PersonaEntity;
 import br.com.soapboxrace.jpa.ProductEntity;
 
 public class PersonaBO {
-	private ConnectionDB connectionDB = new ConnectionDB();
+
+	private OwnedCarDao ownedCarDao = new OwnedCarDao();
+
+	private PersonaDao personaDao = new PersonaDao();
+
+	private ProductDao productDao = new ProductDao();
 
 	public CarSlotInfoTrans carslots(long idPersona) {
-		EntityManager manager = ConnectionDB.getManager();
-		TypedQuery<OwnedCarEntity> query = manager
-				.createQuery("SELECT obj FROM OwnedCarEntity obj WHERE obj.persona = :persona", OwnedCarEntity.class);
-		PersonaEntity personaEntity = new PersonaEntity();
-		personaEntity.setId(idPersona);
-		query.setParameter("persona", personaEntity);
-		List<OwnedCarEntity> ownedCars = query.getResultList();
+		List<OwnedCarEntity> ownedCars = ownedCarDao.findByIdPersona(idPersona);
 
 		CarSlotInfoTrans carSlotInfoTrans = new CarSlotInfoTrans();
 		CarsOwnedByPersonaList carsOwnedByPersonaList = new CarsOwnedByPersonaList();
@@ -45,7 +36,7 @@ public class PersonaBO {
 		if (ownedCars.size() > 0) {
 			carsOwnedByPersonaList.setOwnedCarList(ownedCars);
 		}
-		carSlotInfoTrans.setDefaultOwnedCarIndex(personaEntity.getCurCarIndex());
+		carSlotInfoTrans.setDefaultOwnedCarIndex(personaDao.findById(idPersona).getCurCarIndex());
 		carSlotInfoTrans.setOwnedCarSlotsCount(1);
 
 		// -- Add product data for purchasing car slots in the car dealer
@@ -53,9 +44,8 @@ public class PersonaBO {
 		ObtainableSlotsList obtainableSlotsList = new ObtainableSlotsList();
 
 		ArrayList<ProductEntity> productList = new ArrayList<ProductEntity>();
-		ProductEntity carSlotProductData = new ProductEntity();
-		carSlotProductData.setProductId("SRV-CARSLOT");
-		carSlotProductData = (ProductEntity) connectionDB.find(carSlotProductData).get(0);
+		ProductEntity carSlotProductData = productDao.findByProductId("SRV-CARSLOT");
+
 		productList.add(carSlotProductData);
 		obtainableSlotsList.setProductList(productList);
 
@@ -69,7 +59,8 @@ public class PersonaBO {
 		// TODO: Economy input, currency calculation, and manual processing of
 		// basket items.
 
-		PersonaEntity personaEntity = (PersonaEntity) connectionDB.findById(new PersonaEntity(), idPersona);
+		PersonaEntity personaEntity = personaDao.findById(idPersona);
+
 		CommerceSessionResultTransType commerceSessionResultTransType = new CommerceSessionResultTransType();
 
 		// -- Wallet
@@ -89,10 +80,17 @@ public class PersonaBO {
 		currentCar.getCustomCar().setPerformanceParts(updatedCar.getCustomCar().getPerformanceParts());
 		currentCar.getCustomCar().setSkillModParts(updatedCar.getCustomCar().getSkillModParts());
 		currentCar.getCustomCar().setVisualParts(updatedCar.getCustomCar().getVisualParts());
-		connectionDB.merge(currentCar);
+
+		ownedCarDao.save(currentCar);
 
 		// -- Set the response car
-		commerceSessionResultTransType.setUpdatedCar(convert.fromOwnedCarToUpdatedCar(currentCar));
+		UpdatedCarType responseCar = new UpdatedCarType();
+		responseCar.setCustomCar(currentCar.getCustomCar().getCustomCarType());
+		responseCar.setDurability(currentCar.getDurability());
+		responseCar.setHeatLevel((short) 1);
+		responseCar.setOwnershipType("CustomizedCar");
+		responseCar.setUniqueCarId(currentCar.getUniqueCarId());
+		commerceSessionResultTransType.setUpdatedCar(responseCar);
 
 		// Currently not important, so we just fill in dummy response
 		commerceSessionResultTransType.setInvalidBasket("");
@@ -102,87 +100,26 @@ public class PersonaBO {
 		return commerceSessionResultTransType;
 	}
 
-	public CommerceResultTransType basket(long idPersona, String productId) {
-		// TODO: Economy input, currency calculation, and car slot checking.
-		PersonaEntity personaEntity = (PersonaEntity) connectionDB.findById(new PersonaEntity(), idPersona);
-		CommerceResultTransType commerceResultTransType = new CommerceResultTransType();
-		PurchasedCarsType purchasedCarsType = new PurchasedCarsType();
-
-		// -- Wallet
-		WalletTransType walletTransType = new WalletTransType();
-		walletTransType.setBalance(personaEntity.getCash());
-		walletTransType.setCurrency("CASH");
-
-		WalletsType walletsType = new WalletsType();
-		walletsType.setWalletTrans(walletTransType);
-
-		commerceResultTransType.setWallets(walletsType);
-
-		// -- Set the look-up car
-		BasketDefinitionEntity basketDefinition = new BasketDefinitionEntity();
-		basketDefinition.setProductId(productId);
-
-		// Currently not important, so we just fill in dummy response
-		InventoryItemTransType inventoryItemTransType = new InventoryItemTransType();
-		InventoryItemsType inventoryItemsType = new InventoryItemsType();
-		inventoryItemsType.setInventoryItemTrans(inventoryItemTransType);
-
-		commerceResultTransType.setCommerceItems("");
-		commerceResultTransType.setInvalidBasket("");
-		commerceResultTransType.setInventoryItems(inventoryItemsType);
-
-		// -- Set up empty response in case query returns null
-		commerceResultTransType.setPurchasedCars(purchasedCarsType);
-		commerceResultTransType.setStatus(ShoppingCartPurchaseResult.aFail_itemnotavail);
-
-		List<?> find = connectionDB.find(basketDefinition);
-		if (find.size() > 0) {
-			basketDefinition = (BasketDefinitionEntity) find.get(0);
-			CustomCarType customCar = basketDefinition.getOwnedCarTrans().getCustomCar();
-
-			OwnedCarEntity ownedCarEntity = new OwnedCarEntity();
-			CustomCarEntity customCarEntity = new CustomCarEntity();
-			customCarEntity.setApiId(customCar.getApiId());
-			customCarEntity.setBaseCarId(customCar.getBaseCarId());
-			customCarEntity.setCarClassHash(customCar.getCarClassHash());
-			customCarEntity.setPaints(customCar.getPaints());
-			customCarEntity.setPerformanceParts(customCar.getPerformanceParts());
-			customCarEntity.setPhysicsProfileHash(customCar.getPhysicsProfileHash());
-			customCarEntity.setRating(customCar.getRating());
-			customCarEntity.setResalePrice(customCar.getResalePrice());
-			customCarEntity.setSkillModParts(customCar.getSkillModParts());
-			customCarEntity.setSkillModSlotCount((short) 5);
-			customCarEntity.setVinyls(customCar.getVinyls());
-			customCarEntity.setVisualParts(customCar.getVisualParts());
-			customCarEntity.setParentOwnedCarTrans(ownedCarEntity);
-
-			ownedCarEntity.setCustomCar(customCarEntity);
-			ownedCarEntity.setDurability((short) 100);
-			ownedCarEntity.setExpirationDate(null);
-			ownedCarEntity.setHeatLevel((short) 0);
-			ownedCarEntity.setOwnershipType("PresetCar");
-			ownedCarEntity.setPersona(personaEntity);
-
-			connectionDB.persist(ownedCarEntity);
-			connectionDB.merge(customCarEntity);
-
-			purchasedCarsType.setOwnedCarTrans(ownedCarEntity.getOwnedCarTransType());
-			commerceResultTransType.setPurchasedCars(purchasedCarsType);
-			commerceResultTransType.setStatus(ShoppingCartPurchaseResult.aSuccess);
-		}
-		return commerceResultTransType;
-	}
-
 	public OwnedCarEntity defaultcar(long idPersona) {
-		PersonaEntity personaEntity = (PersonaEntity) connectionDB.findById(new PersonaEntity(), idPersona);
+		PersonaEntity personaEntity = personaDao.findById(idPersona);
 		personaEntity.setId(idPersona);
-		List<OwnedCarEntity> ownedCarList = getOwnedCarList(personaEntity);
-		return ownedCarList.get(personaEntity.getCurCarIndex());
+		List<OwnedCarEntity> ownedCarList = ownedCarDao.findByIdPersona(idPersona);
+		Integer curCarIndex = personaEntity.getCurCarIndex();
+		if (ownedCarList.size() > 0) {
+			if (curCarIndex >= ownedCarList.size()) {
+				curCarIndex--;
+				OwnedCarEntity ownedCarEntity = ownedCarList.get(curCarIndex);
+				changeDefaultCar(idPersona, ownedCarEntity.getId());
+			}
+			OwnedCarEntity ownedCarEntity = ownedCarList.get(curCarIndex);
+			return ownedCarEntity;
+		}
+		return null;
 	}
 
 	public void changeDefaultCar(long idPersona, long defaultCarId) {
-		PersonaEntity personaEntity = (PersonaEntity) connectionDB.findById(new PersonaEntity(), idPersona);
-		List<OwnedCarEntity> ownedCarList = getOwnedCarList(personaEntity);
+		PersonaEntity personaEntity = personaDao.findById(idPersona);
+		List<OwnedCarEntity> ownedCarList = ownedCarDao.findByIdPersona(idPersona);
 		int i = 0;
 		for (OwnedCarEntity ownedCarEntity : ownedCarList) {
 			if (ownedCarEntity.getUniqueCarId() == defaultCarId) {
@@ -191,15 +128,12 @@ public class PersonaBO {
 			i++;
 		}
 		personaEntity.setCurCarIndex(i);
-		connectionDB.merge(personaEntity);
+		personaDao.save(personaEntity);
 	}
 
-	private List<OwnedCarEntity> getOwnedCarList(PersonaEntity personaEntity) {
-		EntityManager manager = ConnectionDB.getManager();
-		TypedQuery<OwnedCarEntity> query = manager.createQuery(
-				"SELECT obj FROM OwnedCarEntity obj WHERE obj.persona = :persona order by obj.id",
-				OwnedCarEntity.class);
-		query.setParameter("persona", personaEntity);
-		return query.getResultList();
+	public OwnedCarEntity deleteCar(long idPersona, long carId) {
+		ownedCarDao.del(carId);
+		return defaultcar(idPersona);
 	}
+
 }
