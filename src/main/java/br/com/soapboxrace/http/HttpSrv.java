@@ -120,7 +120,6 @@ public class HttpSrv extends GzipHandler {
 	public static void main(String[] args) {
 		Locale newLocale = new Locale("en", "GB");
 		Locale.setDefault(newLocale);
-		System.setProperty("javax.xml.bind.context.factory", "org.eclipse.persistence.jaxb.JAXBContextFactory");
 		
 		if (args.length > 0) {
 			Session.setIp(args[0]);
