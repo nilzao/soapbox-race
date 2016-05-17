@@ -1,13 +1,11 @@
 package br.com.soapboxrace.engine;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
 import br.com.soapboxrace.http.HttpSrv;
-import br.com.soapboxrace.jpa.PersonaEntity;
 import br.com.soapboxrace.xmpp.XmppSrv;
 
 public class Default extends Router {
@@ -184,7 +182,9 @@ public class Default extends Router {
 		return "";
 	}
 
-	public void sendChatAnnouncement(String messageText, String userVar) {
+	public void sendChatAnnouncement() {
+		String messageText = getParam("messageText");
+		String userVar = getParam("userVar");
 		switch (userVar) {
 			case "session":
 				Collection<HttpSession> activePersonas = HttpSrv.activePersonas.values();
