@@ -97,6 +97,10 @@ public class DriverPersona extends Router {
 		ArrayOfstringType reserveName = driverPersonaBO.reserveName(getParam("name"));
 		return MarshalXML.marshal(reserveName);
 	}
+	
+	public String unreserveName() {
+		return "";
+	}
 
 	public String createPersona() {
 		String userIdStr = getParam("userId");
