@@ -8,33 +8,25 @@ public class User extends Router {
 
 	private UserBO userBO = new UserBO();
 
-	Long getPersonaId() {
-		return Long.valueOf(getParam("personaId"));
-	}
-
 	public String getPermanentSession() {
-		String securityToken = getSecurityToken();
-		Long userId = getUserId();
-		UserInfoType userInfo = userBO.getPermanentSession(userId, securityToken);
+		String securityToken = getHeader("securityToken");
+		Long userId = Long.valueOf(getHeader("userId"));
+		UserInfoType userInfo = userBO.getPermanentSession(userId, securityToken);	
 		return MarshalXML.marshal(userInfo);
 	}
 
 	public String secureLogout() {
+		removePersonaEntry();
 		return "";
 	}
 
 	public String secureLoginPersona() {
-		Long personaId = getPersonaId();
-		String securityToken = getSecurityToken();
-		Long userId = Long.valueOf(getParam("userId"));
-		userBO.secureLoginPersona(securityToken, userId, personaId);
+		setPersonaEntry(Long.valueOf(getParam("personaId")));
 		return "";
 	}
 
 	public String secureLogoutPersona() {
-		String securityToken = getSecurityToken();
-		Long userId = Long.valueOf(getParam("userId"));
-		userBO.secureLoginPersona(securityToken, userId, 0L);
+		setPersonaEntry(0L);
 		return "";
 	}
 

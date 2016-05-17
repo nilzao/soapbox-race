@@ -18,23 +18,14 @@ import org.eclipse.jetty.server.handler.gzip.GzipHandler;
 import org.eclipse.jetty.server.handler.gzip.GzipHttpOutputInterceptor;
 
 import br.com.soapboxrace.db.ConnectionDB;
-import br.com.soapboxrace.engine.KeepAlive;
 import br.com.soapboxrace.engine.Router;
 import br.com.soapboxrace.engine.Session;
 import br.com.soapboxrace.xmpp.XmppSrv;
 
 public class HttpSrv extends GzipHandler {
-
-	private KeepAlive keepAlive = new KeepAlive();
-
+		
 	public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) {
-		keepAlive.setBaseRequest(baseRequest);
-		keepAlive.setRequest(request);
-		keepAlive.setTarget(target);
-		keepAlive.keepSession();
-		if ("/favicon.ico".equals(target)) {
-			return;
-		}
+		if ("/favicon.ico".equals(target)) return;		
 		System.out.println(baseRequest.toString());
 		String[] targetSplitted = target.split("/");
 		String className = "Default";
