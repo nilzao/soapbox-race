@@ -31,13 +31,13 @@ public class ProfileDataType {
 	@XmlElement(name = "Rating")
 	protected float rating;
 	@XmlElement(name = "Rep")
-	protected int rep;
+	protected float rep;
 	@XmlElement(name = "RepAtCurrentLevel")
-	protected int repAtCurrentLevel;
+	protected float repAtCurrentLevel;
 	@XmlElement(required = true)
 	protected String ccar;
 	@XmlElement(name = "Score")
-	protected int score;
+	protected float score;
 
 	public int getBoost() {
 		return boost;
@@ -111,19 +111,19 @@ public class ProfileDataType {
 		this.rating = rating;
 	}
 
-	public int getRep() {
+	public float getRep() {
 		return rep;
 	}
 
-	public void setRep(int rep) {
+	public void setRep(float rep) {
 		this.rep = rep;
 	}
 
-	public int getRepAtCurrentLevel() {
+	public float getRepAtCurrentLevel() {
 		return repAtCurrentLevel;
 	}
 
-	public void setRepAtCurrentLevel(int repAtCurrentLevel) {
+	public void setRepAtCurrentLevel(float repAtCurrentLevel) {
 		this.repAtCurrentLevel = repAtCurrentLevel;
 	}
 
@@ -135,11 +135,11 @@ public class ProfileDataType {
 		this.ccar = ccar;
 	}
 
-	public int getScore() {
+	public float getScore() {
 		return score;
 	}
 
-	public void setScore(int score) {
+	public void setScore(float score) {
 		this.score = score;
 	}
 

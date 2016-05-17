@@ -1,6 +1,5 @@
 package br.com.soapboxrace.jpa;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,19 +41,19 @@ public class PersonaEntity implements ISoapBoxEntity {
 	private String motto;
 
 	@Column(name = "PERCENTTOLEVEL")
-	private BigDecimal percentToLevel;
+	private float percentToLevel;
 
 	@Column(name = "RATING")
-	private BigDecimal rating;
+	private float rating;
 
 	@Column(name = "REP")
-	private BigDecimal rep;
+	private float rep;
 
 	@Column(name = "REPATCURRENTLEVEL")
-	private BigDecimal repAtCurrentLevel;
+	private float repAtCurrentLevel;
 
 	@Column(name = "SCORE")
-	private BigDecimal score;
+	private float score;
 
 	@Column(name = "NAME", length = 50)
 	private String name;
@@ -110,43 +109,43 @@ public class PersonaEntity implements ISoapBoxEntity {
 		return this.motto;
 	}
 
-	public void setPercentToLevel(BigDecimal percentToLevel) {
+	public void setPercentToLevel(float percentToLevel) {
 		this.percentToLevel = percentToLevel;
 	}
 
-	public BigDecimal getPercentToLevel() {
+	public float getPercentToLevel() {
 		return this.percentToLevel;
 	}
 
-	public void setRating(BigDecimal rating) {
+	public void setRating(float rating) {
 		this.rating = rating;
 	}
 
-	public BigDecimal getRating() {
+	public float getRating() {
 		return this.rating;
 	}
 
-	public void setRep(BigDecimal rep) {
+	public void setRep(float rep) {
 		this.rep = rep;
 	}
 
-	public BigDecimal getRep() {
+	public float getRep() {
 		return this.rep;
 	}
 
-	public void setRepAtCurrentLevel(BigDecimal repAtCurrentLevel) {
+	public void setRepAtCurrentLevel(float repAtCurrentLevel) {
 		this.repAtCurrentLevel = repAtCurrentLevel;
 	}
 
-	public BigDecimal getRepAtCurrentLevel() {
+	public float getRepAtCurrentLevel() {
 		return this.repAtCurrentLevel;
 	}
 
-	public void setScore(BigDecimal score) {
+	public void setScore(float score) {
 		this.score = score;
 	}
 
-	public BigDecimal getScore() {
+	public float getScore() {
 		return this.score;
 	}
 

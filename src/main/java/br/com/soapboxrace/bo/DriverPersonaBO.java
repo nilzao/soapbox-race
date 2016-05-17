@@ -1,6 +1,5 @@
 package br.com.soapboxrace.bo;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import br.com.soapboxrace.dao.PersonaDao;
@@ -32,11 +31,11 @@ public class DriverPersonaBO {
 		personaEntity.setName(name);
 		personaEntity.setIconIndex(iconIndex);
 		personaEntity.setUser(userEntity);
-		personaEntity.setPercentToLevel(BigDecimal.ZERO);
-		personaEntity.setRating(BigDecimal.ZERO);
-		personaEntity.setRep(BigDecimal.ZERO);
-		personaEntity.setRepAtCurrentLevel(BigDecimal.ZERO);
-		personaEntity.setScore(BigDecimal.ZERO);
+		personaEntity.setPercentToLevel(Float.NaN);
+		personaEntity.setRating(Float.NaN);
+		personaEntity.setRep(Float.NaN);
+		personaEntity.setRepAtCurrentLevel(Float.NaN);
+		personaEntity.setScore(Float.NaN);
 		personaEntity.setLevel(1);
 
 		personaEntity = personaDao.save(personaEntity);
@@ -61,12 +60,12 @@ public class DriverPersonaBO {
 		profileDataType.setCash(personaEntity.getCash());
 		profileDataType.setIconIndex(personaEntity.getIconIndex());
 		profileDataType.setLevel(personaEntity.getLevel());
-		profileDataType.setMotto("");
+		profileDataType.setMotto(personaEntity.getMotto());
 		profileDataType.setName(personaEntity.getName());
-		profileDataType.setPercentToLevel(50F);
-		profileDataType.setRep(60);
-		profileDataType.setRepAtCurrentLevel(60);
-		profileDataType.setPersonaId(personaEntity.getId().intValue());
+		profileDataType.setPercentToLevel(personaEntity.getPercentToLevel());
+		profileDataType.setRep(personaEntity.getRep());
+		profileDataType.setRepAtCurrentLevel(personaEntity.getRepAtCurrentLevel());
+		profileDataType.setPersonaId(personaEntity.getId());
 		return profileDataType;
 	}
 
@@ -80,10 +79,10 @@ public class DriverPersonaBO {
 			personaBaseType.setLevel(personaEntity.getLevel());
 			personaBaseType.setName(personaEntity.getName());
 			personaBaseType.setPersonaId(personaEntity.getId().intValue());
-			personaBaseType.setMotto("");
+			personaBaseType.setMotto(personaEntity.getMotto());
 			personaBaseType.setPresence(2);
 			personaBaseType.setUserId(personaEntity.getUser().getId().intValue());
-			personaBaseType.setScore(55);
+			personaBaseType.setScore(personaEntity.getScore());
 			personaBaseType.setBadges("");
 			personaBase.add(personaBaseType);
 		}
