@@ -1,5 +1,15 @@
 package br.com.soapboxrace.engine;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
+
+import javax.servlet.http.HttpSession;
+
+import br.com.soapboxrace.http.HttpSrv;
+import br.com.soapboxrace.jpa.PersonaEntity;
+import br.com.soapboxrace.xmpp.XmppSrv;
+
 public class Default extends Router {
 
 	public String getfriendlistfromuserid() {
@@ -172,6 +182,70 @@ public class Default extends Router {
 
 	public String addfriendrequest() {
 		return "";
+	}
+
+	public void sendChatAnnouncement(String messageText, String userVar) {
+		switch (userVar) {
+			case "session":
+				Collection<HttpSession> activePersonas = HttpSrv.activePersonas.values();
+				for (HttpSession personaSession : activePersonas) {
+					Long personaId = (Long) personaSession.getAttribute("personaId");
+					System.out.println("Session nr." + personaSession.getId() + " {"
+							+ "\r\n token: " + personaSession.getAttribute("securityToken")
+							+ "\r\n userId: " + personaSession.getAttribute("userId")
+							+ "\r\n personaId: " + personaId + "\r\n}");
+					if (personaId != 0 && XmppSrv.xmppClients.containsKey(personaId)) {
+						StringBuilder stringBuilder = new StringBuilder();
+						stringBuilder.append("<message from='nfsw.engine.engine@127.0.0.1/EA_Chat' id='JN_2578' to='nfsw.");
+						stringBuilder.append(personaId);
+						stringBuilder.append("@127.0.0.1'>");
+						stringBuilder.append("<body>");
+						stringBuilder.append("&lt;response status='1' ticket='0'&gt;");
+						stringBuilder.append("&lt;ChatBroadcast &gt;");
+						stringBuilder.append("&lt;ChatBlob&gt;");
+						stringBuilder.append("&lt;FromName&gt;System&lt;/FromName&gt;");
+						stringBuilder.append("&lt;FromPersonaId&gt;0&lt;/FromPersonaId&gt;");
+						stringBuilder.append("&lt;FromUserId&gt;0&lt;/FromUserId&gt;");
+						stringBuilder.append("&lt;Message&gt;" + messageText); //32 char = 1 block
+						stringBuilder.append("&lt;/Message&gt;&lt;ToId&gt;0&lt;/ToId&gt;");
+						stringBuilder.append("&lt;Type&gt;2&lt;/Type&gt;&lt;/ChatBlob&gt;&lt;/ChatBroadcast&gt;");
+						stringBuilder.append("&lt;/response&gt;");
+						stringBuilder.append("</body>");
+						stringBuilder.append("<subject>69</subject>");
+						stringBuilder.append("</message>");
+						String msg = stringBuilder.toString();
+						XmppSrv.sendMsg(personaId, msg);
+					}
+				}
+				break;
+			case "xmpp":
+				Set<Long> activeXmppSessions = XmppSrv.xmppClients.keySet();
+				for (Long personaId : activeXmppSessions) {
+					System.out.println("XmppSession {"
+							+ "\r\n personaId: " + personaId + "\r\n}");
+					StringBuilder stringBuilder = new StringBuilder();
+					stringBuilder.append("<message from='nfsw.engine.engine@127.0.0.1/EA_Chat' id='JN_2578' to='nfsw.");
+					stringBuilder.append(personaId);
+					stringBuilder.append("@127.0.0.1'>");
+					stringBuilder.append("<body>");
+					stringBuilder.append("&lt;response status='1' ticket='0'&gt;");
+					stringBuilder.append("&lt;ChatBroadcast &gt;");
+					stringBuilder.append("&lt;ChatBlob&gt;");
+					stringBuilder.append("&lt;FromName&gt;System&lt;/FromName&gt;");
+					stringBuilder.append("&lt;FromPersonaId&gt;0&lt;/FromPersonaId&gt;");
+					stringBuilder.append("&lt;FromUserId&gt;0&lt;/FromUserId&gt;");
+					stringBuilder.append("&lt;Message&gt;" + messageText); //32
+					stringBuilder.append("&lt;/Message&gt;&lt;ToId&gt;0&lt;/ToId&gt;");
+					stringBuilder.append("&lt;Type&gt;2&lt;/Type&gt;&lt;/ChatBlob&gt;&lt;/ChatBroadcast&gt;");
+					stringBuilder.append("&lt;/response&gt;");
+					stringBuilder.append("</body>");
+					stringBuilder.append("<subject>69</subject>");
+					stringBuilder.append("</message>");
+					String msg = stringBuilder.toString();
+					XmppSrv.sendMsg(personaId, msg);
+				}
+				break;
+		}
 	}
 	
 }
