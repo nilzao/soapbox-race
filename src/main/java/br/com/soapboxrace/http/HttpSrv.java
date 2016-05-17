@@ -7,12 +7,9 @@ import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Paths;
 import java.util.Locale;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.eclipse.jetty.server.HttpOutput;
 import org.eclipse.jetty.server.Request;
@@ -23,17 +20,12 @@ import org.eclipse.jetty.server.handler.gzip.GzipHttpOutputInterceptor;
 import br.com.soapboxrace.db.ConnectionDB;
 import br.com.soapboxrace.engine.Router;
 import br.com.soapboxrace.engine.Session;
-import br.com.soapboxrace.jpa.PersonaEntity;
 import br.com.soapboxrace.xmpp.XmppSrv;
 
 public class HttpSrv extends GzipHandler {
-
-	public static ConcurrentMap<PersonaEntity, HttpSession> activePersonas = new ConcurrentHashMap<PersonaEntity, HttpSession>();
-	
+		
 	public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) {
-		if ("/favicon.ico".equals(target)) {
-			return;
-		}
+		if ("/favicon.ico".equals(target)) return;		
 		System.out.println(baseRequest.toString());
 		String[] targetSplitted = target.split("/");
 		String className = "Default";
@@ -56,7 +48,7 @@ public class HttpSrv extends GzipHandler {
 			Router newInstance = (Router) dynamicObj.newInstance();
 			newInstance.setBaseRequest(baseRequest);
 			newInstance.setRequest(request);
-			newInstance.setTarget(target);
+			newInstance.setTarget(target);			
 			Method declaredMethod;
 			declaredMethod = dynamicObj.getDeclaredMethod(methodName);
 			content = (String) declaredMethod.invoke(newInstance);

@@ -3,11 +3,11 @@ package br.com.soapboxrace.xmpp;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.HashMap;
 
 public class XmppSrv {
 
-	public static ConcurrentHashMap<Long, XmppTalk> xmppClients = new ConcurrentHashMap<Long, XmppTalk>();
+	public static HashMap<Long, XmppTalk> xmppClients = new HashMap<Long, XmppTalk>();
 
 	public static void addXmppClient(long personaId, XmppTalk xmppClient) {
 		xmppClients.putIfAbsent(personaId, xmppClient);
@@ -15,7 +15,11 @@ public class XmppSrv {
 
 	public static void sendMsg(long personaId, String msg) {
 		if (xmppClients.containsKey(personaId)) {
-			xmppClients.get(personaId).write(msg);
+			XmppTalk xTalk = xmppClients.get(personaId);
+			if (xTalk != null)
+				xTalk.write(msg);
+			else
+				System.err.println("xmppClient with the personaId " + personaId + " is attached to a null XmppTalk instance!");
 		} else {
 			System.err.println("xmppClients doesn't contain personaId " + personaId);
 		}

@@ -16,7 +16,9 @@
       <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
       <property name="javax.persistence.jdbc.user" value="root" />
       <property name="javax.persistence.jdbc.password" value="" />
-      <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+      <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLInnoDBDialect" />
+	  <property name="hibernate.connection.provider_class" value="org.hibernate.connection.C3P0ConnectionProvider" />
+	  <property name="hibernate.connection.isolation" value="4" />
 
       <property name="hibernate.default_schema" value="SOAPBOX" />
     </properties>

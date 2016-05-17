@@ -11,23 +11,22 @@ public class User extends Router {
 	public String getPermanentSession() {
 		String securityToken = getHeader("securityToken");
 		Long userId = Long.valueOf(getHeader("userId"));
-		UserInfoType userInfo = userBO.getPermanentSession(userId, securityToken);
-		createSession();		
+		UserInfoType userInfo = userBO.getPermanentSession(userId, securityToken);	
 		return MarshalXML.marshal(userInfo);
 	}
 
 	public String secureLogout() {
-		closeSession();
+		removePersonaEntry();
 		return "";
 	}
 
 	public String secureLoginPersona() {
-		updateSession("personaId", Long.valueOf(getParam("personaId")));
+		setPersonaEntry(Long.valueOf(getParam("personaId")));
 		return "";
 	}
 
 	public String secureLogoutPersona() {
-		updateSession("personaId", null);
+		setPersonaEntry(0L);
 		return "";
 	}
 

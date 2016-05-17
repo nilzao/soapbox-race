@@ -20,7 +20,7 @@ public class Personas extends Router {
 	private long getPersonaId() throws PersonaIdMismatchException {
 		String[] targetSplitted = getTarget().split("/");
 		Long idPersona = Long.valueOf(targetSplitted[4]);
-		if (idPersona.equals(getLoggedPersonaId()))
+		if (idPersona.equals(getLoggedPersonaId()) || getLoggedPersonaId() == null)
 			return idPersona;
 		else
 			throw new ServerExceptions.PersonaIdMismatchException(getLoggedPersonaId(), idPersona);
