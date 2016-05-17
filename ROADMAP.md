@@ -4,6 +4,8 @@ roadmap, priority order
 
 - performance shop (sell)
 
+- skill workshop (sell)
+
 - vinyl shop
 
 - implement xmpp powerup packets called from other players inside race or freeroam session
