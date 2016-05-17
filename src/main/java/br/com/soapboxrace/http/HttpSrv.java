@@ -7,9 +7,12 @@ import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Paths;
 import java.util.Locale;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.eclipse.jetty.server.HttpOutput;
 import org.eclipse.jetty.server.Request;
@@ -18,20 +21,16 @@ import org.eclipse.jetty.server.handler.gzip.GzipHandler;
 import org.eclipse.jetty.server.handler.gzip.GzipHttpOutputInterceptor;
 
 import br.com.soapboxrace.db.ConnectionDB;
-import br.com.soapboxrace.engine.KeepAlive;
 import br.com.soapboxrace.engine.Router;
 import br.com.soapboxrace.engine.Session;
+import br.com.soapboxrace.jpa.PersonaEntity;
 import br.com.soapboxrace.xmpp.XmppSrv;
 
 public class HttpSrv extends GzipHandler {
 
-	private KeepAlive keepAlive = new KeepAlive();
-
+	public static ConcurrentMap<PersonaEntity, HttpSession> activePersonas = new ConcurrentHashMap<PersonaEntity, HttpSession>();
+	
 	public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) {
-		keepAlive.setBaseRequest(baseRequest);
-		keepAlive.setRequest(request);
-		keepAlive.setTarget(target);
-		keepAlive.keepSession();
 		if ("/favicon.ico".equals(target)) {
 			return;
 		}
@@ -120,7 +119,6 @@ public class HttpSrv extends GzipHandler {
 	public static void main(String[] args) {
 		Locale newLocale = new Locale("en", "GB");
 		Locale.setDefault(newLocale);
-		System.setProperty("javax.xml.bind.context.factory", "org.eclipse.persistence.jaxb.JAXBContextFactory");
 		
 		if (args.length > 0) {
 			Session.setIp(args[0]);

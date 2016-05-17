@@ -3,10 +3,13 @@ package br.com.soapboxrace.engine;
 import java.io.BufferedReader;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.eclipse.jetty.server.Request;
 
-import br.com.soapboxrace.bo.SessionBO;
+import br.com.soapboxrace.dao.PersonaDao;
+import br.com.soapboxrace.http.HttpSrv;
+import br.com.soapboxrace.jpa.PersonaEntity;
 
 public class Router {
 
@@ -57,30 +60,38 @@ public class Router {
 		return buffer.toString();
 	}
 
-	protected Long getLoggedPersonaId() {
-		SessionBO sessionBO = new SessionBO();
-		Long loggedPersonaId = sessionBO.getLoggedPersonaId(getSecurityToken(), getUserId());
-		if(loggedPersonaId == 0){
-			System.out.println("==================================");
-			System.out.println("debug personaId");
-			System.out.println("userId [" + getUserId() + "]");
-			System.out.println("securitToken [" + getSecurityToken() + "]");
-			System.out.println("loggedPersonaId [" + loggedPersonaId + "]");
-			System.out.println("==================================");
-		}
-		return loggedPersonaId;
+	protected HttpSession getSession() {
+		return request.getSession();
 	}
 
 	protected String getSecurityToken() {
-		return getHeader("securityToken");
+		return (String) getSession().getAttribute("securityToken");
 	}
 
 	protected Long getUserId() {
-		String header = getHeader("userId");
-		if (header == null) {
-			header = "0";
-		}
-		return Long.valueOf(header);
+		return (Long) getSession().getAttribute("userId");
 	}
-
+	
+	protected Long getLoggedPersonaId() {
+		return (Long) getSession().getAttribute("personaId");
+	}
+	
+	protected void createSession() {
+		HttpSession session = getSession();
+	    session.setAttribute("userId", Long.valueOf(getHeader("userId")));
+	    session.setAttribute("securityToken", getHeader("securityToken"));
+	    session.setMaxInactiveInterval(90); //seconds	    
+	}
+	
+	protected void updateSession(String attributeName, Object value) {
+		HttpSession session = getSession();
+		session.setAttribute(attributeName, value);
+		if (attributeName.equals("personaId")) 
+			HttpSrv.activePersonas.putIfAbsent(new PersonaDao().findById(getLoggedPersonaId()), session);
+	}
+	
+	protected void closeSession() {
+		HttpSrv.activePersonas.remove(new PersonaDao().findById(getLoggedPersonaId()));
+		getSession().invalidate();
+	}
 }
