@@ -10,7 +10,7 @@ public class XmppSrv {
 	public static HashMap<Long, XmppTalk> xmppClients = new HashMap<Long, XmppTalk>();
 
 	public static void addXmppClient(long personaId, XmppTalk xmppClient) {
-		xmppClients.putIfAbsent(personaId, xmppClient);
+		xmppClients.put(personaId, xmppClient);
 	}
 
 	public static void sendMsg(long personaId, String msg) {
