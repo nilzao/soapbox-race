@@ -235,7 +235,7 @@ public class MatchmakingBO {
 			lobbyLaunched.setNewRelayServer(true);
 			lobbyLaunched.setLobbyId(lobbyEntity.getId());
 			lobbyLaunched.setUdpRelayHost(Session.getIp());
-			lobbyLaunched.setUdpRelayPort(9999);
+			lobbyLaunched.setUdpRelayPort(9998);
 
 			lobbyLaunched.setEntrants(entrantsType);
 
