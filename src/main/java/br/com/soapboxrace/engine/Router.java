@@ -7,12 +7,14 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.eclipse.jetty.server.Request;
 
+import br.com.soapboxrace.http.HttpSessionVO;
+
 public class Router {
 
 	private String target;
 	private HttpServletRequest request;
 	private Request baseRequest;
-	public static ConcurrentHashMap<Long, Long> activeUsers = new ConcurrentHashMap<Long, Long>();
+	public static ConcurrentHashMap<Long, HttpSessionVO> activeUsers = new ConcurrentHashMap<Long, HttpSessionVO>();
 
 	protected String getTarget() {
 		return target;
@@ -62,18 +64,31 @@ public class Router {
 	protected Long getUserId() {
 		return Long.valueOf(getHeader("userId"));
 	}
-	
+
+	public HttpSessionVO getHttpSessionVo(Long userId) {
+		HttpSessionVO httpSessionVO = Router.activeUsers.get(userId);
+		if (httpSessionVO != null) {
+			return httpSessionVO;
+		}
+		httpSessionVO = new HttpSessionVO();
+		httpSessionVO.setUserId(userId);
+		return httpSessionVO;
+	}
+
 	protected Long getLoggedPersonaId() {
-		if (Router.activeUsers.containsKey(getUserId()))
-			return Router.activeUsers.get(getUserId());
-		else
-			return null;
+		if (Router.activeUsers.containsKey(getUserId())) {
+			HttpSessionVO httpSessionVO = Router.activeUsers.get(getUserId());
+			return httpSessionVO.getPersonaId();
+		}
+		return null;
 	}
-	
+
 	protected void setPersonaEntry(Long personaId) {
-		Router.activeUsers.put(getUserId(), personaId);
+		HttpSessionVO httpSessionVo = getHttpSessionVo(getUserId());
+		httpSessionVo.setPersonaId(personaId);
+		Router.activeUsers.put(getUserId(), httpSessionVo);
 	}
-	
+
 	protected void removePersonaEntry() {
 		Router.activeUsers.remove(getUserId());
 	}

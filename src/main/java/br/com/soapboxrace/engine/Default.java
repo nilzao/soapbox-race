@@ -3,6 +3,7 @@ package br.com.soapboxrace.engine;
 import java.util.Collection;
 import java.util.Set;
 
+import br.com.soapboxrace.http.HttpSessionVO;
 import br.com.soapboxrace.xmpp.XmppSrv;
 
 public class Default extends Router {
@@ -184,8 +185,9 @@ public class Default extends Router {
 		String userVar = getParam("userVar");
 		switch (userVar) {
 		case "session":
-			Collection<Long> activePersonas = Router.activeUsers.values();
-			for (Long personaId : activePersonas) {
+			Collection<HttpSessionVO> activePersonas = Router.activeUsers.values();
+			for (HttpSessionVO httpSessionVo : activePersonas) {
+				Long personaId = httpSessionVo.getPersonaId();
 				if (XmppSrv.xmppClients.containsKey(personaId)) {
 					StringBuilder stringBuilder = new StringBuilder();
 					stringBuilder.append("<message from='nfsw.engine.engine@127.0.0.1/EA_Chat' id='JN_2578' to='nfsw.");
