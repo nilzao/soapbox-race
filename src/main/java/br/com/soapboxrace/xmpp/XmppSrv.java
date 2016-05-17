@@ -3,24 +3,21 @@ package br.com.soapboxrace.xmpp;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class XmppSrv {
 
-	private static HashMap<Long, XmppTalk> xmppClients = new HashMap<Long, XmppTalk>();
+	public static ConcurrentHashMap<Long, XmppTalk> xmppClients = new ConcurrentHashMap<Long, XmppTalk>();
 
 	public static void addXmppClient(long personaId, XmppTalk xmppClient) {
-		xmppClients.put(personaId, xmppClient);
+		xmppClients.putIfAbsent(personaId, xmppClient);
 	}
 
 	public static void sendMsg(long personaId, String msg) {
-		XmppTalk xmppTalk = xmppClients.get(personaId);
-		if (xmppTalk != null) {
-			xmppTalk.write(msg);
+		if (xmppClients.containsKey(personaId)) {
+			xmppClients.get(personaId).write(msg);
 		} else {
-			System.out.println("error sending xmpp packet");
-			System.out.println("personaId: [" + personaId + "]");
-			System.out.println("msg: [" + msg + "]");
+			System.err.println("xmppClients doesn't contain personaId " + personaId);
 		}
 	}
 
