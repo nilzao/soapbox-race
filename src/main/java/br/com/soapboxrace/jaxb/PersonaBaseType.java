@@ -25,7 +25,7 @@ public class PersonaBaseType {
 	@XmlElement(name = "Presence")
 	protected int presence;
 	@XmlElement(name = "Score")
-	protected int score;
+	protected float score;
 	@XmlElement(name = "UserId")
 	protected long userId;
 
@@ -85,11 +85,11 @@ public class PersonaBaseType {
 		this.presence = presence;
 	}
 
-	public int getScore() {
+	public float getScore() {
 		return score;
 	}
 
-	public void setScore(int score) {
+	public void setScore(float score) {
 		this.score = score;
 	}
 

@@ -9,7 +9,7 @@ public class Security extends Router {
 		stringBuilder.append("	<gameFileFreq>1000000</gameFileFreq>\n");
 		stringBuilder.append("	<moduleFreq>360000</moduleFreq>\n");
 		stringBuilder.append("	<startUpFreq>1000000</startUpFreq>\n");
-		stringBuilder.append("	<userID>1</userID>\n");
+		stringBuilder.append("	<userID>" + getUserId() + "</userID>\n");
 		stringBuilder.append("</FraudConfig>");
 		String xmlTmp = stringBuilder.toString();
 		return xmlTmp;
