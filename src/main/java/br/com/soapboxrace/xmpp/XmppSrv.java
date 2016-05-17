@@ -3,11 +3,11 @@ package br.com.soapboxrace.xmpp;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class XmppSrv {
 
-	public static HashMap<Long, XmppTalk> xmppClients = new HashMap<Long, XmppTalk>();
+	public static ConcurrentHashMap<Long, XmppTalk> xmppClients = new ConcurrentHashMap<Long, XmppTalk>();
 
 	public static void addXmppClient(long personaId, XmppTalk xmppClient) {
 		xmppClients.put(personaId, xmppClient);

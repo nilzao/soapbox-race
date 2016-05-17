@@ -1,8 +1,7 @@
 package br.com.soapboxrace.engine;
 
 import java.io.BufferedReader;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,7 +12,7 @@ public class Router {
 	private String target;
 	private HttpServletRequest request;
 	private Request baseRequest;
-	public static Map<Long, Long> activeUsers = new HashMap<Long, Long>();
+	public static ConcurrentHashMap<Long, Long> activeUsers = new ConcurrentHashMap<Long, Long>();
 
 	protected String getTarget() {
 		return target;
@@ -72,7 +71,7 @@ public class Router {
 	}
 	
 	protected void setPersonaEntry(Long personaId) {
-		Router.activeUsers.putIfAbsent(getUserId(), personaId);
+		Router.activeUsers.put(getUserId(), personaId);
 	}
 	
 	protected void removePersonaEntry() {
