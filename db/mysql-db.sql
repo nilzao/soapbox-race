@@ -240,9 +240,9 @@ INSERT INTO SOAPBOX.EVENTDEFINITION (EVENTID, CARCLASSHASH, COINS, ENGAGEPOINTX,
 INSERT INTO SOAPBOX.EVENTDEFINITION (EVENTID, CARCLASSHASH, COINS, ENGAGEPOINTX, ENGAGEPOINTY, ENGAGEPOINTZ, EVENTLOCALIZATION, EVENTMODEDESCRIPTIONLOCALIZATION, EVENTMODEICON, EVENTMODEID, EVENTMODELOCALIZATION, ISENABLED, ISLOCKED, LAPS, LENGTH, MAXCLASSRATING, MAXENTRANTS, MAXLEVEL, MINCLASSRATING, MINENTRANTS, MINLEVEL, REGIONLOCALIZATION, REWARDMODE1, REWARDMODE2, REWARDMODE3, TIMELIMIT, TRACKLAYOUTMAP, TRACKLOCALIZATION) VALUES (531, 607077938, 0, 4114.5068359375, 952.6956787109375, 44.995140075683594, 953955469, 1204604434, 'GameModeIcon_Sprint', 9, -1152300457, 'true', 'false', 0, 0, 999, 6, 60, 0, 2, 2, 0, 1, 2, 3, 0, 'ReverseTrack04', -491522155);
 INSERT INTO SOAPBOX.EVENTDEFINITION (EVENTID, CARCLASSHASH, COINS, ENGAGEPOINTX, ENGAGEPOINTY, ENGAGEPOINTZ, EVENTLOCALIZATION, EVENTMODEDESCRIPTIONLOCALIZATION, EVENTMODEICON, EVENTMODEID, EVENTMODELOCALIZATION, ISENABLED, ISLOCKED, LAPS, LENGTH, MAXCLASSRATING, MAXENTRANTS, MAXLEVEL, MINCLASSRATING, MINENTRANTS, MINLEVEL, REGIONLOCALIZATION, REWARDMODE1, REWARDMODE2, REWARDMODE3, TIMELIMIT, TRACKLAYOUTMAP, TRACKLOCALIZATION) VALUES (533, 607077938, 0, 3951.64306640625, -1162.6500244140625, 17.851560592651367, 953955471, 1204604434, 'GameModeIcon_Sprint', 9, -1152300457, 'true', 'false', 0, 0, 999, 6, 60, 0, 2, 2, 0, 1, 2, 3, 0, 'ReverseTrack06', 0);
 
-create index basketdefinition_index on soapbox.basketdefinition(productId) using HASH;
-create index eventdefinition_index on soapbox.eventdefinition(eventId, carClassHash, isEnabled, isLocked, minClassRating, minLevel) using HASH;
-create index persona_index on soapbox.persona(userid, name) using HASH;
-create index user_index on soapbox.user(email) using HASH;
-create index ownedcar_index on soapbox.ownedcar(uniqueCarId) using HASH;
-create index product_index on soapbox.product(categoryId, categoryName, hash, productType) using HASH;
+create index basketdefinition_index on SOAPBOX.BASKETDEFINITION(productId) using HASH;
+create index eventdefinition_index on SOAPBOX.EVENTDEFINITION(eventId, carClassHash, isEnabled, isLocked, minClassRating, minLevel) using HASH;
+create index persona_index on SOAPBOX.PERSONA(userid, name) using HASH;
+create index user_index on SOAPBOX.USER(email) using HASH;
+create index ownedcar_index on SOAPBOX.OWNEDCAR(uniqueCarId) using HASH;
+create index product_index on SOAPBOX.PRODUCT(categoryId, categoryName, hash, productType) using HASH;
