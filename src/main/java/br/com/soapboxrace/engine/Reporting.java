@@ -14,4 +14,8 @@ public class Reporting extends Router {
 		return "";
 	}
 
+	public String sendClientPingTime() {
+		return "";
+	}
+
 }
