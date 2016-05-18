@@ -31,11 +31,11 @@ public class DriverPersonaBO {
 		personaEntity.setName(name);
 		personaEntity.setIconIndex(iconIndex);
 		personaEntity.setUser(userEntity);
-		personaEntity.setPercentToLevel(Float.NaN);
-		personaEntity.setRating(Float.NaN);
-		personaEntity.setRep(Float.NaN);
-		personaEntity.setRepAtCurrentLevel(Float.NaN);
-		personaEntity.setScore(Float.NaN);
+		personaEntity.setPercentToLevel(0);
+		personaEntity.setRating(0);
+		personaEntity.setRep(0);
+		personaEntity.setRepAtCurrentLevel(0);
+		personaEntity.setScore(0);
 		personaEntity.setLevel(1);
 
 		personaEntity = personaDao.save(personaEntity);
