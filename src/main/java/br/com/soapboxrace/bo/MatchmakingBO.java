@@ -1,11 +1,15 @@
 package br.com.soapboxrace.bo;
 
+import java.nio.ByteBuffer;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
 import br.com.soapboxrace.dao.LobbyDao;
 import br.com.soapboxrace.dao.PersonaDao;
+import br.com.soapboxrace.engine.Router;
 import br.com.soapboxrace.engine.Session;
+import br.com.soapboxrace.http.HttpSessionVO;
 import br.com.soapboxrace.jaxb.ChallengeType;
 import br.com.soapboxrace.jaxb.CountdownType;
 import br.com.soapboxrace.jaxb.EntrantsType;
@@ -200,6 +204,7 @@ public class MatchmakingBO {
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
+			Long eventSessionId = 123456789L;
 			LobbyEntity lobbyEntity = lobbyDao.findById(lobbyId);
 			List<LobbyEntrantEntity> entrants = lobbyEntity.getEntrants();
 			LobbyLaunchedType lobbyLaunched = new LobbyLaunchedType();
@@ -209,6 +214,19 @@ public class MatchmakingBO {
 			List<P2PCryptoTicketType> p2pCryptoTicket = cryptoTicketsType.getP2PCryptoTicket();
 			int i = 0;
 			for (LobbyEntrantEntity lobbyEntrantEntity : entrants) {
+				byte gridIndex = (byte) i;
+				byte[] helloPacket = { 10, 11, 12, 13 };
+				int sessionId = eventSessionId.intValue();
+				ByteBuffer byteBuffer = ByteBuffer.allocate(48);
+				byteBuffer.put(gridIndex);
+				byteBuffer.put(helloPacket);
+				byteBuffer.putInt(sessionId);
+				byte[] cryptoTicketBytes = byteBuffer.array();
+				String cryptoTicketBase64 = Base64.getEncoder().encodeToString(cryptoTicketBytes);
+				Long userId = lobbyEntrantEntity.getPersona().getUser().getId();
+				HttpSessionVO httpSessionVo = Router.getHttpSessionVo(userId);
+				httpSessionVo.setRelayCryptoTicket(cryptoTicketBase64);
+
 				P2PCryptoTicketType p2pCryptoTicketType = new P2PCryptoTicketType();
 				p2pCryptoTicketType.setPersonaId(lobbyEntrantEntity.getPersona().getId());
 				p2pCryptoTicketType.setSessionKey("AAAAAAAAAAAAAAAAAAAAAA==");
@@ -231,7 +249,7 @@ public class MatchmakingBO {
 
 			eventSessionType.setEventId(lobbyEntity.getEvent().getEventId());
 			eventSessionType.setChallenge(challengeType);
-			eventSessionType.setSessionId(12345678L);
+			eventSessionType.setSessionId(eventSessionId);
 			lobbyLaunched.setNewRelayServer(true);
 			lobbyLaunched.setLobbyId(lobbyEntity.getId());
 			lobbyLaunched.setUdpRelayHost(Session.getIp());
