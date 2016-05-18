@@ -65,7 +65,7 @@ public class Router {
 		return Long.valueOf(getHeader("userId"));
 	}
 
-	public HttpSessionVO getHttpSessionVo(Long userId) {
+	public static HttpSessionVO getHttpSessionVo(Long userId) {
 		HttpSessionVO httpSessionVO = Router.activeUsers.get(userId);
 		if (httpSessionVO != null) {
 			return httpSessionVO;
