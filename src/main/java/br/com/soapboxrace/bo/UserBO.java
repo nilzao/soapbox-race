@@ -3,15 +3,19 @@ package br.com.soapboxrace.bo;
 import java.util.List;
 
 import br.com.soapboxrace.dao.PersonaDao;
+import br.com.soapboxrace.dao.UserDao;
+import br.com.soapboxrace.definition.UserLoginStatus;
 import br.com.soapboxrace.jaxb.PersonasType;
 import br.com.soapboxrace.jaxb.ProfileDataType;
 import br.com.soapboxrace.jaxb.UserInfoType;
 import br.com.soapboxrace.jaxb.UserType;
 import br.com.soapboxrace.jpa.PersonaEntity;
+import br.com.soapboxrace.jpa.UserEntity;
 
 public class UserBO {
 
 	private PersonaDao personaDao = new PersonaDao();
+	private UserDao userDao = new UserDao();
 
 	public UserInfoType getPermanentSession(Long userId, String securityToken) {
 		UserInfoType userInfo = new UserInfoType();
@@ -48,5 +52,16 @@ public class UserBO {
 		userInfo.setPersonas(personasType);
 
 		return userInfo;
+	}
+	
+	public String authenticateUser(String email, String passwordHash) {
+		if (userDao.findByEmail(email) != null) {
+			UserEntity user = userDao.findByEmail(email);
+			if (user.getPassword().equals(passwordHash)) {
+				return user.getId().toString();
+			}
+			return UserLoginStatus.incorrectPassword;
+		}
+		return UserLoginStatus.emailNotFound;
 	}
 }
