@@ -63,8 +63,13 @@ public class HttpSrv extends GzipHandler {
 			System.out.println("classe ou metodo não encontrado");
 		} catch (InvocationTargetException e) {
 			EngineExceptionTrans error = new EngineExceptionTrans();
+			error.setDescription("");
+			error.setInnerException("");
 			error.setErrorCode(e.getCause().getMessage());
+			error.setMessage("");
+			error.setStackTrace("");
 			content = MarshalXML.marshal(error);
+			System.out.println(content);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("erro generico");
@@ -88,7 +93,7 @@ public class HttpSrv extends GzipHandler {
 				System.out.println("          LIDO DE ARQUIVO XML");
 				System.out.println("=======================================");
 			}
-			response.getOutputStream().write(content.getBytes());
+			response.getOutputStream().write(content.getBytes("UTF-8"));
 			response.getOutputStream().flush();
 		} catch (Exception e) {
 			e.printStackTrace();
