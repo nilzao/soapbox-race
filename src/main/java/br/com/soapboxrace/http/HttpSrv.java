@@ -20,12 +20,15 @@ import org.eclipse.jetty.server.handler.gzip.GzipHttpOutputInterceptor;
 import br.com.soapboxrace.db.ConnectionDB;
 import br.com.soapboxrace.engine.Router;
 import br.com.soapboxrace.engine.Session;
+import br.com.soapboxrace.jaxb.EngineExceptionTrans;
+import br.com.soapboxrace.jaxb.util.MarshalXML;
 import br.com.soapboxrace.xmpp.XmppSrv;
 
 public class HttpSrv extends GzipHandler {
-		
+
 	public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) {
-		if ("/favicon.ico".equals(target)) return;		
+		if ("/favicon.ico".equals(target))
+			return;
 		System.out.println(baseRequest.toString());
 		String[] targetSplitted = target.split("/");
 		String className = "Default";
@@ -52,13 +55,16 @@ public class HttpSrv extends GzipHandler {
 			Method declaredMethod;
 			declaredMethod = dynamicObj.getDeclaredMethod(methodName);
 			content = (String) declaredMethod.invoke(newInstance);
-		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
-				| SecurityException e) {
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | SecurityException e) {
 			e.printStackTrace();
 			System.out.println("erro na classe ou metodo");
 		} catch (NoSuchMethodException | ClassNotFoundException e) {
 			e.printStackTrace();
 			System.out.println("classe ou metodo não encontrado");
+		} catch (InvocationTargetException e) {
+			EngineExceptionTrans error = new EngineExceptionTrans();
+			error.setErrorCode(e.getCause().getMessage());
+			content = MarshalXML.marshal(error);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("erro generico");
@@ -111,7 +117,7 @@ public class HttpSrv extends GzipHandler {
 	public static void main(String[] args) {
 		Locale newLocale = new Locale("en", "GB");
 		Locale.setDefault(newLocale);
-		
+
 		if (args.length > 0) {
 			Session.setIp(args[0]);
 		}
