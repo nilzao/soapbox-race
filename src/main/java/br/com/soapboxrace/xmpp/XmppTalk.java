@@ -31,7 +31,7 @@ public class XmppTalk {
 			reader = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
 			writer = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 	}
 
@@ -44,7 +44,7 @@ public class XmppTalk {
 				msg = new String(buffer).substring(0, charsRead);
 			}
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 		System.out.println("C->S [" + msg + "]");
 		return msg;

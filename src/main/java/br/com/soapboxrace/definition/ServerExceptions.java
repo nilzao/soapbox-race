@@ -5,7 +5,15 @@ public interface ServerExceptions {
 		private static final long serialVersionUID = 1L;
 
 		public PersonaIdMismatchException (Long expected, Long result) {
-	        super ("Expected personaId: " + expected + "\r\nGot personaId: " + result);
+	        super("Expected personaId: " + expected + ", but got personaId: " + result);
 	    }
+	}
+	
+	public class EngineException extends Exception {
+		private static final long serialVersionUID = 1L;
+
+		public EngineException (String errorCode) {
+			super(errorCode);
+		}
 	}
 }

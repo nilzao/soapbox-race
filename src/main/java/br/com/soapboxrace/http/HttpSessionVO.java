@@ -5,16 +5,12 @@ import java.util.Date;
 public class HttpSessionVO {
 
 	private Long userId;
-
 	private Long personaId;
-
 	private Long eventSessionId;
-
 	private String relayCryptoTicket;
-
 	private String relaySessionKey;
-
 	private Date expirationDate;
+	private String securityToken;
 
 	public Long getUserId() {
 		return userId;
@@ -62,6 +58,14 @@ public class HttpSessionVO {
 
 	public void setExpirationDate(Date expirationDate) {
 		this.expirationDate = expirationDate;
+	}
+
+	public String getSecurityToken() {
+		return securityToken;
+	}
+
+	public void setSecurityToken(String securityToken) {
+		this.securityToken = securityToken;
 	}
 
 }

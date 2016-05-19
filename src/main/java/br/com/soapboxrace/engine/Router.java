@@ -1,47 +1,93 @@
 package br.com.soapboxrace.engine;
 
 import java.io.BufferedReader;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.eclipse.jetty.server.Request;
 
+import br.com.soapboxrace.definition.ServerExceptions.EngineException;
+import br.com.soapboxrace.definition.UserLoginStatus;
 import br.com.soapboxrace.http.HttpSessionVO;
 
 public class Router {
 
+	public static ConcurrentHashMap<Long, HttpSessionVO> activeUsers = new ConcurrentHashMap<Long, HttpSessionVO>();
+	public static SecureRandom random = new SecureRandom();
+	public static HttpSessionVO getHttpSessionVo(Long userId) {
+		if (Router.activeUsers.containsKey(userId)) {
+			HttpSessionVO httpSessionVO = Router.activeUsers.get(userId);
+			if (httpSessionVO != null)
+				return httpSessionVO;
+		}
+		return null;
+	}
+	
 	private String target;
 	private HttpServletRequest request;
 	private Request baseRequest;
-	public static ConcurrentHashMap<Long, HttpSessionVO> activeUsers = new ConcurrentHashMap<Long, HttpSessionVO>();
 
-	protected String getTarget() {
-		return target;
+	protected void checkSecurityToken() throws EngineException {
+		String securityToken = getHeader("securityToken");
+		Long userId = Long.valueOf(getHeader("userId"));
+		if (getHttpSessionVo(userId) != null) {
+			if (!getHttpSessionVo(userId).getSecurityToken().equals(securityToken))
+				throw new EngineException(UserLoginStatus.invalidToken);
+		} else
+			throw new EngineException("Invalid session");
 	}
 
-	public void setTarget(String target) {
-		this.target = target;
-	}
-
-	protected HttpServletRequest getRequest() {
-		return request;
-	}
-
-	protected String getParam(String param) {
-		return baseRequest.getParameter(param);
+	protected void createSessionEntry(Long userId, String securityToken) {
+		HttpSessionVO session = new HttpSessionVO();
+		session.setUserId(userId);
+		session.setSecurityToken(securityToken);
+		Router.activeUsers.put(userId, session);
 	}
 
 	protected String getHeader(String param) {
 		return request.getHeader(param);
 	}
 
-	public void setRequest(HttpServletRequest request) {
-		this.request = request;
+	protected Long getLoggedPersonaId() {
+		if (Router.activeUsers.containsKey(getUserId())) {
+			HttpSessionVO httpSessionVO = Router.activeUsers.get(getUserId());
+			if (httpSessionVO.getPersonaId() != null)
+				return httpSessionVO.getPersonaId();
+		}
+		return -1L;
 	}
 
-	public void setBaseRequest(Request baseRequest) {
-		this.baseRequest = baseRequest;
+	protected String getParam(String param) {
+		return baseRequest.getParameter(param);
+	}
+
+	protected HttpServletRequest getRequest() {
+		return request;
+	}
+
+	protected String getSecureRandomText() {
+		return new BigInteger(130, Router.random).toString(32);
+	}
+
+	protected String getSecurityToken() {
+		if (getHeader("securityToken") != null)
+			return (String) getHeader("securityToken");
+		return null;
+	}
+
+	protected String getTarget() {
+		return target;
+	}
+
+	protected Long getUserId() {
+		if (getHeader("userId") != null)
+			return Long.valueOf(getHeader("userId"));
+		return -1L;
 	}
 
 	protected String readInputStream() {
@@ -57,39 +103,51 @@ public class Router {
 		return buffer.toString();
 	}
 
-	protected String getSecurityToken() {
-		return (String) getHeader("securityToken");
-	}
-
-	protected Long getUserId() {
-		return Long.valueOf(getHeader("userId"));
-	}
-
-	public static HttpSessionVO getHttpSessionVo(Long userId) {
-		HttpSessionVO httpSessionVO = Router.activeUsers.get(userId);
-		if (httpSessionVO != null) {
-			return httpSessionVO;
+	protected void removeSessionEntry(Long userId) {
+		if (getHttpSessionVo(userId) != null) {
+			Router.activeUsers.remove(userId);
 		}
-		httpSessionVO = new HttpSessionVO();
-		httpSessionVO.setUserId(userId);
-		return httpSessionVO;
 	}
 
-	protected Long getLoggedPersonaId() {
-		if (Router.activeUsers.containsKey(getUserId())) {
-			HttpSessionVO httpSessionVO = Router.activeUsers.get(getUserId());
-			return httpSessionVO.getPersonaId();
+	public void setBaseRequest(Request baseRequest) {
+		this.baseRequest = baseRequest;
+	}
+
+	public void setRequest(HttpServletRequest request) {
+		this.request = request;
+	}
+
+	protected void setSessionEntry(String toBeModifiedEntry, Object assignedValue) {
+		try {
+			if (getHttpSessionVo(getUserId()) != null) {
+				HttpSessionVO httpSessionVo = getHttpSessionVo(getUserId());
+				Method declaredMethod = httpSessionVo.getClass().getMethod("set" + toBeModifiedEntry,
+						assignedValue.getClass());
+				declaredMethod.invoke(httpSessionVo, assignedValue.getClass().cast(assignedValue));
+				Router.activeUsers.put(getUserId(), httpSessionVo);
+			}
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
+				| SecurityException e) {
+			e.printStackTrace();
 		}
-		return null;
 	}
 
-	protected void setPersonaEntry(Long personaId) {
-		HttpSessionVO httpSessionVo = getHttpSessionVo(getUserId());
-		httpSessionVo.setPersonaId(personaId);
-		Router.activeUsers.put(getUserId(), httpSessionVo);
+	public void setTarget(String target) {
+		this.target = target;
 	}
 
-	protected void removePersonaEntry() {
-		Router.activeUsers.remove(getUserId());
+	protected String shuffleString(String input) {
+		StringBuilder sb = new StringBuilder(input.length());
+		double mathRandom;
+		for (char c : input.toCharArray()) {
+			mathRandom = Math.random();
+			if (mathRandom < 0.34)
+				sb.append(c);
+			else if (mathRandom < 0.67)
+				sb.insert(sb.length() / 2, c);
+			else
+				sb.insert(0, c);
+		}
+		return sb.toString();
 	}
 }
