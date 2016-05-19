@@ -20,12 +20,13 @@ public class Personas extends Router {
 	private long getPersonaId(boolean isBypass) throws PersonaIdMismatchException {
 		String[] targetSplitted = getTarget().split("/");
 		Long idPersona = Long.valueOf(targetSplitted[4]);
-		if (idPersona.equals(getLoggedPersonaId()) || getLoggedPersonaId() == null || isBypass == true)
-			return idPersona;
-		else
-			throw new ServerExceptions.PersonaIdMismatchException(getLoggedPersonaId(), idPersona);
+		if (((isBypass || idPersona.equals(getLoggedPersonaId()) || getLoggedPersonaId() == (long) -1)))
+			if (getUserId() != (long) -1 && getSecurityToken() != null
+					&& Router.activeUsers.get(getUserId()).getSecurityToken().equals(getSecurityToken()))
+				return idPersona;
+		throw new ServerExceptions.PersonaIdMismatchException(getLoggedPersonaId(), idPersona);
 	}
-	
+
 	private long getPersonaId() throws PersonaIdMismatchException {
 		return getPersonaId(false);
 	}
@@ -41,6 +42,7 @@ public class Personas extends Router {
 
 	public String carslots() throws PersonaIdMismatchException {
 		CarSlotInfoTrans carslots = personaBO.carslots(getPersonaId());
+		System.out.println(MarshalXML.marshal(carslots));
 		return MarshalXML.marshal(carslots);
 	}
 
