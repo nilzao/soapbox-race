@@ -1,49 +1,61 @@
 # soapbox-race
 
+webserver to handle cars and pilots profiles.
+
 to build need apache maven and jdk8
 
 https://maven.apache.org/
 
 http://www.oracle.com/technetwork/java/javase/downloads/
 
-
-
 build:
 mvn clean compile assembly:single
 
-Tools
-- linux
-- eclipse mars j2ee
-- oracle jdk8
-- inst2xsd (xmlbeans ubuntu package)
+#####to run the server use:
 
-
-
-###to run the server use:
-
-###java -Djsse.enableCBCProtection=false -jar soapbox-race-version-jarname.jar your-ip-to-host-xmpp (optional)
+    java -Djsse.enableCBCProtection=false -jar soapbox-race-version-jarname.jar your-ip-to-host-xmpp (optional)
 
 example:
 
-###java -Djsse.enableCBCProtection=false -jar soapbox-race-version-jarname.jar 127.0.0.1
+    java -Djsse.enableCBCProtection=false -jar soapbox-race-version-jarname.jar 127.0.0.1
 
+---
 
-to use the client run:
+users:
 
+nobody@nowhere	secret
 
-for user1:
+anyone@anywhere	anysecret
 
-soapbox.exe US http://localhost:1337/soapbox/Engine.svc a 1
+more@nomore	notsecret
 
+to use the client, access browser at url:
 
-for user2:
+    http://localhost:1337/soapbox/nothing/user/authenticateUser?email=SOME_EMAIL&password=SOME_PASSWORD
 
-soapbox.exe US http://localhost:1337/soapbox/Engine.svc a 2
+examples:
 
+    user1
+    http://localhost:1337/soapbox/nothing/user/authenticateUser?email=nobody@nowhere&password=secret
+    
+    user2
+    http://localhost:1337/soapbox/nothing/user/authenticateUser?email=anyone@anywhere&password=anysecret
+    
+    user3
+    http://localhost:1337/soapbox/nothing/user/authenticateUser?email=more@nomore&password=notsecret
 
-for user3:
+your browser show a number like this:
 
-soapbox.exe US http://localhost:1337/soapbox/Engine.svc a 3
+    n.zzzzzzzzzzzzzzz
 
+next, you call soapbox.exe with the parameters: 
 
-for more users, insert userid in table user
+    soapbox.exe US http://localhost:1337/soapbox/Engine.svc zzzzzzzzzzzzzzzz n
+    
+---
+
+A launcher is on the way
+
+https://github.com/berkay2578/soapbox-race-launcher
+
+for more users, insert userid, email and passowrd in table user
