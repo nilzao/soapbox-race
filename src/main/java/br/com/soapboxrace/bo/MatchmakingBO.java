@@ -213,6 +213,7 @@ public class MatchmakingBO {
 			CryptoTicketsType cryptoTicketsType = new CryptoTicketsType();
 			List<P2PCryptoTicketType> p2pCryptoTicket = cryptoTicketsType.getP2PCryptoTicket();
 			int i = 0;
+			byte numOfRacers = (byte) entrants.size();
 			for (LobbyEntrantEntity lobbyEntrantEntity : entrants) {
 				byte gridIndex = (byte) i;
 				byte[] helloPacket = { 10, 11, 12, 13 };
@@ -221,11 +222,14 @@ public class MatchmakingBO {
 				byteBuffer.put(gridIndex);
 				byteBuffer.put(helloPacket);
 				byteBuffer.putInt(sessionId);
+				byteBuffer.put(numOfRacers);
 				byte[] cryptoTicketBytes = byteBuffer.array();
 				String cryptoTicketBase64 = Base64.getEncoder().encodeToString(cryptoTicketBytes);
 				Long userId = lobbyEntrantEntity.getPersona().getUser().getId();
 				HttpSessionVO httpSessionVo = Router.getHttpSessionVo(userId);
-				httpSessionVo.setRelayCryptoTicket(cryptoTicketBase64);
+				if (httpSessionVo != null) {
+					httpSessionVo.setRelayCryptoTicket(cryptoTicketBase64);
+				}
 
 				P2PCryptoTicketType p2pCryptoTicketType = new P2PCryptoTicketType();
 				p2pCryptoTicketType.setPersonaId(lobbyEntrantEntity.getPersona().getId());
