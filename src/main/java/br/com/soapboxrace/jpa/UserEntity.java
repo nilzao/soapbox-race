@@ -21,10 +21,10 @@ public class UserEntity implements ISoapBoxEntity {
 	@Column(name = "ID", nullable = false)
 	private Long id;
 
-	@Column(name = "EMAIL", length = 200)
+	@Column(name = "EMAIL", length = 255)
 	private String email;
 
-	@Column(name = "PASSWORD", length = 32)
+	@Column(name = "PASSWORD", length = 41)
 	private String password;
 
 	@OneToMany(mappedBy = "user", targetEntity = PersonaEntity.class)
