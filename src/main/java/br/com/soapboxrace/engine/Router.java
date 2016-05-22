@@ -37,9 +37,9 @@ public class Router {
 		Long userId = Long.valueOf(getHeader("userId"));
 		if (getHttpSessionVo(userId) != null) {
 			if (!getHttpSessionVo(userId).getSecurityToken().equals(securityToken))
-				throw new EngineException(UserLoginStatus.invalidToken);
+				throw new EngineException("Session error: Invalid token!");
 		} else
-			throw new EngineException("Invalid session");
+			throw new EngineException("Session error: Invalid session!");
 	}
 
 	protected void createSessionEntry(Long userId, String securityToken) {

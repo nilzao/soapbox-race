@@ -43,13 +43,13 @@ public class User extends Router {
 		String result = userBO.authenticateUser(email, passwordHash);
 		switch (result) {
 			case UserLoginStatus.emailNotFound:
-				throw new EngineException("Email wasn't found");
+				throw new EngineException("Login Error: Email wasn't found!");
 			case UserLoginStatus.incorrectPassword:
-				throw new EngineException("Incorrect email-password combination");
+				throw new EngineException("Login Error: Incorrect email-password combination!");
 			default:
 				String tokenText = shuffleString(String.valueOf(System.currentTimeMillis()));
 				createSessionEntry(Long.valueOf(result), tokenText);
-				return result.concat(".").concat(tokenText);
+				return String.format("<LoginData><UserId>%s</UserId><LoginToken>%s</LoginToken></LoginData>", result, tokenText);
 		}
 	}
 }

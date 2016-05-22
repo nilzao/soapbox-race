@@ -55,6 +55,7 @@ public class HttpSrv extends GzipHandler {
 			Method declaredMethod;
 			declaredMethod = dynamicObj.getDeclaredMethod(methodName);
 			content = (String) declaredMethod.invoke(newInstance);
+			response.setStatus(200);
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | SecurityException e) {
 			e.printStackTrace();
 			System.out.println("erro na classe ou metodo");
@@ -65,11 +66,11 @@ public class HttpSrv extends GzipHandler {
 			EngineExceptionTrans error = new EngineExceptionTrans();
 			error.setDescription("");
 			error.setInnerException("");
-			error.setErrorCode(e.getCause().getMessage());
-			error.setMessage("");
+			error.setErrorCode("2");
+			error.setMessage(e.getCause().getMessage());
 			error.setStackTrace("");
 			content = MarshalXML.marshal(error);
-			System.out.println(content);
+			response.setStatus(500);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("erro generico");
@@ -85,7 +86,6 @@ public class HttpSrv extends GzipHandler {
 			} else {
 				response.setHeader("connection", "close");
 			}
-			response.setStatus(200);
 			baseRequest.setHandled(true);
 			if (content == null) {
 				content = readContent(target);
