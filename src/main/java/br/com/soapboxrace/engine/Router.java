@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.eclipse.jetty.server.Request;
 
 import br.com.soapboxrace.definition.ServerExceptions.EngineException;
-import br.com.soapboxrace.definition.UserLoginStatus;
 import br.com.soapboxrace.http.HttpSessionVO;
 
 public class Router {
