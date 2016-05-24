@@ -2,7 +2,6 @@ package br.com.soapboxrace.engine;
 
 import br.com.soapboxrace.bo.UserBO;
 import br.com.soapboxrace.definition.ServerExceptions.EngineException;
-import br.com.soapboxrace.definition.UserLoginStatus;
 import br.com.soapboxrace.jaxb.UserInfoType;
 import br.com.soapboxrace.jaxb.util.MarshalXML;
 
@@ -41,15 +40,14 @@ public class User extends Router {
 		String email = getParam("email");
 		String passwordHash = getParam("password");
 		String result = userBO.authenticateUser(email, passwordHash);
-		switch (result) {
-			case UserLoginStatus.emailNotFound:
-				throw new EngineException("Login Error: Email wasn't found!");
-			case UserLoginStatus.incorrectPassword:
-				throw new EngineException("Login Error: Incorrect email-password combination!");
-			default:
-				String tokenText = shuffleString(String.valueOf(System.currentTimeMillis()));
-				createSessionEntry(Long.valueOf(result), tokenText);
-				return String.format("<LoginData><UserId>%s</UserId><LoginToken>%s</LoginToken></LoginData>", result, tokenText);
-		}
+		String tokenText = shuffleString(String.valueOf(System.currentTimeMillis()));
+		createSessionEntry(Long.valueOf(result), tokenText);
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("<LoginData><UserId>");
+		stringBuilder.append(result);
+		stringBuilder.append("</UserId><LoginToken>");
+		stringBuilder.append(tokenText);
+		stringBuilder.append("</LoginToken></LoginData>");
+		return stringBuilder.toString();
 	}
 }
