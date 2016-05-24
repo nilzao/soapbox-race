@@ -21,32 +21,30 @@ example:
 
 ---
 
-users:
+users / password hashes:
 
-nobody@nowhere	secret
-
-anyone@anywhere	anysecret
-
-more@nomore	notsecret
+debug@player1	a94a8fe5ccb19ba61c4c0873d391e987982fbbd3
+debug@player2	a94a8fe5ccb19ba61c4c0873d391e987982fbbd3
+debug@player3	a94a8fe5ccb19ba61c4c0873d391e987982fbbd3
 
 to use the client, access browser at url:
 
-    http://localhost:1337/soapbox/nothing/user/authenticateUser?email=SOME_EMAIL&password=SOME_PASSWORD
+    http://localhost:1337/soapbox/nothing/user/authenticateUser?email=SOME_EMAIL&password=SOME_HASH_PASSWORD
 
 examples:
 
     user1
-    http://localhost:1337/soapbox/nothing/user/authenticateUser?email=nobody@nowhere&password=secret
+    http://localhost:1337/soapbox/nothing/user/authenticateUser?email=debug@player1&password=a94a8fe5ccb19ba61c4c0873d391e987982fbbd3
     
     user2
-    http://localhost:1337/soapbox/nothing/user/authenticateUser?email=anyone@anywhere&password=anysecret
+    http://localhost:1337/soapbox/nothing/user/authenticateUser?email=debug@player2&password=a94a8fe5ccb19ba61c4c0873d391e987982fbbd3
     
     user3
-    http://localhost:1337/soapbox/nothing/user/authenticateUser?email=more@nomore&password=notsecret
+    http://localhost:1337/soapbox/nothing/user/authenticateUser?email=debug@player3&password=a94a8fe5ccb19ba61c4c0873d391e987982fbbd3
 
-your browser show a number like this:
+your browser show a response like this:
 
-    n.zzzzzzzzzzzzzzz
+    <LoginData><UserId>n</UserId><LoginToken>zzzzzzzzzzzzzzzz</LoginToken></LoginData>
 
 next, you call soapbox.exe with the parameters: 
 
