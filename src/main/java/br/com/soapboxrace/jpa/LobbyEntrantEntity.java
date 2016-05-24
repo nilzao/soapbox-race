@@ -27,7 +27,6 @@ public class LobbyEntrantEntity implements ISoapBoxEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@Transient
 	@XmlElement(name = "GridIndex")
 	protected int gridIndex = 0;
 
