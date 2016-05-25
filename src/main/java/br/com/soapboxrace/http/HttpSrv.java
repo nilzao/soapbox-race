@@ -124,7 +124,10 @@ public class HttpSrv extends GzipHandler {
 		Locale.setDefault(newLocale);
 
 		if (args.length > 0) {
-			Session.setIp(args[0]);
+			Session.setXmppIp(args[0]);
+			if (args.length > 1) {
+				Session.setUdpIp(args[1]);
+			}
 		}
 		new ConnectionDB();
 		new XmppSrv();
