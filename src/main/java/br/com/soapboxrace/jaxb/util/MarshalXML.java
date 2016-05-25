@@ -16,10 +16,8 @@ public class MarshalXML {
 			jaxbMarshaller.setProperty(Marshaller.JAXB_FRAGMENT, true);
 			jaxbMarshaller.marshal(obj, stringWriter);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		// System.out.println(stringWriter.toString());
 		return stringWriter.toString();
 	}
 }

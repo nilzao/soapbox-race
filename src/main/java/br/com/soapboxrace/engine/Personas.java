@@ -42,7 +42,6 @@ public class Personas extends Router {
 
 	public String carslots() throws PersonaIdMismatchException {
 		CarSlotInfoTrans carslots = personaBO.carslots(getPersonaId());
-		System.out.println(MarshalXML.marshal(carslots));
 		return MarshalXML.marshal(carslots);
 	}
 
