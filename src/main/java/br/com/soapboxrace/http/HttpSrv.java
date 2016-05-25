@@ -58,10 +58,10 @@ public class HttpSrv extends GzipHandler {
 			response.setStatus(200);
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | SecurityException e) {
 			e.printStackTrace();
-			System.out.println("erro na classe ou metodo");
+			System.out.println("class or method error");
 		} catch (NoSuchMethodException | ClassNotFoundException e) {
 			e.printStackTrace();
-			System.out.println("classe ou metodo não encontrado");
+			System.out.println("class not found");
 		} catch (InvocationTargetException e) {
 			EngineExceptionTrans error = new EngineExceptionTrans();
 			error.setDescription("");
@@ -73,7 +73,7 @@ public class HttpSrv extends GzipHandler {
 			response.setStatus(500);
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("erro generico");
+			System.out.println("generic error");
 		}
 		try {
 			setCompressionLevel(9);
@@ -90,7 +90,7 @@ public class HttpSrv extends GzipHandler {
 			if (content == null) {
 				content = readContent(target);
 				System.out.println("=======================================");
-				System.out.println("          LIDO DE ARQUIVO XML");
+				System.out.println("          READ FROM XML FILE");
 				System.out.println("=======================================");
 			}
 			response.getOutputStream().write(content.getBytes("UTF-8"));
