@@ -157,6 +157,7 @@ public class MatchmakingBO {
 			LobbyEntrantInfoType lobbyEntrantInfoType = new LobbyEntrantInfoType();
 			lobbyEntrantInfoType.setPersonaId(lobbyEntrantEntity.getPersona().getId());
 			lobbyEntrantInfoType.setLevel(lobbyEntrantEntity.getPersona().getLevel());
+			lobbyEntrantInfoType.setGridIndex(lobbyEntrantEntity.getGridIndex());
 			lobbyEntrantInfo.add(lobbyEntrantInfoType);
 			if (lobbyEntrantEntity.getPersona().getId().equals(personaId)) {
 				personaInside = true;
@@ -169,12 +170,14 @@ public class MatchmakingBO {
 			lobbyEntrantEntity.setPersonaId(personaEntity.getId());
 			lobbyEntrantEntity.setLevel(personaEntity.getLevel());
 			lobbyEntrantEntity.setLobby(lobbyEntity);
+			lobbyEntrantEntity.setGridIndex(entrants.size());
 			lobbyEntrantEntity.setLobbyId(lobbyEntrantEntity.getId());
 			lobbyEntity.getEntrants().add(lobbyEntrantEntity);
 			lobbyDao.save(lobbyEntity);
 			LobbyEntrantInfoType lobbyEntrantInfoType = new LobbyEntrantInfoType();
 			lobbyEntrantInfoType.setPersonaId(lobbyEntrantEntity.getPersona().getId());
 			lobbyEntrantInfoType.setLevel(lobbyEntrantEntity.getPersona().getLevel());
+			lobbyEntrantInfoType.setGridIndex(lobbyEntrantEntity.getGridIndex());
 			lobbyEntrantInfo.add(lobbyEntrantInfoType);
 		}
 
