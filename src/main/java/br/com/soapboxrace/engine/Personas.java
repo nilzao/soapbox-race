@@ -21,7 +21,7 @@ public class Personas extends Router {
 		String[] targetSplitted = getTarget().split("/");
 		Long idPersona = Long.valueOf(targetSplitted[4]);
 		if (((isBypass || idPersona.equals(getLoggedPersonaId()) || getLoggedPersonaId() == -1L)))
-			if (getUserId() != -1L && getSecurityToken() != null
+			if (getUserId() != -1L && !getSecurityToken().isEmpty()
 					&& Router.activeUsers.get(getUserId()).getSecurityToken().equals(getSecurityToken()))
 				return idPersona;
 		throw new ServerExceptions.PersonaIdMismatchException(getLoggedPersonaId(), idPersona);
