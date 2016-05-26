@@ -50,4 +50,13 @@ public class User extends Router {
 		stringBuilder.append("</LoginToken></LoginData>");
 		return stringBuilder.toString();
 	}
+	
+	public String createUser() throws EngineException {
+		String email = getParam("email");
+		String passwordHash = getParam("password");
+		if (!userBO.createUser(email, passwordHash).isEmpty())
+			return authenticateUser();
+		else
+			throw new EngineException("Registration Error: Couldn't authenticate user.");
+	}
 }

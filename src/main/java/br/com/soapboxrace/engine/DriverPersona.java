@@ -20,7 +20,7 @@ public class DriverPersona extends Router {
 		String personaIdStr = getParam("personaId");
 		Long idPersona = Long.valueOf(personaIdStr);
 		if (((idPersona.equals(getLoggedPersonaId()) || getLoggedPersonaId() == -1L)))
-			if (getUserId() != -1L && getSecurityToken() != null
+			if (getUserId() != -1L && !getSecurityToken().isEmpty()
 					&& Router.activeUsers.get(getUserId()).getSecurityToken().equals(getSecurityToken()))
 				return idPersona;
 		throw new ServerExceptions.PersonaIdMismatchException(getLoggedPersonaId(), idPersona);
