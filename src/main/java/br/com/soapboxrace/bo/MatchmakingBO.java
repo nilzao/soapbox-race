@@ -207,7 +207,7 @@ public class MatchmakingBO {
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
-			Long eventSessionId = 123456789L;
+			Long eventSessionId = Session.getNextMpSessionId();
 			LobbyEntity lobbyEntity = lobbyDao.findById(lobbyId);
 			List<LobbyEntrantEntity> entrants = lobbyEntity.getEntrants();
 			LobbyLaunchedType lobbyLaunched = new LobbyLaunchedType();

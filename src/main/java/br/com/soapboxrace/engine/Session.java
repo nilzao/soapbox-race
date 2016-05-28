@@ -6,6 +6,8 @@ public class Session extends Router {
 
 	private static String udpIp = "127.0.0.1";
 
+	private static long currentMpSessionId = 10000L;
+
 	public String getChatInfo() {
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("<chatServer>\n");
@@ -41,4 +43,7 @@ public class Session extends Router {
 		Session.udpIp = udpIp;
 	}
 
+	public static long getNextMpSessionId() {
+		return currentMpSessionId++;
+	}
 }
