@@ -58,4 +58,4 @@ A launcher is on the way
 
 https://github.com/berkay2578/soapbox-race-launcher
 
-for more users, insert userid, email and passowrd in table user
+for more users, insert userid, email and password in table user
