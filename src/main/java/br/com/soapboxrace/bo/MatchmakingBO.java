@@ -132,8 +132,7 @@ public class MatchmakingBO {
 	}
 
 	private void sendJoinEvent(Long personaId, LobbyEntity lobbyEntity) {
-		// TODO get from httpSessionVO
-		Long sessionId = 6969L;
+		Long sessionId = lobbyEntity.getId();
 		XmppChatLobby xmppChatLobby = XmppChatLobbys.getChatLobby(sessionId);
 		XmppTalk xmppTalk = XmppSrv.get(personaId);
 		xmppChatLobby.addXmppTalk(xmppTalk);
