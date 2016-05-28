@@ -6,6 +6,7 @@ import br.com.soapboxrace.dao.PersonaDao;
 import br.com.soapboxrace.jaxb.ArrayOfPersonaBaseType;
 import br.com.soapboxrace.jaxb.ArrayOfstringType;
 import br.com.soapboxrace.jaxb.PersonaBaseType;
+import br.com.soapboxrace.jaxb.PersonaPresenceType;
 import br.com.soapboxrace.jaxb.ProfileDataType;
 import br.com.soapboxrace.jpa.PersonaEntity;
 import br.com.soapboxrace.jpa.UserEntity;
@@ -57,15 +58,18 @@ public class DriverPersonaBO {
 	public ProfileDataType getPersonaInfo(long idPersona) {
 		PersonaEntity personaEntity = personaDao.findById(idPersona);
 		ProfileDataType profileDataType = new ProfileDataType();
+		profileDataType.setBadges("");
 		profileDataType.setCash(personaEntity.getCash());
 		profileDataType.setIconIndex(personaEntity.getIconIndex());
 		profileDataType.setLevel(personaEntity.getLevel());
 		profileDataType.setMotto(personaEntity.getMotto());
 		profileDataType.setName(personaEntity.getName());
 		profileDataType.setPercentToLevel(personaEntity.getPercentToLevel());
+		profileDataType.setPersonaId(personaEntity.getId());
+		profileDataType.setRating(personaEntity.getRating());
 		profileDataType.setRep(personaEntity.getRep());
 		profileDataType.setRepAtCurrentLevel(personaEntity.getRepAtCurrentLevel());
-		profileDataType.setPersonaId(personaEntity.getId());
+		profileDataType.setScore(personaEntity.getScore());
 		return profileDataType;
 	}
 
@@ -87,5 +91,18 @@ public class DriverPersonaBO {
 			personaBase.add(personaBaseType);
 		}
 		return arrayOfPersonaBaseType;
+	}
+
+	public PersonaPresenceType getPersonaPresenceByName(String name) {
+		PersonaEntity persona = personaDao.findByName(name);
+		persona = personaDao.findByName(name);
+		if (persona != null) {
+			PersonaPresenceType personaPresenceType = new PersonaPresenceType();
+			personaPresenceType.setPersonaId(persona.getId());
+			personaPresenceType.setPresence(1);
+			personaPresenceType.setUserId(persona.getUser().getId());
+			return personaPresenceType;
+		}
+		return null;
 	}
 }

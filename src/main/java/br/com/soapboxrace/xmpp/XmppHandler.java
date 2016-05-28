@@ -1,5 +1,8 @@
 package br.com.soapboxrace.xmpp;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class XmppHandler {
 
 	private XmppTalk xmppTalk;
@@ -30,10 +33,30 @@ public class XmppHandler {
 				XmppChat xmppChat = new XmppChat(xmppTalk.getPersonaId(), read);
 				chatLobby.broadcast(xmppChat);
 			}
+			if (read.contains("Chat_Whisper")) {
+				Long personaIdTo = parsePersonaId(read);
+				if (personaIdTo != 0) {
+					int personaIdFrom = xmppTalk.getPersonaId();
+					XmppChat xmppChat = new XmppChat(personaIdFrom, read);
+					XmppTalk xmppTalkTo = XmppSrv.get(personaIdTo);
+					if (xmppTalkTo != null) {
+						xmppTalkTo.write(xmppChat.getWisperMsg(personaIdTo.intValue()));
+					} else {
+						System.err.println("persona: " + personaIdTo + " not online in xmpp server");
+					}
+				}
+			}
 		}
-
-		System.out.println();
 		return read;
+	}
+
+	private Long parsePersonaId(String read) {
+		Pattern regPattern = Pattern.compile("message to='nfsw.(\\d+)@(.*)");
+		Matcher match = regPattern.matcher(read);
+		if (match.find()) {
+			return Long.valueOf(match.group(1));
+		}
+		return 0L;
 	}
 
 }

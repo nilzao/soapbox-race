@@ -49,4 +49,14 @@ public class PersonaDao extends SoapboxDao {
 		return personaList;
 	}
 
+	public PersonaEntity findByName(String name) {
+		PersonaEntity personaEntity = new PersonaEntity();
+		personaEntity.setName(name);
+		List<ISoapBoxEntity> find = find(personaEntity);
+		if (find.size() > 0) {
+			return (PersonaEntity) find.get(0);
+		}
+		return null;
+	}
+
 }

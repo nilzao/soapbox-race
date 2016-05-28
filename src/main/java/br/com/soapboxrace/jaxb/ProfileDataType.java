@@ -7,11 +7,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ProfileDataType", propOrder = { "boost", "cash", "iconIndex", "level", "motto", "name",
+@XmlType(name = "ProfileDataType", propOrder = { "badges", "boost", "cash", "iconIndex", "level", "motto", "name",
 		"percentToLevel", "personaId", "rating", "rep", "repAtCurrentLevel", "ccar", "score" })
 @XmlRootElement(name = "ProfileData")
 public class ProfileDataType {
 
+	@XmlElement(name = "Badges")
+	protected String badges;
 	@XmlElement(name = "Boost")
 	protected int boost;
 	@XmlElement(name = "Cash")
@@ -38,6 +40,14 @@ public class ProfileDataType {
 	protected String ccar;
 	@XmlElement(name = "Score")
 	protected float score;
+
+	public String getBadges() {
+		return badges;
+	}
+
+	public void setBadges(String badges) {
+		this.badges = badges;
+	}
 
 	public int getBoost() {
 		return boost;

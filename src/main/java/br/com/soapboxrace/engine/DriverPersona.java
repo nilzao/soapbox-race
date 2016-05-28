@@ -8,6 +8,7 @@ import br.com.soapboxrace.definition.ServerExceptions.PersonaIdMismatchException
 import br.com.soapboxrace.jaxb.ArrayOfstringType;
 import br.com.soapboxrace.jaxb.PersonaIdArrayType;
 import br.com.soapboxrace.jaxb.PersonaIdsType;
+import br.com.soapboxrace.jaxb.PersonaPresenceType;
 import br.com.soapboxrace.jaxb.ProfileDataType;
 import br.com.soapboxrace.jaxb.util.MarshalXML;
 import br.com.soapboxrace.jaxb.util.UnmarshalXML;
@@ -98,7 +99,7 @@ public class DriverPersona extends Router {
 		ArrayOfstringType reserveName = driverPersonaBO.reserveName(getParam("name"));
 		return MarshalXML.marshal(reserveName);
 	}
-	
+
 	public String unreserveName() {
 		return "";
 	}
@@ -142,6 +143,10 @@ public class DriverPersona extends Router {
 	}
 
 	public String getPersonaPresenceByName() {
+		PersonaPresenceType personaPresenceType = driverPersonaBO.getPersonaPresenceByName(getParam("displayName"));
+		if (personaPresenceType != null) {
+			return MarshalXML.marshal(personaPresenceType);
+		}
 		return "";
 	}
 
