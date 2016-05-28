@@ -95,7 +95,6 @@ public class DriverPersonaBO {
 
 	public PersonaPresenceType getPersonaPresenceByName(String name) {
 		PersonaEntity persona = personaDao.findByName(name);
-		persona = personaDao.findByName(name);
 		if (persona != null) {
 			PersonaPresenceType personaPresenceType = new PersonaPresenceType();
 			personaPresenceType.setPersonaId(persona.getId());
