@@ -40,7 +40,7 @@ public class XmppHandler {
 					XmppChat xmppChat = new XmppChat(personaIdFrom, read);
 					XmppTalk xmppTalkTo = XmppSrv.get(personaIdTo);
 					if (xmppTalkTo != null) {
-						xmppTalkTo.write(xmppChat.getWisperMsg(personaIdTo.intValue()));
+						xmppTalkTo.write(xmppChat.getWhisperMsg(personaIdTo.intValue()));
 					} else {
 						System.err.println("persona: " + personaIdTo + " not online in xmpp server");
 					}

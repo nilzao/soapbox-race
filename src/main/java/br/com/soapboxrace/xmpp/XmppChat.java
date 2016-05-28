@@ -20,15 +20,15 @@ public class XmppChat {
 		return transformChatMsg(targetPersonaId);
 	}
 
-	public String getWisperMsg(Integer targetPersonaId) {
-		return transformWisperMsg(targetPersonaId);
+	public String getWhisperMsg(Integer targetPersonaId) {
+		return transformWhisperMsg(targetPersonaId);
 	}
 
 	public int getPersonaId() {
 		return personaId;
 	}
 
-	private String transformWisperMsg(Integer targetPersonaId) {
+	private String transformWhisperMsg(Integer targetPersonaId) {
 		Pattern regPattern = Pattern.compile(
 				"message to='nfsw.(\\d+)@(.*)' type='(\\w+)'><channel>Chat_Whisper</channel>(.*)Uid=&quot;(\\d+)&quot;");
 		Matcher match = regPattern.matcher(chatMsg);
