@@ -29,7 +29,7 @@ public class XmppChatLobby {
 			Integer personaId = (int) xmppChat.getPersonaId();
 			if (!personaId.equals(key)) {
 				XmppTalk xmppTalk = next.getValue();
-				xmppTalk.write(xmppChat.getChatMsg());
+				xmppTalk.write(xmppChat.getChatMsg(xmppTalk.getPersonaId()));
 			}
 		}
 	}
