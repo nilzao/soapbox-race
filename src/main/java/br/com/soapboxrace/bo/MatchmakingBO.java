@@ -20,7 +20,11 @@ import br.com.soapboxrace.jpa.EventDefinitionEntity;
 import br.com.soapboxrace.jpa.LobbyEntity;
 import br.com.soapboxrace.jpa.LobbyEntrantEntity;
 import br.com.soapboxrace.jpa.PersonaEntity;
+import br.com.soapboxrace.xmpp.XmppChatLobby;
+import br.com.soapboxrace.xmpp.XmppChatLobbys;
 import br.com.soapboxrace.xmpp.XmppLobby;
+import br.com.soapboxrace.xmpp.XmppSrv;
+import br.com.soapboxrace.xmpp.XmppTalk;
 import br.com.soapboxrace.xmpp.jaxb.CryptoTicketsType;
 import br.com.soapboxrace.xmpp.jaxb.EventSessionType;
 import br.com.soapboxrace.xmpp.jaxb.LobbyInviteType;
@@ -128,6 +132,12 @@ public class MatchmakingBO {
 	}
 
 	private void sendJoinEvent(Long personaId, LobbyEntity lobbyEntity) {
+		// TODO get from httpSessionVO
+		Long sessionId = 6969L;
+		XmppChatLobby xmppChatLobby = XmppChatLobbys.getChatLobby(sessionId);
+		XmppTalk xmppTalk = XmppSrv.get(personaId);
+		xmppChatLobby.addXmppTalk(xmppTalk);
+
 		LobbyInviteType lobbyInviteType = new LobbyInviteType();
 		Long eventId = lobbyEntity.getEvent().getEventId();
 		lobbyInviteType.setEventId(eventId);

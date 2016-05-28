@@ -11,6 +11,7 @@ public class XmppTalk {
 	private Socket socket;
 	private BufferedReader reader;
 	private BufferedWriter writer;
+	private int personaId;
 
 	public XmppTalk(Socket socket) {
 		this.socket = socket;
@@ -58,6 +59,14 @@ public class XmppTalk {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public int getPersonaId() {
+		return personaId;
+	}
+
+	public void setPersonaId(int personaId) {
+		this.personaId = personaId;
 	}
 
 }

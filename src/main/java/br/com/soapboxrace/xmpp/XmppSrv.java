@@ -19,7 +19,8 @@ public class XmppSrv {
 			if (xTalk != null)
 				xTalk.write(msg);
 			else
-				System.err.println("xmppClient with the personaId " + personaId + " is attached to a null XmppTalk instance!");
+				System.err.println(
+						"xmppClient with the personaId " + personaId + " is attached to a null XmppTalk instance!");
 		} else {
 			System.err.println("xmppClients doesn't contain personaId " + personaId);
 		}
@@ -68,8 +69,9 @@ public class XmppSrv {
 		public void run() {
 			try {
 				new XmppHandShake(xmppTalk);
+				XmppHandler xmppHandler = new XmppHandler(xmppTalk);
 				while (true) {
-					String input = xmppTalk.read();
+					String input = xmppHandler.read();
 					if (input == null || input.contains("</stream:stream>")) {
 						break;
 					}
@@ -84,5 +86,9 @@ public class XmppSrv {
 			}
 		}
 
+	}
+
+	public static XmppTalk get(Long personaId) {
+		return xmppClients.get(personaId);
 	}
 }

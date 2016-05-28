@@ -53,6 +53,7 @@ public class XmppHandShake {
 		packets[3] = "<presence from='channel.en__1@conference.127.0.0.1' to='nfsw." + personaId
 				+ "@127.0.0.1/EA-Chat' type='error'><error code='401' type='auth'><not-authorized xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/></error><x xmlns='http://jabber.org/protocol/muc'/></presence>";
 		xmppTalk.write(packets[3]);
+		xmppTalk.setPersonaId(personaId);
 		XmppSrv.addXmppClient(personaId, xmppTalk);
 	}
 
