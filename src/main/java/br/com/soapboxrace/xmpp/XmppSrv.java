@@ -7,8 +7,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class XmppSrv {
 
-	private static TlsWrapper tlsWrapper;
-
 	public static ConcurrentHashMap<Long, XmppTalk> xmppClients = new ConcurrentHashMap<Long, XmppTalk>();
 
 	public static void addXmppClient(long personaId, XmppTalk xmppClient) {
@@ -18,11 +16,12 @@ public class XmppSrv {
 	public static void sendMsg(long personaId, String msg) {
 		if (xmppClients.containsKey(personaId)) {
 			XmppTalk xTalk = xmppClients.get(personaId);
-			if (xTalk != null)
+			if (xTalk != null) {
 				xTalk.write(msg);
-			else
+			} else {
 				System.err.println(
 						"xmppClient with the personaId " + personaId + " is attached to a null XmppTalk instance!");
+			}
 		} else {
 			System.err.println("xmppClients doesn't contain personaId " + personaId);
 		}
@@ -37,7 +36,6 @@ public class XmppSrv {
 	}
 
 	public XmppSrv() {
-		XmppSrv.tlsWrapper = new TlsWrapper();
 		new XmppSrvRun().start();
 	}
 
@@ -85,6 +83,7 @@ public class XmppSrv {
 				} catch (IOException e) {
 					System.out.println("Couldn't close a socket, what's going on?");
 				}
+				XmppSrv.removeXmppClient(xmppTalk.getPersonaId());
 				System.out.println("Connection with client closed");
 			}
 		}
@@ -93,10 +92,6 @@ public class XmppSrv {
 
 	public static XmppTalk get(Long personaId) {
 		return xmppClients.get(personaId);
-	}
-
-	public static TlsWrapper getTlsWrapper() {
-		return tlsWrapper;
 	}
 
 }
