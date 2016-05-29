@@ -18,11 +18,12 @@ public class XmppSrv {
 	public static void sendMsg(long personaId, String msg) {
 		if (xmppClients.containsKey(personaId)) {
 			XmppTalk xTalk = xmppClients.get(personaId);
-			if (xTalk != null)
+			if (xTalk != null) {
 				xTalk.write(msg);
-			else
+			} else {
 				System.err.println(
 						"xmppClient with the personaId " + personaId + " is attached to a null XmppTalk instance!");
+			}
 		} else {
 			System.err.println("xmppClients doesn't contain personaId " + personaId);
 		}
@@ -85,6 +86,7 @@ public class XmppSrv {
 				} catch (IOException e) {
 					System.out.println("Couldn't close a socket, what's going on?");
 				}
+				XmppSrv.removeXmppClient(xmppTalk.getPersonaId());
 				System.out.println("Connection with client closed");
 			}
 		}

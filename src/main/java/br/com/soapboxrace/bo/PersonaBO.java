@@ -6,11 +6,15 @@ import java.util.List;
 import br.com.soapboxrace.dao.OwnedCarDao;
 import br.com.soapboxrace.dao.PersonaDao;
 import br.com.soapboxrace.dao.ProductDao;
+import br.com.soapboxrace.definition.ShoppingCartPurchaseResult;
 import br.com.soapboxrace.jaxb.CarSlotInfoTrans;
 import br.com.soapboxrace.jaxb.CarsOwnedByPersonaList;
 import br.com.soapboxrace.jaxb.CommerceSessionResultTransType;
+import br.com.soapboxrace.jaxb.InventoryItemsType;
 import br.com.soapboxrace.jaxb.ObtainableSlotsList;
 import br.com.soapboxrace.jaxb.UpdatedCarType;
+import br.com.soapboxrace.jaxb.WalletTransType;
+import br.com.soapboxrace.jaxb.WalletsType;
 import br.com.soapboxrace.jpa.OwnedCarEntity;
 import br.com.soapboxrace.jpa.PersonaEntity;
 import br.com.soapboxrace.jpa.ProductEntity;
@@ -55,44 +59,38 @@ public class PersonaBO {
 		// TODO: Economy input, currency calculation, and manual processing of
 		// basket items.
 
-		// PersonaEntity personaEntity = personaDao.findById(idPersona);
-		//
+		PersonaEntity personaEntity = personaDao.findById(idPersona);
+
 		CommerceSessionResultTransType commerceSessionResultTransType = new CommerceSessionResultTransType();
-		//
-		// // -- Wallet
-		// WalletTransType walletTransType = new WalletTransType();
-		// walletTransType.setBalance(personaEntity.getCash());
-		// walletTransType.setCurrency("CASH");
-		//
-		// WalletsType walletsType = new WalletsType();
-		// walletsType.setWalletTrans(walletTransType);
-		//
-		// commerceSessionResultTransType.setWallets(walletsType);
-		//
-		// // -- Modify the car on DB
-		// OwnedCarEntity currentCar = defaultcar(personaEntity.getId());
-		// currentCar.getCustomCar().setVinyls(updatedCar.getCustomCar().getVinyls());
-		// currentCar.getCustomCar().setPaints(updatedCar.getCustomCar().getPaints());
-		// currentCar.getCustomCar().setPerformanceParts(updatedCar.getCustomCar().getPerformanceParts());
-		// currentCar.getCustomCar().setSkillModParts(updatedCar.getCustomCar().getSkillModParts());
-		// currentCar.getCustomCar().setVisualParts(updatedCar.getCustomCar().getVisualParts());
-		//
-		// ownedCarDao.save(currentCar);
-		//
-		// // -- Set the response car
-		// UpdatedCarType responseCar = new UpdatedCarType();
-		// responseCar.setCustomCar(currentCar.getCustomCar().getCustomCarType());
-		// responseCar.setDurability(currentCar.getDurability());
-		// responseCar.setHeatLevel((short) 1);
-		// responseCar.setOwnershipType("CustomizedCar");
-		// responseCar.setUniqueCarId(currentCar.getUniqueCarId());
-		// commerceSessionResultTransType.setUpdatedCar(responseCar);
-		//
-		// // Currently not important, so we just fill in dummy response
-		// commerceSessionResultTransType.setInvalidBasket("");
-		// commerceSessionResultTransType.setInventoryItems(new
-		// InventoryItemsType());
-		// commerceSessionResultTransType.setStatus(ShoppingCartPurchaseResult.aSuccess);
+		// -- Wallet
+		WalletTransType walletTransType = new WalletTransType();
+		walletTransType.setBalance(personaEntity.getCash());
+		walletTransType.setCurrency("CASH");
+
+		WalletsType walletsType = new WalletsType();
+		walletsType.setWalletTrans(walletTransType);
+
+		commerceSessionResultTransType.setWallets(walletsType);
+
+		// -- Modify the car on DB
+		OwnedCarEntity currentCar = defaultcar(personaEntity.getId());
+		currentCar.setCustomCar(updatedCar.getCustomCar());
+
+		ownedCarDao.save(currentCar);
+
+		// -- Set the response car
+		UpdatedCarType responseCar = new UpdatedCarType();
+		responseCar.setCustomCar(currentCar.getCustomCarType());
+		responseCar.setDurability(currentCar.getDurability());
+		responseCar.setHeatLevel((short) 1);
+		responseCar.setOwnershipType("CustomizedCar");
+		responseCar.setUniqueCarId(currentCar.getId());
+		commerceSessionResultTransType.setUpdatedCar(responseCar);
+
+		// Currently not important, so we just fill in dummy response
+		commerceSessionResultTransType.setInvalidBasket("");
+		commerceSessionResultTransType.setInventoryItems(new InventoryItemsType());
+		commerceSessionResultTransType.setStatus(ShoppingCartPurchaseResult.aSuccess);
 
 		return commerceSessionResultTransType;
 	}

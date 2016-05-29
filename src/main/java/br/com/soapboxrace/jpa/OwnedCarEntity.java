@@ -29,7 +29,6 @@ public class OwnedCarEntity implements ISoapBoxEntity {
 
 	private static final long serialVersionUID = 6298043520507324814L;
 
-	@XmlTransient
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "PersonaId", referencedColumnName = "ID")
 	private PersonaEntity persona;
@@ -54,6 +53,7 @@ public class OwnedCarEntity implements ISoapBoxEntity {
 
 	protected String ownershipType;
 
+	@XmlTransient
 	public PersonaEntity getPersona() {
 		return persona;
 	}
