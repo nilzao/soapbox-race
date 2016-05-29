@@ -1,6 +1,5 @@
 package br.com.soapboxrace.xmpp;
 
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -14,20 +13,29 @@ import javax.net.ssl.TrustManagerFactory;
 
 public class TlsWrapper {
 
+	private InputStream keyInputStream;
+	private InputStream keyStoreInputStream;
+
+	public TlsWrapper() {
+		ClassLoader classLoader = getClass().getClassLoader();
+		keyInputStream = classLoader.getResourceAsStream("keystore.jks");
+		keyStoreInputStream = classLoader.getResourceAsStream("keystore.jks");
+	}
+
 	/*
 	 * genkey command keytool -genkey -keyalg RSA -alias selfsigned -keystore
 	 * keystore.jks \ -storepass 123456 -validity 360 -keysize 2048
 	 * 
 	 * need to run with vm param -Djsse.enableCBCProtection=false
 	 */
-	public static void wrapXmppTalk(XmppTalk xmppTalk) {
+	public void wrapXmppTalk(XmppTalk xmppTalk) {
 		try {
 			Socket socket = xmppTalk.getSocket();
 			KeyStore ksKeys = KeyStore.getInstance("JKS");
-			ksKeys.load(new FileInputStream("keystore.jks"), "123456".toCharArray());
+			ksKeys.load(keyInputStream, "123456".toCharArray());
 			KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
 			kmf.init(ksKeys, "123456".toCharArray());
-			InputStream keyStoreIS = new FileInputStream("keystore.jks");
+			InputStream keyStoreIS = keyStoreInputStream;
 			char[] keyStorePassphrase = "123456".toCharArray();
 			ksKeys.load(keyStoreIS, keyStorePassphrase);
 			kmf.init(ksKeys, keyStorePassphrase);

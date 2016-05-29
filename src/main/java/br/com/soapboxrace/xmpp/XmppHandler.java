@@ -13,7 +13,7 @@ public class XmppHandler {
 
 	public String read() {
 		String read = xmppTalk.read();
-		if (!read.isEmpty()) {
+		if (read != null && read.isEmpty()) {
 			if (read.contains("Chat_All")) {
 				Long sessionId = 0L;
 				Pattern regPattern = Pattern.compile("message to='(\\d+)_(\\d+)");
