@@ -8,19 +8,19 @@
       <property name="hibernate.c3p0.max_statements" value="0" />
       <property name="hibernate.c3p0.acquire_increment" value="1" />
 
-  <!-- <property name="hibernate.hbm2ddl.auto" value="update" /> -->
+      <!-- <property name="hibernate.hbm2ddl.auto" value="update" /> -->
       <property name="hibernate.show_sql" value="false" />
 
       <!-- mysql -->
-      <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/SOAPBOX_DEV?serverTimezone=UTC&amp;useSSL=false&amp;requireSSL=false" />
+      <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/SOAPBOX?serverTimezone=UTC&amp;useSSL=false&amp;requireSSL=false" />
       <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
       <property name="javax.persistence.jdbc.user" value="root" />
-      <property name="javax.persistence.jdbc.password" value="123" />
-      <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+      <property name="javax.persistence.jdbc.password" value="" />
+      <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLInnoDBDialect" />
 	  <property name="hibernate.connection.provider_class" value="org.hibernate.connection.C3P0ConnectionProvider" />
 	  <property name="hibernate.connection.isolation" value="2" />
 
-      <property name="hibernate.default_schema" value="SOAPBOX_DEV" />
+      <property name="hibernate.default_schema" value="SOAPBOX" />
     </properties>
   </persistence-unit>
 </persistence>
