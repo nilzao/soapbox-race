@@ -120,6 +120,14 @@ public class HttpSrv extends GzipHandler {
 	}
 
 	public static void main(String[] args) {
+		String enabledCBC = System.getProperty("jsse.enableCBCProtection");
+		if(!"false".equals(enabledCBC)){
+			System.err.println("\n  ERROR!!!  \n\nNeed to run java vm with -Djsse.enableCBCProtection=false\n\n");
+			System.out.println("Example:");
+			System.out.println("   java -Djsse.enableCBCProtection=false -jar soapbox-race.jar");
+			System.exit(0);
+		}
+		
 		Locale newLocale = new Locale("en", "GB");
 		Locale.setDefault(newLocale);
 
