@@ -1,15 +1,11 @@
 package br.com.soapboxrace.jpa;
 
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import br.com.soapboxrace.jaxb.OwnedCarTransType;
-import br.com.soapboxrace.jaxb.convert.OwnedCarTransConverter;
 
 @Entity
 @Table(name = "BASKETDEFINITION")
@@ -33,9 +29,8 @@ public class BasketDefinitionEntity implements ISoapBoxEntity {
 	@Column(name = "ProductId")
 	private String productId;
 
-	@Convert(converter = OwnedCarTransConverter.class)
 	@Column(name = "OwnedCarTrans")
-	private OwnedCarTransType ownedCarTrans;
+	private String ownedCarTrans;
 
 	public String getProductId() {
 		return productId;
@@ -45,11 +40,12 @@ public class BasketDefinitionEntity implements ISoapBoxEntity {
 		this.productId = productId;
 	}
 
-	public OwnedCarTransType getOwnedCarTrans() {
+	public String getOwnedCarTrans() {
 		return ownedCarTrans;
 	}
 
-	public void setOwnedCarTrans(OwnedCarTransType ownedCarTrans) {
+	public void setOwnedCarTrans(String ownedCarTrans) {
 		this.ownedCarTrans = ownedCarTrans;
 	}
+
 }

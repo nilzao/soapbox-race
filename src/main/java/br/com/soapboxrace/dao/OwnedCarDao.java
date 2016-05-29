@@ -5,8 +5,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-import org.hibernate.Hibernate;
-
 import br.com.soapboxrace.db.SoapboxDao;
 import br.com.soapboxrace.jpa.OwnedCarEntity;
 import br.com.soapboxrace.jpa.PersonaEntity;
@@ -28,10 +26,6 @@ public class OwnedCarDao extends SoapboxDao {
 		personaEntity.setId(idPersona);
 		query.setParameter("persona", personaEntity);
 		List<OwnedCarEntity> ownedCars = query.getResultList();
-		for (OwnedCarEntity ownedCarEntity : ownedCars) {
-			// @Convert performance problem:
-			Hibernate.initialize(ownedCarEntity.getCustomCar());
-		}
 		return ownedCars;
 	}
 

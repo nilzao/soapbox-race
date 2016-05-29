@@ -1,18 +1,19 @@
 package br.com.soapboxrace.bo;
 
+import org.hibernate.Hibernate;
+
 import br.com.soapboxrace.dao.BasketDefinitionDao;
 import br.com.soapboxrace.dao.OwnedCarDao;
 import br.com.soapboxrace.dao.PersonaDao;
 import br.com.soapboxrace.definition.ShoppingCartPurchaseResult;
 import br.com.soapboxrace.jaxb.CommerceResultTransType;
-import br.com.soapboxrace.jaxb.CustomCarType;
 import br.com.soapboxrace.jaxb.InventoryItemTransType;
 import br.com.soapboxrace.jaxb.InventoryItemsType;
 import br.com.soapboxrace.jaxb.PurchasedCarsType;
 import br.com.soapboxrace.jaxb.WalletTransType;
 import br.com.soapboxrace.jaxb.WalletsType;
+import br.com.soapboxrace.jaxb.util.UnmarshalXML;
 import br.com.soapboxrace.jpa.BasketDefinitionEntity;
-import br.com.soapboxrace.jpa.CustomCarEntity;
 import br.com.soapboxrace.jpa.OwnedCarEntity;
 import br.com.soapboxrace.jpa.PersonaEntity;
 
@@ -55,25 +56,10 @@ public class BasketBO {
 		BasketDefinitionEntity basketDefinition = basketDefinitionDao.findByProductId(productId);
 
 		if (basketDefinition != null) {
-			CustomCarType customCar = basketDefinition.getOwnedCarTrans().getCustomCar();
-
-			OwnedCarEntity ownedCarEntity = new OwnedCarEntity();
-			CustomCarEntity customCarEntity = new CustomCarEntity();
-			customCarEntity.setApiId(customCar.getApiId());
-			customCarEntity.setBaseCarId(customCar.getBaseCarId());
-			customCarEntity.setCarClassHash(customCar.getCarClassHash());
-			customCarEntity.setPaints(customCar.getPaints());
-			customCarEntity.setPerformanceParts(customCar.getPerformanceParts());
-			customCarEntity.setPhysicsProfileHash(customCar.getPhysicsProfileHash());
-			customCarEntity.setRating(customCar.getRating());
-			customCarEntity.setResalePrice(customCar.getResalePrice());
-			customCarEntity.setSkillModParts(customCar.getSkillModParts());
-			customCarEntity.setSkillModSlotCount((short) 5);
-			customCarEntity.setVinyls(customCar.getVinyls());
-			customCarEntity.setVisualParts(customCar.getVisualParts());
-			customCarEntity.setParentOwnedCarTrans(ownedCarEntity);
-
-			ownedCarEntity.setCustomCar(customCarEntity);
+			String ownedCarTrans = basketDefinition.getOwnedCarTrans();
+			OwnedCarEntity ownedCarEntity = (OwnedCarEntity) UnmarshalXML.unMarshal(ownedCarTrans,
+					new OwnedCarEntity());
+			ownedCarEntity.setId(0L);
 			ownedCarEntity.setDurability((short) 100);
 			ownedCarEntity.setExpirationDate(null);
 			ownedCarEntity.setHeatLevel((short) 0);
@@ -81,12 +67,14 @@ public class BasketBO {
 			ownedCarEntity.setPersona(personaEntity);
 
 			ownedCarEntity = (OwnedCarEntity) ownedCarDao.save(ownedCarEntity);
+			// Hibernate.initialize(personaEntity.getOwnedCarlist());
 			personaBO.changeDefaultCar(idPersona, ownedCarEntity.getId());
 
-			purchasedCarsType.setOwnedCarTrans(ownedCarEntity.getOwnedCarTransType());
+			purchasedCarsType.setOwnedCarTrans(ownedCarEntity);
 			commerceResultTransType.setPurchasedCars(purchasedCarsType);
 			commerceResultTransType.setStatus(ShoppingCartPurchaseResult.aSuccess);
 		}
 		return commerceResultTransType;
 	}
+
 }

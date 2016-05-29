@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -62,7 +63,7 @@ public class PersonaEntity implements ISoapBoxEntity {
 	private Integer curCarIndex = 0;
 
 	@OneToMany(mappedBy = "persona", targetEntity = OwnedCarEntity.class, cascade = { CascadeType.MERGE,
-			CascadeType.DETACH, CascadeType.REMOVE })
+			CascadeType.DETACH, CascadeType.REMOVE }, fetch = FetchType.LAZY)
 	private List<OwnedCarEntity> ownedCarlist;
 
 	@ManyToOne
