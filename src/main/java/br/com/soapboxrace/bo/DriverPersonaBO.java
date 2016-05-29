@@ -28,7 +28,7 @@ public class DriverPersonaBO {
 		userEntity.setId(userId);
 
 		PersonaEntity personaEntity = new PersonaEntity();
-		personaEntity.setCash(200000);
+		personaEntity.setCash(5000000);
 		personaEntity.setName(name);
 		personaEntity.setIconIndex(iconIndex);
 		personaEntity.setUser(userEntity);
@@ -37,7 +37,7 @@ public class DriverPersonaBO {
 		personaEntity.setRep(0);
 		personaEntity.setRepAtCurrentLevel(0);
 		personaEntity.setScore(0);
-		personaEntity.setLevel(1);
+		personaEntity.setLevel(60);
 
 		personaEntity = personaDao.save(personaEntity);
 
