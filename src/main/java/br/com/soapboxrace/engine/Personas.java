@@ -231,18 +231,10 @@ public class Personas extends Router {
 		}
 
 		long personaId = getPersonaId();
-		long defaultCarId = getDefaultCarId();
-		if (defaultCarId != 0) {
-			personaBO.changeDefaultCar(personaId, defaultCarId);
-			return "";
-		}
 		String defaultcar = "";
 		OwnedCarEntity ownedCarEntity = personaBO.defaultcar(personaId);
 		if (ownedCarEntity != null) {
 			ownedCarEntity.setExpirationDate("");
-			ownedCarEntity.getCustomCarType().setVersion(0);
-			ownedCarEntity.getCustomCarType().setPreset(true);
-			ownedCarEntity.getCustomCarType().setBaseCarId(ownedCarEntity.getId());
 			defaultcar = MarshalXML.marshal(ownedCarEntity);
 		}
 		System.out.println(defaultcar);

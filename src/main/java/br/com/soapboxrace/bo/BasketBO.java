@@ -58,6 +58,9 @@ public class BasketBO {
 			OwnedCarEntity ownedCarEntity = (OwnedCarEntity) UnmarshalXML.unMarshal(ownedCarTrans,
 					new OwnedCarEntity());
 			ownedCarEntity.setId(0L);
+			ownedCarEntity.getCustomCarType().setId(12345678L);
+			ownedCarEntity.getCustomCarType().setBaseCarId(12345678L);
+			ownedCarEntity.getCustomCarType().setPreset(true);
 			ownedCarEntity.setDurability((short) 100);
 			ownedCarEntity.setExpirationDate(null);
 			ownedCarEntity.setHeatLevel((short) 0);

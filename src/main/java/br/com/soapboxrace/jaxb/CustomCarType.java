@@ -78,11 +78,11 @@ public class CustomCarType {
 		this.level = value;
 	}
 
-	public void setApiId(long value) {
+	public void setId(long value) {
 		this.apiId = value;
 	}
 
-	public long getApiId() {
+	public long getId() {
 		return this.apiId;
 	}
 
