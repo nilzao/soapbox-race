@@ -17,6 +17,8 @@ public class UserBO {
 	private UserDao userDao = new UserDao();
 
 	public UserInfoType getPermanentSession(Long userId, String securityToken) {
+		createUser(userId);
+
 		UserInfoType userInfo = new UserInfoType();
 		UserType userType = new UserType();
 
@@ -53,14 +55,15 @@ public class UserBO {
 		return userInfo;
 	}
 
-	public String createUser(String email, String passwordHash) {
-		if (userDao.findByEmail(email) != null) {
-			return "Registration Error: Email already exists!";
+	public String createUser(long userId) {
+		UserEntity userEntity = userDao.findById(userId);
+		if (userEntity == null) {
+			UserEntity user = new UserEntity();
+			user.setId(userId);
+			user.setEmail("user_" + userId + "@here");
+			user.setPassword("nothing");
+			userDao.save(user);
 		}
-		UserEntity user = new UserEntity();
-		user.setEmail(email);
-		user.setPassword(passwordHash);
-		userDao.save(user);
-		return userDao.find(user).get(0).getId().toString();
+		return "";
 	}
 }
