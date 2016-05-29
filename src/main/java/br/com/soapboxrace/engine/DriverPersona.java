@@ -8,6 +8,7 @@ import br.com.soapboxrace.definition.ServerExceptions.PersonaIdMismatchException
 import br.com.soapboxrace.jaxb.ArrayOfstringType;
 import br.com.soapboxrace.jaxb.PersonaIdArrayType;
 import br.com.soapboxrace.jaxb.PersonaIdsType;
+import br.com.soapboxrace.jaxb.PersonaMottoType;
 import br.com.soapboxrace.jaxb.PersonaPresenceType;
 import br.com.soapboxrace.jaxb.ProfileDataType;
 import br.com.soapboxrace.jaxb.util.MarshalXML;
@@ -139,6 +140,12 @@ public class DriverPersona extends Router {
 	}
 
 	public String updateStatusMessage() {
+		String xmlTmp = readInputStream();
+		PersonaMottoType personaMottoType = new PersonaMottoType();
+		personaMottoType = (PersonaMottoType) UnmarshalXML.unMarshal(xmlTmp, personaMottoType);
+		String statusMessage = personaMottoType.getMessage();
+		Long personaId = personaMottoType.getPersonaId();
+		driverPersonaBO.updateStatusMessage(personaId, statusMessage);
 		return "";
 	}
 

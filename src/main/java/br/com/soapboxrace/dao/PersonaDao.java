@@ -59,4 +59,10 @@ public class PersonaDao extends SoapboxDao {
 		return null;
 	}
 
+	public void updateStatusMessage(Long personaId, String statusMessage) {
+		PersonaEntity personaEntity = findById(personaId);
+		personaEntity.setMotto(statusMessage);
+		save(personaEntity);
+	}
+
 }

@@ -104,4 +104,8 @@ public class DriverPersonaBO {
 		}
 		return null;
 	}
+
+	public void updateStatusMessage(Long personaId, String statusMessage) {
+		personaDao.updateStatusMessage(personaId, statusMessage);
+	}
 }
