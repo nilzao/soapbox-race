@@ -11,13 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.eclipse.jetty.server.Request;
 
-import br.com.soapboxrace.definition.ServerExceptions.EngineException;
 import br.com.soapboxrace.http.HttpSessionVO;
 
 public class Router {
 
 	public static ConcurrentHashMap<Long, HttpSessionVO> activeUsers = new ConcurrentHashMap<Long, HttpSessionVO>();
 	public static SecureRandom random = new SecureRandom();
+
 	public static HttpSessionVO getHttpSessionVo(Long userId) {
 		if (Router.activeUsers.containsKey(userId)) {
 			HttpSessionVO httpSessionVO = Router.activeUsers.get(userId);
@@ -26,20 +26,10 @@ public class Router {
 		}
 		return null;
 	}
-	
+
 	private String target;
 	private HttpServletRequest request;
 	private Request baseRequest;
-
-	protected void checkSecurityToken() throws EngineException {
-		String securityToken = getHeader("securityToken");
-		Long userId = Long.valueOf(getHeader("userId"));
-		if (getHttpSessionVo(userId) != null) {
-			if (!getHttpSessionVo(userId).getSecurityToken().equals(securityToken))
-				throw new EngineException("Session error: Invalid token!");
-		} else
-			throw new EngineException("Session error: Invalid session!");
-	}
 
 	protected void createSessionEntry(Long userId, String securityToken) {
 		HttpSessionVO session = new HttpSessionVO();

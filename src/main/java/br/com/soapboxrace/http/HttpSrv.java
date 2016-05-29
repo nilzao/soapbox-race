@@ -20,8 +20,6 @@ import org.eclipse.jetty.server.handler.gzip.GzipHttpOutputInterceptor;
 import br.com.soapboxrace.db.ConnectionDB;
 import br.com.soapboxrace.engine.Router;
 import br.com.soapboxrace.engine.Session;
-import br.com.soapboxrace.jaxb.EngineExceptionTrans;
-import br.com.soapboxrace.jaxb.util.MarshalXML;
 import br.com.soapboxrace.xmpp.XmppSrv;
 
 public class HttpSrv extends GzipHandler {
@@ -56,21 +54,13 @@ public class HttpSrv extends GzipHandler {
 			declaredMethod = dynamicObj.getDeclaredMethod(methodName);
 			content = (String) declaredMethod.invoke(newInstance);
 			response.setStatus(200);
-		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | SecurityException e) {
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
+				| SecurityException e) {
 			e.printStackTrace();
 			System.out.println("class or method error");
 		} catch (NoSuchMethodException | ClassNotFoundException e) {
 			e.printStackTrace();
 			System.out.println("class not found");
-		} catch (InvocationTargetException e) {
-			EngineExceptionTrans error = new EngineExceptionTrans();
-			error.setDescription("");
-			error.setInnerException("");
-			error.setErrorCode("2");
-			error.setMessage(e.getCause().getMessage());
-			error.setStackTrace("");
-			content = MarshalXML.marshal(error);
-			response.setStatus(500);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("generic error");
@@ -121,13 +111,13 @@ public class HttpSrv extends GzipHandler {
 
 	public static void main(String[] args) {
 		String enabledCBC = System.getProperty("jsse.enableCBCProtection");
-		if(!"false".equals(enabledCBC)){
+		if (!"false".equals(enabledCBC)) {
 			System.err.println("\n  ERROR!!!  \n\nNeed to run java vm with -Djsse.enableCBCProtection=false\n\n");
 			System.out.println("Example:");
 			System.out.println("   java -Djsse.enableCBCProtection=false -jar soapbox-race.jar");
 			System.exit(0);
 		}
-		
+
 		Locale newLocale = new Locale("en", "GB");
 		Locale.setDefault(newLocale);
 

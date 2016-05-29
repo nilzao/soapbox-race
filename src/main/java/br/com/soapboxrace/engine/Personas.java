@@ -2,8 +2,6 @@ package br.com.soapboxrace.engine;
 
 import br.com.soapboxrace.bo.BasketBO;
 import br.com.soapboxrace.bo.PersonaBO;
-import br.com.soapboxrace.definition.ServerExceptions;
-import br.com.soapboxrace.definition.ServerExceptions.PersonaIdMismatchException;
 import br.com.soapboxrace.jaxb.BasketTransType;
 import br.com.soapboxrace.jaxb.CarSlotInfoTrans;
 import br.com.soapboxrace.jaxb.CommerceResultTransType;
@@ -17,18 +15,10 @@ public class Personas extends Router {
 
 	private PersonaBO personaBO = new PersonaBO();
 
-	private long getPersonaId(boolean isBypass) throws PersonaIdMismatchException {
+	private long getPersonaId() {
 		String[] targetSplitted = getTarget().split("/");
 		Long idPersona = Long.valueOf(targetSplitted[4]);
-		if (((isBypass || idPersona.equals(getLoggedPersonaId()) || getLoggedPersonaId() == -1L)))
-			if (getUserId() != -1L && !getSecurityToken().isEmpty()
-					&& Router.activeUsers.get(getUserId()).getSecurityToken().equals(getSecurityToken()))
-				return idPersona;
-		throw new ServerExceptions.PersonaIdMismatchException(getLoggedPersonaId(), idPersona);
-	}
-
-	private long getPersonaId() throws PersonaIdMismatchException {
-		return getPersonaId(false);
+		return idPersona;
 	}
 
 	private long getDefaultCarId() {
@@ -40,7 +30,7 @@ public class Personas extends Router {
 		return carId;
 	}
 
-	public String carslots() throws PersonaIdMismatchException {
+	public String carslots() {
 		CarSlotInfoTrans carslots = personaBO.carslots(getPersonaId());
 		return MarshalXML.marshal(carslots);
 	}
@@ -198,8 +188,8 @@ public class Personas extends Router {
 		return inventoryStr;
 	}
 
-	public String defaultcar() throws PersonaIdMismatchException {
-		long personaId = getPersonaId(true);
+	public String defaultcar() {
+		long personaId = getPersonaId();
 		long defaultCarId = getDefaultCarId();
 		if (defaultCarId != 0) {
 			personaBO.changeDefaultCar(personaId, defaultCarId);
@@ -212,7 +202,7 @@ public class Personas extends Router {
 		return "";
 	}
 
-	public String commerce() throws PersonaIdMismatchException {
+	public String commerce() {
 		String commerceXml = readInputStream();
 		CommerceSessionTransType commerceSessionTransType = new CommerceSessionTransType();
 		commerceSessionTransType = (CommerceSessionTransType) UnmarshalXML.unMarshal(commerceXml,
@@ -222,7 +212,7 @@ public class Personas extends Router {
 		return MarshalXML.marshal(commerceSessionResultTrans);
 	}
 
-	public String baskets() throws PersonaIdMismatchException {
+	public String baskets() {
 		String basketXml = readInputStream();
 		BasketTransType basketTransType = new BasketTransType();
 		basketTransType = (BasketTransType) UnmarshalXML.unMarshal(basketXml, basketTransType);
@@ -232,7 +222,7 @@ public class Personas extends Router {
 		return MarshalXML.marshal(commerceResultTrans);
 	}
 
-	public String cars() throws PersonaIdMismatchException {
+	public String cars() {
 		String serialNumber = getParam("serialNumber");
 		if (serialNumber != null) {
 			Long carId = Long.valueOf(serialNumber);

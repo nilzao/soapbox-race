@@ -4,7 +4,6 @@ import java.util.List;
 
 import br.com.soapboxrace.dao.PersonaDao;
 import br.com.soapboxrace.dao.UserDao;
-import br.com.soapboxrace.definition.ServerExceptions.EngineException;
 import br.com.soapboxrace.jaxb.PersonasType;
 import br.com.soapboxrace.jaxb.ProfileDataType;
 import br.com.soapboxrace.jaxb.UserInfoType;
@@ -54,21 +53,10 @@ public class UserBO {
 		return userInfo;
 	}
 
-	public String authenticateUser(String email, String passwordHash) throws EngineException {
+	public String createUser(String email, String passwordHash) {
 		if (userDao.findByEmail(email) != null) {
-			UserEntity user = userDao.findByEmail(email);
-			if (user.getPassword().equals(passwordHash)) {
-				return user.getId().toString();
-			}
-			throw new EngineException("Login Error: Incorrect email-password combination!");
+			return "Registration Error: Email already exists!";
 		}
-		throw new EngineException("Login Error: Email wasn't found!");
-	}
-	
-	public String createUser(String email, String passwordHash) throws EngineException {
-		if (userDao.findByEmail(email) != null)
-			throw new EngineException("Registration Error: Email already exists!");
-
 		UserEntity user = new UserEntity();
 		user.setEmail(email);
 		user.setPassword(passwordHash);

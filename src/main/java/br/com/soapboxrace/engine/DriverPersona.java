@@ -3,8 +3,6 @@ package br.com.soapboxrace.engine;
 import java.util.List;
 
 import br.com.soapboxrace.bo.DriverPersonaBO;
-import br.com.soapboxrace.definition.ServerExceptions;
-import br.com.soapboxrace.definition.ServerExceptions.PersonaIdMismatchException;
 import br.com.soapboxrace.jaxb.ArrayOfstringType;
 import br.com.soapboxrace.jaxb.PersonaIdArrayType;
 import br.com.soapboxrace.jaxb.PersonaIdsType;
@@ -18,14 +16,10 @@ public class DriverPersona extends Router {
 
 	private DriverPersonaBO driverPersonaBO = new DriverPersonaBO();
 
-	private Long getPersonaId() throws PersonaIdMismatchException {
+	private Long getPersonaId() {
 		String personaIdStr = getParam("personaId");
 		Long idPersona = Long.valueOf(personaIdStr);
-		if (((idPersona.equals(getLoggedPersonaId()) || getLoggedPersonaId() == -1L)))
-			if (getUserId() != -1L && !getSecurityToken().isEmpty()
-					&& Router.activeUsers.get(getUserId()).getSecurityToken().equals(getSecurityToken()))
-				return idPersona;
-		throw new ServerExceptions.PersonaIdMismatchException(getLoggedPersonaId(), idPersona);
+		return idPersona;
 	}
 
 	public String getExpLevelPointsMap() {
@@ -114,7 +108,7 @@ public class DriverPersona extends Router {
 		return MarshalXML.marshal(createPersona);
 	}
 
-	public String getPersonaInfo() throws PersonaIdMismatchException {
+	public String getPersonaInfo() {
 		ProfileDataType personaInfo = driverPersonaBO.getPersonaInfo(getPersonaId());
 		return MarshalXML.marshal(personaInfo);
 	}
@@ -133,7 +127,7 @@ public class DriverPersona extends Router {
 		return "";
 	}
 
-	public String deletePersona() throws PersonaIdMismatchException {
+	public String deletePersona() {
 		Long idPersona = getPersonaId();
 		driverPersonaBO.deletePersona(idPersona);
 		return "<long>0</long>";
