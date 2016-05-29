@@ -1,6 +1,10 @@
 package br.com.soapboxrace.http;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
@@ -26,7 +30,7 @@ public class HttpSrv extends GzipHandler {
 	public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) {
 		if ("/favicon.ico".equals(target))
 			return;
-		System.out.println(baseRequest.toString());
+		// System.out.println(baseRequest.toString());
 		String[] targetSplitted = target.split("/");
 		String className = "Default";
 		String methodName = "";
@@ -110,6 +114,25 @@ public class HttpSrv extends GzipHandler {
 			System.exit(0);
 		}
 
+		File f = new File("soapbox.mv.db");
+		if (!f.exists()) {
+			ClassLoader classLoader = HttpSrv.class.getClassLoader();
+			InputStream h2DbInputStream = classLoader.getResourceAsStream("soapbox.mv.db");
+			try {
+				int read = 0;
+				byte[] bytes = new byte[1024];
+				OutputStream outputStream = new FileOutputStream(new File("soapbox.mv.db"));
+				while ((read = h2DbInputStream.read(bytes)) != -1) {
+					outputStream.write(bytes, 0, read);
+				}
+				outputStream.close();
+			} catch (Exception e) {
+				System.err.println("ERROR CREATING DB FILE");
+				e.printStackTrace();
+				System.exit(0);
+			}
+		}
+
 		Locale newLocale = new Locale("en", "GB");
 		Locale.setDefault(newLocale);
 
@@ -120,6 +143,7 @@ public class HttpSrv extends GzipHandler {
 			}
 		}
 		new ConnectionDB();
+		System.out.println("Http server is running.");
 		new XmppSrv();
 		try {
 			Server server = new Server(1337);

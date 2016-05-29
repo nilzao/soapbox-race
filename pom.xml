@@ -46,9 +46,9 @@
       <version>9.3.0.v20150612</version>
     </dependency>
     <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <version>6.0.2</version>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <version>1.4.191</version>
     </dependency>
     <dependency>
       <groupId>log4j</groupId>

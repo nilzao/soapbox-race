@@ -12,8 +12,8 @@
   <root>
     <!-- <priority value="debug" /> -->
     <!-- <priority value="info" /> -->
-    <!-- <priority value="fatal" /> -->
-    <priority value="info" />
+    <priority value="fatal" />
+    <!-- <priority value="info" /> -->
     <appender-ref ref="console" />
   </root>
 
