@@ -7,8 +7,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class XmppSrv {
 
-	private static TlsWrapper tlsWrapper;
-
 	public static ConcurrentHashMap<Long, XmppTalk> xmppClients = new ConcurrentHashMap<Long, XmppTalk>();
 
 	public static void addXmppClient(long personaId, XmppTalk xmppClient) {
@@ -38,7 +36,6 @@ public class XmppSrv {
 	}
 
 	public XmppSrv() {
-		XmppSrv.tlsWrapper = new TlsWrapper();
 		new XmppSrvRun().start();
 	}
 
@@ -95,10 +92,6 @@ public class XmppSrv {
 
 	public static XmppTalk get(Long personaId) {
 		return xmppClients.get(personaId);
-	}
-
-	public static TlsWrapper getTlsWrapper() {
-		return tlsWrapper;
 	}
 
 }

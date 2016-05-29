@@ -20,7 +20,7 @@ public class XmppHandShake {
 			xmppTalk.write(packets[pkgCount]);
 			pkgCount++;
 		} while (pkgCount < packets.length);
-		XmppSrv.getTlsWrapper().wrapXmppTalk(xmppTalk);
+		TlsWrapper.wrapXmppTalk(xmppTalk);
 		pkgCount = 0;
 	}
 

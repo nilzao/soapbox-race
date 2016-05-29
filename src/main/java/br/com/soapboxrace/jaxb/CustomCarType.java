@@ -8,8 +8,8 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "CustomCarType", propOrder = { "baseCarId", "carClassHash", "isPreset", "level", "name", "apiId",
-		"paints", "performanceParts", "physicsProfileHash", "rating", "resalePrice", "skillModParts", "skillModSlotCount", "vinyls",
-		"visualParts" })
+		"paints", "performanceParts", "physicsProfileHash", "rating", "resalePrice", "skillModParts",
+		"skillModSlotCount", "vinyls", "visualParts", "version" })
 @XmlRootElement(name = "CustomCar")
 public class CustomCarType {
 	@XmlElement(name = "BaseCar", required = true)
@@ -42,6 +42,9 @@ public class CustomCarType {
 	protected VinylsType vinyls;
 	@XmlElement(name = "VisualParts")
 	protected VisualPartsType visualParts;
+
+	@XmlElement(name = "Version")
+	protected int version = 0;
 
 	public void setBaseCarId(long value) {
 		this.baseCarId = value;
@@ -130,7 +133,7 @@ public class CustomCarType {
 	public SkillModPartsType getSkillModParts() {
 		return this.skillModParts;
 	}
-	
+
 	public Short getSkillModSlotCount() {
 		return skillModSlotCount;
 	}
@@ -154,4 +157,21 @@ public class CustomCarType {
 	public VisualPartsType getVisualParts() {
 		return this.visualParts;
 	}
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 }

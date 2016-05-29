@@ -229,9 +229,23 @@ public class Personas extends Router {
 			OwnedCarEntity defaultCar = personaBO.deleteCar(getPersonaId(), carId);
 			return MarshalXML.marshal(defaultCar);
 		}
-		String ownedCarTransXml = readInputStream();
-		System.out.println("TODO: sell performance shop");
-		System.out.println(ownedCarTransXml);
-		return "";
+
+		long personaId = getPersonaId();
+		long defaultCarId = getDefaultCarId();
+		if (defaultCarId != 0) {
+			personaBO.changeDefaultCar(personaId, defaultCarId);
+			return "";
+		}
+		String defaultcar = "";
+		OwnedCarEntity ownedCarEntity = personaBO.defaultcar(personaId);
+		if (ownedCarEntity != null) {
+			ownedCarEntity.setExpirationDate("");
+			ownedCarEntity.getCustomCarType().setVersion(0);
+			ownedCarEntity.getCustomCarType().setPreset(true);
+			ownedCarEntity.getCustomCarType().setBaseCarId(ownedCarEntity.getId());
+			defaultcar = MarshalXML.marshal(ownedCarEntity);
+		}
+		System.out.println(defaultcar);
+		return defaultcar;
 	}
 }

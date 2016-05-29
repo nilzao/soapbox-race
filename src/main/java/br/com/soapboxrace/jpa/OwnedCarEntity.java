@@ -70,6 +70,7 @@ public class OwnedCarEntity implements ISoapBoxEntity {
 		this.customCarType = customCarType;
 	}
 
+	@XmlTransient
 	public String getCustomCar() {
 		if (customCarType != null) {
 			return MarshalXML.marshal(customCarType);
