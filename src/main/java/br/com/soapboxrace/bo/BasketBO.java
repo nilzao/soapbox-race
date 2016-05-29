@@ -1,7 +1,5 @@
 package br.com.soapboxrace.bo;
 
-import org.hibernate.Hibernate;
-
 import br.com.soapboxrace.dao.BasketDefinitionDao;
 import br.com.soapboxrace.dao.OwnedCarDao;
 import br.com.soapboxrace.dao.PersonaDao;
