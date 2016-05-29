@@ -19,9 +19,7 @@ public class XmppHandler {
 				Pattern regPattern = Pattern.compile("message to='(\\d+)_(\\d+)");
 				Matcher match = regPattern.matcher(read);
 				if (match.find()) {
-					// Long eventId = Long.valueOf(match.group(1));
 					sessionId = Long.valueOf(match.group(2));
-					System.out.println("arroy");
 				}
 				XmppChatLobby chatLobby = XmppChatLobbys.getChatLobby(sessionId);
 				XmppChat xmppChat = new XmppChat(xmppTalk.getPersonaId(), read);
