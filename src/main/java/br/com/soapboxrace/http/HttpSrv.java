@@ -1,7 +1,6 @@
 package br.com.soapboxrace.http;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
@@ -54,16 +53,9 @@ public class HttpSrv extends GzipHandler {
 			declaredMethod = dynamicObj.getDeclaredMethod(methodName);
 			content = (String) declaredMethod.invoke(newInstance);
 			response.setStatus(200);
-		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
-				| SecurityException e) {
-			e.printStackTrace();
-			System.out.println("class or method error");
-		} catch (NoSuchMethodException | ClassNotFoundException e) {
-			e.printStackTrace();
-			System.out.println("class not found");
 		} catch (Exception e) {
+			response.setStatus(500);
 			e.printStackTrace();
-			System.out.println("generic error");
 		}
 		try {
 			setCompressionLevel(9);
