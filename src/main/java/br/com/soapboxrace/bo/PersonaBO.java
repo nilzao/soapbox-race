@@ -80,6 +80,8 @@ public class PersonaBO {
 		currentCar.getCustomCar().setPerformanceParts(updatedCar.getCustomCar().getPerformanceParts());
 		currentCar.getCustomCar().setSkillModParts(updatedCar.getCustomCar().getSkillModParts());
 		currentCar.getCustomCar().setVisualParts(updatedCar.getCustomCar().getVisualParts());
+		currentCar.setHeatLevel((short) 1);
+		currentCar.setOwnershipType("CustomizedCar");
 
 		ownedCarDao.save(currentCar);
 
