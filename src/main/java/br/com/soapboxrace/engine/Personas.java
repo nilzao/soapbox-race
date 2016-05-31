@@ -1,6 +1,5 @@
 package br.com.soapboxrace.engine;
 
-import br.com.soapboxrace.bo.BasketBO;
 import br.com.soapboxrace.bo.PersonaBO;
 import br.com.soapboxrace.definition.ServerExceptions;
 import br.com.soapboxrace.definition.ServerExceptions.PersonaIdMismatchException;
@@ -227,8 +226,7 @@ public class Personas extends Router {
 		BasketTransType basketTransType = new BasketTransType();
 		basketTransType = (BasketTransType) UnmarshalXML.unMarshal(basketXml, basketTransType);
 		String productId = basketTransType.getItems().getBasketItemTrans().getProductId();
-		BasketBO basketBO = new BasketBO();
-		CommerceResultTransType commerceResultTrans = basketBO.basket(getPersonaId(), productId);
+		CommerceResultTransType commerceResultTrans = personaBO.basket(getPersonaId(), productId);
 		return MarshalXML.marshal(commerceResultTrans);
 	}
 
