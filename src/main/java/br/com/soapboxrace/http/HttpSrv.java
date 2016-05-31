@@ -79,8 +79,10 @@ public class HttpSrv extends GzipHandler {
 				System.out.println("          READ FROM XML FILE");
 				System.out.println("=======================================");
 			}
-			response.getOutputStream().write(content.getBytes("UTF-8"));
-			response.getOutputStream().flush();
+			if (!content.trim().isEmpty()) {
+				response.getOutputStream().write(content.getBytes("UTF-8"));
+				response.getOutputStream().flush();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
