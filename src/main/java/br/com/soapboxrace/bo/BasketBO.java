@@ -68,7 +68,7 @@ public class BasketBO {
 			customCarEntity.setRating(customCar.getRating());
 			customCarEntity.setResalePrice(customCar.getResalePrice());
 			customCarEntity.setSkillModParts(customCar.getSkillModParts());
-			customCarEntity.setSkillModSlotCount((short) 5);
+			customCarEntity.setSkillModSlotCount(customCar.getSkillModSlotCount());
 			customCarEntity.setVinyls(customCar.getVinyls());
 			customCarEntity.setVisualParts(customCar.getVisualParts());
 			customCarEntity.setParentOwnedCarTrans(ownedCarEntity);
