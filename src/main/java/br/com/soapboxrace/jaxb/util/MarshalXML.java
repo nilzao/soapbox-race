@@ -13,7 +13,6 @@ public class MarshalXML {
 			JAXBContext jaxbContext = JAXBContext.newInstance(obj.getClass());
 			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, false);
-			//jaxbMarshaller.setProperty(Marshaller.JAXB_FRAGMENT, true);
 			jaxbMarshaller.marshal(obj, stringWriter);
 		} catch (Exception e) {
 			e.printStackTrace();
