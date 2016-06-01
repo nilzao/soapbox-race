@@ -1,6 +1,5 @@
 package br.com.soapboxrace.jaxb;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,7 +13,7 @@ import br.com.soapboxrace.jpa.ProductEntity;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ArrayOfProductTransType")
 @XmlRootElement(name = "ArrayOfProductTrans")
-public class ArrayOfProductTransList {
+public class ArrayOfProductTrans {
 
 	@XmlElement(name = "ProductTrans")
 	protected List<ProductEntity> productTrans;
@@ -26,12 +25,4 @@ public class ArrayOfProductTransList {
 	public void setProductTrans(List<ProductEntity> productTrans) {
 		this.productTrans = productTrans;
 	}
-
-	public boolean add(ProductEntity e) {
-		if (productTrans == null) {
-			productTrans = new ArrayList<ProductEntity>();
-		}
-		return productTrans.add(e);
-	}
-
 }

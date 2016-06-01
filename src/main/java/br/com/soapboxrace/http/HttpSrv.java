@@ -1,12 +1,7 @@
 package br.com.soapboxrace.http;
 
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.nio.file.Files;
-import java.nio.file.LinkOption;
-import java.nio.file.Paths;
-import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -63,6 +58,7 @@ public class HttpSrv extends GzipHandler {
 			e.printStackTrace();
 			System.out.println("class not found");
 		} catch (InvocationTargetException e) {
+			e.printStackTrace();
 			EngineExceptionTrans error = new EngineExceptionTrans();
 			error.setDescription("");
 			error.setInnerException("");
@@ -88,10 +84,8 @@ public class HttpSrv extends GzipHandler {
 			}
 			baseRequest.setHandled(true);
 			if (content == null) {
-				content = readContent(target);
-				System.out.println("=======================================");
-				System.out.println("          READ FROM XML FILE");
-				System.out.println("=======================================");
+				content = "";
+				System.err.println("empty response.");
 			}
 			response.getOutputStream().write(content.getBytes("UTF-8"));
 			response.getOutputStream().flush();
@@ -100,36 +94,8 @@ public class HttpSrv extends GzipHandler {
 		}
 	}
 
-	private String readContent(String target) throws IOException {
-		StringBuilder modTarget = new StringBuilder();
-		modTarget.append("www");
-		modTarget.append(target);
-		byte[] content = null;
-		String targetClr = modTarget.toString();
-		String targetXml = modTarget.append(".xml").toString();
-		if (Files.exists(Paths.get(targetXml, new String[0]), new LinkOption[0])) {
-			content = Files.readAllBytes(Paths.get(targetXml, new String[0]));
-		} else if (Files.exists(Paths.get(targetClr, new String[0]), new LinkOption[0])) {
-			content = Files.readAllBytes(Paths.get(targetClr, new String[0]));
-		}
-		String str = "";
-		if (content != null) {
-			str = new String(content, "UTF-8");
-		}
-		return str;
-	}
-
 	public static void main(String[] args) {
-		String enabledCBC = System.getProperty("jsse.enableCBCProtection");
-		if(!"false".equals(enabledCBC)){
-			System.err.println("\n  ERROR!!!  \n\nNeed to run java vm with -Djsse.enableCBCProtection=false\n\n");
-			System.out.println("Example:");
-			System.out.println("   java -Djsse.enableCBCProtection=false -jar soapbox-race.jar");
-			System.exit(0);
-		}
-		
-		Locale newLocale = new Locale("en", "GB");
-		Locale.setDefault(newLocale);
+		System.setProperty("jsse.enableCBCProtection", "false");
 
 		if (args.length > 0) {
 			Session.setXmppIp(args[0]);
