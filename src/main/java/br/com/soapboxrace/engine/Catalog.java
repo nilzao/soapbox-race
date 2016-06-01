@@ -1,6 +1,7 @@
 package br.com.soapboxrace.engine;
 
 import br.com.soapboxrace.bo.CatalogBO;
+import br.com.soapboxrace.jaxb.ArrayOfCategoryTrans;
 import br.com.soapboxrace.jaxb.ArrayOfProductTransList;
 import br.com.soapboxrace.jaxb.util.MarshalXML;
 
@@ -18,7 +19,8 @@ public class Catalog extends Router {
 	}
 
 	public String categories() {
-		return "<ArrayOfCategoryTrans />";
+		ArrayOfCategoryTrans categories = catalogBO.categories();
+		return MarshalXML.marshal(categories);
 	}
 
 }
