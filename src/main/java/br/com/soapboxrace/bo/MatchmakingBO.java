@@ -255,6 +255,7 @@ public class MatchmakingBO {
 				lobbyEntrantInfoType.setGridIndex(i++);
 				lobbyEntrantInfoType.setState("Unknown");
 				lobbyEntrantInfo.add(lobbyEntrantInfoType);
+				lobbyLaunched.setUdpRelayHost(httpSessionVo.getUdpIpAddress());
 			}
 			EventSessionType eventSessionType = new EventSessionType();
 			ChallengeType challengeType = new ChallengeType();
@@ -268,7 +269,6 @@ public class MatchmakingBO {
 			eventSessionType.setSessionId(eventSessionId);
 			lobbyLaunched.setNewRelayServer(true);
 			lobbyLaunched.setLobbyId(lobbyEntity.getId());
-			lobbyLaunched.setUdpRelayHost(Session.getUdpIp());
 			lobbyLaunched.setUdpRelayPort(9998);
 
 			lobbyLaunched.setEntrants(entrantsType);

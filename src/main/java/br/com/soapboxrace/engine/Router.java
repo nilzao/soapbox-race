@@ -31,10 +31,12 @@ public class Router {
 	private HttpServletRequest request;
 	private Request baseRequest;
 
-	protected void createSessionEntry(Long userId, String securityToken) {
+	protected void createSessionEntry(Long userId, String securityToken, String httpAddress) {
 		HttpSessionVO session = new HttpSessionVO();
 		session.setUserId(userId);
 		session.setSecurityToken(securityToken);
+		session.setXmppIpAddres(httpAddress);
+		session.setUdpIpAddress(httpAddress);
 		Router.activeUsers.put(userId, session);
 	}
 
@@ -53,6 +55,10 @@ public class Router {
 
 	protected String getParam(String param) {
 		return baseRequest.getParameter(param);
+	}
+
+	protected String getHttpAddress() {
+		return baseRequest.getLocalAddr();
 	}
 
 	protected HttpServletRequest getRequest() {

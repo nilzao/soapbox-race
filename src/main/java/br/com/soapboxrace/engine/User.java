@@ -13,7 +13,7 @@ public class User extends Router {
 		String tokenText = shuffleString(getSecureRandomText());
 		UserInfoType userInfo = userBO.getPermanentSession(userId, tokenText);
 		setSessionEntry("SecurityToken", tokenText);
-		createSessionEntry(userId, tokenText);
+		createSessionEntry(userId, tokenText, getHttpAddress());
 		return MarshalXML.marshal(userInfo);
 	}
 

@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import br.com.soapboxrace.engine.Router;
-import br.com.soapboxrace.engine.Session;
+import br.com.soapboxrace.http.HttpSessionVO;
 
 public class XmppChat {
 
@@ -36,8 +36,9 @@ public class XmppChat {
 		if (match.find()) {
 			String messageType = match.group(3);
 			Long hostUserId = Long.valueOf(match.group(5));
-			Long hostPersonaId = Router.getHttpSessionVo(hostUserId).getPersonaId();
-			String xmppIp = Session.getXmppIp();
+			HttpSessionVO httpSessionVo = Router.getHttpSessionVo(hostUserId);
+			Long hostPersonaId = httpSessionVo.getPersonaId();
+			String xmppIp = httpSessionVo.getXmppIpAddres();
 
 			String newMessageBlock = String.format("message from='nfsw.%d@%s/EA-Chat' to='nfsw.%d@%s' type='%s'>",
 					hostPersonaId, xmppIp, targetPersonaId, xmppIp, messageType);
@@ -47,12 +48,13 @@ public class XmppChat {
 	}
 
 	private String transformChatMsg(Integer targetPersonaId) {
+		String xmppIp = "127.0.0.1";
 		String newMsg = chatMsg;
 		newMsg = newMsg.replaceFirst("message to=", "message from=");
-		newMsg = newMsg.replaceFirst("@conference.".concat(Session.getXmppIp()),
-				"@conference.".concat(Session.getXmppIp()).concat("/nfsw." + personaId));
-		newMsg = newMsg.replaceFirst("type=", "to='nfsw."
-				.concat(String.valueOf(targetPersonaId) + "@" + Session.getXmppIp()).concat("/EA-Chat' type="));
+		newMsg = newMsg.replaceFirst("@conference.".concat(xmppIp),
+				"@conference.".concat(xmppIp).concat("/nfsw." + personaId));
+		newMsg = newMsg.replaceFirst("type=",
+				"to='nfsw.".concat(String.valueOf(targetPersonaId) + "@" + xmppIp).concat("/EA-Chat' type="));
 		return newMsg;
 	}
 

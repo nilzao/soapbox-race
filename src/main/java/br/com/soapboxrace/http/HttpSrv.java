@@ -23,14 +23,14 @@ import org.eclipse.jetty.server.handler.gzip.GzipHandler;
 
 import br.com.soapboxrace.db.ConnectionDB;
 import br.com.soapboxrace.engine.Router;
-import br.com.soapboxrace.engine.Session;
 import br.com.soapboxrace.xmpp.XmppSrv;
 
 public class HttpSrv extends GzipHandler {
 
 	public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) {
-		if ("/favicon.ico".equals(target))
+		if ("/favicon.ico".equals(target)) {
 			return;
+		}
 		// System.out.println(baseRequest.toString());
 		String[] targetSplitted = target.split("/");
 		String className = "Default";
@@ -152,16 +152,8 @@ public class HttpSrv extends GzipHandler {
 				System.exit(0);
 			}
 		}
-
 		Locale newLocale = new Locale("en", "GB");
 		Locale.setDefault(newLocale);
-
-		if (args.length > 0) {
-			Session.setXmppIp(args[0]);
-			if (args.length > 1) {
-				Session.setUdpIp(args[1]);
-			}
-		}
 		new ConnectionDB();
 		System.out.println("Http server is running.");
 		new XmppSrv();

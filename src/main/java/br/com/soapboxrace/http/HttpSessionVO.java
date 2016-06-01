@@ -11,6 +11,8 @@ public class HttpSessionVO {
 	private String relaySessionKey;
 	private Date expirationDate;
 	private String securityToken;
+	private String xmppIpAddres;
+	private String udpIpAddress;
 
 	public Long getUserId() {
 		return userId;
@@ -66,6 +68,22 @@ public class HttpSessionVO {
 
 	public void setSecurityToken(String securityToken) {
 		this.securityToken = securityToken;
+	}
+
+	public String getXmppIpAddres() {
+		return xmppIpAddres;
+	}
+
+	public void setXmppIpAddres(String xmppIpAddres) {
+		this.xmppIpAddres = xmppIpAddres;
+	}
+
+	public String getUdpIpAddress() {
+		return udpIpAddress;
+	}
+
+	public void setUdpIpAddress(String udpIpAddress) {
+		this.udpIpAddress = udpIpAddress;
 	}
 
 }
