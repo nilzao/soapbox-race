@@ -41,7 +41,7 @@ public class Personas extends Router {
 		stringBuilder.append("<InventoryItems>");
 		stringBuilder.append("<InventoryItemTrans>");
 		stringBuilder.append("<EntitlementTag>nosshot</EntitlementTag>");
-		stringBuilder.append("<ExpirationDate i:nil=\"true\" />");
+		stringBuilder.append("<ExpirationDate  />");
 		stringBuilder.append("<Hash>-1681514783</Hash>");
 		stringBuilder.append("<InventoryId>1842996427</InventoryId>");
 		stringBuilder.append("<ProductId>DO NOT USE ME</ProductId>");
@@ -53,7 +53,7 @@ public class Personas extends Router {
 		stringBuilder.append("</InventoryItemTrans>");
 		stringBuilder.append("<InventoryItemTrans>");
 		stringBuilder.append("      <EntitlementTag>runflattires</EntitlementTag>");
-		stringBuilder.append("      <ExpirationDate i:nil=\"true\" />");
+		stringBuilder.append("      <ExpirationDate  />");
 		stringBuilder.append("      <Hash>-537557654</Hash>");
 		stringBuilder.append("      <InventoryId>2876729160</InventoryId>");
 		stringBuilder.append("      <ProductId>DO NOT USE ME</ProductId>");
@@ -65,7 +65,7 @@ public class Personas extends Router {
 		stringBuilder.append("    </InventoryItemTrans>");
 		stringBuilder.append("    <InventoryItemTrans>");
 		stringBuilder.append("      <EntitlementTag>instantcooldown</EntitlementTag>");
-		stringBuilder.append("      <ExpirationDate i:nil=\"true\" />");
+		stringBuilder.append("      <ExpirationDate  />");
 		stringBuilder.append("      <Hash>-1692359144</Hash>");
 		stringBuilder.append("      <InventoryId>2876729162</InventoryId>");
 		stringBuilder.append("      <ProductId>DO NOT USE ME</ProductId>");
@@ -77,7 +77,7 @@ public class Personas extends Router {
 		stringBuilder.append("    </InventoryItemTrans>");
 		stringBuilder.append("    <InventoryItemTrans>");
 		stringBuilder.append("      <EntitlementTag>shield</EntitlementTag>");
-		stringBuilder.append("      <ExpirationDate i:nil=\"true\" />");
+		stringBuilder.append("      <ExpirationDate  />");
 		stringBuilder.append("      <Hash>-364944936</Hash>");
 		stringBuilder.append("      <InventoryId>2876729163</InventoryId>");
 		stringBuilder.append("      <ProductId>DO NOT USE ME</ProductId>");
@@ -89,7 +89,7 @@ public class Personas extends Router {
 		stringBuilder.append("    </InventoryItemTrans>");
 		stringBuilder.append("    <InventoryItemTrans>");
 		stringBuilder.append("      <EntitlementTag>slingshot</EntitlementTag>");
-		stringBuilder.append("      <ExpirationDate i:nil=\"true\" />");
+		stringBuilder.append("      <ExpirationDate  />");
 		stringBuilder.append("      <Hash>2236629</Hash>");
 		stringBuilder.append("      <InventoryId>2876729164</InventoryId>");
 		stringBuilder.append("      <ProductId>DO NOT USE ME</ProductId>");
@@ -101,7 +101,7 @@ public class Personas extends Router {
 		stringBuilder.append("    </InventoryItemTrans>");
 		stringBuilder.append("    <InventoryItemTrans>");
 		stringBuilder.append("      <EntitlementTag>ready</EntitlementTag>");
-		stringBuilder.append("      <ExpirationDate i:nil=\"true\" />");
+		stringBuilder.append("      <ExpirationDate  />");
 		stringBuilder.append("      <Hash>957701799</Hash>");
 		stringBuilder.append("      <InventoryId>2876729165</InventoryId>");
 		stringBuilder.append("      <ProductId>DO NOT USE ME</ProductId>");
@@ -113,7 +113,7 @@ public class Personas extends Router {
 		stringBuilder.append("    </InventoryItemTrans>");
 		stringBuilder.append("    <InventoryItemTrans>");
 		stringBuilder.append("      <EntitlementTag>juggernaut</EntitlementTag>");
-		stringBuilder.append("      <ExpirationDate i:nil=\"true\" />");
+		stringBuilder.append("      <ExpirationDate  />");
 		stringBuilder.append("      <Hash>1805681994</Hash>");
 		stringBuilder.append("      <InventoryId>2876729166</InventoryId>");
 		stringBuilder.append("      <ProductId>DO NOT USE ME</ProductId>");
@@ -125,7 +125,7 @@ public class Personas extends Router {
 		stringBuilder.append("    </InventoryItemTrans>");
 		stringBuilder.append("    <InventoryItemTrans>");
 		stringBuilder.append("      <EntitlementTag>emergencyevade</EntitlementTag>");
-		stringBuilder.append("      <ExpirationDate i:nil=\"true\" />");
+		stringBuilder.append("      <ExpirationDate  />");
 		stringBuilder.append("      <Hash>-611661916</Hash>");
 		stringBuilder.append("      <InventoryId>2876729167</InventoryId>");
 		stringBuilder.append("      <ProductId>DO NOT USE ME</ProductId>");
@@ -137,7 +137,7 @@ public class Personas extends Router {
 		stringBuilder.append("    </InventoryItemTrans>");
 		stringBuilder.append("    <InventoryItemTrans>");
 		stringBuilder.append("      <EntitlementTag>team_emergencyevade</EntitlementTag>");
-		stringBuilder.append("      <ExpirationDate i:nil=\"true\" />");
+		stringBuilder.append("      <ExpirationDate  />");
 		stringBuilder.append("      <Hash>-1564932069</Hash>");
 		stringBuilder.append("      <InventoryId>2876729168</InventoryId>");
 		stringBuilder.append("      <ProductId>DO NOT USE ME</ProductId>");
@@ -149,7 +149,7 @@ public class Personas extends Router {
 		stringBuilder.append("    </InventoryItemTrans>");
 		stringBuilder.append("    <InventoryItemTrans>");
 		stringBuilder.append("      <EntitlementTag>onemorelap</EntitlementTag>");
-		stringBuilder.append("      <ExpirationDate i:nil=\"true\" />");
+		stringBuilder.append("      <ExpirationDate  />");
 		stringBuilder.append("      <Hash>1627606782</Hash>");
 		stringBuilder.append("      <InventoryId>2876729170</InventoryId>");
 		stringBuilder.append("      <ProductId>DO NOT USE ME</ProductId>");
@@ -161,7 +161,7 @@ public class Personas extends Router {
 		stringBuilder.append("    </InventoryItemTrans>");
 		stringBuilder.append("    <InventoryItemTrans>");
 		stringBuilder.append("      <EntitlementTag>team_slingshot</EntitlementTag>");
-		stringBuilder.append("      <ExpirationDate i:nil=\"true\" />");
+		stringBuilder.append("      <ExpirationDate  />");
 		stringBuilder.append("      <Hash>1113720384</Hash>");
 		stringBuilder.append("      <InventoryId>2876729171</InventoryId>");
 		stringBuilder.append("      <ProductId>DO NOT USE ME</ProductId>");
@@ -172,7 +172,7 @@ public class Personas extends Router {
 		stringBuilder.append("      <VirtualItemType>powerup</VirtualItemType>");
 		stringBuilder.append("    </InventoryItemTrans><InventoryItemTrans>");
 		stringBuilder.append("      <EntitlementTag>trafficmagnet</EntitlementTag>");
-		stringBuilder.append("      <ExpirationDate i:nil=\"true\" />");
+		stringBuilder.append("      <ExpirationDate  />");
 		stringBuilder.append("      <Hash>125509666</Hash>");
 		stringBuilder.append("      <InventoryId>2880783203</InventoryId>");
 		stringBuilder.append("      <ProductId>DO NOT USE ME</ProductId>");
@@ -183,6 +183,12 @@ public class Personas extends Router {
 		stringBuilder.append("      <VirtualItemType>powerup</VirtualItemType>");
 		stringBuilder.append("    </InventoryItemTrans>");
 		stringBuilder.append("  </InventoryItems>");
+		stringBuilder.append("<PerformancePartsCapacity>150</PerformancePartsCapacity>\r\n");
+		stringBuilder.append("  <PerformancePartsUsedSlotCount>0</PerformancePartsUsedSlotCount>\r\n");
+		stringBuilder.append("  <SkillModPartsCapacity>200</SkillModPartsCapacity>\r\n");
+		stringBuilder.append("  <SkillModPartsUsedSlotCount>0</SkillModPartsUsedSlotCount>\r\n");
+		stringBuilder.append("  <VisualPartsCapacity>300</VisualPartsCapacity>\r\n");
+		stringBuilder.append("  <VisualPartsUsedSlotCount>0</VisualPartsUsedSlotCount>");
 		stringBuilder.append("</InventoryTrans>");
 		String inventoryStr = stringBuilder.toString();
 		return inventoryStr;
@@ -229,7 +235,6 @@ public class Personas extends Router {
 			OwnedCarEntity defaultCar = personaBO.deleteCar(getPersonaId(), carId);
 			return MarshalXML.marshal(defaultCar);
 		}
-
 		long personaId = getPersonaId();
 		String defaultcar = "";
 		OwnedCarEntity ownedCarEntity = personaBO.defaultcar(personaId);

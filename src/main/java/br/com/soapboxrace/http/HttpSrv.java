@@ -1,24 +1,25 @@
 package br.com.soapboxrace.http;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Paths;
 import java.util.Locale;
+import java.util.zip.GZIPOutputStream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.eclipse.jetty.server.HttpOutput;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.gzip.GzipHandler;
-import org.eclipse.jetty.server.handler.gzip.GzipHttpOutputInterceptor;
 
 import br.com.soapboxrace.db.ConnectionDB;
 import br.com.soapboxrace.engine.Router;
@@ -62,10 +63,6 @@ public class HttpSrv extends GzipHandler {
 			e.printStackTrace();
 		}
 		try {
-			setCompressionLevel(9);
-			HttpOutput out = baseRequest.getResponse().getHttpOutput();
-			out.setInterceptor(new GzipHttpOutputInterceptor(this, GzipHttpOutputInterceptor.VARY_ACCEPT_ENCODING,
-					baseRequest.getHttpChannel(), out.getInterceptor()));
 			response.setContentType("application/xml;charset=utf-8");
 			if (target.contains("accept")) {
 				response.addHeader("Keep-Alive", "timeout=70");
@@ -80,12 +77,33 @@ public class HttpSrv extends GzipHandler {
 				System.out.println("=======================================");
 			}
 			if (!content.trim().isEmpty()) {
-				response.getOutputStream().write(content.getBytes("UTF-8"));
+				byte[] bytes = gzip(content.getBytes(StandardCharsets.UTF_8));
+				response.setContentLength(bytes.length);
+				response.getOutputStream().write(bytes);
 				response.getOutputStream().flush();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private byte[] gzip(byte[] data) throws IOException {
+		ByteArrayOutputStream byteStream = new ByteArrayOutputStream(data.length);
+		try {
+			OutputStream gzipout = new GZIPOutputStream(byteStream) {
+				{
+					def.setLevel(1);
+				}
+			};
+			try {
+				gzipout.write(data);
+			} finally {
+				gzipout.close();
+			}
+		} finally {
+			byteStream.close();
+		}
+		return byteStream.toByteArray();
 	}
 
 	private String readContent(String target) throws IOException {

@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "CustomCarType", propOrder = { "baseCarId", "carClassHash", "isPreset", "level", "name", "apiId",
-		"paints", "performanceParts", "physicsProfileHash", "rating", "resalePrice", "skillModParts",
-		"skillModSlotCount", "vinyls", "visualParts", "version" })
+@XmlType(name = "CustomCarType", propOrder = { "baseCarId", "carClassHash", "isPreset", "level", "name", "id", "paints",
+		"performanceParts", "physicsProfileHash", "rating", "resalePrice", "rideHeightDrop", "skillModParts",
+		"skillModSlotCount", "version", "vinyls", "visualParts" })
 @XmlRootElement(name = "CustomCar")
 public class CustomCarType {
 	@XmlElement(name = "BaseCar", required = true)
@@ -23,7 +23,7 @@ public class CustomCarType {
 	@XmlElement(name = "Name")
 	protected String name;
 	@XmlElement(name = "Id", required = true)
-	protected long apiId;
+	protected long id;
 	@XmlElement(name = "Paints")
 	protected PaintsType paints;
 	@XmlElement(name = "PerformanceParts")
@@ -34,17 +34,18 @@ public class CustomCarType {
 	protected int rating;
 	@XmlElement(name = "ResalePrice")
 	protected int resalePrice;
+	@XmlElement(name = "RideHeightDrop")
+	protected int rideHeightDrop = 0;
 	@XmlElement(name = "SkillModParts")
 	protected SkillModPartsType skillModParts;
 	@XmlElement(name = "SkillModSlotCount")
 	protected Short skillModSlotCount;
+	@XmlElement(name = "Version")
+	protected int version = 0;
 	@XmlElement(name = "Vinyls")
 	protected VinylsType vinyls;
 	@XmlElement(name = "VisualParts")
 	protected VisualPartsType visualParts;
-
-	@XmlElement(name = "Version")
-	protected int version = 0;
 
 	public void setBaseCarId(long value) {
 		this.baseCarId = value;
@@ -78,12 +79,12 @@ public class CustomCarType {
 		this.level = value;
 	}
 
-	public void setId(long value) {
-		this.apiId = value;
+	public long getId() {
+		return id;
 	}
 
-	public long getId() {
-		return this.apiId;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public void setPaints(PaintsType value) {
@@ -172,6 +173,14 @@ public class CustomCarType {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public int getRideHeightDrop() {
+		return rideHeightDrop;
+	}
+
+	public void setRideHeightDrop(int rideHeightDrop) {
+		this.rideHeightDrop = rideHeightDrop;
 	}
 
 }

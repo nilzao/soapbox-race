@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 
@@ -28,6 +29,9 @@ public class PersonaEntity implements ISoapBoxEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID", nullable = false)
 	private Long id;
+
+	@Transient
+	private String ccar = "";
 
 	@Column(name = "CASH")
 	private Integer cash;
@@ -188,4 +192,13 @@ public class PersonaEntity implements ISoapBoxEntity {
 		}
 		return ownedCarlist.add(e);
 	}
+
+	public String getCcar() {
+		return ccar;
+	}
+
+	public void setCcar(String ccar) {
+		this.ccar = ccar;
+	}
+
 }
