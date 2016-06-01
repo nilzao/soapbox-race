@@ -3,7 +3,6 @@ package br.com.soapboxrace.dao;
 import java.util.List;
 
 import br.com.soapboxrace.db.SoapboxDao;
-import br.com.soapboxrace.jpa.ISoapBoxEntity;
 import br.com.soapboxrace.jpa.ProductEntity;
 
 public class ProductDao extends SoapboxDao {
@@ -14,11 +13,12 @@ public class ProductDao extends SoapboxDao {
 		return entity;
 	}
 
-	public List<ISoapBoxEntity> findByCategoryNameClientProductType(String categoryName, String clientProductType) {
+	@SuppressWarnings("unchecked")
+	public List<ProductEntity> findByCategoryNameClientProductType(String categoryName, String clientProductType) {
 		ProductEntity productEntity = new ProductEntity();
 		productEntity.setCategoryName(categoryName);
 		productEntity.setProductType(clientProductType);
-		List<ISoapBoxEntity> find = super.find(productEntity);
+		List<ProductEntity> find = (List<ProductEntity>) (List<?>) super.find(productEntity);
 		return find;
 	}
 
@@ -28,5 +28,4 @@ public class ProductDao extends SoapboxDao {
 		carSlotProductData = (ProductEntity) super.find(carSlotProductData).get(0);
 		return carSlotProductData;
 	}
-
 }

@@ -12,13 +12,14 @@
       <property name="hibernate.show_sql" value="false" />
 
       <!-- mysql -->
+	  <property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver" />
       <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/SOAPBOX?serverTimezone=UTC&amp;useSSL=false&amp;requireSSL=false" />
-      <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
-      <property name="javax.persistence.jdbc.user" value="root" />
-      <property name="javax.persistence.jdbc.password" value="" />
-      <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLInnoDBDialect" />
+      <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
 	  <property name="hibernate.connection.provider_class" value="org.hibernate.connection.C3P0ConnectionProvider" />
 	  <property name="hibernate.connection.isolation" value="2" />
+	  <property name="hibernate.connection.username" value="root" />
+	  <property name="hibernate.connection.password" value="" />	 
+	  <property name="hibernate.temp.use_jdbc_metadata_defaults" value="false" />	  
 
       <property name="hibernate.default_schema" value="SOAPBOX" />
     </properties>
