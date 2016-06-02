@@ -33,9 +33,9 @@ public class PersonaDao extends SoapboxDao {
 	}
 
 	public void del(PersonaEntity entity) {
-		super.del(entity);
 		LobbyEntrantDao lobbyEntrantDao = new LobbyEntrantDao();
 		lobbyEntrantDao.delByPersona(entity);
+		super.del(entity);
 	}
 
 	public List<PersonaEntity> findByUserId(Long userId) {
