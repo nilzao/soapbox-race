@@ -31,4 +31,11 @@ public class XmppChatLobbies {
 	public static XmppSystemLobby getSystemLobby() {
 		return xmppSystemLobby;
 	}
+	
+	public static void signOut(XmppTalk xmppTalk) {
+		Long personaId = xmppTalk.getPersonaId();
+		getFreeroamLobby(xmppTalk.getCurrentChannelName(), xmppTalk.getCurrentChannelNumber()).removeXmppTalk(personaId);
+		getSystemLobby().removeXmppTalk(personaId);
+		XmppSrv.removeXmppClient(personaId);
+	}
 }
