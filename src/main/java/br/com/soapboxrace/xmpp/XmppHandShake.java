@@ -50,10 +50,13 @@ public class XmppHandShake {
 		for (int i = 0; i < 3; i++) {
 			xmppTalk.read();
 		}
-		packets[3] = XmppChat.getPresenceResponse(personaId, "NB", 1337);
-		xmppTalk.write(packets[3]);
+		
 		xmppTalk.setPersonaId(personaId);
 		XmppSrv.addXmppClient(personaId, xmppTalk);
+		
+		packets[3] = XmppChat.getPresenceResponse(xmppTalk);
+		xmppTalk.write(packets[3]);
+		
 		XmppChatLobbies.getFreeroamLobby("NB", 1337).addXmppTalk(xmppTalk);
 		XmppChatLobbies.getSystemLobby().addXmppTalk(xmppTalk);
 	}

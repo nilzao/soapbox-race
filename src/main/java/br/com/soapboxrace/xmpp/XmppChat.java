@@ -20,11 +20,18 @@ public class XmppChat {
 		return personaId;
 	}
 
-	public static String getPresenceResponse(Long personaId, String channelName, Integer channelNumber) {
-		String xmppIp = Session.getXmppIp();
-		String formatString = "<presence from='channel.%s__%d@conference.%s/nfsw.%d' to='nfsw.%d@%s/EA-Chat' xml:lang='en'>"
-				+ "<x xmlns='http://jabber.org/protocol/muc#user'><item affiliation='none' role='none'/></x></presence>";
-		return String.format(formatString, channelName, channelNumber, xmppIp, personaId, personaId, xmppIp);
+	public static String getPresenceResponse(XmppTalk xmppTalk) {
+		if (XmppChatLobbies.getSystemLobby().joinRoom(xmppTalk)) {
+			String channelName = xmppTalk.getCurrentChannelName();
+			Integer channelNumber = xmppTalk.getCurrentChannelNumber();
+			Long personaId = xmppTalk.getPersonaId();
+			String xmppIp = Session.getXmppIp();
+			
+			String formatString = "<presence from='channel.%s__%d@conference.%s/nfsw.%d' to='nfsw.%d@%s/EA-Chat' xml:lang='en'>"
+					+ "<x xmlns='http://jabber.org/protocol/muc#user'><item affiliation='none' role='none'/></x></presence>";
+			return String.format(formatString, channelName, channelNumber, xmppIp, personaId, personaId, xmppIp);
+		}
+		return null; //will never happen
 	}
 
 	public String getEventMessage(Long targetPersonaId) {

@@ -74,6 +74,7 @@ public class XmppSrv {
 				while (true) {
 					String input = xmppHandler.read();
 					if (input == null || input.contains("</stream:stream>")) {
+						XmppChatLobbies.signOut(xmppTalk);
 						break;
 					}
 				}

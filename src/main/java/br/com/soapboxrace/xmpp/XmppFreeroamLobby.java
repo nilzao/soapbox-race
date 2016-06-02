@@ -38,6 +38,10 @@ public class XmppFreeroamLobby {
 			}
 		}
 	}
+	
+	public HashMap<Long, XmppTalk> getLobby() {
+		return  xmppFreeroamLobby;
+	}
 
 	public String getChannelName() {
 		return channelName;

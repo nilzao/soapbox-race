@@ -4,8 +4,6 @@ import br.com.soapboxrace.bo.UserBO;
 import br.com.soapboxrace.definition.ServerExceptions.EngineException;
 import br.com.soapboxrace.jaxb.UserInfoType;
 import br.com.soapboxrace.jaxb.util.MarshalXML;
-import br.com.soapboxrace.xmpp.XmppChatLobbies;
-import br.com.soapboxrace.xmpp.XmppSrv;
 
 public class User extends Router {
 
@@ -22,7 +20,6 @@ public class User extends Router {
 
 	public String secureLogout() throws EngineException {
 		checkSecurityToken();
-		XmppChatLobbies.signOut(XmppSrv.get(getLoggedPersonaId()));
 		removeSessionEntry(Long.valueOf(getParam("userId")));
 		return "";
 	}
@@ -35,7 +32,6 @@ public class User extends Router {
 
 	public String secureLogoutPersona() throws EngineException {
 		checkSecurityToken();
-		XmppChatLobbies.signOut(XmppSrv.get(getLoggedPersonaId()));
 		setSessionEntry("PersonaId", 0L);
 		return "";
 	}
