@@ -19,7 +19,7 @@ public class XmppChat {
 	public Long getPersonaId() {
 		return personaId;
 	}
-	
+
 	public static String getPresenceResponse(Long personaId, String channelName, Integer channelNumber) {
 		String xmppIp = Session.getXmppIp();
 		String formatString = "<presence from='channel.%s__%d@conference.%s/nfsw.%d' to='nfsw.%d@%s/EA-Chat' xml:lang='en'>"
@@ -36,23 +36,25 @@ public class XmppChat {
 				.concat(String.valueOf(targetPersonaId) + "@" + Session.getXmppIp()).concat("/EA-Chat' type="));
 		return newMsg;
 	}
-	
-	public String getFreeroamMessage(Long hostPersonaId, Long targetPersonaId, String channelName, Integer channelNumber) {
+
+	public String getFreeroamMessage(Long hostPersonaId, Long targetPersonaId, String channelName,
+			Integer channelNumber) {
 		String xmppIp = Session.getXmppIp();
-		String newMessageBlock = String.format("message from='nfsw.%s__%d@conference.%s/nfsw.%d' to='nfsw.%d@%s/EA-Chat'",
-				channelName, channelNumber, xmppIp, hostPersonaId, targetPersonaId, xmppIp);
+		String newMessageBlock = String.format(
+				"message from='nfsw.%s__%d@conference.%s/nfsw.%d' to='nfsw.%d@%s/EA-Chat'", channelName, channelNumber,
+				xmppIp, hostPersonaId, targetPersonaId, xmppIp);
 		String newMsg = chatMessage.replaceFirst("message to='(.*)'", newMessageBlock);
 		return newMsg;
 	}
-	
+
 	public static String getSystemMessage(Long targetPersonaId, String announcementText) {
 		String xmppIp = Session.getXmppIp();
-		String announcementBlock = String.format("<message from='nfsw.engine.engine@conference.%s/EA_Chat' id='JN_2578' to='nfsw.%d@%s'>"
-				+ "<body>&lt;response status='1' ticket='0'&gt;&lt;ChatBroadcast &gt;&lt;ChatBlob&gt;&lt;FromName&gt;System&lt;/FromName&gt;"
-				+ "&lt;FromPersonaId&gt;0&lt;/FromPersonaId&gt;&lt;FromUserId&gt;0&lt;/FromUserId&gt;&lt;Message&gt;%s"
-				+ "&lt;/Message&gt;&lt;ToId&gt;0&lt;/ToId&gt;&lt;Type&gt;2&lt;/Type&gt;&lt;/ChatBlob&gt;&lt;/ChatBroadcast&gt;&lt;/response&gt;</body>"
-				+ "<subject>69</subject></message>",
-				xmppIp, targetPersonaId, xmppIp, announcementText);
+		String announcementBlock = String
+				.format("<message from='nfsw.engine.engine@conference.%s/EA_Chat' id='JN_2578' to='nfsw.%d@%s'>"
+						+ "<body>&lt;response status='1' ticket='0'&gt;&lt;ChatBroadcast &gt;&lt;ChatBlob&gt;&lt;FromName&gt;System&lt;/FromName&gt;"
+						+ "&lt;FromPersonaId&gt;0&lt;/FromPersonaId&gt;&lt;FromUserId&gt;0&lt;/FromUserId&gt;&lt;Message&gt;%s"
+						+ "&lt;/Message&gt;&lt;ToId&gt;0&lt;/ToId&gt;&lt;Type&gt;2&lt;/Type&gt;&lt;/ChatBlob&gt;&lt;/ChatBroadcast&gt;&lt;/response&gt;</body>"
+						+ "<subject>69</subject></message>", xmppIp, targetPersonaId, xmppIp, announcementText);
 		return announcementBlock;
 	}
 

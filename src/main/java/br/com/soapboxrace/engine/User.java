@@ -54,7 +54,7 @@ public class User extends Router {
 		stringBuilder.append("</LoginToken></LoginData>");
 		return stringBuilder.toString();
 	}
-	
+
 	public String createUser() throws EngineException {
 		String email = getParam("email");
 		String passwordHash = getParam("password");

@@ -15,15 +15,19 @@ public class XmppHandler {
 		String read = xmppTalk.read();
 		if (read != null && !read.isEmpty()) {
 			if (read.contains("presence to")) {
-				Pattern regPattern = Pattern.compile("<presence to='channel.(\\w+)__(\\d+)@conference.(.*)/nfsw.(\\d+)'/>");
+				Pattern regPattern = Pattern
+						.compile("<presence to='channel.(\\w+)__(\\d+)@conference.(.*)/nfsw.(\\d+)'/>");
 				Matcher match = regPattern.matcher(read);
 				if (match.find()) {
 					String channelName = match.group(1);
 					Integer channelNumber = Integer.valueOf(match.group(2));
 					Long personaId = xmppTalk.getPersonaId();
 
-					if (!channelName.equals(xmppTalk.getCurrentChannelName()) && !channelNumber.equals(xmppTalk.getCurrentChannelNumber()))
-						XmppChatLobbies.getFreeroamLobby(xmppTalk.getCurrentChannelName(), xmppTalk.getCurrentChannelNumber()).removeXmppTalk(personaId);
+					if (!channelName.equals(xmppTalk.getCurrentChannelName())
+							&& !channelNumber.equals(xmppTalk.getCurrentChannelNumber()))
+						XmppChatLobbies
+								.getFreeroamLobby(xmppTalk.getCurrentChannelName(), xmppTalk.getCurrentChannelNumber())
+								.removeXmppTalk(personaId);
 
 					xmppTalk.setCurrentChannelName(channelName);
 					xmppTalk.setCurrentChannelNumber(channelNumber);

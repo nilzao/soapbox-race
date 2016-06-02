@@ -12,9 +12,10 @@ public class XmppSystemLobby {
 		Long personaId = xmppTalk.getPersonaId();
 		xmppEventChats.put(personaId, xmppTalk);
 	}
-	
+
 	public void removeXmppTalk(Long personaId) {
-		if (xmppEventChats.containsKey(personaId)) xmppEventChats.remove(personaId);
+		if (xmppEventChats.containsKey(personaId))
+			xmppEventChats.remove(personaId);
 	}
 
 	public void broadcast(String announcementText) {

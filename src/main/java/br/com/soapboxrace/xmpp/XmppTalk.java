@@ -66,6 +66,7 @@ public class XmppTalk {
 	public Long getPersonaId() {
 		return personaId;
 	}
+
 	public void setPersonaId(Long personaId) {
 		this.personaId = personaId;
 	}
@@ -73,6 +74,7 @@ public class XmppTalk {
 	public String getCurrentChannelName() {
 		return currentChannelName;
 	}
+
 	public void setCurrentChannelName(String currentChannelName) {
 		this.currentChannelName = currentChannelName;
 	}
@@ -80,7 +82,8 @@ public class XmppTalk {
 	public Integer getCurrentChannelNumber() {
 		return currentChannelNumber;
 	}
+
 	public void setCurrentChannelNumber(Integer currentChannelNumber) {
 		this.currentChannelNumber = currentChannelNumber;
-	}	
+	}
 }

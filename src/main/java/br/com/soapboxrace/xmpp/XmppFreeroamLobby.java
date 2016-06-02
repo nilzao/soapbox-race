@@ -20,9 +20,10 @@ public class XmppFreeroamLobby {
 		Long personaId = xmppTalk.getPersonaId();
 		xmppFreeroamLobby.put(personaId, xmppTalk);
 	}
-	
+
 	public void removeXmppTalk(Long personaId) {
-		if (xmppFreeroamLobby.containsKey(personaId)) xmppFreeroamLobby.remove(personaId);
+		if (xmppFreeroamLobby.containsKey(personaId))
+			xmppFreeroamLobby.remove(personaId);
 	}
 
 	public void broadcast(XmppChat xmppChat) {
@@ -33,8 +34,7 @@ public class XmppFreeroamLobby {
 			Long key = next.getKey();
 			if (!key.equals(hostPersonaId)) {
 				XmppTalk xmppTalk = next.getValue();
-				xmppTalk.write(xmppChat.getFreeroamMessage(
-						hostPersonaId, key, channelName, channelNumber));
+				xmppTalk.write(xmppChat.getFreeroamMessage(hostPersonaId, key, channelName, channelNumber));
 			}
 		}
 	}
@@ -42,6 +42,7 @@ public class XmppFreeroamLobby {
 	public String getChannelName() {
 		return channelName;
 	}
+
 	public void setChannelName(String channelName) {
 		this.channelName = channelName;
 	}
@@ -49,9 +50,9 @@ public class XmppFreeroamLobby {
 	public Integer getChannelNumber() {
 		return channelNumber;
 	}
+
 	public void setChannelNumber(Integer channelNumber) {
 		this.channelNumber = channelNumber;
 	}
-	
-	
+
 }
