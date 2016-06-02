@@ -33,10 +33,10 @@ public class XmppHandler {
 
 					xmppTalk.setCurrentChannelName(channelName);
 					xmppTalk.setCurrentChannelNumber(channelNumber);
-					if (XmppChatLobbies.getSystemLobby().joinRoom(xmppTalk)) {
-						XmppChatLobbies.getFreeroamLobby(channelName, channelNumber).addXmppTalk(xmppTalk);
-						XmppSrv.get(personaId).write(XmppChat.getPresenceResponse(xmppTalk));
-					}
+					XmppChatLobbies.getSystemLobby().joinRoom(xmppTalk);
+
+					XmppChatLobbies.getFreeroamLobby(channelName, channelNumber).addXmppTalk(xmppTalk);
+					XmppSrv.get(personaId).write(XmppChat.getPresenceResponse(xmppTalk));
 				}
 			} else if (read.contains("Chat_All")) {
 				Pattern regPattern = Pattern.compile("message to='channel.(\\w+)__(\\d+)@");

@@ -40,7 +40,7 @@ public class XmppFreeroamLobby {
 	}
 	
 	public HashMap<Long, XmppTalk> getLobby() {
-		return  xmppFreeroamLobby;
+		return xmppFreeroamLobby;
 	}
 
 	public String getChannelName() {
