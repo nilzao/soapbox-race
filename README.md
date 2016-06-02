@@ -3,10 +3,7 @@
 Webserver to handle cars and pilots profiles.
 
 ##How to:
-My advice is to download Eclipse JavaEE, and after that download eGit Maven SCM profile from the Eclipse marketplace(both free). Then build the server with the in-built maven using `mvn clean compile assembly:single`.
-
-###Notice:
-Following the commit [da546969484a6ecd1f14d4d8397119525746a662](https://github.com/berkay2578/soapbox-race/commit/da546969484a6ecd1f14d4d8397119525746a662) made by Nilzao, the servers will both go into different directions. My goals are dedicated to turn this into a complete dedicated server with little portability; that is, no XML files to play with, only DB-Engine(currently MySQL), and complete server-side actions.
+My advice is to download Eclipse JavaEE, and after that download eGit Maven SCM profile from the Eclipse marketplace(both free). Then build the server with the in-built maven using `clean compile assembly:single`.
 
 ##Running the server is as simple as:
 

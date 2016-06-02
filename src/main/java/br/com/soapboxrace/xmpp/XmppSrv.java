@@ -9,11 +9,11 @@ public class XmppSrv {
 
 	public static ConcurrentHashMap<Long, XmppTalk> xmppClients = new ConcurrentHashMap<Long, XmppTalk>();
 
-	public static void addXmppClient(long personaId, XmppTalk xmppClient) {
+	public static void addXmppClient(Long personaId, XmppTalk xmppClient) {
 		xmppClients.put(personaId, xmppClient);
 	}
 
-	public static void sendMsg(long personaId, String msg) {
+	public static void sendMsg(Long personaId, String msg) {
 		if (xmppClients.containsKey(personaId)) {
 			XmppTalk xTalk = xmppClients.get(personaId);
 			if (xTalk != null) {
@@ -27,7 +27,7 @@ public class XmppSrv {
 		}
 	}
 
-	public static void removeXmppClient(int personaId) {
+	public static void removeXmppClient(Long personaId) {
 		xmppClients.remove(personaId);
 	}
 
@@ -74,6 +74,7 @@ public class XmppSrv {
 				while (true) {
 					String input = xmppHandler.read();
 					if (input == null || input.contains("</stream:stream>")) {
+						XmppChatLobbies.signOut(xmppTalk);
 						break;
 					}
 				}

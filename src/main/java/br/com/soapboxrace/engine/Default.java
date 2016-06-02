@@ -1,10 +1,6 @@
 package br.com.soapboxrace.engine;
 
-import java.util.Collection;
-import java.util.Set;
-
-import br.com.soapboxrace.http.HttpSessionVO;
-import br.com.soapboxrace.xmpp.XmppSrv;
+import br.com.soapboxrace.xmpp.XmppChatLobbies;
 
 public class Default extends Router {
 
@@ -15,7 +11,7 @@ public class Default extends Router {
 	public String systeminfo() {
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("<SystemInfo>\n");
-		stringBuilder.append("  <Branch>production</Branch>\n");
+		stringBuilder.append("  <Branch>debug</Branch>\n");
 		stringBuilder.append("  <ChangeList>620384</ChangeList>\n");
 		stringBuilder.append("  <ClientVersion>637</ClientVersion>\n");
 		stringBuilder.append("  <ClientVersionCheck>true</ClientVersionCheck>\n");
@@ -28,12 +24,11 @@ public class Default extends Router {
 		stringBuilder.append("  <NucleusNamespace>nfsw-live</NucleusNamespace>\n");
 		stringBuilder.append("  <NucleusNamespaceWeb>nfs_web</NucleusNamespaceWeb>\n");
 		stringBuilder.append("  <PersonaCacheTimeout>900</PersonaCacheTimeout>\n");
-		stringBuilder.append("  <PortalDomain>world.needforspeed.com</PortalDomain>\n");
-		stringBuilder.append("  <PortalSecureDomain>world.needforspeed.com</PortalSecureDomain>\n");
-		stringBuilder.append(
-				"  <PortalStoreFailurePage>world.needforspeed.com/webkit/pageLoadError</PortalStoreFailurePage>\n");
+		stringBuilder.append("  <PortalDomain/>\n");
+		stringBuilder.append("  <PortalSecureDomain/>\n");
+		stringBuilder.append("  <PortalStoreFailurePage/>\n");
 		stringBuilder.append("  <PortalTimeOut>60000</PortalTimeOut>\n");
-		stringBuilder.append("  <ShardName>APEX</ShardName>\n");
+		stringBuilder.append("  <ShardName>THANKSOBAMA</ShardName>\n");
 		stringBuilder.append("  <Time>2010-01-01T12:00:00.0000000+00:00</Time>\n");
 		stringBuilder.append("  <Version>1599</Version>\n");
 		stringBuilder.append("</SystemInfo>\n");
@@ -181,64 +176,8 @@ public class Default extends Router {
 	}
 
 	public void sendChatAnnouncement() {
-		String messageText = getParam("messageText");
-		String userVar = getParam("userVar");
-		switch (userVar) {
-		case "session":
-			Collection<HttpSessionVO> activePersonas = Router.activeUsers.values();
-			for (HttpSessionVO httpSessionVo : activePersonas) {
-				Long personaId = httpSessionVo.getPersonaId();
-				if (XmppSrv.xmppClients.containsKey(personaId)) {
-					StringBuilder stringBuilder = new StringBuilder();
-					stringBuilder.append("<message from='nfsw.engine.engine@127.0.0.1/EA_Chat' id='JN_2578' to='nfsw.");
-					stringBuilder.append(personaId);
-					stringBuilder.append("@127.0.0.1'>");
-					stringBuilder.append("<body>");
-					stringBuilder.append("&lt;response status='1' ticket='0'&gt;");
-					stringBuilder.append("&lt;ChatBroadcast &gt;");
-					stringBuilder.append("&lt;ChatBlob&gt;");
-					stringBuilder.append("&lt;FromName&gt;System&lt;/FromName&gt;");
-					stringBuilder.append("&lt;FromPersonaId&gt;0&lt;/FromPersonaId&gt;");
-					stringBuilder.append("&lt;FromUserId&gt;0&lt;/FromUserId&gt;");
-					stringBuilder.append("&lt;Message&gt;" + messageText); // 32 char = 1 block
-					stringBuilder.append("&lt;/Message&gt;&lt;ToId&gt;0&lt;/ToId&gt;");
-					stringBuilder.append("&lt;Type&gt;2&lt;/Type&gt;&lt;/ChatBlob&gt;&lt;/ChatBroadcast&gt;");
-					stringBuilder.append("&lt;/response&gt;");
-					stringBuilder.append("</body>");
-					stringBuilder.append("<subject>69</subject>");
-					stringBuilder.append("</message>");
-					String msg = stringBuilder.toString();
-					XmppSrv.sendMsg(personaId, msg);
-				}
-			}
-			break;
-		case "xmpp":
-			Set<Long> activeXmppSessions = XmppSrv.xmppClients.keySet();
-			for (Long personaId : activeXmppSessions) {
-				System.out.println("XmppSession {" + "\r\n personaId: " + personaId + "\r\n}");
-				StringBuilder stringBuilder = new StringBuilder();
-				stringBuilder.append("<message from='nfsw.engine.engine@127.0.0.1/EA_Chat' id='JN_2578' to='nfsw.");
-				stringBuilder.append(personaId);
-				stringBuilder.append("@127.0.0.1'>");
-				stringBuilder.append("<body>");
-				stringBuilder.append("&lt;response status='1' ticket='0'&gt;");
-				stringBuilder.append("&lt;ChatBroadcast &gt;");
-				stringBuilder.append("&lt;ChatBlob&gt;");
-				stringBuilder.append("&lt;FromName&gt;System&lt;/FromName&gt;");
-				stringBuilder.append("&lt;FromPersonaId&gt;0&lt;/FromPersonaId&gt;");
-				stringBuilder.append("&lt;FromUserId&gt;0&lt;/FromUserId&gt;");
-				stringBuilder.append("&lt;Message&gt;" + messageText); // 32
-				stringBuilder.append("&lt;/Message&gt;&lt;ToId&gt;0&lt;/ToId&gt;");
-				stringBuilder.append("&lt;Type&gt;2&lt;/Type&gt;&lt;/ChatBlob&gt;&lt;/ChatBroadcast&gt;");
-				stringBuilder.append("&lt;/response&gt;");
-				stringBuilder.append("</body>");
-				stringBuilder.append("<subject>69</subject>");
-				stringBuilder.append("</message>");
-				String msg = stringBuilder.toString();
-				XmppSrv.sendMsg(personaId, msg);
-			}
-			break;
-		}
+		String announcementText = getParam("announcementText");
+		XmppChatLobbies.getSystemLobby().broadcast(announcementText);
 	}
 
 }
