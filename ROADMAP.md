@@ -1,13 +1,7 @@
-roadmap, priority order
+TODO list:
 
 - powerups shop
-
-- vinyl shop
-
-- implement xmpp powerup packets called from other players inside race or freeroam session
-
-other things not on roadmap yet:
-
+- xmpp powerup packets called from other players inside race or freeroam session
 - economy
 - damage
 - heat
