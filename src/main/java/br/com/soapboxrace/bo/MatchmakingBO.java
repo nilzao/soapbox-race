@@ -20,8 +20,8 @@ import br.com.soapboxrace.jpa.EventDefinitionEntity;
 import br.com.soapboxrace.jpa.LobbyEntity;
 import br.com.soapboxrace.jpa.LobbyEntrantEntity;
 import br.com.soapboxrace.jpa.PersonaEntity;
-import br.com.soapboxrace.xmpp.XmppChatLobby;
-import br.com.soapboxrace.xmpp.XmppChatLobbys;
+import br.com.soapboxrace.xmpp.XmppEventLobby;
+import br.com.soapboxrace.xmpp.XmppChatLobbies;
 import br.com.soapboxrace.xmpp.XmppLobby;
 import br.com.soapboxrace.xmpp.XmppSrv;
 import br.com.soapboxrace.xmpp.XmppTalk;
@@ -133,9 +133,9 @@ public class MatchmakingBO {
 
 	private void sendJoinEvent(Long personaId, LobbyEntity lobbyEntity) {
 		Long sessionId = lobbyEntity.getId();
-		XmppChatLobby xmppChatLobby = XmppChatLobbys.getChatLobby(sessionId);
+		XmppEventLobby xmppEventLobby = XmppChatLobbies.getEventLobby(sessionId);
 		XmppTalk xmppTalk = XmppSrv.get(personaId);
-		xmppChatLobby.addXmppTalk(xmppTalk);
+		xmppEventLobby.addXmppTalk(xmppTalk);
 
 		LobbyInviteType lobbyInviteType = new LobbyInviteType();
 		Long eventId = lobbyEntity.getEvent().getEventId();

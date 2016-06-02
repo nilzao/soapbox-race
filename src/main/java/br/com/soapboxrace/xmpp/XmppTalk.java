@@ -11,7 +11,9 @@ public class XmppTalk {
 	private Socket socket;
 	private BufferedReader reader;
 	private BufferedWriter writer;
-	private int personaId;
+	private Long personaId;
+	private String currentChannelName = "NB";
+	private Integer currentChannelNumber = 1337;
 
 	public XmppTalk(Socket socket) {
 		this.socket = socket;
@@ -61,12 +63,27 @@ public class XmppTalk {
 		}
 	}
 
-	public int getPersonaId() {
+	public Long getPersonaId() {
 		return personaId;
 	}
 
-	public void setPersonaId(int personaId) {
+	public void setPersonaId(Long personaId) {
 		this.personaId = personaId;
 	}
 
+	public String getCurrentChannelName() {
+		return currentChannelName;
+	}
+
+	public void setCurrentChannelName(String currentChannelName) {
+		this.currentChannelName = currentChannelName;
+	}
+
+	public Integer getCurrentChannelNumber() {
+		return currentChannelNumber;
+	}
+
+	public void setCurrentChannelNumber(Integer currentChannelNumber) {
+		this.currentChannelNumber = currentChannelNumber;
+	}
 }
