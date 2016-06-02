@@ -25,7 +25,7 @@ public class XmppHandShake {
 	}
 
 	private void handShakeAfterSsl() {
-		int personaId = 0;
+		Long personaId = 0L;
 		String[] packets = new String[4];
 		packets[0] = "<stream:stream xmlns='jabber:client' xml:lang='en' xmlns:stream='http://etherx.jabber.org/streams' from='127.0.0.1' id='5000000000000A' version='1.0'><stream:features/>";
 		packets[1] = "";
@@ -37,7 +37,7 @@ public class XmppHandShake {
 				int start = read.indexOf("<username>nfsw.");
 				read = read.substring(start);
 				read = read.replaceAll("\\D+", "");
-				personaId = Integer.valueOf(read);
+				personaId = Long.valueOf(read);
 				packets[1] = "<iq id='EA-Chat-1' type='result' xml:lang='en'><query xmlns='jabber:iq:auth'><username>nfsw."
 						+ personaId
 						+ "</username><password/><digest/><resource/><clientlock xmlns='http://www.jabber.com/schemas/clientlocking.xsd'/></query></iq>";
@@ -50,11 +50,10 @@ public class XmppHandShake {
 		for (int i = 0; i < 3; i++) {
 			xmppTalk.read();
 		}
-		packets[3] = "<presence from='channel.en__1@conference.127.0.0.1' to='nfsw." + personaId
-				+ "@127.0.0.1/EA-Chat' type='error'><error code='401' type='auth'><not-authorized xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/></error><x xmlns='http://jabber.org/protocol/muc'/></presence>";
+		packets[3] = XmppChat.getPresenceResponse(personaId, "NB", 1337);
 		xmppTalk.write(packets[3]);
 		xmppTalk.setPersonaId(personaId);
 		XmppSrv.addXmppClient(personaId, xmppTalk);
+		XmppChatLobbies.getFreeroamLobby("NB", 1337).addXmppTalk(xmppTalk);
 	}
-
 }
