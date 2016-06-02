@@ -55,5 +55,6 @@ public class XmppHandShake {
 		xmppTalk.setPersonaId(personaId);
 		XmppSrv.addXmppClient(personaId, xmppTalk);
 		XmppChatLobbies.getFreeroamLobby("NB", 1337).addXmppTalk(xmppTalk);
+		XmppChatLobbies.getSystemLobby().addXmppTalk(xmppTalk);
 	}
 }
