@@ -55,7 +55,7 @@ public class Router {
 	protected Long getLoggedPersonaId() {
 		if (Router.activeUsers.containsKey(getUserId())) {
 			HttpSessionVO httpSessionVO = Router.activeUsers.get(getUserId());
-			if (httpSessionVO.getPersonaId() != null)
+			if (httpSessionVO.getPersonaId() != null && httpSessionVO.getPersonaId() != 0L)
 				return httpSessionVO.getPersonaId();
 		}
 		return -1L;
