@@ -49,6 +49,11 @@ public class XmppChat {
 
 	private String transformChatMsg(Integer targetPersonaId) {
 		String xmppIp = "127.0.0.1";
+		Pattern regPattern = Pattern.compile("(.*)@conference.(.*)' ");
+		Matcher match = regPattern.matcher(chatMsg);
+		if (match.find()) {
+			xmppIp = match.group(2);
+		}
 		String newMsg = chatMsg;
 		newMsg = newMsg.replaceFirst("message to=", "message from=");
 		newMsg = newMsg.replaceFirst("@conference.".concat(xmppIp),
