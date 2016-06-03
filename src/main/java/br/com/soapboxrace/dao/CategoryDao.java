@@ -27,7 +27,7 @@ public class CategoryDao extends SoapboxDao {
         TypedQuery<CategoryEntity> allQuery = manager.createQuery(all);
 		//Query query = ;
 		ArrayOfCategoryTrans catTrans = new ArrayOfCategoryTrans();
-		catTrans.setCategoryEntity(allQuery.getResultList());
+		catTrans.setCategoryEntityList(allQuery.getResultList());
 	    return catTrans;
 	}
 	

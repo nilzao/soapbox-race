@@ -18,7 +18,7 @@ public class XmppChatLobbies {
 	}
 
 	public static XmppFreeroamLobby getFreeroamLobby(String channelName, Integer channelNumber) {
-		Long channelHash = Long.valueOf(channelName.hashCode() + channelNumber);
+		Long channelHash = Long.valueOf(String.format("%d_%d", channelName.hashCode(), channelNumber).hashCode());
 
 		if (xmppFreeroamLobbies.containsKey(channelHash))
 			return xmppFreeroamLobbies.get(channelHash);

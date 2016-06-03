@@ -22,9 +22,9 @@ public class XmppHandler {
 					String channelName = match.group(1);
 					Integer channelNumber = Integer.valueOf(match.group(2));
 					Long personaId = xmppTalk.getPersonaId();
-
+					
 					if (!channelName.equals(xmppTalk.getCurrentChannelName())
-							&& !channelNumber.equals(xmppTalk.getCurrentChannelNumber())) {
+							|| !channelNumber.equals(xmppTalk.getCurrentChannelNumber())) {
 						XmppChatLobbies
 								.getFreeroamLobby(xmppTalk.getCurrentChannelName(), xmppTalk.getCurrentChannelNumber())
 								.removeXmppTalk(personaId);
