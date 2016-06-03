@@ -6,11 +6,7 @@ roadmap, priority order
 
 - skill workshop (sell)
 
-- vinyl shop
-
 - implement xmpp powerup packets called from other players inside race or freeroam session
-
-- rip off all @Convert stuff, and put full xml inside db (performance + simplify code + easy edit for newbies)
 
 other things not on roadmap yet:
 

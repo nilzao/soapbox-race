@@ -11,16 +11,16 @@ public class XmppChat {
 	private String chatMessage;
 	private Long personaId;
 
-	public XmppChat(Long personaId, String chatMsg) {
+	public XmppChat(Long personaId, String chatMessage) {
 		this.personaId = personaId;
-		this.chatMessage = chatMsg;
+		this.chatMessage = chatMessage;
 	}
 
 	public Long getPersonaId() {
 		return personaId;
 	}
 	
-	public static String getPresenceResponse(XmppTalk xmppTalk) {
+	public static void getPresenceResponse(XmppTalk xmppTalk) {
 		String channelName = xmppTalk.getCurrentChannelName();
 		Integer channelNumber = xmppTalk.getCurrentChannelNumber();
 		Long personaId = xmppTalk.getPersonaId();
@@ -28,7 +28,9 @@ public class XmppChat {
 
 		String formatString = "<presence from='channel.%s__%d@conference.%s/nfsw.%d' to='nfsw.%d@%s/EA-Chat' xml:lang='en'>"
 				+ "<x xmlns='http://jabber.org/protocol/muc#user'><item affiliation='none' role='none'/></x></presence>";
-		return String.format(formatString, channelName, channelNumber, xmppIp, personaId, personaId, xmppIp);
+		xmppTalk.write(String.format(formatString, channelName, channelNumber, xmppIp, personaId, personaId, xmppIp));
+		XmppChatLobbies.getFreeroamLobby(channelName, channelNumber).addXmppTalk(xmppTalk);
+
 	}
 
 	public String getEventMessage(Long targetPersonaId) {

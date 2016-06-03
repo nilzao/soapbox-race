@@ -11,21 +11,21 @@ import javax.xml.bind.annotation.XmlType;
 import br.com.soapboxrace.jpa.CategoryEntity;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ArrayOfCategoryTransType")
+@XmlType(name = "ArrayOfCategoryTrans")
 @XmlRootElement(name = "ArrayOfCategoryTrans")
 public class ArrayOfCategoryTrans {
 
 	@XmlElement(name = "CategoryTrans")
-    private List<CategoryEntity> categoryEntity;
+    private List<CategoryEntity> categoryEntityList;
 
-    public List<CategoryEntity> getCategoryEntity()
+    public List<CategoryEntity> getCategoryEntityList()
     {
-        return categoryEntity;
+        return categoryEntityList;
     }
 
-    public void setCategoryEntity(List<CategoryEntity> CategoryEntity)
+    public void setCategoryEntityList(List<CategoryEntity> categoryEntityList)
     {
-        this.categoryEntity = CategoryEntity;
+        this.categoryEntityList = categoryEntityList;
     }
 
 }

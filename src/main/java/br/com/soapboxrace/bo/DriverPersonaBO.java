@@ -6,6 +6,7 @@ import br.com.soapboxrace.dao.PersonaDao;
 import br.com.soapboxrace.jaxb.ArrayOfPersonaBaseType;
 import br.com.soapboxrace.jaxb.ArrayOfstringType;
 import br.com.soapboxrace.jaxb.PersonaBaseType;
+import br.com.soapboxrace.jaxb.PersonaMottoType;
 import br.com.soapboxrace.jaxb.PersonaPresenceType;
 import br.com.soapboxrace.jaxb.ProfileDataType;
 import br.com.soapboxrace.jpa.PersonaEntity;
@@ -105,7 +106,11 @@ public class DriverPersonaBO {
 		return null;
 	}
 
-	public void updateStatusMessage(Long personaId, String statusMessage) {
-		personaDao.updateStatusMessage(personaId, statusMessage);
+	public PersonaMottoType updateStatusMessage(Long personaId, String message) {
+		personaDao.updateStatusMessage(personaId, message);
+		PersonaMottoType personaMottoType = new PersonaMottoType();
+		personaMottoType.setMessage(message);
+		personaMottoType.setPersonaId(personaId);
+		return personaMottoType;
 	}
 }

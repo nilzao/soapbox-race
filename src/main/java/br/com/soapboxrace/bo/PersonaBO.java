@@ -8,6 +8,7 @@ import br.com.soapboxrace.dao.OwnedCarDao;
 import br.com.soapboxrace.dao.PersonaDao;
 import br.com.soapboxrace.dao.ProductDao;
 import br.com.soapboxrace.definition.ShoppingCartPurchaseResult;
+import br.com.soapboxrace.jaxb.ArrayOfOwnedCarTrans;
 import br.com.soapboxrace.jaxb.CarSlotInfoTrans;
 import br.com.soapboxrace.jaxb.CarsOwnedByPersonaList;
 import br.com.soapboxrace.jaxb.CommerceResultTransType;
@@ -206,9 +207,16 @@ public class PersonaBO {
 		personaDao.save(personaEntity);
 	}
 
-	public OwnedCarEntity deleteCar(long idPersona, long carId) {
+	public ArrayOfOwnedCarTrans getCars(long personaId) {
+		ArrayOfOwnedCarTrans arrayOfOwnedCarTrans = new ArrayOfOwnedCarTrans();
+		PersonaEntity personaEntity = personaDao.findById(personaId);
+		arrayOfOwnedCarTrans.setOwnedCarTransList(personaEntity.getOwnedCarlist());
+		return arrayOfOwnedCarTrans;
+	}
+	
+	public OwnedCarEntity sellCar(long personaId, long carId) {
 		ownedCarDao.del(carId);
-		return defaultcar(idPersona);
+		return defaultcar(personaId);
 	}
 
 }

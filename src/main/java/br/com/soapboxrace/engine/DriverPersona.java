@@ -18,14 +18,18 @@ public class DriverPersona extends Router {
 
 	private DriverPersonaBO driverPersonaBO = new DriverPersonaBO();
 
-	private Long getPersonaId() throws PersonaIdMismatchException {
+	private Long getPersonaId(boolean isBypass) throws PersonaIdMismatchException {
 		String personaIdStr = getParam("personaId");
 		Long idPersona = Long.valueOf(personaIdStr);
-		if (((idPersona.equals(getLoggedPersonaId()) || getLoggedPersonaId() == -1L)))
+		if (((idPersona.equals(getLoggedPersonaId()) || getLoggedPersonaId() == -1L)) || isBypass)
 			if (getUserId() != -1L && !getSecurityToken().isEmpty()
 					&& Router.activeUsers.get(getUserId()).getSecurityToken().equals(getSecurityToken()))
 				return idPersona;
 		throw new ServerExceptions.PersonaIdMismatchException(getLoggedPersonaId(), idPersona);
+	}
+	
+	private long getPersonaId() throws PersonaIdMismatchException {
+		return getPersonaId(false);
 	}
 
 	public String getExpLevelPointsMap() {
@@ -115,7 +119,7 @@ public class DriverPersona extends Router {
 	}
 
 	public String getPersonaInfo() throws PersonaIdMismatchException {
-		ProfileDataType personaInfo = driverPersonaBO.getPersonaInfo(getPersonaId());
+		ProfileDataType personaInfo = driverPersonaBO.getPersonaInfo(getPersonaId(true));
 		return MarshalXML.marshal(personaInfo);
 	}
 
@@ -140,13 +144,12 @@ public class DriverPersona extends Router {
 	}
 
 	public String updateStatusMessage() {
-		String xmlTmp = readInputStream();
+		String mottoXml = readInputStream();
 		PersonaMottoType personaMottoType = new PersonaMottoType();
-		personaMottoType = (PersonaMottoType) UnmarshalXML.unMarshal(xmlTmp, personaMottoType);
-		String statusMessage = personaMottoType.getMessage();
+		personaMottoType = (PersonaMottoType) UnmarshalXML.unMarshal(mottoXml, personaMottoType);
+		String message = personaMottoType.getMessage();
 		Long personaId = personaMottoType.getPersonaId();
-		driverPersonaBO.updateStatusMessage(personaId, statusMessage);
-		return "";
+		return MarshalXML.marshal(driverPersonaBO.updateStatusMessage(personaId, message));
 	}
 
 	public String getPersonaPresenceByName() {
@@ -156,16 +159,4 @@ public class DriverPersona extends Router {
 		}
 		return "";
 	}
-
-	public static void main(String[] args) {
-		String xmlTmp = "<PersonaIdArray xmlns=\"http://schemas.datacontract.org/2004/07/Victory.TransferObjects.DriverPersona\" "
-				+ "xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">"
-				+ "<PersonaIds xmlns:array=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\">"
-				+ "<array:long>102</array:long>" + "</PersonaIds></PersonaIdArray>";
-		xmlTmp = xmlTmp.replace(":long", "");
-		PersonaIdArrayType personaIdArrayType = new PersonaIdArrayType();
-		personaIdArrayType = (PersonaIdArrayType) UnmarshalXML.unMarshal(xmlTmp, personaIdArrayType);
-		System.out.println(personaIdArrayType);
-	}
-
 }
