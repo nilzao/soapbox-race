@@ -34,7 +34,6 @@ public class XmppHandler {
 					xmppTalk.setCurrentChannelNumber(channelNumber);
 
 					XmppChat.getPresenceResponse(xmppTalk);
-					XmppChatLobbies.getFreeroamLobby(channelName, channelNumber).addXmppTalk(xmppTalk);
 				}
 			} else if (read.contains("Chat_All")) {
 				Pattern regPattern = Pattern.compile("message to='channel.(\\w+)__(\\d+)@");

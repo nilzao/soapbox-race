@@ -25,12 +25,12 @@ public class XmppChat {
 		Integer channelNumber = xmppTalk.getCurrentChannelNumber();
 		Long personaId = xmppTalk.getPersonaId();
 		String xmppIp = Session.getXmppIp();
-		
-		XmppChatLobbies.getFreeroamLobby(channelName, channelNumber).addXmppTalk(xmppTalk);
 
 		String formatString = "<presence from='channel.%s__%d@conference.%s/nfsw.%d' to='nfsw.%d@%s/EA-Chat' xml:lang='en'>"
 				+ "<x xmlns='http://jabber.org/protocol/muc#user'><item affiliation='none' role='none'/></x></presence>";
 		xmppTalk.write(String.format(formatString, channelName, channelNumber, xmppIp, personaId, personaId, xmppIp));
+		XmppChatLobbies.getFreeroamLobby(channelName, channelNumber).addXmppTalk(xmppTalk);
+
 	}
 
 	public String getEventMessage(Long targetPersonaId) {
