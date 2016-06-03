@@ -16,7 +16,6 @@ public class Session extends Router {
 		ChatServerType chatServer = new ChatServerType();
 		chatServer.setRooms(getRooms());
 		chatServer.setIp(xmppIp);
-		System.out.println(MarshalXML.marshal(chatServer));
 		return MarshalXML.marshal(chatServer);
 	}
 
