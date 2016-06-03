@@ -22,21 +22,19 @@ public class XmppHandler {
 					String channelName = match.group(1);
 					Integer channelNumber = Integer.valueOf(match.group(2));
 					Long personaId = xmppTalk.getPersonaId();
-					
+
 					if (!channelName.equals(xmppTalk.getCurrentChannelName())
 							|| !channelNumber.equals(xmppTalk.getCurrentChannelNumber())) {
 						XmppChatLobbies
 								.getFreeroamLobby(xmppTalk.getCurrentChannelName(), xmppTalk.getCurrentChannelNumber())
 								.removeXmppTalk(personaId);
-						XmppChatLobbies.getSystemLobby().leftRoom(xmppTalk);
 					}
 
 					xmppTalk.setCurrentChannelName(channelName);
 					xmppTalk.setCurrentChannelNumber(channelNumber);
-					XmppChatLobbies.getSystemLobby().joinRoom(xmppTalk);
 
+				XmppSrv.get(personaId).write(XmppChat.getPresenceResponse(xmppTalk));
 					XmppChatLobbies.getFreeroamLobby(channelName, channelNumber).addXmppTalk(xmppTalk);
-					XmppSrv.get(personaId).write(XmppChat.getPresenceResponse(xmppTalk));
 				}
 			} else if (read.contains("Chat_All")) {
 				Pattern regPattern = Pattern.compile("message to='channel.(\\w+)__(\\d+)@");

@@ -11,9 +11,9 @@ public class XmppChat {
 	private String chatMessage;
 	private Long personaId;
 
-	public XmppChat(Long personaId, String chatMsg) {
+	public XmppChat(Long personaId, String chatMessage) {
 		this.personaId = personaId;
-		this.chatMessage = chatMsg;
+		this.chatMessage = chatMessage;
 	}
 
 	public Long getPersonaId() {
