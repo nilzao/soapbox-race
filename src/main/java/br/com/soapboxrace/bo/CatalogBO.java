@@ -16,7 +16,7 @@ public class CatalogBO {
 	public ArrayOfProductTrans productsInCategory(String categoryName, String clientProductType) {
 		List<ProductEntity> products = productDao.findByCategoryNameClientProductType(categoryName, clientProductType);
 		ArrayOfProductTrans arrayOfProductTrans = new ArrayOfProductTrans();
-		arrayOfProductTrans.setProductTrans(products);
+		arrayOfProductTrans.setProductTransList(products);
 		return arrayOfProductTrans;
 	}
 

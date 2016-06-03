@@ -3,6 +3,7 @@ package br.com.soapboxrace.engine;
 import br.com.soapboxrace.bo.PersonaBO;
 import br.com.soapboxrace.definition.ServerExceptions;
 import br.com.soapboxrace.definition.ServerExceptions.PersonaIdMismatchException;
+import br.com.soapboxrace.jaxb.ArrayOfOwnedCarTrans;
 import br.com.soapboxrace.jaxb.BasketTransType;
 import br.com.soapboxrace.jaxb.CarSlotInfoTrans;
 import br.com.soapboxrace.jaxb.CommerceResultTransType;
@@ -18,12 +19,12 @@ public class Personas extends Router {
 
 	private long getPersonaId(boolean isBypass) throws PersonaIdMismatchException {
 		String[] targetSplitted = getTarget().split("/");
-		Long idPersona = Long.valueOf(targetSplitted[4]);
-		if (((isBypass || idPersona.equals(getLoggedPersonaId()) || getLoggedPersonaId() == -1L)))
+		Long personaId = Long.valueOf(targetSplitted[4]);
+		if (((isBypass || personaId.equals(getLoggedPersonaId()) || getLoggedPersonaId() == -1L)))
 			if (getUserId() != -1L && !getSecurityToken().isEmpty()
 					&& Router.activeUsers.get(getUserId()).getSecurityToken().equals(getSecurityToken()))
-				return idPersona;
-		throw new ServerExceptions.PersonaIdMismatchException(getLoggedPersonaId(), idPersona);
+				return personaId;
+		throw new ServerExceptions.PersonaIdMismatchException(getLoggedPersonaId(), personaId);
 	}
 
 	private long getPersonaId() throws PersonaIdMismatchException {
@@ -231,15 +232,19 @@ public class Personas extends Router {
 	}
 
 	public String cars() throws PersonaIdMismatchException {
-		String serialNumber = getParam("serialNumber");
-		if (serialNumber != null) {
-			Long carId = Long.valueOf(serialNumber);
-			OwnedCarEntity defaultCar = personaBO.deleteCar(getPersonaId(), carId);
-			return MarshalXML.marshal(defaultCar);
+		if (getRequest().getMethod().equals("POST")) { //sell car
+			String serialNumber = getParam("serialNumber");
+			if (serialNumber != null) {
+				Long personaId = getPersonaId();
+				Long carId = Long.valueOf(serialNumber);
+				OwnedCarEntity defaultCar = personaBO.sellCar(personaId, carId);
+				return MarshalXML.marshal(defaultCar);
+			}
+		} else { //get cars
+			Long personaId = getPersonaId(true);
+			ArrayOfOwnedCarTrans arrayofOwnedCarTrans = personaBO.getCars(personaId);
+			return MarshalXML.marshal(arrayofOwnedCarTrans);
 		}
-		String ownedCarTransXml = readInputStream();
-		System.out.println("TODO: sell performance shop");
-		System.out.println(ownedCarTransXml);
 		return "";
 	}
 }

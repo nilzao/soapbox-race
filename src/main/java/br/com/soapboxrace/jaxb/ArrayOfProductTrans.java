@@ -11,18 +11,18 @@ import javax.xml.bind.annotation.XmlType;
 import br.com.soapboxrace.jpa.ProductEntity;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ArrayOfProductTransType")
+@XmlType(name = "ArrayOfProductTrans")
 @XmlRootElement(name = "ArrayOfProductTrans")
 public class ArrayOfProductTrans {
 
 	@XmlElement(name = "ProductTrans")
-	protected List<ProductEntity> productTrans;
+	protected List<ProductEntity> productTransList;
 
-	public List<ProductEntity> getProductTrans() {
-		return productTrans;
+	public List<ProductEntity> getProductTransList() {
+		return productTransList;
 	}
 
-	public void setProductTrans(List<ProductEntity> productTrans) {
-		this.productTrans = productTrans;
+	public void setProductTransList(List<ProductEntity> productTransList) {
+		this.productTransList = productTransList;
 	}
 }
