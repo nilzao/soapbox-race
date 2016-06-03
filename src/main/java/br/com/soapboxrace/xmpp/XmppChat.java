@@ -20,7 +20,7 @@ public class XmppChat {
 		return personaId;
 	}
 	
-	public static String getPresenceResponse(XmppTalk xmppTalk) {
+	public static void getPresenceResponse(XmppTalk xmppTalk) {
 		String channelName = xmppTalk.getCurrentChannelName();
 		Integer channelNumber = xmppTalk.getCurrentChannelNumber();
 		Long personaId = xmppTalk.getPersonaId();
@@ -30,7 +30,7 @@ public class XmppChat {
 
 		String formatString = "<presence from='channel.%s__%d@conference.%s/nfsw.%d' to='nfsw.%d@%s/EA-Chat' xml:lang='en'>"
 				+ "<x xmlns='http://jabber.org/protocol/muc#user'><item affiliation='none' role='none'/></x></presence>";
-		return String.format(formatString, channelName, channelNumber, xmppIp, personaId, personaId, xmppIp);
+		xmppTalk.write(String.format(formatString, channelName, channelNumber, xmppIp, personaId, personaId, xmppIp));
 	}
 
 	public String getEventMessage(Long targetPersonaId) {

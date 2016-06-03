@@ -30,12 +30,13 @@ public class XmppFreeroamLobby {
 		while (iterator.hasNext()) {
 			Entry<Long, XmppTalk> next = iterator.next();
 			XmppTalk xmppTalk = next.getValue();
-			xmppTalk.write(XmppChat.getSystemMessage(xmppTalk.getPersonaId(), joinNoticeChannel));
+			if (!xmppTalk.getPersonaId().equals(personaId))
+				xmppTalk.write(XmppChat.getSystemMessage(xmppTalk.getPersonaId(), joinNoticeChannel));
 		}
 
 		xmppFreeroamLobby.put(personaId, hostXmppTalk);
 	}
-	
+
 	public void removeXmppTalk(Long personaId) {
 		if (xmppFreeroamLobby.containsKey(personaId)) {
 			XmppTalk hostXmppTalk = xmppFreeroamLobby.get(personaId);

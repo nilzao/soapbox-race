@@ -33,7 +33,7 @@ public class XmppHandler {
 					xmppTalk.setCurrentChannelName(channelName);
 					xmppTalk.setCurrentChannelNumber(channelNumber);
 
-				XmppSrv.get(personaId).write(XmppChat.getPresenceResponse(xmppTalk));
+					XmppChat.getPresenceResponse(xmppTalk);
 					XmppChatLobbies.getFreeroamLobby(channelName, channelNumber).addXmppTalk(xmppTalk);
 				}
 			} else if (read.contains("Chat_All")) {

@@ -26,11 +26,10 @@ public class XmppHandShake {
 
 	private void handShakeAfterSsl() {
 		Long personaId = 0L;
-		String[] packets = new String[4];
+		String[] packets = new String[3];
 		packets[0] = "<stream:stream xmlns='jabber:client' xml:lang='en' xmlns:stream='http://etherx.jabber.org/streams' from='127.0.0.1' id='5000000000000A' version='1.0'><stream:features/>";
 		packets[1] = "";
 		packets[2] = "<iq id='EA-Chat-2' type='result' xml:lang='en'/>";
-		packets[3] = "";
 		do {
 			String read = xmppTalk.read();
 			if (pkgCount == 1) {
@@ -53,10 +52,7 @@ public class XmppHandShake {
 
 		xmppTalk.setPersonaId(personaId);
 		XmppSrv.addXmppClient(personaId, xmppTalk);
-
-		packets[3] = XmppChat.getPresenceResponse(xmppTalk);
-		xmppTalk.write(packets[3]);
-
+		XmppChat.getPresenceResponse(xmppTalk);
 		XmppChatLobbies.getSystemLobby().addXmppTalk(xmppTalk);
 	}
 }
