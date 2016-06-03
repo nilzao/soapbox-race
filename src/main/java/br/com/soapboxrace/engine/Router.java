@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigInteger;
+import java.net.URL;
 import java.security.SecureRandom;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -58,7 +59,16 @@ public class Router {
 	}
 
 	protected String getHttpAddress() {
-		return baseRequest.getLocalAddr();
+		String hostAddress = "127.0.0.1";
+		try {
+			StringBuilder rootURL = baseRequest.getRootURL();
+			URL url = new URL(rootURL.toString());
+			hostAddress = url.getHost();
+		} catch (Exception e1) {
+			System.out.println("host address parse error!");
+		}
+		System.out.println("setting address: [" + hostAddress + "] to client.");
+		return hostAddress;
 	}
 
 	protected HttpServletRequest getRequest() {
