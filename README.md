@@ -3,7 +3,7 @@
 Webserver to handle cars and pilots profiles.
 
 ##How to:
-My advice is to download Eclipse JavaEE, and after that download eGit Maven SCM profile from the Eclipse marketplace(both free). Then build the server with the in-built maven using `clean compile assembly:single`.
+My advice is to download Eclipse JavaEE, and after that download eGit Maven SCM profile from the Eclipse marketplace(both free). After importing the project from the SCM profile, build the server with the built-in maven using `clean compile assembly:single`.
 
 ##Running the server is as simple as:
 
