@@ -57,7 +57,6 @@ public class XmppHandShake {
 		packets[3] = XmppChat.getPresenceResponse(xmppTalk);
 		xmppTalk.write(packets[3]);
 
-		XmppChatLobbies.getSystemLobby().joinRoom(xmppTalk);
 		XmppChatLobbies.getFreeroamLobby("GN", 1).addXmppTalk(xmppTalk);
 		XmppChatLobbies.getSystemLobby().addXmppTalk(xmppTalk);
 	}
