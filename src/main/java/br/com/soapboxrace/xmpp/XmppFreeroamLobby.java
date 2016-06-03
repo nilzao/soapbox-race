@@ -38,9 +38,8 @@ public class XmppFreeroamLobby {
 	
 	public void removeXmppTalk(Long personaId) {
 		if (xmppFreeroamLobby.containsKey(personaId)) {
-			xmppFreeroamLobby.remove(personaId);
-
 			XmppTalk hostXmppTalk = xmppFreeroamLobby.get(personaId);
+
 			String channelName = hostXmppTalk.getCurrentChannelName();
 			Integer channelNumber = hostXmppTalk.getCurrentChannelNumber();
 
@@ -48,6 +47,7 @@ public class XmppFreeroamLobby {
 			String leftNoticeChannel = String.format("%s left the channel.", personaDao.findById(personaId).getName());
 
 			hostXmppTalk.write(XmppChat.getSystemMessage(personaId, leftNotice));
+			xmppFreeroamLobby.remove(personaId);
 
 			Iterator<Entry<Long, XmppTalk>> iterator = xmppFreeroamLobby.entrySet().iterator();
 			while (iterator.hasNext()) {
