@@ -33,7 +33,7 @@ public class XmppLobby {
 			Thread.sleep(1000);
 			XmppSrv.sendMsg(personaId, packet);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
 		}
 	}
 
@@ -48,7 +48,7 @@ public class XmppLobby {
 			Thread.sleep(1000);
 			XmppSrv.sendMsg(personaId, packet);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
 		}
 	}
 

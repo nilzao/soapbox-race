@@ -31,7 +31,6 @@ public class HttpSrv extends GzipHandler {
 		if ("/favicon.ico".equals(target)) {
 			return;
 		}
-		// System.out.println(baseRequest.toString());
 		String[] targetSplitted = target.split("/");
 		String className = "Default";
 		String methodName = "";
@@ -70,13 +69,7 @@ public class HttpSrv extends GzipHandler {
 				response.setHeader("connection", "close");
 			}
 			baseRequest.setHandled(true);
-			if (content == null) {
-				content = readContent(target);
-				System.out.println("=======================================");
-				System.out.println("          READ FROM XML FILE");
-				System.out.println("=======================================");
-			}
-			if (!content.trim().isEmpty()) {
+			if (content != null && !content.trim().isEmpty()) {
 				byte[] bytes = gzip(content.getBytes(StandardCharsets.UTF_8));
 				response.setContentLength(bytes.length);
 				response.getOutputStream().write(bytes);
@@ -104,25 +97,6 @@ public class HttpSrv extends GzipHandler {
 			byteStream.close();
 		}
 		return byteStream.toByteArray();
-	}
-
-	private String readContent(String target) throws IOException {
-		StringBuilder modTarget = new StringBuilder();
-		modTarget.append("www");
-		modTarget.append(target);
-		byte[] content = null;
-		String targetClr = modTarget.toString();
-		String targetXml = modTarget.append(".xml").toString();
-		if (Files.exists(Paths.get(targetXml, new String[0]), new LinkOption[0])) {
-			content = Files.readAllBytes(Paths.get(targetXml, new String[0]));
-		} else if (Files.exists(Paths.get(targetClr, new String[0]), new LinkOption[0])) {
-			content = Files.readAllBytes(Paths.get(targetClr, new String[0]));
-		}
-		String str = "";
-		if (content != null) {
-			str = new String(content, "UTF-8");
-		}
-		return str;
 	}
 
 	public static void main(String[] args) {

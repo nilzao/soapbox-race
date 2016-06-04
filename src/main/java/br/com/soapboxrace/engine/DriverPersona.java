@@ -151,15 +151,4 @@ public class DriverPersona extends Router {
 		return "";
 	}
 
-	public static void main(String[] args) {
-		String xmlTmp = "<PersonaIdArray xmlns=\"http://schemas.datacontract.org/2004/07/Victory.TransferObjects.DriverPersona\" "
-				+ "xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">"
-				+ "<PersonaIds xmlns:array=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\">"
-				+ "<array:long>102</array:long>" + "</PersonaIds></PersonaIdArray>";
-		xmlTmp = xmlTmp.replace(":long", "");
-		PersonaIdArrayType personaIdArrayType = new PersonaIdArrayType();
-		personaIdArrayType = (PersonaIdArrayType) UnmarshalXML.unMarshal(xmlTmp, personaIdArrayType);
-		System.out.println(personaIdArrayType);
-	}
-
 }

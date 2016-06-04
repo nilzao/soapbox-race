@@ -41,7 +41,6 @@ public class XmppHandShake {
 				packets[1] = "<iq id='EA-Chat-1' type='result' xml:lang='en'><query xmlns='jabber:iq:auth'><username>nfsw."
 						+ personaId
 						+ "</username><password/><digest/><resource/><clientlock xmlns='http://www.jabber.com/schemas/clientlocking.xsd'/></query></iq>";
-
 				System.out.println("parse personaId: " + personaId);
 			}
 			xmppTalk.write(packets[pkgCount]);

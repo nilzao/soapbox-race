@@ -65,7 +65,7 @@ public class Router {
 			URL url = new URL(rootURL.toString());
 			hostAddress = url.getHost();
 		} catch (Exception e1) {
-			System.out.println("host address parse error!");
+			System.err.println("host address parse error!");
 		}
 		System.out.println("setting address: [" + hostAddress + "] to client.");
 		return hostAddress;

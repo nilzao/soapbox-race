@@ -47,13 +47,11 @@ public class XmppTalk {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		// System.out.println("C->S [" + msg + "]");
 		return msg;
 	}
 
 	public void write(String msg) {
 		try {
-			// System.out.println("S->C [" + msg + "]");
 			writer.write(msg);
 			writer.flush();
 		} catch (Exception e) {

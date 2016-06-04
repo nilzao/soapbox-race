@@ -242,7 +242,6 @@ public class Personas extends Router {
 			ownedCarEntity.setExpirationDate("");
 			defaultcar = MarshalXML.marshal(ownedCarEntity);
 		}
-		System.out.println(defaultcar);
 		return defaultcar;
 	}
 }

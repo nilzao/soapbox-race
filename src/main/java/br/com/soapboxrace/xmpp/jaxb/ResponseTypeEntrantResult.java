@@ -46,21 +46,4 @@ public class ResponseTypeEntrantResult {
 		this.ticket = ticket;
 	}
 
-	public static void main(String[] args) {
-		RouteEntrantResultType routeEntrantResultType = new RouteEntrantResultType();
-		routeEntrantResultType.setEventDurationInMilliseconds(150000);
-		routeEntrantResultType.setEventSessionId(123456789);
-		routeEntrantResultType.setFinishReason(22);
-		routeEntrantResultType.setPersonaId(100);
-		routeEntrantResultType.setRanking(1);
-		routeEntrantResultType.setBestLapDurationInMilliseconds(150000);
-		routeEntrantResultType.setTopSpeed(59.123F);
-		ResponseTypeEntrantResult responseTypeEntrantResult = new ResponseTypeEntrantResult();
-		responseTypeEntrantResult.setRouteEntrantResult(routeEntrantResultType);
-		MessageType messageType = new MessageType();
-		messageType.setBody(responseTypeEntrantResult);
-		String marshal = MarshalXML.marshal(messageType);
-		System.out.println(marshal);
-	}
-
 }

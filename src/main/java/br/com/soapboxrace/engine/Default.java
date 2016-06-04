@@ -215,7 +215,6 @@ public class Default extends Router {
 		case "xmpp":
 			Set<Long> activeXmppSessions = XmppSrv.xmppClients.keySet();
 			for (Long personaId : activeXmppSessions) {
-				System.out.println("XmppSession {" + "\r\n personaId: " + personaId + "\r\n}");
 				StringBuilder stringBuilder = new StringBuilder();
 				stringBuilder.append("<message from='nfsw.engine.engine@127.0.0.1/EA_Chat' id='JN_2578' to='nfsw.");
 				stringBuilder.append(personaId);
