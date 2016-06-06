@@ -20,3 +20,4 @@ target/
 www/
 /TelosysTools/
 /telosys-tools.cfg
+.pydevproject
