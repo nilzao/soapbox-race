@@ -12,7 +12,8 @@ public class User extends Router {
 	public String getPermanentSession() throws EngineException {
 		Long userId = Long.valueOf(getHeader("userId"));
 		checkSecurityToken();
-		String tokenText = shuffleString(getSecureRandomText());
+		// first 16 token chars used to login xmpp server
+		String tokenText = "1234567890123456" + shuffleString(getSecureRandomText());
 		UserInfoType userInfo = userBO.getPermanentSession(userId, tokenText);
 		setSessionEntry("SecurityToken", tokenText);
 		return MarshalXML.marshal(userInfo);

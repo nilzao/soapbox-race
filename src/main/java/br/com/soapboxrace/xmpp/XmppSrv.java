@@ -43,6 +43,8 @@ public class XmppSrv {
 		public void run() {
 			try {
 				System.out.println("Xmpp server is running.");
+				// change port to debug openfire
+				// ServerSocket listener = new ServerSocket(5333);
 				ServerSocket listener = new ServerSocket(5222);
 				try {
 					while (true) {
