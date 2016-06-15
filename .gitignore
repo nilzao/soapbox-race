@@ -21,3 +21,7 @@ www/
 /TelosysTools/
 /telosys-tools.cfg
 .pydevproject
+
+#local h2 db
+soapbox.mv.db
+soapbox.trace.db
