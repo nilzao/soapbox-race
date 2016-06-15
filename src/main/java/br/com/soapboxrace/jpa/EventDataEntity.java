@@ -21,7 +21,7 @@ public class EventDataEntity implements ISoapBoxEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "sessionId", nullable = false)
+	@Column(name = "eventSessionId", nullable = false)
 	private Long id;
 
 	@Column(name = "eventId")

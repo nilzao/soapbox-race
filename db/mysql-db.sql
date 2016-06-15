@@ -66,7 +66,7 @@ CREATE TABLE SOAPBOX.EVENTDEFINITION (
 )  ENGINE=INNODB;
 
 CREATE TABLE SOAPBOX.EVENTDATA (
-	sessionId bigint NOT NULL DEFAULT 0,
+	eventSessionId bigint NOT NULL DEFAULT 0,
 	eventId bigint NOT NULL,
     eventLaunched boolean NOT NULL,
 	personaId bigint NOT NULL,
@@ -76,7 +76,7 @@ CREATE TABLE SOAPBOX.EVENTDATA (
 	eventDurationInMS bigint NOT NULL,
 	bestLapTimeInMS bigint,
 	topSpeed int NOT NULL,
-	PRIMARY KEY (sessionId),
+	PRIMARY KEY (sessionSessionId),
     INDEX FKj264c6h4qbwmdsnyrfk2g34hu (eventId)
 ) ENGINE=InnoDB;
 
