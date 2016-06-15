@@ -1,11 +1,13 @@
 package br.com.soapboxrace.jpa;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -30,8 +32,9 @@ public class EventDefinitionEntity implements ISoapBoxEntity {
 	private static final long serialVersionUID = -8986500193422498612L;
 
 	@XmlElement(name = "EventId")
+	@OneToMany(mappedBy = "eventDefintion", targetEntity = EventDataEntity.class)
 	@Id
-	protected long eventId;
+	protected List<Long> eventId;
 
 	@XmlElement(name = "CarClassHash")
 	protected int carClassHash;
@@ -130,19 +133,23 @@ public class EventDefinitionEntity implements ISoapBoxEntity {
 	}
 
 	public long getEventId() {
-		return eventId;
+		return eventId.get(0);
 	}
 
-	public void setEventId(long eventId) {
-		this.eventId = eventId;
+	public void setEventId(Long eventId) {
+		List<Long> dummyList = new ArrayList<Long>();
+		dummyList.add(eventId);
+		this.eventId = dummyList;
 	}
 
 	public Long getId() {
-		return eventId;
+		return eventId.get(0);
 	}
 
 	public void setId(Long eventId) {
-		this.eventId = eventId;
+		List<Long> dummyList = new ArrayList<Long>();
+		dummyList.add(eventId);
+		this.eventId = dummyList;
 	}
 
 	public int getEventLocalization() {
