@@ -226,7 +226,7 @@ public class Personas extends Router {
 		String basketXml = readInputStream();
 		BasketTransType basketTransType = new BasketTransType();
 		basketTransType = (BasketTransType) UnmarshalXML.unMarshal(basketXml, basketTransType);
-		String productId = basketTransType.getItems().getBasketItemTrans().getProductId();
+		String productId = basketTransType.getBasketItems().getBasketItemTrans().getProductId();
 		CommerceResultTransType commerceResultTrans = personaBO.basket(getPersonaId(), productId);
 		return MarshalXML.marshal(commerceResultTrans);
 	}

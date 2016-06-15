@@ -26,7 +26,7 @@ public class LobbyDao extends SoapboxDao {
 				"SELECT obj FROM LobbyEntity obj WHERE obj.event = :event and obj.lobbyDateTimeStart between :dateTime1 and :dateTime2",
 				LobbyEntity.class);
 		EventDefinitionEntity eventEntity = new EventDefinitionEntity();
-		eventEntity.setEventId(eventId);
+		eventEntity.setId(eventId);
 		query.setParameter("event", eventEntity);
 		query.setParameter("dateTime1", datePast);
 		query.setParameter("dateTime2", dateNow);

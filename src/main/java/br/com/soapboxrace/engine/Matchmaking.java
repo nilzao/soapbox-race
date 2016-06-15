@@ -17,7 +17,8 @@ public class Matchmaking extends Router {
 	}
 
 	public String launchevent() {
-		SessionInfoType launchevent = matchmakingBO.launchevent(getEventId());
+		if (getLoggedPersonaId() == -1L) return "";
+		SessionInfoType launchevent = matchmakingBO.launchevent(getLoggedPersonaId(), getEventId());
 		return MarshalXML.marshal(launchevent);
 	}
 

@@ -5,6 +5,7 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
+import br.com.soapboxrace.dao.EventDataDao;
 import br.com.soapboxrace.dao.LobbyDao;
 import br.com.soapboxrace.dao.PersonaDao;
 import br.com.soapboxrace.engine.Router;
@@ -16,6 +17,7 @@ import br.com.soapboxrace.jaxb.EntrantsType;
 import br.com.soapboxrace.jaxb.LobbyEntrantInfoType;
 import br.com.soapboxrace.jaxb.LobbyInfoType;
 import br.com.soapboxrace.jaxb.SessionInfoType;
+import br.com.soapboxrace.jpa.EventDataEntity;
 import br.com.soapboxrace.jpa.EventDefinitionEntity;
 import br.com.soapboxrace.jpa.LobbyEntity;
 import br.com.soapboxrace.jpa.LobbyEntrantEntity;
@@ -35,16 +37,22 @@ public class MatchmakingBO {
 
 	private LobbyDao lobbyDao = new LobbyDao();
 	private PersonaDao personaDao = new PersonaDao();
+	private EventDataDao eventDataDao = new EventDataDao();
 
-	public SessionInfoType launchevent(Long eventId) {
+	public SessionInfoType launchevent(Long personaId, Long eventId) {
 		ChallengeType challengeType = new ChallengeType();
 		challengeType.setChallengeId("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 		challengeType.setPattern("FFFFFFFFFFFFFFFF");
 		challengeType.setLeftSize(14);
 		challengeType.setRightSize(50);
+		
+		EventDataEntity eventDataEntity = new EventDataEntity();
+		eventDataEntity.setEventId(eventId);
+		eventDataEntity.setPersonaId(personaId);
+		eventDataEntity = eventDataDao.save(eventDataEntity);
 
 		SessionInfoType sessionInfoType = new SessionInfoType();
-		sessionInfoType.setSessionId(1000000000);
+		sessionInfoType.setSessionId(eventDataEntity.getId());
 		sessionInfoType.setEventId(eventId);
 		sessionInfoType.setChallenge(challengeType);
 		return sessionInfoType;
@@ -138,7 +146,7 @@ public class MatchmakingBO {
 		xmppEventLobby.addXmppTalk(xmppTalk);
 
 		LobbyInviteType lobbyInviteType = new LobbyInviteType();
-		Long eventId = lobbyEntity.getEvent().getEventId();
+		Long eventId = lobbyEntity.getEvent().getId();
 		lobbyInviteType.setEventId(eventId);
 		Long lobbyId = lobbyEntity.getId();
 		lobbyInviteType.setLobbyInviteId(lobbyId);
@@ -148,7 +156,7 @@ public class MatchmakingBO {
 
 	public LobbyInfoType acceptinvite(Long personaId, Long lobbyInviteId) {
 		LobbyEntity lobbyEntity = lobbyDao.findById(lobbyInviteId);
-		Long eventIdLong = lobbyEntity.getEvent().getEventId();
+		Long eventIdLong = lobbyEntity.getEvent().getId();
 
 		CountdownType countdownType = new CountdownType();
 		long eventId = eventIdLong;
@@ -263,7 +271,7 @@ public class MatchmakingBO {
 			challengeType.setLeftSize(14);
 			challengeType.setRightSize(50);
 
-			eventSessionType.setEventId(lobbyEntity.getEvent().getEventId());
+			eventSessionType.setEventId(lobbyEntity.getEvent().getId());
 			eventSessionType.setChallenge(challengeType);
 			eventSessionType.setSessionId(eventSessionId);
 			lobbyLaunched.setNewRelayServer(true);
