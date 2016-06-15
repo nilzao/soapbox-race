@@ -17,7 +17,7 @@ import br.com.soapboxrace.engine.Router;
 import br.com.soapboxrace.engine.Session;
 import br.com.soapboxrace.jaxb.EngineExceptionTrans;
 import br.com.soapboxrace.jaxb.util.MarshalXML;
-import br.com.soapboxrace.xmpp.XmppSrv;
+import br.com.soapboxrace.openfire.OpenFireSoapBoxCli;
 
 public class HttpSrv extends GzipHandler {
 
@@ -96,15 +96,14 @@ public class HttpSrv extends GzipHandler {
 
 	public static void main(String[] args) {
 		System.setProperty("jsse.enableCBCProtection", "false");
-
 		if (args.length > 0) {
 			Session.setXmppIp(args[0]);
 			if (args.length > 1) {
 				Session.setUdpIp(args[1]);
 			}
 		}
+		OpenFireSoapBoxCli.getInstance();
 		new ConnectionDB();
-		new XmppSrv();
 		try {
 			Server server = new Server(1337);
 			server.setHandler(new HttpSrv());
