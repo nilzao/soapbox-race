@@ -16,11 +16,11 @@ public class AccoladesType {
 	protected FinalRewardsType finalRewards;
 	@XmlElement(name = "HasLeveledUp", required = true)
 	protected Boolean hasLeveledUp;
-	@XmlElement(name = "LuckyDrawInfo", required = true)
+	@XmlElement(name = "LuckyDrawInfo", required = true, nillable = true)
 	protected LuckyDrawInfoType luckyDrawInfo;
 	@XmlElement(name = "OriginalRewards", required = true)
 	protected OriginalRewardsType originalRewards = new OriginalRewardsType();
-	@XmlElement(name = "RewardPart", type = RewardPartType.class, required = true)
+	@XmlElement(name = "RewardPart", type = RewardPartType.class, required = true, nillable = true)
 	@XmlElementWrapper(name = "RewardInfo")
 	protected List<RewardPartType> rewardInfo;
 
