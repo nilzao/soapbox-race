@@ -11,7 +11,6 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "ResponseTypeLobbyInvite", propOrder = { "lobbyInvite" })
 @XmlRootElement(name = "response")
 public class ResponseTypeLobbyInvite {
-
 	@XmlElement(name = "LobbyInvite", required = true)
 	protected LobbyInviteType lobbyInvite;
 	@XmlAttribute(name = "status")
@@ -42,5 +41,4 @@ public class ResponseTypeLobbyInvite {
 	public void setTicket(int ticket) {
 		this.ticket = ticket;
 	}
-
 }

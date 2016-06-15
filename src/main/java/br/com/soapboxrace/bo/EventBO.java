@@ -24,6 +24,7 @@ import br.com.soapboxrace.jpa.EventDataEntity;
 import br.com.soapboxrace.jpa.OwnedCarEntity;
 import br.com.soapboxrace.jpa.PersonaEntity;
 import br.com.soapboxrace.xmpp.XmppSrv;
+import br.com.soapboxrace.xmpp.jaxb.MessageType;
 import br.com.soapboxrace.xmpp.jaxb.ResponseTypeEntrantResult;
 import br.com.soapboxrace.xmpp.jaxb.RouteEntrantResultTypeXmpp;
 
@@ -116,7 +117,19 @@ public class EventBO {
 			routeEventResult.setAccolades(accolades);
 			routeEventResult.setDurability(newCarDurability);
 			routeEventResult.setEventId(eventDataEntity.getEventId());
-			routeEventResult.setEventSessionId(eventSessionId);
+			routeEventResult.setEventSessionId(eventSessionId);			
+
+			RouteEntrantResultTypeXmpp xmppResult = new RouteEntrantResultTypeXmpp();
+			xmppResult.setBestLapDurationInMilliseconds(routeArbitrationPacket.getBestLapDurationInMilliseconds());
+			xmppResult.setEventDurationInMilliseconds(routeArbitrationPacket.getEventDurationInMilliseconds());
+			xmppResult.setEventSessionId(eventSessionId);
+			xmppResult.setFinishReason(routeArbitrationPacket.getFinishReason());
+			xmppResult.setPersonaId(personaId);
+			xmppResult.setRanking(routeArbitrationPacket.getRank());
+			xmppResult.setTopSpeed(routeArbitrationPacket.getTopSpeed());
+			
+			ResponseTypeEntrantResult entrantResultResponse = new ResponseTypeEntrantResult();
+			entrantResultResponse.setRouteEntrantResult(xmppResult);
 			
 			List<RouteEntrantResultType> entrants = new ArrayList<RouteEntrantResultType>();
 			for (EventDataEntity racer : eventDataDao.getRacers(eventSessionId)) {
@@ -129,20 +142,13 @@ public class EventBO {
 				routeEntrantResult.setRanking(racer.getRank());
 				routeEntrantResult.setTopSpeed(racer.getTopSpeed());
 				
-				if (racer.getEventDurationInMS() == 0L && racer.getPersonaId() != personaId && racer.getPersonaId() > 10) {
-					RouteEntrantResultTypeXmpp xmppResult = new RouteEntrantResultTypeXmpp();
-					xmppResult.setBestLapDurationInMilliseconds(routeArbitrationPacket.getBestLapDurationInMilliseconds());
-					xmppResult.setEventDurationInMilliseconds(routeArbitrationPacket.getEventDurationInMilliseconds());
-					xmppResult.setEventSessionId(eventSessionId);
-					xmppResult.setFinishReason(routeArbitrationPacket.getFinishReason());
-					xmppResult.setPersonaId(personaId);
-					xmppResult.setRanking(routeArbitrationPacket.getRank());
-					xmppResult.setTopSpeed(routeArbitrationPacket.getTopSpeed());
-					
-					ResponseTypeEntrantResult entrantResultResponse = new ResponseTypeEntrantResult();
-					entrantResultResponse.setRouteEntrantResult(xmppResult);
-					XmppSrv.get(racer.getPersonaId()).write(MarshalXML.marshal(entrantResultResponse));
+				if (racer.getEventDurationInMS() == 0L && racer.getPersonaId() != personaId && racer.getPersonaId() > 10) {					
+					MessageType message = new MessageType();
+					message.setToPersonaId(racer.getPersonaId());
+					message.setBody(entrantResultResponse);
+					XmppSrv.get(racer.getPersonaId()).write(MarshalXML.marshal(message));
 				}
+				entrants.add(routeEntrantResult);
 			}
 			routeEventResult.setEntrants(entrants);
 			

@@ -14,7 +14,6 @@ import br.com.soapboxrace.jaxb.util.MarshalXML;
 @XmlType(name = "MessageType", propOrder = { "body", "subject" })
 @XmlRootElement(name = "message")
 public class MessageType {
-
 	@XmlElement(required = true)
 	protected String body;
 	protected int subject = 1;

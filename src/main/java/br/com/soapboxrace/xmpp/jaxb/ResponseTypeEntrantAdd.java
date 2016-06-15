@@ -10,10 +10,9 @@ import javax.xml.bind.annotation.XmlType;
 import br.com.soapboxrace.jpa.LobbyEntrantEntity;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "responseType", propOrder = { "lobbyInvite" })
+@XmlType(name = "ResponseTypeEntrantAdd", propOrder = { "lobbyInvite" })
 @XmlRootElement(name = "response")
 public class ResponseTypeEntrantAdd {
-
 	@XmlElement(name = "LobbyEntrantAdded", required = true)
 	protected LobbyEntrantEntity lobbyInvite;
 	@XmlAttribute(name = "status")
@@ -44,5 +43,4 @@ public class ResponseTypeEntrantAdd {
 	public void setTicket(int ticket) {
 		this.ticket = ticket;
 	}
-
 }
