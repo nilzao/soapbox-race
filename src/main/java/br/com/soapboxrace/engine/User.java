@@ -4,6 +4,7 @@ import br.com.soapboxrace.bo.UserBO;
 import br.com.soapboxrace.definition.ServerExceptions.EngineException;
 import br.com.soapboxrace.jaxb.UserInfoType;
 import br.com.soapboxrace.jaxb.util.MarshalXML;
+import br.com.soapboxrace.openfire.RestApiCli;
 
 public class User extends Router {
 
@@ -28,6 +29,7 @@ public class User extends Router {
 	public String secureLoginPersona() throws EngineException {
 		checkSecurityToken();
 		setSessionEntry("PersonaId", Long.valueOf(getParam("personaId")));
+		RestApiCli.createUpdatePersona(Long.valueOf(getParam("personaId")), "1234567890123456");
 		return "";
 	}
 
