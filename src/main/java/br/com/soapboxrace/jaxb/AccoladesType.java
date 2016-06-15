@@ -1,64 +1,66 @@
 package br.com.soapboxrace.jaxb;
 
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "AccoladesType", propOrder = { "finalRewards", "hasLeveledUp", "luckyDrawInfo", "originalRewards",
 		"rewardInfo" })
 public class AccoladesType {
-
 	@XmlElement(name = "FinalRewards", required = true)
 	protected FinalRewardsType finalRewards;
 	@XmlElement(name = "HasLeveledUp", required = true)
-	protected String hasLeveledUp;
+	protected Boolean hasLeveledUp;
 	@XmlElement(name = "LuckyDrawInfo", required = true)
-	protected String luckyDrawInfo;
+	protected LuckyDrawInfoType luckyDrawInfo;
 	@XmlElement(name = "OriginalRewards", required = true)
-	protected OriginalRewardsType originalRewards;
-	@XmlElement(name = "RewardInfo", required = true)
-	protected String rewardInfo;
+	protected OriginalRewardsType originalRewards = new OriginalRewardsType();
+	@XmlElement(name = "RewardPart", type = RewardPartType.class, required = true)
+	@XmlElementWrapper(name = "RewardInfo")
+	protected List<RewardPartType> rewardInfo;
 
 	public FinalRewardsType getFinalRewards() {
 		return finalRewards;
 	}
 
-	public void setFinalRewards(FinalRewardsType value) {
-		this.finalRewards = value;
+	public void setFinalRewards(FinalRewardsType finalRewards) {
+		this.finalRewards = finalRewards;
 	}
 
-	public String getHasLeveledUp() {
+	public Boolean getHasLeveledUp() {
 		return hasLeveledUp;
 	}
 
-	public void setHasLeveledUp(String value) {
-		this.hasLeveledUp = value;
+	public void setHasLeveledUp(Boolean hasLeveledUp) {
+		this.hasLeveledUp = hasLeveledUp;
 	}
 
-	public String getLuckyDrawInfo() {
+	public LuckyDrawInfoType getLuckyDrawInfo() {
 		return luckyDrawInfo;
 	}
 
-	public void setLuckyDrawInfo(String value) {
-		this.luckyDrawInfo = value;
+	public void setLuckyDrawInfo(LuckyDrawInfoType luckyDrawInfo) {
+		this.luckyDrawInfo = luckyDrawInfo;
 	}
 
 	public OriginalRewardsType getOriginalRewards() {
 		return originalRewards;
 	}
 
-	public void setOriginalRewards(OriginalRewardsType value) {
-		this.originalRewards = value;
+	public void setOriginalRewards(OriginalRewardsType originalRewards) {
+		this.originalRewards = originalRewards;
 	}
 
-	public String getRewardInfo() {
+	public List<RewardPartType> getRewardInfo() {
 		return rewardInfo;
 	}
 
-	public void setRewardInfo(String value) {
-		this.rewardInfo = value;
+	public void setRewardInfo(List<RewardPartType> rewardInfo) {
+		this.rewardInfo = rewardInfo;
 	}
-
 }

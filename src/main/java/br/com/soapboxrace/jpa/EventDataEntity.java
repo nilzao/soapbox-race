@@ -16,8 +16,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "EVENTDATA")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class EventDataEntity implements ISoapBoxEntity {
-
-	private static final long serialVersionUID = -261637507273450837L;
+	private static final long serialVersionUID = 3936406387007347425L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,11 +40,11 @@ public class EventDataEntity implements ISoapBoxEntity {
 	@Column(name = "bestLapTimeInMS")
 	private Long bestLapTimeInMS;
 	@Column(name = "topSpeed")
-	private Integer topSpeed;
+	private Float topSpeed;
 
 	@XmlTransient
 	@ManyToOne
-	@JoinColumn(name = "eventId", referencedColumnName = "eventId")
+	@JoinColumn(name = "eventId", referencedColumnName = "eventId", insertable = false, updatable = false)
 	private EventDefinitionEntity eventDefinition;
 
 	public void setId(Long id) {
@@ -120,11 +119,11 @@ public class EventDataEntity implements ISoapBoxEntity {
 		this.bestLapTimeInMS = bestLapTimeInMS;
 	}
 
-	public Integer getTopSpeed() {
+	public Float getTopSpeed() {
 		return topSpeed;
 	}
 
-	public void setTopSpeed(Integer topSpeed) {
+	public void setTopSpeed(Float topSpeed) {
 		this.topSpeed = topSpeed;
 	}
 
