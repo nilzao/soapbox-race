@@ -68,12 +68,13 @@ CREATE TABLE SOAPBOX.EVENTDEFINITION (
 CREATE TABLE SOAPBOX.EVENTDATA (
 	sessionId bigint NOT NULL DEFAULT 0,
 	eventId bigint NOT NULL,
+    eventLaunched boolean NOT NULL,
 	personaId bigint NOT NULL,
 	carId bigint NOT NULL,
 	finishReason int NOT NULL,
 	rank smallint NOT NULL,
 	eventDurationInMS bigint NOT NULL,
-	bestLapTimeInMS bigint NOT NULL,
+	bestLapTimeInMS bigint,
 	topSpeed int NOT NULL,
 	PRIMARY KEY (sessionId),
     INDEX FKj264c6h4qbwmdsnyrfk2g34hu (eventId)

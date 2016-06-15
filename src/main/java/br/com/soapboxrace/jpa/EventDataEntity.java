@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "EVENTDATA")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class EventDataEntity implements ISoapBoxEntity {
-	
+
 	private static final long serialVersionUID = -261637507273450837L;
 
 	@Id
@@ -26,6 +26,8 @@ public class EventDataEntity implements ISoapBoxEntity {
 
 	@Column(name = "eventId")
 	private Long eventId;
+	@Column(name = "eventLaunched")
+	private Boolean eventLaunched;
 	@Column(name = "personaId")
 	private Long personaId;
 	@Column(name = "carId")
@@ -60,6 +62,14 @@ public class EventDataEntity implements ISoapBoxEntity {
 
 	public void setEventId(Long eventId) {
 		this.eventId = eventId;
+	}
+
+	public Boolean getEventLaunched() {
+		return eventLaunched;
+	}
+
+	public void setEventLaunched(Boolean eventLaunched) {
+		this.eventLaunched = eventLaunched;
 	}
 
 	public Long getPersonaId() {
