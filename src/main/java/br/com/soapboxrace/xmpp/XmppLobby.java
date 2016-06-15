@@ -10,7 +10,7 @@ import br.com.soapboxrace.xmpp.jaxb.LobbyInviteType;
 import br.com.soapboxrace.xmpp.jaxb.LobbyLaunchedType;
 import br.com.soapboxrace.xmpp.jaxb.MessageType;
 import br.com.soapboxrace.xmpp.jaxb.P2PCryptoTicketType;
-import br.com.soapboxrace.xmpp.jaxb.ResponseType;
+import br.com.soapboxrace.xmpp.jaxb.ResponseTypeLobbyInvite;
 import br.com.soapboxrace.xmpp.jaxb.ResponseTypeEntrantAdd;
 import br.com.soapboxrace.xmpp.jaxb.ResponseTypeLobbyLaunched;
 
@@ -23,7 +23,7 @@ public class XmppLobby {
 	}
 
 	public void joinQueueEvent(LobbyInviteType lobbyInviteType) {
-		ResponseType responseType = new ResponseType();
+		ResponseTypeLobbyInvite responseType = new ResponseTypeLobbyInvite();
 		responseType.setLobbyInvite(lobbyInviteType);
 		MessageType messageType = new MessageType();
 		messageType.setToPersonaId(personaId);

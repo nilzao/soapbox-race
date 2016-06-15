@@ -7,10 +7,11 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import br.com.soapboxrace.engine.Session;
 import br.com.soapboxrace.jaxb.util.MarshalXML;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "messageType", propOrder = { "body", "subject" })
+@XmlType(name = "MessageType", propOrder = { "body", "subject" })
 @XmlRootElement(name = "message")
 public class MessageType {
 
@@ -18,7 +19,7 @@ public class MessageType {
 	protected String body;
 	protected int subject = 1;
 	@XmlAttribute(name = "from")
-	protected String from = "nfsw.engine.engine7.victoryworker.0@127.0.0.1/EA_Chat";
+	protected String from = "nfsw.engine.engine7.victoryworker.0@" + Session.getXmppIp() + "/EA_Chat";
 	@XmlAttribute(name = "id")
 	protected String id = "JN_1234567";
 	@XmlAttribute(name = "to")

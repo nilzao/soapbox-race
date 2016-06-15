@@ -8,9 +8,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "responseType", propOrder = { "lobbyInvite" })
+@XmlType(name = "ResponseTypeLobbyInvite", propOrder = { "lobbyInvite" })
 @XmlRootElement(name = "response")
-public class ResponseType {
+public class ResponseTypeLobbyInvite {
 
 	@XmlElement(name = "LobbyInvite", required = true)
 	protected LobbyInviteType lobbyInvite;
