@@ -10,16 +10,14 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "BasketTransType", propOrder = { "items" })
 @XmlRootElement(name = "BasketTrans")
 public class BasketTransType {
-
 	@XmlElement(name = "Items", required = true)
-	protected ItemsType items;
+	private BasketItemsType basketItems;
 
-	public ItemsType getItems() {
-		return items;
+	public BasketItemsType getBasketItems() {
+		return basketItems;
 	}
 
-	public void setItems(ItemsType value) {
-		this.items = value;
+	public void setBasketItems(BasketItemsType basketItems) {
+		this.basketItems = basketItems;
 	}
-
 }
