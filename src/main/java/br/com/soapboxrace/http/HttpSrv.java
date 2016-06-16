@@ -97,10 +97,14 @@ public class HttpSrv extends GzipHandler {
 
 	public static void main(String[] args) {
 		System.setProperty("jsse.enableCBCProtection", "false");
-		if (args.length > 0) {
-			Session.setXmppIp(args[0]);
-			if (args.length > 1) {
-				Session.setUdpIp(args[1]);
+		if (args.length == 0) {
+			System.err.println("OpenFire Auth Token missing");
+		}
+		RestApiCli.setOpenFireAuthToken(args[0]);
+		if (args.length > 1) {
+			Session.setXmppIp(args[1]);
+			if (args.length > 2) {
+				Session.setUdpIp(args[2]);
 			}
 		}
 		RestApiCli.createUpdateUser("nfsw.engine.engine", "1234567890123456");
