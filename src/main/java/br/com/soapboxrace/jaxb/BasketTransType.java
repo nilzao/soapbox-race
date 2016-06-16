@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "BasketTransType", propOrder = { "items" })
+@XmlType(name = "BasketTransType", propOrder = { "basketItems" })
 @XmlRootElement(name = "BasketTrans")
 public class BasketTransType {
 	@XmlElement(name = "Items", required = true)
