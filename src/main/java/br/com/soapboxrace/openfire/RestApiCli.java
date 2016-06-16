@@ -6,10 +6,45 @@ import org.igniterealtime.restclient.entity.UserEntity;
 
 public class RestApiCli {
 
+	private static String openFireIp = "127.0.0.1";
+
+	private static int openFireRestPort = 9090;
+
+	private static String openFireAuthToken = "y0gs2EUWSakiz1q5";
+
 	public static void createUpdatePersona(Long personaId, String password) {
-		AuthenticationToken authenticationToken = new AuthenticationToken("y0gs2EUWSakiz1q5");
-		RestApiClient restApiClient = new RestApiClient("http://localhost", 9090, authenticationToken);
-		UserEntity userEntity = new UserEntity("nfsw." + personaId.toString(), null, null, password);
+		createUpdateUser("nfsw." + personaId.toString(), password);
+	}
+
+	public static void createUpdateUser(String user, String password) {
+		AuthenticationToken authenticationToken = new AuthenticationToken(openFireAuthToken);
+		RestApiClient restApiClient = new RestApiClient(openFireIp, openFireRestPort, authenticationToken);
+		UserEntity userEntity = new UserEntity(user, null, null, password);
 		restApiClient.createUser(userEntity);
 	}
+
+	public static String getOpenFireIp() {
+		return openFireIp;
+	}
+
+	public static void setOpenFireIp(String openFireIp) {
+		RestApiCli.openFireIp = openFireIp;
+	}
+
+	public static int getOpenFireRestPort() {
+		return openFireRestPort;
+	}
+
+	public static void setOpenFireRestPort(int openFireRestPort) {
+		RestApiCli.openFireRestPort = openFireRestPort;
+	}
+
+	public static String getOpenFireAuthToken() {
+		return openFireAuthToken;
+	}
+
+	public static void setOpenFireAuthToken(String openFireAuthToken) {
+		RestApiCli.openFireAuthToken = openFireAuthToken;
+	}
+
 }

@@ -18,6 +18,7 @@ import br.com.soapboxrace.engine.Session;
 import br.com.soapboxrace.jaxb.EngineExceptionTrans;
 import br.com.soapboxrace.jaxb.util.MarshalXML;
 import br.com.soapboxrace.openfire.OpenFireSoapBoxCli;
+import br.com.soapboxrace.openfire.RestApiCli;
 
 public class HttpSrv extends GzipHandler {
 
@@ -102,6 +103,7 @@ public class HttpSrv extends GzipHandler {
 				Session.setUdpIp(args[1]);
 			}
 		}
+		RestApiCli.createUpdateUser("nfsw.engine.engine", "1234567890123456");
 		OpenFireSoapBoxCli.getInstance();
 		new ConnectionDB();
 		try {
