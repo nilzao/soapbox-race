@@ -20,12 +20,12 @@ public class DriverPersona extends Router {
 
 	private Long getPersonaId(boolean isBypass) throws PersonaIdMismatchException {
 		String personaIdStr = getParam("personaId");
-		Long idPersona = Long.valueOf(personaIdStr);
-		if (((idPersona.equals(getLoggedPersonaId()) || getLoggedPersonaId() == -1L)) || isBypass)
+		Long personaId = Long.valueOf(personaIdStr);
+		if (((personaId.equals(getLoggedPersonaId()) || getLoggedPersonaId() == -1L)) || isBypass)
 			if (getUserId() != -1L && !getSecurityToken().isEmpty()
 					&& Router.activeUsers.get(getUserId()).getSecurityToken().equals(getSecurityToken()))
-				return idPersona;
-		throw new ServerExceptions.PersonaIdMismatchException(getLoggedPersonaId(), idPersona);
+				return personaId;
+		throw new ServerExceptions.PersonaIdMismatchException(getLoggedPersonaId(), personaId);
 	}
 	
 	private long getPersonaId() throws PersonaIdMismatchException {

@@ -9,11 +9,15 @@ public class Event extends Router {
 	private EventBO eventBO = new EventBO();
 
 	public String launched() {
-		return "";
+		Long eventSessionId = Long.valueOf(getParam("eventSessionId"));
+		setSessionEntry("EventSessionId", eventSessionId);
+		return eventBO.launched(getUserId(), eventSessionId);
 	}
 
 	public String arbitration() {
-		PursuitEventResultType arbitration = eventBO.arbitration(getLoggedPersonaId(), "");
+		Object arbitration = eventBO.arbitration(getUserId(), readInputStream());
+		if (arbitration == null) return "";
+		setSessionEntry("EventSessionId", 0L);
 		return MarshalXML.marshal(arbitration);
 	}
 

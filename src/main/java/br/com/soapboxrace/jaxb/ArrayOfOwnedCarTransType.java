@@ -11,10 +11,9 @@ import javax.xml.bind.annotation.XmlType;
 import br.com.soapboxrace.jpa.OwnedCarEntity;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ArrayOfOwnedCarTrans")
+@XmlType(name = "ArrayOfOwnedCarTransType")
 @XmlRootElement(name = "ArrayOfOwnedCarTrans")
-public class ArrayOfOwnedCarTrans {
-
+public class ArrayOfOwnedCarTransType {
 	@XmlElement(name = "OwnedCarTrans")
 	protected List<OwnedCarEntity> ownedCarTransList;
 

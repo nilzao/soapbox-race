@@ -3,13 +3,14 @@ package br.com.soapboxrace.xmpp.jaxb;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "RouteEntrantResultType", propOrder = { "eventDurationInMilliseconds", "eventSessionId", "finishReason",
+@XmlType(name = "RouteEntrantResultTypeXmpp", propOrder = { "eventDurationInMilliseconds", "eventSessionId", "finishReason",
 		"personaId", "ranking", "bestLapDurationInMilliseconds", "topSpeed" })
-public class RouteEntrantResultType {
-
+@XmlRootElement(name = "RouteEntrantResult")
+public class RouteEntrantResultTypeXmpp {
 	@XmlElement(name = "EventDurationInMilliseconds")
 	protected long eventDurationInMilliseconds;
 	@XmlElement(name = "EventSessionId")

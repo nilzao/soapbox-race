@@ -8,26 +8,24 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "OriginalRewardsType", propOrder = { "rep", "tokens" })
 public class OriginalRewardsType {
+	@XmlElement(name = "Rep", defaultValue = "0", required = true)
+	private Integer rep = 0;
+	@XmlElement(name = "Tokens", defaultValue = "0", required = true)
+	private Integer tokens;
 
-	@XmlElement(name = "Rep")
-	protected int rep;
-	@XmlElement(name = "Tokens")
-	protected int tokens;
-
-	public int getRep() {
+	public Integer getRep() {
 		return rep;
 	}
 
-	public void setRep(int value) {
-		this.rep = value;
+	public void setRep(Integer rep) {
+		this.rep = rep;
 	}
 
-	public int getTokens() {
+	public Integer getTokens() {
 		return tokens;
 	}
 
-	public void setTokens(int value) {
-		this.tokens = value;
+	public void setTokens(Integer tokens) {
+		this.tokens = tokens;
 	}
-
 }
