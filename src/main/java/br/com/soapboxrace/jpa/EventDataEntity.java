@@ -16,18 +16,22 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "EVENTDATA")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class EventDataEntity implements ISoapBoxEntity {
-	private static final long serialVersionUID = 3936406387007347425L;
+	private static final long serialVersionUID = 1296921022141294333L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "eventSessionId", nullable = false)
+	@Column(name = "id", nullable = false)
 	private Long id;
 
-	@Column(name = "eventId")
+	@Column(name = "eventId", nullable = false)
 	private Long eventId;
+	@Column(name = "eventSessionId", nullable = false)
+	private Long eventSessionId;
 	@Column(name = "eventLaunched")
 	private Boolean eventLaunched;
-	@Column(name = "personaId")
+	@Column(name = "isSinglePlayer")
+	private Boolean isSinglePlayer;
+	@Column(name = "personaId", nullable = false)
 	private Long personaId;
 	@Column(name = "carId")
 	private Long carId;
@@ -47,12 +51,12 @@ public class EventDataEntity implements ISoapBoxEntity {
 	@JoinColumn(name = "eventId", referencedColumnName = "eventId", insertable = false, updatable = false)
 	private EventDefinitionEntity eventDefinition;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	public Long getId() {
 		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Long getEventId() {
@@ -63,12 +67,28 @@ public class EventDataEntity implements ISoapBoxEntity {
 		this.eventId = eventId;
 	}
 
+	public Long getEventSessionId() {
+		return eventSessionId;
+	}
+
+	public void setEventSessionId(Long eventSessionId) {
+		this.eventSessionId = eventSessionId;
+	}
+
 	public Boolean getEventLaunched() {
 		return eventLaunched;
 	}
 
 	public void setEventLaunched(Boolean eventLaunched) {
 		this.eventLaunched = eventLaunched;
+	}
+
+	public Boolean getIsSinglePlayer() {
+		return isSinglePlayer;
+	}
+
+	public void setIsSinglePlayer(Boolean isSinglePlayer) {
+		this.isSinglePlayer = isSinglePlayer;
 	}
 
 	public Long getPersonaId() {

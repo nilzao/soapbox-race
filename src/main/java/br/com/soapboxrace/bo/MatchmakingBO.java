@@ -22,8 +22,8 @@ import br.com.soapboxrace.jpa.EventDefinitionEntity;
 import br.com.soapboxrace.jpa.LobbyEntity;
 import br.com.soapboxrace.jpa.LobbyEntrantEntity;
 import br.com.soapboxrace.jpa.PersonaEntity;
-import br.com.soapboxrace.xmpp.XmppEventLobby;
 import br.com.soapboxrace.xmpp.XmppChatLobbies;
+import br.com.soapboxrace.xmpp.XmppEventLobby;
 import br.com.soapboxrace.xmpp.XmppLobby;
 import br.com.soapboxrace.xmpp.XmppSrv;
 import br.com.soapboxrace.xmpp.XmppTalk;
@@ -45,14 +45,16 @@ public class MatchmakingBO {
 		challengeType.setPattern("FFFFFFFFFFFFFFFF");
 		challengeType.setLeftSize(14);
 		challengeType.setRightSize(50);
-		
+
 		EventDataEntity eventDataEntity = new EventDataEntity();
 		eventDataEntity.setEventId(eventId);
+		eventDataEntity.setEventSessionId(eventDataDao.getNextSessionId());
+		eventDataEntity.setIsSinglePlayer(true);
 		eventDataEntity.setPersonaId(personaId);
-		eventDataEntity = eventDataDao.save(eventDataEntity);
+		eventDataDao.save(eventDataEntity);
 
 		SessionInfoType sessionInfoType = new SessionInfoType();
-		sessionInfoType.setSessionId(eventDataEntity.getId());
+		sessionInfoType.setSessionId(eventDataEntity.getEventSessionId());
 		sessionInfoType.setEventId(eventId);
 		sessionInfoType.setChallenge(challengeType);
 		return sessionInfoType;
@@ -66,7 +68,7 @@ public class MatchmakingBO {
 	public void joinqueueevent(Long personaId, Long eventId) {
 		PersonaEntity personaEntity = personaDao.findById(personaId);
 		Date now = new Date();
-		Date past = new Date(now.getTime() - 45000);
+		Date past = new Date(now.getTime() - 35000);
 		List<LobbyEntity> lobbys = lobbyDao.findByEventStarted(eventId, now, past);
 
 		if (lobbys.size() == 0) {
@@ -213,6 +215,7 @@ public class MatchmakingBO {
 		private Long lobbyId;
 
 		private LobbyDao lobbyDao = new LobbyDao();
+		private EventDataDao eventDataDao = new EventDataDao();
 
 		public LobbyCountDown(Long lobbyId) {
 			this.lobbyId = lobbyId;
@@ -220,11 +223,11 @@ public class MatchmakingBO {
 
 		public void run() {
 			try {
-				Thread.sleep(60000);
+				Thread.sleep(30000);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
-			Long eventSessionId = Session.getNextMpSessionId();
+			Long eventSessionId = eventDataDao.getNextSessionId();
 			LobbyEntity lobbyEntity = lobbyDao.findById(lobbyId);
 			List<LobbyEntrantEntity> entrants = lobbyEntity.getEntrants();
 			LobbyLaunchedType lobbyLaunched = new LobbyLaunchedType();
@@ -235,6 +238,12 @@ public class MatchmakingBO {
 			int i = 0;
 			byte numOfRacers = (byte) entrants.size();
 			for (LobbyEntrantEntity lobbyEntrantEntity : entrants) {
+				EventDataEntity eventDataEntity = new EventDataEntity();
+				eventDataEntity.setEventId(lobbyEntity.getEvent().getId());
+				eventDataEntity.setEventSessionId(eventSessionId);
+				eventDataEntity.setIsSinglePlayer(false);
+				eventDataEntity.setPersonaId(lobbyEntrantEntity.getPersona().getId());
+				eventDataDao.save(eventDataEntity);
 				byte gridIndex = (byte) i;
 				byte[] helloPacket = { 10, 11, 12, 13 };
 				int sessionId = eventSessionId.intValue();

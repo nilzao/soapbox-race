@@ -66,17 +66,19 @@ CREATE TABLE SOAPBOX.EVENTDEFINITION (
 )  ENGINE=INNODB;
 
 CREATE TABLE SOAPBOX.EVENTDATA (
-	eventSessionId bigint NOT NULL DEFAULT 0,
-	eventId bigint NOT NULL,
+	id bigint NOT NULL AUTO_INCREMENT,
+	eventId bigint,
+	eventSessionId bigint,
     eventLaunched boolean,
-	personaId bigint NOT NULL,
+    isSinglePlayer boolean,
+	personaId bigint,
 	carId bigint,
 	finishReason int,
 	rank smallint,
 	eventDurationInMS bigint,
 	bestLapTimeInMS bigint,
 	topSpeed float,
-	PRIMARY KEY (eventSessionId),
+	PRIMARY KEY (id),
     INDEX FKj264c6h4qbwmdsnyrfk2g34hu (eventId)
 ) ENGINE=InnoDB;
 
@@ -304,6 +306,7 @@ INSERT INTO SOAPBOX.EVENTDEFINITION (EVENTID, CARCLASSHASH, COINS, ENGAGEPOINTX,
 INSERT INTO SOAPBOX.EVENTDEFINITION (EVENTID, CARCLASSHASH, COINS, ENGAGEPOINTX, ENGAGEPOINTY, ENGAGEPOINTZ, EVENTLOCALIZATION, EVENTMODEDESCRIPTIONLOCALIZATION, EVENTMODEICON, EVENTMODEID, EVENTMODELOCALIZATION, ISENABLED, ISLOCKED, LAPS, LENGTH, MAXCLASSRATING, MAXENTRANTS, MAXLEVEL, MINCLASSRATING, MINENTRANTS, MINLEVEL, REGIONLOCALIZATION, REWARDMODE1, REWARDMODE2, REWARDMODE3, TIMELIMIT, TRACKLAYOUTMAP, TRACKLOCALIZATION) VALUES (533, 607077938, 0, 3951.64306640625, -1162.6500244140625, 17.851560592651367, 953955471, 1204604434, 'GameModeIcon_Sprint', 9, -1152300457, 'true', 'false', 0, 0, 999, 6, 60, 0, 2, 2, 0, 1, 2, 3, 0, 'ReverseTrack06', 0);
 
 create index basketdefinition_index on SOAPBOX.BASKETDEFINITION(productId) using HASH;
+create index eventdata_index on SOAPBOX.EVENTDATA(eventId, eventSessionId, isSinglePlayer, personaId) using HASH;
 create index eventdefinition_index on SOAPBOX.EVENTDEFINITION(eventId, carClassHash, isEnabled, isLocked, minClassRating, minLevel) using HASH;
 create index persona_index on SOAPBOX.PERSONA(userid, name) using HASH;
 create index user_index on SOAPBOX.USER(email, password) using HASH;

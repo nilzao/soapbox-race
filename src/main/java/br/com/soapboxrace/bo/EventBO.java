@@ -24,8 +24,10 @@ import br.com.soapboxrace.jpa.EventDataEntity;
 import br.com.soapboxrace.jpa.OwnedCarEntity;
 import br.com.soapboxrace.jpa.PersonaEntity;
 import br.com.soapboxrace.xmpp.XmppSrv;
+import br.com.soapboxrace.xmpp.jaxb.EventTimingOutType;
 import br.com.soapboxrace.xmpp.jaxb.MessageType;
 import br.com.soapboxrace.xmpp.jaxb.ResponseTypeEntrantResult;
+import br.com.soapboxrace.xmpp.jaxb.ResponseTypeEventTimingOut;
 import br.com.soapboxrace.xmpp.jaxb.RouteEntrantResultTypeXmpp;
 
 public class EventBO {
@@ -35,8 +37,9 @@ public class EventBO {
 	private EventDataDao eventDataDao = new EventDataDao();
 
 	public String launched(Long userId, Long eventSessionId) {
-		Router.getHttpSessionVo(userId).getAlternateEventTimer().start();
-		EventDataEntity eventDataEntity = eventDataDao.findById(eventSessionId);
+		//Router.getHttpSessionVo(userId).getAlternateEventTimer().start();
+		Long personaId = Router.getHttpSessionVo(userId).getPersonaId();
+		EventDataEntity eventDataEntity = eventDataDao.findByEventSessionIdAndPersonaId(eventSessionId, personaId);
 		eventDataEntity.setBestLapTimeInMS(0L);
 		eventDataEntity.setEventDurationInMS(0L);
 		eventDataEntity.setEventLaunched(true);
@@ -56,7 +59,7 @@ public class EventBO {
 		Long eventSessionId = httpSessionVo.getEventSessionId();
 		Long personaId = httpSessionVo.getPersonaId();
 		
-		EventDataEntity eventDataEntity = eventDataDao.findById(eventSessionId);
+		EventDataEntity eventDataEntity = eventDataDao.findByEventSessionIdAndPersonaId(eventSessionId, personaId);
 		if (!eventDataEntity.getEventLaunched())
 			return null;
 
@@ -131,6 +134,13 @@ public class EventBO {
 			ResponseTypeEntrantResult entrantResultResponse = new ResponseTypeEntrantResult();
 			entrantResultResponse.setRouteEntrantResult(xmppResult);
 			
+			EventTimingOutType eventTimingOut = new EventTimingOutType();
+			eventTimingOut.setEventSessionId(eventSessionId);
+			ResponseTypeEventTimingOut eventTimingOutResponse = new ResponseTypeEventTimingOut();
+			eventTimingOutResponse.setEventTimingOut(eventTimingOut);
+			
+			Boolean isFirstPlace = routeArbitrationPacket.getRank() == 1;
+			
 			List<RouteEntrantResultType> entrants = new ArrayList<RouteEntrantResultType>();
 			for (EventDataEntity racer : eventDataDao.getRacers(eventSessionId)) {
 				RouteEntrantResultType routeEntrantResult = new RouteEntrantResultType();
@@ -147,6 +157,10 @@ public class EventBO {
 					message.setToPersonaId(racer.getPersonaId());
 					message.setBody(entrantResultResponse);
 					XmppSrv.get(racer.getPersonaId()).write(MarshalXML.marshal(message));
+					if (isFirstPlace) {
+						message.setBody(eventTimingOutResponse);
+						XmppSrv.get(racer.getPersonaId()).write(MarshalXML.marshal(message));
+					}
 				}
 				entrants.add(routeEntrantResult);
 			}

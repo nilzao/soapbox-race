@@ -46,7 +46,7 @@ public class DriverPersonaBO {
 		profileDataType.setName(personaEntity.getName());
 		profileDataType.setCash(personaEntity.getCash());
 		profileDataType.setIconIndex(personaEntity.getIconIndex());
-		profileDataType.setPersonaId(personaEntity.getId().intValue());
+		profileDataType.setPersonaId(personaEntity.getId());
 		profileDataType.setLevel(personaEntity.getLevel());
 		return profileDataType;
 	}

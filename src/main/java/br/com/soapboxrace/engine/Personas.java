@@ -3,7 +3,7 @@ package br.com.soapboxrace.engine;
 import br.com.soapboxrace.bo.PersonaBO;
 import br.com.soapboxrace.definition.ServerExceptions;
 import br.com.soapboxrace.definition.ServerExceptions.PersonaIdMismatchException;
-import br.com.soapboxrace.jaxb.ArrayOfOwnedCarTrans;
+import br.com.soapboxrace.jaxb.ArrayOfOwnedCarTransType;
 import br.com.soapboxrace.jaxb.BasketTransType;
 import br.com.soapboxrace.jaxb.CarSlotInfoTrans;
 import br.com.soapboxrace.jaxb.CommerceResultTransType;
@@ -232,7 +232,7 @@ public class Personas extends Router {
 	}
 
 	public String cars() throws PersonaIdMismatchException {
-		if (getRequest().getMethod().equals("POST")) { //sell car
+		if (getRequest().getMethod().equals("POST")) { // sell car
 			String serialNumber = getParam("serialNumber");
 			if (serialNumber != null) {
 				Long personaId = getPersonaId();
@@ -240,9 +240,9 @@ public class Personas extends Router {
 				OwnedCarEntity defaultCar = personaBO.sellCar(personaId, carId);
 				return MarshalXML.marshal(defaultCar);
 			}
-		} else { //get cars
+		} else { // get cars
 			Long personaId = getPersonaId(true);
-			ArrayOfOwnedCarTrans arrayofOwnedCarTrans = personaBO.getCars(personaId);
+			ArrayOfOwnedCarTransType arrayofOwnedCarTrans = personaBO.getCars(personaId);
 			return MarshalXML.marshal(arrayofOwnedCarTrans);
 		}
 		return "";
