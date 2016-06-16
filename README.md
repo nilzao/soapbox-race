@@ -5,9 +5,16 @@ Webserver to handle cars and pilots profiles.
 ##How to:
 My advice is to download Eclipse JavaEE, and after that download eGit Maven SCM profile from the Eclipse marketplace(both free). After importing the project from the SCM profile, build the server with the built-in maven using `clean compile assembly:single`.
 
-##Running the server is as simple as:
+##Running the server:
 
-    java -jar soapbox-race-version-jarname.jar Secret-key-auth-from-openfire ip-to-xmpp-host(optional) ip-to-udp-host(optional)
+- mysql db server running
+- openfire xmpp server running
+
+    java -jar soapbox-race-version-jarname.jar Secret-key-auth-from-openfire ip-to-openfire-xmpp-host(optional) ip-to-udp-host(optional)
+    
+example:
+
+    java -jar soapbox-race-1.0.jar y0gs2EUWSakiz1q5 192.168.0.33 192.168.0.33
 
 ##How to login
 
