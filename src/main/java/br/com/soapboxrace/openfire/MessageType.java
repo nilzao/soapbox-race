@@ -7,6 +7,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import br.com.soapboxrace.engine.Session;
+
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "messageType", propOrder = { "body", "subject" })
 @XmlRootElement(name = "message")
@@ -16,11 +18,15 @@ public class MessageType {
 	protected String body;
 	protected int subject = 1;
 	@XmlAttribute(name = "from")
-	protected String from = "nfsw.engine.engine@127.0.0.1";
+	protected String from = "";
 	@XmlAttribute(name = "id")
 	protected String id = "JN_1234567";
 	@XmlAttribute(name = "to")
 	protected String to;
+
+	public MessageType() {
+		from = "nfsw.engine.engine@" + Session.getXmppIp();
+	}
 
 	public String getBody() {
 		return body;
@@ -63,7 +69,7 @@ public class MessageType {
 	}
 
 	public void setToPersonaId(Long personaId) {
-		this.to = "nfsw." + personaId.toString() + "@127.0.0.1";
+		this.to = "nfsw." + personaId.toString() + "@" + Session.getXmppIp();
 	}
 
 }

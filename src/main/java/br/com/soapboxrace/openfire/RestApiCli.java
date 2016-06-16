@@ -4,9 +4,9 @@ import org.igniterealtime.restclient.RestApiClient;
 import org.igniterealtime.restclient.entity.AuthenticationToken;
 import org.igniterealtime.restclient.entity.UserEntity;
 
-public class RestApiCli {
+import br.com.soapboxrace.engine.Session;
 
-	private static String openFireIp = "127.0.0.1";
+public class RestApiCli {
 
 	private static int openFireRestPort = 9090;
 
@@ -18,17 +18,9 @@ public class RestApiCli {
 
 	public static void createUpdateUser(String user, String password) {
 		AuthenticationToken authenticationToken = new AuthenticationToken(openFireAuthToken);
-		RestApiClient restApiClient = new RestApiClient(openFireIp, openFireRestPort, authenticationToken);
+		RestApiClient restApiClient = new RestApiClient(Session.getXmppIp(), openFireRestPort, authenticationToken);
 		UserEntity userEntity = new UserEntity(user, null, null, password);
 		restApiClient.createUser(userEntity);
-	}
-
-	public static String getOpenFireIp() {
-		return openFireIp;
-	}
-
-	public static void setOpenFireIp(String openFireIp) {
-		RestApiCli.openFireIp = openFireIp;
 	}
 
 	public static int getOpenFireRestPort() {
