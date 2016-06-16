@@ -18,11 +18,11 @@ public class SocketClient {
 		while (!connected) {
 			try {
 				tries++;
-				System.out.println("Attempting to connect XMPPHost. #" + String.valueOf(tries));
+				System.out.println("Attempting to connect OpenFire XMPP Host. #" + String.valueOf(tries));
 				socket = new Socket(srvAddress, port);
 				out = new PrintWriter(this.socket.getOutputStream(), true);
 				in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-				System.out.println("Connected to XMPPHost...");
+				System.out.println("Connected to OpenFire XMPP Host...");
 				connected = true;
 				break;
 			} catch (Exception e) {
