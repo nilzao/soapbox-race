@@ -15,7 +15,7 @@ public class CountdownType {
 	@XmlElement(name = "IsWaiting", required = true)
 	protected boolean isWaiting = false;
 	@XmlElement(name = "LobbyCountdownInMilliseconds")
-	protected long lobbyCountdownInMilliseconds = 60000;
+	protected long lobbyCountdownInMilliseconds = 30000;
 	@XmlElement(name = "LobbyId")
 	protected long lobbyId = 12345678;
 	@XmlElement(name = "LobbyStuckDurationInMilliseconds")
