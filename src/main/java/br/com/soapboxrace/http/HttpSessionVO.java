@@ -3,7 +3,6 @@ package br.com.soapboxrace.http;
 import java.util.Date;
 
 public class HttpSessionVO {
-
 	private Long userId;
 	private Long personaId;
 	private Long eventSessionId;
@@ -11,6 +10,7 @@ public class HttpSessionVO {
 	private String relaySessionKey;
 	private Date expirationDate;
 	private String securityToken;
+	private Stopwatch alternateEventTimer = new Stopwatch();
 
 	public Long getUserId() {
 		return userId;
@@ -68,4 +68,29 @@ public class HttpSessionVO {
 		this.securityToken = securityToken;
 	}
 
+	public Stopwatch getAlternateEventTimer() {
+		return alternateEventTimer;
+	}
+
+	public void setAlternateEventTimer(Stopwatch alternateEventTimer) {
+		this.alternateEventTimer = alternateEventTimer;
+	}
+
+	public class Stopwatch {
+		public long startTime;
+		public long endTime;
+
+		public void start() {
+			startTime = System.currentTimeMillis();
+		}
+
+		public void stop() {
+			endTime = System.currentTimeMillis();
+		}
+
+		public long getElapsed() {
+			stop();
+			return endTime - startTime;
+		}
+	}
 }

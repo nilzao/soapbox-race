@@ -8,23 +8,23 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "responseType", propOrder = { "lobbyInvite" })
+@XmlType(name = "ResponseTypeEventTimingOut", propOrder = { "eventTimingOut" })
 @XmlRootElement(name = "response")
-public class ResponseType {
+public class ResponseTypeEventTimingOut {
+	@XmlElement(name = "EventTimingOut", required = true)
+	protected EventTimingOutType eventTimingOut;
 
-	@XmlElement(name = "LobbyInvite", required = true)
-	protected LobbyInviteType lobbyInvite;
 	@XmlAttribute(name = "status")
 	protected int status = 1;
 	@XmlAttribute(name = "ticket")
 	protected int ticket = 0;
 
-	public LobbyInviteType getLobbyInvite() {
-		return lobbyInvite;
+	public EventTimingOutType getEventTimingOut() {
+		return eventTimingOut;
 	}
 
-	public void setLobbyInvite(LobbyInviteType value) {
-		this.lobbyInvite = value;
+	public void setEventTimingOut(EventTimingOutType eventTimingOut) {
+		this.eventTimingOut = eventTimingOut;
 	}
 
 	public int getStatus() {
@@ -42,5 +42,4 @@ public class ResponseType {
 	public void setTicket(int ticket) {
 		this.ticket = ticket;
 	}
-
 }

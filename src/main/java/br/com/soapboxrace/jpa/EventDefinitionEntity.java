@@ -4,8 +4,10 @@ import java.util.List;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -18,7 +20,7 @@ import br.com.soapboxrace.jaxb.EngagePointType;
 import br.com.soapboxrace.jaxb.RewardModesType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "EventDefinitionType", propOrder = { "carClassHash", "coins", "engagePoint", "eventId",
+@XmlType(name = "EventDefinitionType", propOrder = { "carClassHash", "coins", "engagePoint", "id",
 		"eventLocalization", "eventModeDescriptionLocalization", "eventModeIcon", "eventModeId",
 		"eventModeLocalization", "isEnabled", "isLocked", "laps", "length", "maxClassRating", "maxEntrants", "maxLevel",
 		"minClassRating", "minEntrants", "minLevel", "regionLocalization", "rewardModes", "timeLimit", "trackLayoutMap",
@@ -26,12 +28,12 @@ import br.com.soapboxrace.jaxb.RewardModesType;
 @Entity
 @Table(name = "EVENTDEFINITION")
 public class EventDefinitionEntity implements ISoapBoxEntity {
+	private static final long serialVersionUID = -1170162152186670454L;
 
-	private static final long serialVersionUID = -8986500193422498612L;
-
-	@XmlElement(name = "EventId")
 	@Id
-	protected long eventId;
+	@Column(name = "eventId")
+	@XmlElement(name = "EventId")
+	protected Long id;
 
 	@XmlElement(name = "CarClassHash")
 	protected int carClassHash;
@@ -105,6 +107,10 @@ public class EventDefinitionEntity implements ISoapBoxEntity {
 	@XmlElement(name = "TrackLocalization")
 	protected int trackLocalization;
 
+	@XmlTransient
+	@OneToMany(mappedBy = "eventDefinition", targetEntity = EventDataEntity.class)
+	protected List<EventDataEntity> eventResults;
+
 	public int getCarClassHash() {
 		return carClassHash;
 	}
@@ -129,20 +135,20 @@ public class EventDefinitionEntity implements ISoapBoxEntity {
 		this.engagePoint = value;
 	}
 
-	public long getEventId() {
-		return eventId;
-	}
-
-	public void setEventId(long eventId) {
-		this.eventId = eventId;
-	}
-
 	public Long getId() {
-		return eventId;
+		return id;
 	}
 
 	public void setId(Long eventId) {
-		this.eventId = eventId;
+		this.id = eventId;
+	}
+
+	public List<EventDataEntity> getEventResults() {
+		return eventResults;
+	}
+
+	public void setEventResults(List<EventDataEntity> eventResults) {
+		this.eventResults = eventResults;
 	}
 
 	public int getEventLocalization() {

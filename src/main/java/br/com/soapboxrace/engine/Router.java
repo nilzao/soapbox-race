@@ -18,6 +18,7 @@ public class Router {
 
 	public static ConcurrentHashMap<Long, HttpSessionVO> activeUsers = new ConcurrentHashMap<Long, HttpSessionVO>();
 	public static SecureRandom random = new SecureRandom();
+
 	public static HttpSessionVO getHttpSessionVo(Long userId) {
 		if (Router.activeUsers.containsKey(userId)) {
 			HttpSessionVO httpSessionVO = Router.activeUsers.get(userId);
@@ -26,7 +27,7 @@ public class Router {
 		}
 		return null;
 	}
-	
+
 	private String target;
 	private HttpServletRequest request;
 	private Request baseRequest;
@@ -54,7 +55,13 @@ public class Router {
 
 	protected Long getLoggedPersonaId() {
 		if (Router.activeUsers.containsKey(getUserId())) {
-			HttpSessionVO httpSessionVO = Router.activeUsers.get(getUserId());
+			try {
+				checkSecurityToken();
+			} catch (EngineException e) {
+				Router.activeUsers.remove(getUserId());
+				return null;
+			}
+			HttpSessionVO httpSessionVO = getHttpSessionVo(getUserId());
 			if (httpSessionVO.getPersonaId() != null && httpSessionVO.getPersonaId() != 0L)
 				return httpSessionVO.getPersonaId();
 		}

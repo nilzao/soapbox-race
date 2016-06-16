@@ -7,25 +7,24 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import br.com.soapboxrace.jpa.LobbyEntrantEntity;
-
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ResponseTypeEntrantAdd", propOrder = { "lobbyInvite" })
+@XmlType(name = "ResponseTypePowerupActivated", propOrder = { "powerupActivated" })
 @XmlRootElement(name = "response")
-public class ResponseTypeEntrantAdd {
-	@XmlElement(name = "LobbyEntrantAdded", required = true)
-	protected LobbyEntrantEntity lobbyInvite;
+public class ResponseTypePowerupActivated {
+	@XmlElement(name = "PowerupActivated", required = true)
+	protected PowerupActivatedType powerupActivated;
+
 	@XmlAttribute(name = "status")
 	protected int status = 1;
 	@XmlAttribute(name = "ticket")
 	protected int ticket = 0;
 
-	public LobbyEntrantEntity getLobbyInvite() {
-		return lobbyInvite;
+	public PowerupActivatedType getPowerupActivated() {
+		return powerupActivated;
 	}
 
-	public void setLobbyInvite(LobbyEntrantEntity lobbyInvite) {
-		this.lobbyInvite = lobbyInvite;
+	public void setPowerupActivated(PowerupActivatedType powerupActivated) {
+		this.powerupActivated = powerupActivated;
 	}
 
 	public int getStatus() {

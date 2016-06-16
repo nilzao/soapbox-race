@@ -6,8 +6,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ItemsType", propOrder = { "basketItemTrans" })
-public class ItemsType {
+@XmlType(name = "BasketItemsType", propOrder = { "basketItemTrans" })
+public class BasketItemsType {
 
 	@XmlElement(name = "BasketItemTrans", required = true)
 	protected BasketItemTransType basketItemTrans;

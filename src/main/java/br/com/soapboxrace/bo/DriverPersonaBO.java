@@ -11,7 +11,6 @@ import br.com.soapboxrace.jaxb.PersonaPresenceType;
 import br.com.soapboxrace.jaxb.ProfileDataType;
 import br.com.soapboxrace.jpa.PersonaEntity;
 import br.com.soapboxrace.jpa.UserEntity;
-import br.com.soapboxrace.openfire.RestApiCli;
 
 public class DriverPersonaBO {
 
@@ -47,9 +46,8 @@ public class DriverPersonaBO {
 		profileDataType.setName(personaEntity.getName());
 		profileDataType.setCash(personaEntity.getCash());
 		profileDataType.setIconIndex(personaEntity.getIconIndex());
-		profileDataType.setPersonaId(personaEntity.getId().intValue());
+		profileDataType.setPersonaId(personaEntity.getId());
 		profileDataType.setLevel(personaEntity.getLevel());
-		RestApiCli.createUpdatePersona(personaEntity.getId(), "1234567890123456");
 		return profileDataType;
 	}
 

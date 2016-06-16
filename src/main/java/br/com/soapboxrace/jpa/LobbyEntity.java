@@ -35,7 +35,7 @@ public class LobbyEntity implements ISoapBoxEntity {
 	private boolean isWaiting = false;
 
 	@Transient
-	private long lobbyCountdownInMilliseconds = 60000;
+	private long lobbyCountdownInMilliseconds = 30000;
 
 	@Transient
 	private long lobbyStuckDurationInMilliseconds = 5000;

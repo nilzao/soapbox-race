@@ -8,10 +8,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "responseType", propOrder = { "lobbyInvite" })
+@XmlType(name = "ResponseTypeLobbyLaunched", propOrder = { "lobbyInvite" })
 @XmlRootElement(name = "response")
 public class ResponseTypeLobbyLaunched {
-
 	@XmlElement(name = "LobbyLaunched", required = true)
 	protected LobbyLaunchedType lobbyInvite;
 	@XmlAttribute(name = "status")
@@ -42,5 +41,4 @@ public class ResponseTypeLobbyLaunched {
 	public void setTicket(int ticket) {
 		this.ticket = ticket;
 	}
-
 }
