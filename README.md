@@ -7,7 +7,7 @@ My advice is to download Eclipse JavaEE, and after that download eGit Maven SCM 
 
 ##Running the server is as simple as:
 
-    java -jar soapbox-race-version-jarname.jar ip-to-xmpp-host(optional) ip-to-udp-host(optional)
+    java -jar soapbox-race-version-jarname.jar Secret-key-auth-from-openfire ip-to-xmpp-host(optional) ip-to-udp-host(optional)
 
 ##How to login
 

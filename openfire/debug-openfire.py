@@ -6,16 +6,16 @@ from ssl import PROTOCOL_TLSv1
 BUFSIZE = 4096
 
 #before ssl
-cliPktA = '''<?xml version='1.0' ?><stream:stream to='nils-pc' xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' version='1.0' xml:lang='en'>'''
+cliPktA = '''<?xml version='1.0' ?><stream:stream to='127.0.0.1' xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' version='1.0' xml:lang='en'>'''
 cliPktB = '''<starttls xmlns='urn:ietf:params:xml:ns:xmpp-tls'/>'''
 
 #after ssl
-cliPktC = '''<?xml version='1.0' ?><stream:stream to='nils-pc' xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' version='1.0' xml:lang='en'>'''
+cliPktC = '''<?xml version='1.0' ?><stream:stream to='127.0.0.1' xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' version='1.0' xml:lang='en'>'''
 cliPktD = '''<iq id='EA-Chat-1' type='get'><query xmlns='jabber:iq:auth'><username>nfsw.102</username></query></iq>'''
 cliPktE = '''<iq xml:lang='en' id='EA-Chat-2' type='set'><query xmlns='jabber:iq:auth'><username>nfsw.102</username><password>1234567890123456</password><resource>EA-Chat</resource><clientlock xmlns='http://www.jabber.com/schemas/clientlocking.xsd' id='900'>57b8914527daff651df93557aef0387e5aa60fae</clientlock></query></iq>'''
 cliPktF = '''<presence><show>chat</show><status>Online</status><priority>0</priority></presence>'''
 cliPktG = ''' '''
-cliPktH = '''<presence to='channel.EN__1@conference.nils-pc/nfsw.102'/>'''
+cliPktH = '''<presence to='channel.EN__1@conference.127.0.0.1/nfsw.102'/>'''
 
 name = '''127.0.0.1'''
 
