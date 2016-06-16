@@ -1,10 +1,8 @@
 package br.com.soapboxrace.engine;
 
-import br.com.soapboxrace.jaxb.util.MarshalXML;
-import br.com.soapboxrace.xmpp.XmppSrv;
-import br.com.soapboxrace.xmpp.jaxb.MessageType;
 import br.com.soapboxrace.xmpp.jaxb.PowerupActivatedType;
 import br.com.soapboxrace.xmpp.jaxb.ResponseTypePowerupActivated;
+import br.com.soapboxrace.openfire.OpenFireSoapBoxCli;
 
 public class Powerups extends Router {
 	private Long getPowerupHash() {
@@ -27,10 +25,7 @@ public class Powerups extends Router {
 		for (String receiver : getParam("receivers").split("-")) {
 			Long receiverPersonaId = Long.valueOf(receiver);
 			if (receiverPersonaId > 10) {
-				MessageType message = new MessageType();
-				message.setToPersonaId(receiverPersonaId);
-				message.setBody(powerupActivatedResponse);
-				XmppSrv.sendMsg(receiverPersonaId, MarshalXML.marshal(message));
+				OpenFireSoapBoxCli.getInstance().send(powerupActivatedResponse, getLoggedPersonaId());
 			}
 		}
 		return "";
