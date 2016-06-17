@@ -18,12 +18,11 @@ import br.com.soapboxrace.jaxb.PursuitEventResultType;
 import br.com.soapboxrace.jaxb.RouteArbitrationPacketType;
 import br.com.soapboxrace.jaxb.RouteEntrantResultType;
 import br.com.soapboxrace.jaxb.RouteEventResultType;
-import br.com.soapboxrace.jaxb.util.MarshalXML;
 import br.com.soapboxrace.jaxb.util.UnmarshalXML;
 import br.com.soapboxrace.jpa.EventDataEntity;
 import br.com.soapboxrace.jpa.OwnedCarEntity;
 import br.com.soapboxrace.jpa.PersonaEntity;
-import br.com.soapboxrace.xmpp.XmppSrv;
+import br.com.soapboxrace.openfire.OpenFireSoapBoxCli;
 import br.com.soapboxrace.xmpp.jaxb.EventTimingOutType;
 import br.com.soapboxrace.xmpp.jaxb.MessageType;
 import br.com.soapboxrace.xmpp.jaxb.ResponseTypeEntrantResult;
@@ -156,10 +155,10 @@ public class EventBO {
 					MessageType message = new MessageType();
 					message.setToPersonaId(racer.getPersonaId());
 					message.setBody(entrantResultResponse);
-					XmppSrv.get(racer.getPersonaId()).write(MarshalXML.marshal(message));
+					OpenFireSoapBoxCli.getInstance().send(entrantResultResponse, racer.getPersonaId());
 					if (isFirstPlace) {
 						message.setBody(eventTimingOutResponse);
-						XmppSrv.get(racer.getPersonaId()).write(MarshalXML.marshal(message));
+						OpenFireSoapBoxCli.getInstance().send(eventTimingOutResponse, racer.getPersonaId());
 					}
 				}
 				entrants.add(routeEntrantResult);

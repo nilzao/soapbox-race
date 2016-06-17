@@ -1,7 +1,5 @@
 package br.com.soapboxrace.engine;
 
-import br.com.soapboxrace.xmpp.XmppChatLobbies;
-
 public class Default extends Router {
 
 	public String getfriendlistfromuserid() {
@@ -141,7 +139,7 @@ public class Default extends Router {
 		stringBuilder.append("  <firstTimeLogin>false</firstTimeLogin>\n");
 		stringBuilder.append("  <maxLevel>60</maxLevel>\n");
 		stringBuilder.append("  <starterPackApplied>false</starterPackApplied>\n");
-		stringBuilder.append("  <userId>"+getUserId()+"</userId>\n");
+		stringBuilder.append("  <userId>" + getUserId() + "</userId>\n");
 		stringBuilder.append("</User_Settings>");
 		String xmlTmp = stringBuilder.toString();
 		return xmlTmp;
@@ -175,8 +173,4 @@ public class Default extends Router {
 		return "";
 	}
 
-	public void sendChatAnnouncement() {
-		String announcementText = getParam("announcementText");
-		XmppChatLobbies.getSystemLobby().broadcast(announcementText);
-	}
 }
