@@ -25,7 +25,7 @@ public class Powerups extends Router {
 		for (String receiver : getParam("receivers").split("-")) {
 			Long receiverPersonaId = Long.valueOf(receiver);
 			if (receiverPersonaId > 10) {
-				OpenFireSoapBoxCli.getInstance().send(powerupActivatedResponse, getLoggedPersonaId());
+				OpenFireSoapBoxCli.getInstance().send(powerupActivatedResponse, receiverPersonaId);
 			}
 		}
 		return "";
