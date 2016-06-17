@@ -15,7 +15,7 @@ public class EngineExceptionTrans {
 	@XmlElement(name = "Description")
 	private String description;
 	@XmlElement(name = "ErrorCode", required = true)
-	private String errorCode;
+	private Integer errorCode;
 	@XmlElement(name = "InnerException")
 	private String innerException;
 	@XmlElement(name = "Message")
@@ -31,11 +31,11 @@ public class EngineExceptionTrans {
 		this.description = description;
 	}
 
-	public String getErrorCode() {
+	public Integer getErrorCode() {
 		return errorCode;
 	}
 
-	public void setErrorCode(String errorCode) {
+	public void setErrorCode(Integer errorCode) {
 		this.errorCode = errorCode;
 	}
 
