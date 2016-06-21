@@ -63,8 +63,8 @@ public class HttpSrv extends GzipHandler {
 			EngineExceptionTrans error = new EngineExceptionTrans();
 			error.setDescription("");
 			error.setInnerException("");
-			error.setErrorCode("2");
-			error.setMessage(e.getCause().getMessage());
+			error.setErrorCode(2);
+			error.setMessage("");
 			error.setStackTrace("");
 			content = MarshalXML.marshal(error);
 			response.setStatus(500);
