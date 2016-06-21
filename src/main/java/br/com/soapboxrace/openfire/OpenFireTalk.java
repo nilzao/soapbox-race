@@ -6,6 +6,11 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
+import br.com.soapboxrace.jaxb.util.MarshalXML;
+import br.com.soapboxrace.jaxb.util.UnmarshalXML;
+import br.com.soapboxrace.xmpp.jaxb.IQPingType;
+import br.com.soapboxrace.xmpp.jaxb.IQPongType;
+
 public class OpenFireTalk {
 
 	private Socket socket;
@@ -47,6 +52,10 @@ public class OpenFireTalk {
 			e.printStackTrace();
 		}
 		System.out.println("S->C [" + msg + "]");
+		if (msg.contains("<ping xmlns=\"urn:xmpp:ping\"/>")) {
+			IQPingType openfirePing = (IQPingType) UnmarshalXML.unMarshal(msg, new IQPingType());
+			write(MarshalXML.marshal(new IQPongType(openfirePing.getId())));
+		}
 		return msg;
 	}
 
