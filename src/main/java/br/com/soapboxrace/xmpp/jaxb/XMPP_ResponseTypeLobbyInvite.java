@@ -8,21 +8,21 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ResponseTypeLobbyInvite", propOrder = { "lobbyInvite" })
+@XmlType(name = "XMPP_ResponseTypeLobbyInvite", propOrder = { "lobbyInvite" })
 @XmlRootElement(name = "response")
-public class ResponseTypeLobbyInvite {
+public class XMPP_ResponseTypeLobbyInvite {
 	@XmlElement(name = "LobbyInvite", required = true)
-	protected LobbyInviteType lobbyInvite;
+	protected XMPP_LobbyInviteType lobbyInvite;
 	@XmlAttribute(name = "status")
 	protected int status = 1;
 	@XmlAttribute(name = "ticket")
 	protected int ticket = 0;
 
-	public LobbyInviteType getLobbyInvite() {
+	public XMPP_LobbyInviteType getLobbyInvite() {
 		return lobbyInvite;
 	}
 
-	public void setLobbyInvite(LobbyInviteType value) {
+	public void setLobbyInvite(XMPP_LobbyInviteType value) {
 		this.lobbyInvite = value;
 	}
 

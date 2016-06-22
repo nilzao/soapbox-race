@@ -3,38 +3,30 @@ package br.com.soapboxrace.xmpp.jaxb;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import br.com.soapboxrace.engine.Session;
+
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "IQPingType", propOrder = { "type", "id", "from", "to", "ping" })
+@XmlType(name = "XMPP_IQPongType", propOrder = { "from", "to", "id", "type" })
 @XmlRootElement(name = "iq")
-public class IQPingType {
-	@XmlAttribute(name = "type", required = true)
-	private String type;
-	@XmlAttribute(name = "id")
-	private String id;
+public class XMPP_IQPongType {
 	@XmlAttribute(name = "from")
 	private String from;
 	@XmlAttribute(name = "to")
 	private String to;
-	@XmlElement(namespace = "urn:xmpp:ping")
-	private String ping;
+	@XmlAttribute(name = "id")
+	private String id;
+	@XmlAttribute(name = "type", required = true)
+	private String type = "result";
 
-	public String getType() {
-		return type;
+	public XMPP_IQPongType() {
 	}
 
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
+	public XMPP_IQPongType(String id) {
+		from = String.format("nfsw.engine.engine@%s/EA_Chat", Session.getXmppIp());
+		to = Session.getXmppIp();
 		this.id = id;
 	}
 
@@ -54,11 +46,19 @@ public class IQPingType {
 		this.to = to;
 	}
 
-	public String getPing() {
-		return ping;
+	public String getId() {
+		return id;
 	}
 
-	public void setPing(String ping) {
-		this.ping = ping;
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 }

@@ -6,8 +6,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "EventTimingOutType", propOrder = { "eventSessionId", "timeInMilliseconds" })
-public class EventTimingOutType {
+@XmlType(name = "XMPP_EventTimingOutType", propOrder = { "eventSessionId", "timeInMilliseconds" })
+public class XMPP_EventTimingOutType {
 	@XmlElement(name = "EventSessionId", required = true)
 	private Long eventSessionId;
 	@XmlElement(name = "TimeInMilliseconds", required = true)

@@ -8,22 +8,22 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ResponseTypePowerupActivated", propOrder = { "powerupActivated" })
+@XmlType(name = "XMPP_ResponseTypePowerupActivated", propOrder = { "powerupActivated" })
 @XmlRootElement(name = "response")
-public class ResponseTypePowerupActivated {
+public class XMPP_ResponseTypePowerupActivated {
 	@XmlElement(name = "PowerupActivated", required = true)
-	protected PowerupActivatedType powerupActivated;
+	protected XMPP_PowerupActivatedType powerupActivated;
 
 	@XmlAttribute(name = "status")
 	protected int status = 1;
 	@XmlAttribute(name = "ticket")
 	protected int ticket = 0;
 
-	public PowerupActivatedType getPowerupActivated() {
+	public XMPP_PowerupActivatedType getPowerupActivated() {
 		return powerupActivated;
 	}
 
-	public void setPowerupActivated(PowerupActivatedType powerupActivated) {
+	public void setPowerupActivated(XMPP_PowerupActivatedType powerupActivated) {
 		this.powerupActivated = powerupActivated;
 	}
 

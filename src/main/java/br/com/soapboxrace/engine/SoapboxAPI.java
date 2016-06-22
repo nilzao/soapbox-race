@@ -51,12 +51,15 @@ public class SoapboxAPI extends Router {
 			return "<Error>No parameters set</Error>";
 
 		Object eventIdParam = getParam("eventId");
+		Object eventModeIdParam = getParam("eventModeId");
 		Object personaIdParam = getParam("personaId");
 		Object singlePlayerParam = getParam("singlePlayer");
 
 		EventDataEntity reqEventData = new EventDataEntity();
 		if (eventIdParam != null)
 			reqEventData.setEventId(Long.valueOf(eventIdParam.toString()));
+		if (eventModeIdParam != null)
+			reqEventData.setEventMode(Integer.valueOf(eventModeIdParam.toString()));
 		if (personaIdParam != null)
 			reqEventData.setPersonaId(Long.valueOf(personaIdParam.toString()));
 		if (singlePlayerParam != null)

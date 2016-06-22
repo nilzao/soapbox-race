@@ -1,7 +1,7 @@
 package br.com.soapboxrace.engine;
 
-import br.com.soapboxrace.xmpp.jaxb.PowerupActivatedType;
-import br.com.soapboxrace.xmpp.jaxb.ResponseTypePowerupActivated;
+import br.com.soapboxrace.xmpp.jaxb.XMPP_PowerupActivatedType;
+import br.com.soapboxrace.xmpp.jaxb.XMPP_ResponseTypePowerupActivated;
 import br.com.soapboxrace.openfire.OpenFireSoapBoxCli;
 
 public class Powerups extends Router {
@@ -15,8 +15,8 @@ public class Powerups extends Router {
 	}
 
 	public String activated() {
-		ResponseTypePowerupActivated powerupActivatedResponse = new ResponseTypePowerupActivated();
-		PowerupActivatedType powerupActivated = new PowerupActivatedType();
+		XMPP_ResponseTypePowerupActivated powerupActivatedResponse = new XMPP_ResponseTypePowerupActivated();
+		XMPP_PowerupActivatedType powerupActivated = new XMPP_PowerupActivatedType();
 		powerupActivated.setId(getPowerupHash());
 		powerupActivated.setTargetPersonaId(Long.valueOf(getParam("targetId")));
 		powerupActivated.setPersonaId(getLoggedPersonaId());

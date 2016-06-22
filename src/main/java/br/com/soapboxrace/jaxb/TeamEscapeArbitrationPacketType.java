@@ -7,12 +7,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "RouteArbitrationPacketType", propOrder = { "alternateEventDurationInMilliseconds", "carId",
+@XmlType(name = "TeamEscapeArbitrationPacketType", propOrder = { "alternateEventDurationInMilliseconds", "carId",
 		"eventDurationInMilliseconds", "finishReason", "fraudDetectionInfo", "hacksDetected", "physicsMetrics", "rank",
-		"response", "bestLapDurationInMilliseconds", "fractionCompleted", "longestJumpDurationInMilliseconds",
-		"numberOfCollisions", "perfectStart", "sumOfJumpsDurationInMilliseconds", "topSpeed" })
-@XmlRootElement(name = "RouteArbitrationPacket")
-public class RouteArbitrationPacketType {
+		"response", "bustedCount", "copsDeployed", "copsDisabled", "copsRammed", "costToState", "distanceToFinish",
+		"fractionCompleted", "infractions", "longestJumpDurationInMilliseconds", "numberOfCollisions", "perfectStart",
+		"roadBlocksDodged", "spikeStripsDodged", "sumOfJumpsDurationInMilliseconds", "topSpeed" })
+@XmlRootElement(name = "TeamEscapeArbitrationPacket")
+public class TeamEscapeArbitrationPacketType {
 	@XmlElement(name = "AlternateEventDurationInMilliseconds", required = true)
 	private Long alternateEventDurationInMilliseconds;
 	@XmlElement(name = "CarId", required = true)
@@ -31,16 +32,32 @@ public class RouteArbitrationPacketType {
 	private Short rank;
 	@XmlElement(name = "Response", required = true)
 	private ResponseType response;
-	@XmlElement(name = "BestLapDurationInMilliseconds", required = true)
-	private Long bestLapDurationInMilliseconds;
+	@XmlElement(name = "BustedCount", required = true)
+	private Integer bustedCount;
+	@XmlElement(name = "CopsDeployed", required = true)
+	private Integer copsDeployed;
+	@XmlElement(name = "CopsDisabled", required = true)
+	private Integer copsDisabled;
+	@XmlElement(name = "CopsRammed", required = true)
+	private Integer copsRammed;
+	@XmlElement(name = "CostToState", required = true)
+	private Integer costToState;
+	@XmlElement(name = "DistanceToFinish", required = true)
+	private Float distanceToFinish;
 	@XmlElement(name = "FractionCompleted", required = true)
 	private Float fractionCompleted;
+	@XmlElement(name = "Infractions", required = true)
+	private Integer infractions;
 	@XmlElement(name = "LongestJumpDurationInMilliseconds", required = true)
 	private Long longestJumpDurationInMilliseconds;
 	@XmlElement(name = "NumberOfCollisions", required = true)
 	private Integer numberOfCollisions;
 	@XmlElement(name = "PerfectStart", required = true)
 	private Short perfectStart;
+	@XmlElement(name = "RoadBlocksDodged", required = true)
+	private Integer roadBlocksDodged;
+	@XmlElement(name = "SpikeStripsDodged", required = true)
+	private Integer spikeStripsDodged;
 	@XmlElement(name = "SumOfJumpsDurationInMilliseconds", required = true)
 	private Long sumOfJumpsDurationInMilliseconds;
 	@XmlElement(name = "TopSpeed", required = true)
@@ -118,12 +135,52 @@ public class RouteArbitrationPacketType {
 		this.response = response;
 	}
 
-	public Long getBestLapDurationInMilliseconds() {
-		return bestLapDurationInMilliseconds;
+	public Integer getBustedCount() {
+		return bustedCount;
 	}
 
-	public void setBestLapDurationInMilliseconds(Long bestLapDurationInMilliseconds) {
-		this.bestLapDurationInMilliseconds = bestLapDurationInMilliseconds;
+	public void setBustedCount(Integer bustedCount) {
+		this.bustedCount = bustedCount;
+	}
+
+	public Integer getCopsDeployed() {
+		return copsDeployed;
+	}
+
+	public void setCopsDeployed(Integer copsDeployed) {
+		this.copsDeployed = copsDeployed;
+	}
+
+	public Integer getCopsDisabled() {
+		return copsDisabled;
+	}
+
+	public void setCopsDisabled(Integer copsDisabled) {
+		this.copsDisabled = copsDisabled;
+	}
+
+	public Integer getCopsRammed() {
+		return copsRammed;
+	}
+
+	public void setCopsRammed(Integer copsRammed) {
+		this.copsRammed = copsRammed;
+	}
+
+	public Integer getCostToState() {
+		return costToState;
+	}
+
+	public void setCostToState(Integer costToState) {
+		this.costToState = costToState;
+	}
+
+	public Float getDistanceToFinish() {
+		return distanceToFinish;
+	}
+
+	public void setDistanceToFinish(Float distanceToFinish) {
+		this.distanceToFinish = distanceToFinish;
 	}
 
 	public Float getFractionCompleted() {
@@ -132,6 +189,14 @@ public class RouteArbitrationPacketType {
 
 	public void setFractionCompleted(Float fractionCompleted) {
 		this.fractionCompleted = fractionCompleted;
+	}
+
+	public Integer getInfractions() {
+		return infractions;
+	}
+
+	public void setInfractions(Integer infractions) {
+		this.infractions = infractions;
 	}
 
 	public Long getLongestJumpDurationInMilliseconds() {
@@ -156,6 +221,22 @@ public class RouteArbitrationPacketType {
 
 	public void setPerfectStart(Short perfectStart) {
 		this.perfectStart = perfectStart;
+	}
+
+	public Integer getRoadBlocksDodged() {
+		return roadBlocksDodged;
+	}
+
+	public void setRoadBlocksDodged(Integer roadBlocksDodged) {
+		this.roadBlocksDodged = roadBlocksDodged;
+	}
+
+	public Integer getSpikeStripsDodged() {
+		return spikeStripsDodged;
+	}
+
+	public void setSpikeStripsDodged(Integer spikeStripsDodged) {
+		this.spikeStripsDodged = spikeStripsDodged;
 	}
 
 	public Long getSumOfJumpsDurationInMilliseconds() {
