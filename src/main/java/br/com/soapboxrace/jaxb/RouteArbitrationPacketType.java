@@ -40,7 +40,7 @@ public class RouteArbitrationPacketType {
 	@XmlElement(name = "NumberOfCollisions", required = true)
 	private Integer numberOfCollisions;
 	@XmlElement(name = "PerfectStart", required = true)
-	private Short perfectStart;
+	private Boolean perfectStart;
 	@XmlElement(name = "SumOfJumpsDurationInMilliseconds", required = true)
 	private Long sumOfJumpsDurationInMilliseconds;
 	@XmlElement(name = "TopSpeed", required = true)
@@ -150,11 +150,11 @@ public class RouteArbitrationPacketType {
 		this.numberOfCollisions = numberOfCollisions;
 	}
 
-	public Short getPerfectStart() {
+	public Boolean getPerfectStart() {
 		return perfectStart;
 	}
 
-	public void setPerfectStart(Short perfectStart) {
+	public void setPerfectStart(Boolean perfectStart) {
 		this.perfectStart = perfectStart;
 	}
 

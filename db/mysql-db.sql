@@ -6,8 +6,8 @@ CREATE database `SOAPBOX`
 
 CREATE TABLE SOAPBOX.BASKETDEFINITION (
     id BIGINT NOT NULL AUTO_INCREMENT,
-	ProductId varchar(50),
-	OwnedCarTrans varchar(21000),
+    ProductId VARCHAR(50),
+    OwnedCarTrans VARCHAR(21000),
     PRIMARY KEY (id)
 )  ENGINE=INNODB;
 
@@ -17,17 +17,17 @@ CREATE TABLE SOAPBOX.CUSTOMCAR (
     CarClassHash INT,
     IsPreset BOOLEAN,
     Level INT,
-	`Name` varchar(255),
+    `Name` VARCHAR(255),
     ApiId BIGINT,
-	Paints varchar(1500),
-	PerformanceParts varchar(1000),
+    Paints VARCHAR(1500),
+    PerformanceParts VARCHAR(1000),
     PhysicsProfileHash BIGINT,
     Rating INT,
     ResalePrice INT,
-    SkillModParts varchar(1000),
+    SkillModParts VARCHAR(1000),
     SkillModSlotCount SMALLINT,
-	Vinyls varchar(15000),
-	VisualParts varchar(1000),
+    Vinyls VARCHAR(15000),
+    VisualParts VARCHAR(1000),
     IdParentOwnedCarTrans BIGINT,
     PRIMARY KEY (id),
     INDEX FK1x37o50wbwj5o7wj99ouj91om (IdParentOwnedCarTrans)
@@ -66,38 +66,33 @@ CREATE TABLE SOAPBOX.EVENTDEFINITION (
 )  ENGINE=INNODB;
 
 CREATE TABLE SOAPBOX.EVENTDATA (
-	id bigint NOT NULL AUTO_INCREMENT,
-	carId bigint,
-	eventDurationInMS bigint,
-	eventId bigint,
-    eventLaunched boolean,
-    eventMode int,
-	eventSessionId bigint,
-	finishReason int,
-    isSinglePlayer boolean,
-    perfectStart boolean,
-	personaId bigint,
-	rank smallint,
-	topSpeed float,
-    
-    # Circuit specific data
-	bestLapTimeInMS bigint,
-    
-    # TeamEscape specific data
-    bustedCount int,
-    copsDeployed int,
-    copsDisabled int,
-    copsRammed int,
-    costToState int,
-    distanceToFinish float,
-    fractionCompleted float,
-    infractions int,
-    roadBlocksDodged int,
-    spikeStripsDodged int,
-    
-	PRIMARY KEY (id),
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    carId BIGINT,
+    eventDurationInMS BIGINT,
+    eventId BIGINT,
+    eventLaunched BOOLEAN default false,
+    eventMode INT,
+    eventSessionId BIGINT,
+    finishReason INT,
+    isSinglePlayer BOOLEAN,
+    perfectStart BOOLEAN,
+    personaId BIGINT,
+    rank SMALLINT,
+    topSpeed FLOAT,
+    bestLapTimeInMS BIGINT,
+    bustedCount INT,
+    copsDeployed INT,
+    copsDisabled INT,
+    copsRammed INT,
+    costToState INT,
+    distanceToFinish FLOAT,
+    fractionCompleted FLOAT,
+    infractions INT,
+    roadBlocksDodged INT,
+    spikeStripsDodged INT,
+    PRIMARY KEY (id),
     INDEX FKj264c6h4qbwmdsnyrfk2g34hu (eventId)
-) ENGINE=InnoDB;
+)  ENGINE=INNODB;
 
 CREATE TABLE SOAPBOX.LOBBY (
     id BIGINT NOT NULL AUTO_INCREMENT,
@@ -121,10 +116,10 @@ CREATE TABLE SOAPBOX.LOBBYENTRANT (
 
 CREATE TABLE SOAPBOX.OWNEDCAR (
     Durability SMALLINT,
-    ExpirationDate varchar(255),
+    ExpirationDate VARCHAR(255),
     HeatLevel SMALLINT,
     UniqueCarId BIGINT NOT NULL AUTO_INCREMENT,
-	OwnershipType varchar(255),
+    OwnershipType VARCHAR(255),
     PersonaId BIGINT,
     PRIMARY KEY (UniqueCarId),
     INDEX FKqgmirqm1js3v66oxvwungafsx (PersonaId)
@@ -136,8 +131,8 @@ CREATE TABLE SOAPBOX.PERSONA (
     CURCARINDEX INT,
     ICONINDEX INT,
     LEVEL INT,
-	MOTTO varchar(60),
-	`NAME` varchar(50),
+    MOTTO VARCHAR(60),
+    `NAME` VARCHAR(50),
     PERCENTTOLEVEL FLOAT,
     RATING FLOAT,
     REP FLOAT,
@@ -154,12 +149,12 @@ CREATE TABLE SOAPBOX.PRODUCT (
     categoryId VARCHAR(255),
     categoryName VARCHAR(255),
     currency VARCHAR(255),
-    description varchar(255),
+    description VARCHAR(255),
     durationMinute INT NOT NULL,
     hash BIGINT NOT NULL,
     icon VARCHAR(255),
     level INT NOT NULL,
-    longDescription varchar(255),
+    longDescription VARCHAR(255),
     price FLOAT NOT NULL,
     priority INT NOT NULL,
     productId VARCHAR(255),
@@ -181,22 +176,22 @@ CREATE TABLE SOAPBOX.USER (
 )  ENGINE=INNODB;
 
 CREATE TABLE SOAPBOX.CATEGORY (
-	idcategory bigint NOT NULL AUTO_INCREMENT,
-	catalogVersion VARCHAR(45) NOT NULL,
-	categories VARCHAR(45) NULL,
-	displayName VARCHAR(255) NULL,
-	filterType INT NOT NULL,
-	icon VARCHAR(45) NULL,
-	id BIGINT NOT NULL,
-	longDescription VARCHAR(45) NULL,
-	`name` VARCHAR(255) NOT NULL,
-	priority SMALLINT NOT NULL,
-	shortDescription VARCHAR(45) NULL,
-	showInNavigationPane BOOLEAN NOT NULL,
-	showPromoPage BOOLEAN NOT NULL,
-	webIcon VARCHAR(45) NULL,
-	PRIMARY KEY (idcategory)
-) ENGINE=InnoDB;
+    idcategory BIGINT NOT NULL AUTO_INCREMENT,
+    catalogVersion VARCHAR(45) NOT NULL,
+    categories VARCHAR(45) NULL,
+    displayName VARCHAR(255) NULL,
+    filterType INT NOT NULL,
+    icon VARCHAR(45) NULL,
+    id BIGINT NOT NULL,
+    longDescription VARCHAR(45) NULL,
+    `name` VARCHAR(255) NOT NULL,
+    priority SMALLINT NOT NULL,
+    shortDescription VARCHAR(45) NULL,
+    showInNavigationPane BOOLEAN NOT NULL,
+    showPromoPage BOOLEAN NOT NULL,
+    webIcon VARCHAR(45) NULL,
+    PRIMARY KEY (idcategory)
+)  ENGINE=INNODB;
 
 CREATE TABLE SOAPBOX.VINYLPRODUCT (
     id BIGINT NOT NULL AUTO_INCREMENT,
@@ -204,12 +199,12 @@ CREATE TABLE SOAPBOX.VINYLPRODUCT (
     categoryId VARCHAR(255),
     categoryName VARCHAR(255),
     currency VARCHAR(255),
-    description varchar(255),
+    description VARCHAR(255),
     durationMinute INT NOT NULL,
     hash BIGINT NOT NULL,
     icon VARCHAR(255),
     level INT NOT NULL,
-    longDescription varchar(255),
+    longDescription VARCHAR(255),
     price FLOAT NOT NULL,
     priority INT NOT NULL,
     productId VARCHAR(255),
@@ -222,7 +217,7 @@ CREATE TABLE SOAPBOX.VINYLPRODUCT (
     webLocation VARCHAR(255),
     parentCategoryId BIGINT,
     PRIMARY KEY (id),
-	INDEX FKz6mi4qm1jsgv66yxv3unga2sx (parentCategoryId)
+    INDEX FKz6mi4qm1jsgv66yxv3unga2sx (parentCategoryId)
 )  ENGINE=INNODB;
 
 ALTER TABLE SOAPBOX.CUSTOMCAR ADD CONSTRAINT FK1x37o50wbwj5o7wj99ouj91om FOREIGN KEY (IdParentOwnedCarTrans) REFERENCES SOAPBOX.OWNEDCAR (UniqueCarId);
@@ -239,16 +234,16 @@ INSERT INTO SOAPBOX.USER (EMAIL, PASSWORD) VALUES ('dev@berkay','a94a8fe5ccb19ba
 INSERT INTO SOAPBOX.USER (EMAIL, PASSWORD) VALUES ('debug@player1', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3');
 INSERT INTO SOAPBOX.USER (EMAIL, PASSWORD) VALUES ('debug@player2', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3');
 INSERT INTO SOAPBOX.USER (EMAIL, PASSWORD) VALUES ('debug@player3', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3');
-INSERT INTO SOAPBOX.PERSONA (ID, CASH, CURCARINDEX, ICONINDEX, LEVEL, MOTTO, NAME, PERCENTTOLEVEL, RATING, REP, REPATCURRENTLEVEL, SCORE, USERID) VALUES (11, 5000000, 0, 1, 60, "", "DEVNilzao", 3, 0, 5, 5, 5, 1);
-INSERT INTO SOAPBOX.PERSONA (ID, CASH, CURCARINDEX, ICONINDEX, LEVEL, MOTTO, NAME, PERCENTTOLEVEL, RATING, REP, REPATCURRENTLEVEL, SCORE, USERID) VALUES (12, 5000000, 0, 2, 60, "", "DEVberkay", 3, 0, 5, 5, 5, 2);
-INSERT INTO SOAPBOX.PERSONA (ID, CASH, CURCARINDEX, ICONINDEX, LEVEL, MOTTO, NAME, PERCENTTOLEVEL, RATING, REP, REPATCURRENTLEVEL, SCORE, USERID) VALUES (13, 5000000, 0, 3, 60, "", "DEBUG1", 3, 0, 5, 5, 5, 3);
-INSERT INTO SOAPBOX.PERSONA (ID, CASH, CURCARINDEX, ICONINDEX, LEVEL, MOTTO, NAME, PERCENTTOLEVEL, RATING, REP, REPATCURRENTLEVEL, SCORE, USERID) VALUES (14, 5000000, 0, 4, 60, "", "DEBUG2", 3, 0, 5, 5, 5, 4);
-INSERT INTO SOAPBOX.PERSONA (ID, CASH, CURCARINDEX, ICONINDEX, LEVEL, MOTTO, NAME, PERCENTTOLEVEL, RATING, REP, REPATCURRENTLEVEL, SCORE, USERID) VALUES (15, 5000000, 0, 5, 60, "", "DEBUG3", 3, 0, 5, 5, 5, 5);
-INSERT INTO SOAPBOX.OWNEDCAR (Durability, ExpirationDate, HeatLevel, UniqueCarId, OwnershipType, PersonaId) VALUES (11, null, 1, 1, 'CustomizedCar', 11);
-INSERT INTO SOAPBOX.OWNEDCAR (Durability, ExpirationDate, HeatLevel, UniqueCarId, OwnershipType, PersonaId) VALUES (12, null, 1, 2, 'CustomizedCar', 12);
-INSERT INTO SOAPBOX.OWNEDCAR (Durability, ExpirationDate, HeatLevel, UniqueCarId, OwnershipType, PersonaId) VALUES (13, null, 1, 3, 'CustomizedCar', 13);
-INSERT INTO SOAPBOX.OWNEDCAR (Durability, ExpirationDate, HeatLevel, UniqueCarId, OwnershipType, PersonaId) VALUES (14, null, 1, 4, 'CustomizedCar', 14);
-INSERT INTO SOAPBOX.OWNEDCAR (Durability, ExpirationDate, HeatLevel, UniqueCarId, OwnershipType, PersonaId) VALUES (15, null, 1, 5, 'CustomizedCar', 15);
+INSERT INTO SOAPBOX.PERSONA (ID, CASH, CURCARINDEX, ICONINDEX, LEVEL, MOTTO, NAME, PERCENTTOLEVEL, RATING, REP, REPATCURRENTLEVEL, SCORE, USERID) VALUES (100, 5000000, 0, 1, 60, "", "DEVNilzao", 3, 0, 5, 5, 5, 1);
+INSERT INTO SOAPBOX.PERSONA (ID, CASH, CURCARINDEX, ICONINDEX, LEVEL, MOTTO, NAME, PERCENTTOLEVEL, RATING, REP, REPATCURRENTLEVEL, SCORE, USERID) VALUES (101, 5000000, 0, 2, 60, "", "DEVberkay", 3, 0, 5, 5, 5, 2);
+INSERT INTO SOAPBOX.PERSONA (ID, CASH, CURCARINDEX, ICONINDEX, LEVEL, MOTTO, NAME, PERCENTTOLEVEL, RATING, REP, REPATCURRENTLEVEL, SCORE, USERID) VALUES (102, 5000000, 0, 3, 60, "", "DEBUG1", 3, 0, 5, 5, 5, 3);
+INSERT INTO SOAPBOX.PERSONA (ID, CASH, CURCARINDEX, ICONINDEX, LEVEL, MOTTO, NAME, PERCENTTOLEVEL, RATING, REP, REPATCURRENTLEVEL, SCORE, USERID) VALUES (103, 5000000, 0, 4, 60, "", "DEBUG2", 3, 0, 5, 5, 5, 4);
+INSERT INTO SOAPBOX.PERSONA (ID, CASH, CURCARINDEX, ICONINDEX, LEVEL, MOTTO, NAME, PERCENTTOLEVEL, RATING, REP, REPATCURRENTLEVEL, SCORE, USERID) VALUES (104, 5000000, 0, 5, 60, "", "DEBUG3", 3, 0, 5, 5, 5, 5);
+INSERT INTO SOAPBOX.OWNEDCAR (Durability, ExpirationDate, HeatLevel, UniqueCarId, OwnershipType, PersonaId) VALUES (100, null, 1, 1, 'CustomizedCar', 100);
+INSERT INTO SOAPBOX.OWNEDCAR (Durability, ExpirationDate, HeatLevel, UniqueCarId, OwnershipType, PersonaId) VALUES (100, null, 1, 2, 'CustomizedCar', 101);
+INSERT INTO SOAPBOX.OWNEDCAR (Durability, ExpirationDate, HeatLevel, UniqueCarId, OwnershipType, PersonaId) VALUES (100, null, 1, 3, 'CustomizedCar', 102);
+INSERT INTO SOAPBOX.OWNEDCAR (Durability, ExpirationDate, HeatLevel, UniqueCarId, OwnershipType, PersonaId) VALUES (100, null, 1, 4, 'CustomizedCar', 103);
+INSERT INTO SOAPBOX.OWNEDCAR (Durability, ExpirationDate, HeatLevel, UniqueCarId, OwnershipType, PersonaId) VALUES (100, null, 1, 5, 'CustomizedCar', 104);
 INSERT INTO SOAPBOX.CUSTOMCAR (BaseCarId, CarClassHash, IsPreset, Level, Name, ApiId, Paints, PerformanceParts, PhysicsProfileHash, Rating, ResalePrice, SkillModParts, SkillModSlotCount, Vinyls, VisualParts, IdParentOwnedCarTrans) VALUES (1816139026, -405837480, false, 0, null, 9, '<Paints><CustomPaintTrans><Group>-1480403439</Group><Hue>496032624</Hue><Sat>0</Sat><Slot>1</Slot><Var>76</Var></CustomPaintTrans><CustomPaintTrans><Group>-1480403439</Group><Hue>496032624</Hue><Sat>0</Sat><Slot>2</Slot><Var>76</Var></CustomPaintTrans><CustomPaintTrans><Group>595033610</Group><Hue>496032624</Hue><Sat>0</Sat><Slot>6</Slot><Var>254</Var></CustomPaintTrans><CustomPaintTrans><Group>595033610</Group><Hue>496032624</Hue><Sat>0</Sat><Slot>0</Slot><Var>254</Var></CustomPaintTrans><CustomPaintTrans><Group>595033610</Group><Hue>496032624</Hue><Sat>0</Sat><Slot>3</Slot><Var>254</Var></CustomPaintTrans><CustomPaintTrans><Group>595033610</Group><Hue>496032624</Hue><Sat>0</Sat><Slot>4</Slot><Var>254</Var></CustomPaintTrans><CustomPaintTrans><Group>595033610</Group><Hue>496032624</Hue><Sat>0</Sat><Slot>5</Slot><Var>254</Var></CustomPaintTrans></Paints>', '<PerformanceParts><PerformancePartTrans><PerformancePartAttribHash>-1962598619</PerformancePartAttribHash></PerformancePartTrans><PerformancePartTrans><PerformancePartAttribHash>-183076819</PerformancePartAttribHash></PerformancePartTrans><PerformancePartTrans><PerformancePartAttribHash>7155944</PerformancePartAttribHash></PerformancePartTrans><PerformancePartTrans><PerformancePartAttribHash>754340312</PerformancePartAttribHash></PerformancePartTrans><PerformancePartTrans><PerformancePartAttribHash>1621862030</PerformancePartAttribHash></PerformancePartTrans><PerformancePartTrans><PerformancePartAttribHash>1727386028</PerformancePartAttribHash></PerformancePartTrans></PerformanceParts>', -846723009, 708, 350000, '<SkillModParts><SkillModPartTrans><IsFixed>false</IsFixed><SkillModPartAttribHash>-1196331958</SkillModPartAttribHash></SkillModPartTrans><SkillModPartTrans><IsFixed>false</IsFixed><SkillModPartAttribHash>-1012293684</SkillModPartAttribHash></SkillModPartTrans><SkillModPartTrans><IsFixed>false</IsFixed><SkillModPartAttribHash>-577002039</SkillModPartAttribHash></SkillModPartTrans><SkillModPartTrans><IsFixed>false</IsFixed><SkillModPartAttribHash>861531645</SkillModPartAttribHash></SkillModPartTrans><SkillModPartTrans><IsFixed>false</IsFixed><SkillModPartAttribHash>917249206</SkillModPartAttribHash></SkillModPartTrans></SkillModParts>', 5, '<Vinyls><CustomVinylTrans><Hash>-883491363</Hash><Hue1>-799662319</Hue1><Hue2>-799662186</Hue2><Hue3>-799662452</Hue3><Hue4>-799662452</Hue4><Layer>0</Layer><Mir>true</Mir><Rot>128</Rot><Sat1>0</Sat1><Sat2>0</Sat2><Sat3>0</Sat3><Sat4>0</Sat4><ScaleX>7162</ScaleX><ScaleY>11595</ScaleY><Shear>0</Shear><TranX>2</TranX><TranY>327</TranY><Var1>204</Var1><Var2>0</Var2><Var3>0</Var3><Var4>0</Var4></CustomVinylTrans><CustomVinylTrans><Hash>-1282944374</Hash><Hue1>-799662156</Hue1><Hue2>-799662354</Hue2><Hue3>-799662385</Hue3><Hue4>-799662385</Hue4><Layer>1</Layer><Mir>true</Mir><Rot>60</Rot><Sat1>0</Sat1><Sat2>0</Sat2><Sat3>0</Sat3><Sat4>0</Sat4><ScaleX>735</ScaleX><ScaleY>1063</ScaleY><Shear>0</Shear><TranX>-52</TranX><TranY>268</TranY><Var1>255</Var1><Var2>0</Var2><Var3>0</Var3><Var4>0</Var4></CustomVinylTrans></Vinyls>', '<VisualParts><VisualPartTrans><PartHash>-541305606</PartHash><SlotHash>1694991</SlotHash></VisualPartTrans><VisualPartTrans><PartHash>-273819714</PartHash><SlotHash>-2126743923</SlotHash></VisualPartTrans><VisualPartTrans><PartHash>-48607787</PartHash><SlotHash>453545749</SlotHash></VisualPartTrans><VisualPartTrans><PartHash>948331475</PartHash><SlotHash>2106784967</SlotHash></VisualPartTrans></VisualParts>', 1);
 INSERT INTO SOAPBOX.CUSTOMCAR (BaseCarId, CarClassHash, IsPreset, Level, Name, ApiId, Paints, PerformanceParts, PhysicsProfileHash, Rating, ResalePrice, SkillModParts, SkillModSlotCount, Vinyls, VisualParts, IdParentOwnedCarTrans) VALUES (1816139026, -405837480, false, 0, null, 9, '<Paints><CustomPaintTrans><Group>-1480403439</Group><Hue>496032624</Hue><Sat>0</Sat><Slot>1</Slot><Var>76</Var></CustomPaintTrans><CustomPaintTrans><Group>-1480403439</Group><Hue>496032624</Hue><Sat>0</Sat><Slot>2</Slot><Var>76</Var></CustomPaintTrans><CustomPaintTrans><Group>595033610</Group><Hue>496032624</Hue><Sat>0</Sat><Slot>6</Slot><Var>254</Var></CustomPaintTrans><CustomPaintTrans><Group>595033610</Group><Hue>496032624</Hue><Sat>0</Sat><Slot>0</Slot><Var>254</Var></CustomPaintTrans><CustomPaintTrans><Group>595033610</Group><Hue>496032624</Hue><Sat>0</Sat><Slot>3</Slot><Var>254</Var></CustomPaintTrans><CustomPaintTrans><Group>595033610</Group><Hue>496032624</Hue><Sat>0</Sat><Slot>4</Slot><Var>254</Var></CustomPaintTrans><CustomPaintTrans><Group>595033610</Group><Hue>496032624</Hue><Sat>0</Sat><Slot>5</Slot><Var>254</Var></CustomPaintTrans></Paints>', '<PerformanceParts><PerformancePartTrans><PerformancePartAttribHash>-1962598619</PerformancePartAttribHash></PerformancePartTrans><PerformancePartTrans><PerformancePartAttribHash>-183076819</PerformancePartAttribHash></PerformancePartTrans><PerformancePartTrans><PerformancePartAttribHash>7155944</PerformancePartAttribHash></PerformancePartTrans><PerformancePartTrans><PerformancePartAttribHash>754340312</PerformancePartAttribHash></PerformancePartTrans><PerformancePartTrans><PerformancePartAttribHash>1621862030</PerformancePartAttribHash></PerformancePartTrans><PerformancePartTrans><PerformancePartAttribHash>1727386028</PerformancePartAttribHash></PerformancePartTrans></PerformanceParts>', -846723009, 708, 350000, '<SkillModParts><SkillModPartTrans><IsFixed>false</IsFixed><SkillModPartAttribHash>-1196331958</SkillModPartAttribHash></SkillModPartTrans><SkillModPartTrans><IsFixed>false</IsFixed><SkillModPartAttribHash>-1012293684</SkillModPartAttribHash></SkillModPartTrans><SkillModPartTrans><IsFixed>false</IsFixed><SkillModPartAttribHash>-577002039</SkillModPartAttribHash></SkillModPartTrans><SkillModPartTrans><IsFixed>false</IsFixed><SkillModPartAttribHash>861531645</SkillModPartAttribHash></SkillModPartTrans><SkillModPartTrans><IsFixed>false</IsFixed><SkillModPartAttribHash>917249206</SkillModPartAttribHash></SkillModPartTrans></SkillModParts>', 5, '<Vinyls><CustomVinylTrans><Hash>-883491363</Hash><Hue1>-799662319</Hue1><Hue2>-799662186</Hue2><Hue3>-799662452</Hue3><Hue4>-799662452</Hue4><Layer>0</Layer><Mir>true</Mir><Rot>128</Rot><Sat1>0</Sat1><Sat2>0</Sat2><Sat3>0</Sat3><Sat4>0</Sat4><ScaleX>7162</ScaleX><ScaleY>11595</ScaleY><Shear>0</Shear><TranX>2</TranX><TranY>327</TranY><Var1>204</Var1><Var2>0</Var2><Var3>0</Var3><Var4>0</Var4></CustomVinylTrans><CustomVinylTrans><Hash>-1282944374</Hash><Hue1>-799662156</Hue1><Hue2>-799662354</Hue2><Hue3>-799662385</Hue3><Hue4>-799662385</Hue4><Layer>1</Layer><Mir>true</Mir><Rot>60</Rot><Sat1>0</Sat1><Sat2>0</Sat2><Sat3>0</Sat3><Sat4>0</Sat4><ScaleX>735</ScaleX><ScaleY>1063</ScaleY><Shear>0</Shear><TranX>-52</TranX><TranY>268</TranY><Var1>255</Var1><Var2>0</Var2><Var3>0</Var3><Var4>0</Var4></CustomVinylTrans></Vinyls>', '<VisualParts><VisualPartTrans><PartHash>-541305606</PartHash><SlotHash>1694991</SlotHash></VisualPartTrans><VisualPartTrans><PartHash>-273819714</PartHash><SlotHash>-2126743923</SlotHash></VisualPartTrans><VisualPartTrans><PartHash>-48607787</PartHash><SlotHash>453545749</SlotHash></VisualPartTrans><VisualPartTrans><PartHash>948331475</PartHash><SlotHash>2106784967</SlotHash></VisualPartTrans></VisualParts>', 2);
 INSERT INTO SOAPBOX.CUSTOMCAR (BaseCarId, CarClassHash, IsPreset, Level, Name, ApiId, Paints, PerformanceParts, PhysicsProfileHash, Rating, ResalePrice, SkillModParts, SkillModSlotCount, Vinyls, VisualParts, IdParentOwnedCarTrans) VALUES (1816139026, -405837480, false, 0, null, 9, '<Paints><CustomPaintTrans><Group>-1480403439</Group><Hue>496032624</Hue><Sat>0</Sat><Slot>1</Slot><Var>76</Var></CustomPaintTrans><CustomPaintTrans><Group>-1480403439</Group><Hue>496032624</Hue><Sat>0</Sat><Slot>2</Slot><Var>76</Var></CustomPaintTrans><CustomPaintTrans><Group>595033610</Group><Hue>496032624</Hue><Sat>0</Sat><Slot>6</Slot><Var>254</Var></CustomPaintTrans><CustomPaintTrans><Group>595033610</Group><Hue>496032624</Hue><Sat>0</Sat><Slot>0</Slot><Var>254</Var></CustomPaintTrans><CustomPaintTrans><Group>595033610</Group><Hue>496032624</Hue><Sat>0</Sat><Slot>3</Slot><Var>254</Var></CustomPaintTrans><CustomPaintTrans><Group>595033610</Group><Hue>496032624</Hue><Sat>0</Sat><Slot>4</Slot><Var>254</Var></CustomPaintTrans><CustomPaintTrans><Group>595033610</Group><Hue>496032624</Hue><Sat>0</Sat><Slot>5</Slot><Var>254</Var></CustomPaintTrans></Paints>', '<PerformanceParts><PerformancePartTrans><PerformancePartAttribHash>-1962598619</PerformancePartAttribHash></PerformancePartTrans><PerformancePartTrans><PerformancePartAttribHash>-183076819</PerformancePartAttribHash></PerformancePartTrans><PerformancePartTrans><PerformancePartAttribHash>7155944</PerformancePartAttribHash></PerformancePartTrans><PerformancePartTrans><PerformancePartAttribHash>754340312</PerformancePartAttribHash></PerformancePartTrans><PerformancePartTrans><PerformancePartAttribHash>1621862030</PerformancePartAttribHash></PerformancePartTrans><PerformancePartTrans><PerformancePartAttribHash>1727386028</PerformancePartAttribHash></PerformancePartTrans></PerformanceParts>', -846723009, 708, 350000, '<SkillModParts><SkillModPartTrans><IsFixed>false</IsFixed><SkillModPartAttribHash>-1196331958</SkillModPartAttribHash></SkillModPartTrans><SkillModPartTrans><IsFixed>false</IsFixed><SkillModPartAttribHash>-1012293684</SkillModPartAttribHash></SkillModPartTrans><SkillModPartTrans><IsFixed>false</IsFixed><SkillModPartAttribHash>-577002039</SkillModPartAttribHash></SkillModPartTrans><SkillModPartTrans><IsFixed>false</IsFixed><SkillModPartAttribHash>861531645</SkillModPartAttribHash></SkillModPartTrans><SkillModPartTrans><IsFixed>false</IsFixed><SkillModPartAttribHash>917249206</SkillModPartAttribHash></SkillModPartTrans></SkillModParts>', 5, '<Vinyls><CustomVinylTrans><Hash>-883491363</Hash><Hue1>-799662319</Hue1><Hue2>-799662186</Hue2><Hue3>-799662452</Hue3><Hue4>-799662452</Hue4><Layer>0</Layer><Mir>true</Mir><Rot>128</Rot><Sat1>0</Sat1><Sat2>0</Sat2><Sat3>0</Sat3><Sat4>0</Sat4><ScaleX>7162</ScaleX><ScaleY>11595</ScaleY><Shear>0</Shear><TranX>2</TranX><TranY>327</TranY><Var1>204</Var1><Var2>0</Var2><Var3>0</Var3><Var4>0</Var4></CustomVinylTrans><CustomVinylTrans><Hash>-1282944374</Hash><Hue1>-799662156</Hue1><Hue2>-799662354</Hue2><Hue3>-799662385</Hue3><Hue4>-799662385</Hue4><Layer>1</Layer><Mir>true</Mir><Rot>60</Rot><Sat1>0</Sat1><Sat2>0</Sat2><Sat3>0</Sat3><Sat4>0</Sat4><ScaleX>735</ScaleX><ScaleY>1063</ScaleY><Shear>0</Shear><TranX>-52</TranX><TranY>268</TranY><Var1>255</Var1><Var2>0</Var2><Var3>0</Var3><Var4>0</Var4></CustomVinylTrans></Vinyls>', '<VisualParts><VisualPartTrans><PartHash>-541305606</PartHash><SlotHash>1694991</SlotHash></VisualPartTrans><VisualPartTrans><PartHash>-273819714</PartHash><SlotHash>-2126743923</SlotHash></VisualPartTrans><VisualPartTrans><PartHash>-48607787</PartHash><SlotHash>453545749</SlotHash></VisualPartTrans><VisualPartTrans><PartHash>948331475</PartHash><SlotHash>2106784967</SlotHash></VisualPartTrans></VisualParts>', 3);

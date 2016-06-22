@@ -134,6 +134,25 @@ public class EventBO {
 
 			Boolean teamEscapeIsFirstPlace = teamEscapeArbitrationPacket.getRank() == 1;
 
+			eventDataEntity.setBustedCount(teamEscapeArbitrationPacket.getBustedCount());
+			eventDataEntity.setCarId(teamEscapeArbitrationPacket.getCarId());
+			eventDataEntity.setCopsDeployed(teamEscapeArbitrationPacket.getCopsDeployed());
+			eventDataEntity.setCopsDisabled(teamEscapeArbitrationPacket.getCopsDisabled());
+			eventDataEntity.setCopsRammed(teamEscapeArbitrationPacket.getCopsRammed());
+			eventDataEntity.setCostToState(teamEscapeArbitrationPacket.getCostToState());
+			eventDataEntity.setDistanceToFinish(teamEscapeArbitrationPacket.getDistanceToFinish());
+			eventDataEntity.setEventDurationInMS(teamEscapeArbitrationPacket.getEventDurationInMilliseconds());
+			eventDataEntity.setEventMode(eventModeId);
+			eventDataEntity.setFinishReason(teamEscapeArbitrationPacket.getFinishReason());
+			eventDataEntity.setFractionCompleted(teamEscapeArbitrationPacket.getFractionCompleted());
+			eventDataEntity.setInfractions(teamEscapeArbitrationPacket.getInfractions());
+			eventDataEntity.setPerfectStart(teamEscapeArbitrationPacket.getPerfectStart());
+			eventDataEntity.setRank(teamEscapeArbitrationPacket.getRank());
+			eventDataEntity.setRoadBlocksDodged(teamEscapeArbitrationPacket.getRoadBlocksDodged());
+			eventDataEntity.setSpikeStripsDodged(teamEscapeArbitrationPacket.getSpikeStripsDodged());
+			eventDataEntity.setTopSpeed(teamEscapeArbitrationPacket.getTopSpeed());
+			eventDataDao.save(eventDataEntity);
+
 			List<TeamEscapeEntrantResultType> teamEscapeEntrants = new ArrayList<TeamEscapeEntrantResultType>();
 			for (EventDataEntity racer : eventDataDao.getRacers(eventSessionId)) {
 				TeamEscapeEntrantResultType teamEscapeEntrantResult = new TeamEscapeEntrantResultType();
@@ -144,6 +163,7 @@ public class EventBO {
 				teamEscapeEntrantResult.setFractionCompleted(racer.getFractionCompleted());
 				teamEscapeEntrantResult.setPersonaId(racer.getPersonaId());
 				teamEscapeEntrantResult.setRanking(racer.getRank());
+				teamEscapeEntrants.add(teamEscapeEntrantResult);
 
 				if (racer.getEventDurationInMS() == 0L && racer.getPersonaId() != personaId
 						&& racer.getPersonaId() > 10) {
@@ -157,27 +177,8 @@ public class EventBO {
 						OpenFireSoapBoxCli.getInstance().send(eventTimingOutResponse, racer.getPersonaId());
 					}
 				}
-				teamEscapeEntrants.add(teamEscapeEntrantResult);
 			}
 			teamEscapeEventResult.setEntrants(teamEscapeEntrants);
-
-			eventDataEntity.setBustedCount(teamEscapeArbitrationPacket.getBustedCount());
-			eventDataEntity.setCarId(teamEscapeArbitrationPacket.getCarId());
-			eventDataEntity.setCopsDeployed(teamEscapeArbitrationPacket.getCopsDeployed());
-			eventDataEntity.setCopsDisabled(teamEscapeArbitrationPacket.getCopsDisabled());
-			eventDataEntity.setCopsRammed(teamEscapeArbitrationPacket.getCopsRammed());
-			eventDataEntity.setCostToState(teamEscapeArbitrationPacket.getCostToState());
-			eventDataEntity.setDistanceToFinish(teamEscapeArbitrationPacket.getDistanceToFinish());
-			eventDataEntity.setEventDurationInMS(teamEscapeArbitrationPacket.getEventDurationInMilliseconds());
-			eventDataEntity.setEventMode(eventModeId);
-			eventDataEntity.setFinishReason(teamEscapeArbitrationPacket.getFinishReason());
-			eventDataEntity.setFractionCompleted(teamEscapeArbitrationPacket.getFractionCompleted());
-			eventDataEntity.setInfractions(teamEscapeArbitrationPacket.getInfractions());
-			eventDataEntity.setRank(teamEscapeArbitrationPacket.getRank());
-			eventDataEntity.setRoadBlocksDodged(teamEscapeArbitrationPacket.getRoadBlocksDodged());
-			eventDataEntity.setSpikeStripsDodged(teamEscapeArbitrationPacket.getSpikeStripsDodged());
-			eventDataEntity.setTopSpeed(teamEscapeArbitrationPacket.getTopSpeed());
-			eventDataDao.save(eventDataEntity);
 
 			return teamEscapeEventResult;
 		case Pursuit_SP:
@@ -209,6 +210,16 @@ public class EventBO {
 
 			Boolean routeIsFirstPlace = routeArbitrationPacket.getRank() == 1;
 
+			eventDataEntity.setBestLapTimeInMS(routeArbitrationPacket.getBestLapDurationInMilliseconds());
+			eventDataEntity.setCarId(routeArbitrationPacket.getCarId());
+			eventDataEntity.setEventDurationInMS(routeArbitrationPacket.getEventDurationInMilliseconds());
+			eventDataEntity.setEventMode(eventModeId);
+			eventDataEntity.setFinishReason(routeArbitrationPacket.getFinishReason());
+			eventDataEntity.setPerfectStart(routeArbitrationPacket.getPerfectStart());
+			eventDataEntity.setRank(routeArbitrationPacket.getRank());
+			eventDataEntity.setTopSpeed(routeArbitrationPacket.getTopSpeed());
+			eventDataDao.save(eventDataEntity);
+
 			List<RouteEntrantResultType> routeEntrants = new ArrayList<RouteEntrantResultType>();
 			for (EventDataEntity racer : eventDataDao.getRacers(eventSessionId)) {
 				RouteEntrantResultType routeEntrantResult = new RouteEntrantResultType();
@@ -219,6 +230,7 @@ public class EventBO {
 				routeEntrantResult.setPersonaId(racer.getPersonaId());
 				routeEntrantResult.setRanking(racer.getRank());
 				routeEntrantResult.setTopSpeed(racer.getTopSpeed());
+				routeEntrants.add(routeEntrantResult);
 
 				if (racer.getEventDurationInMS() == 0L && racer.getPersonaId() != personaId
 						&& racer.getPersonaId() > 10) {
@@ -232,22 +244,12 @@ public class EventBO {
 						OpenFireSoapBoxCli.getInstance().send(eventTimingOutResponse, racer.getPersonaId());
 					}
 				}
-				routeEntrants.add(routeEntrantResult);
 			}
 			routeEventResult.setEntrants(routeEntrants);
 
-			eventDataEntity.setBestLapTimeInMS(routeArbitrationPacket.getBestLapDurationInMilliseconds());
-			eventDataEntity.setCarId(routeArbitrationPacket.getCarId());
-			eventDataEntity.setEventDurationInMS(routeArbitrationPacket.getEventDurationInMilliseconds());
-			eventDataEntity.setEventMode(eventModeId);
-			eventDataEntity.setFinishReason(routeArbitrationPacket.getFinishReason());
-			eventDataEntity.setRank(routeArbitrationPacket.getRank());
-			eventDataEntity.setTopSpeed(routeArbitrationPacket.getTopSpeed());
-			eventDataDao.save(eventDataEntity);
-
 			return routeEventResult;
 		default:
-			return null;
+			break;
 		}
 		return bust(personaId); // fake data
 	}

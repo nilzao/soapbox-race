@@ -53,7 +53,7 @@ public class TeamEscapeArbitrationPacketType {
 	@XmlElement(name = "NumberOfCollisions", required = true)
 	private Integer numberOfCollisions;
 	@XmlElement(name = "PerfectStart", required = true)
-	private Short perfectStart;
+	private Boolean perfectStart;
 	@XmlElement(name = "RoadBlocksDodged", required = true)
 	private Integer roadBlocksDodged;
 	@XmlElement(name = "SpikeStripsDodged", required = true)
@@ -215,11 +215,11 @@ public class TeamEscapeArbitrationPacketType {
 		this.numberOfCollisions = numberOfCollisions;
 	}
 
-	public Short getPerfectStart() {
+	public Boolean getPerfectStart() {
 		return perfectStart;
 	}
 
-	public void setPerfectStart(Short perfectStart) {
+	public void setPerfectStart(Boolean perfectStart) {
 		this.perfectStart = perfectStart;
 	}
 
