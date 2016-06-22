@@ -32,7 +32,7 @@ public class EventDataEntity implements ISoapBoxEntity {
 	@Column(name = "eventLaunched")
 	private Boolean eventLaunched;
 	@Column(name = "eventMode")
-	private Integer eventMode;
+	private Integer eventModeId;
 	@Column(name = "eventSessionId", nullable = false)
 	private Long eventSessionId;
 	@Column(name = "finishReason")
@@ -119,12 +119,12 @@ public class EventDataEntity implements ISoapBoxEntity {
 		this.eventLaunched = eventLaunched;
 	}
 
-	public Integer getEventMode() {
-		return eventMode;
+	public Integer getEventModeId() {
+		return eventModeId;
 	}
 
-	public void setEventMode(Integer eventMode) {
-		this.eventMode = eventMode;
+	public void setEventModeId(Integer eventModeId) {
+		this.eventModeId = eventModeId;
 	}
 
 	public Long getEventSessionId() {

@@ -59,7 +59,7 @@ public class SoapboxAPI extends Router {
 		if (eventIdParam != null)
 			reqEventData.setEventId(Long.valueOf(eventIdParam.toString()));
 		if (eventModeIdParam != null)
-			reqEventData.setEventMode(Integer.valueOf(eventModeIdParam.toString()));
+			reqEventData.setEventModeId(Integer.valueOf(eventModeIdParam.toString()));
 		if (personaIdParam != null)
 			reqEventData.setPersonaId(Long.valueOf(personaIdParam.toString()));
 		if (singlePlayerParam != null)

@@ -142,7 +142,7 @@ public class EventBO {
 			eventDataEntity.setCostToState(teamEscapeArbitrationPacket.getCostToState());
 			eventDataEntity.setDistanceToFinish(teamEscapeArbitrationPacket.getDistanceToFinish());
 			eventDataEntity.setEventDurationInMS(teamEscapeArbitrationPacket.getEventDurationInMilliseconds());
-			eventDataEntity.setEventMode(eventModeId);
+			eventDataEntity.setEventModeId(eventModeId);
 			eventDataEntity.setFinishReason(teamEscapeArbitrationPacket.getFinishReason());
 			eventDataEntity.setFractionCompleted(teamEscapeArbitrationPacket.getFractionCompleted());
 			eventDataEntity.setInfractions(teamEscapeArbitrationPacket.getInfractions());
@@ -165,8 +165,7 @@ public class EventBO {
 				teamEscapeEntrantResult.setRanking(racer.getRank());
 				teamEscapeEntrants.add(teamEscapeEntrantResult);
 
-				if (racer.getEventDurationInMS() == 0L && racer.getPersonaId() != personaId
-						&& racer.getPersonaId() > 10) {
+				if (racer.getPersonaId() != personaId) {
 					OpenFireSoapBoxCli.getInstance().send(teamEscapeEntrantResultResponse, racer.getPersonaId());
 					if (teamEscapeIsFirstPlace) {
 						XMPP_EventTimingOutType eventTimingOut = new XMPP_EventTimingOutType();
@@ -213,7 +212,7 @@ public class EventBO {
 			eventDataEntity.setBestLapTimeInMS(routeArbitrationPacket.getBestLapDurationInMilliseconds());
 			eventDataEntity.setCarId(routeArbitrationPacket.getCarId());
 			eventDataEntity.setEventDurationInMS(routeArbitrationPacket.getEventDurationInMilliseconds());
-			eventDataEntity.setEventMode(eventModeId);
+			eventDataEntity.setEventModeId(eventModeId);
 			eventDataEntity.setFinishReason(routeArbitrationPacket.getFinishReason());
 			eventDataEntity.setPerfectStart(routeArbitrationPacket.getPerfectStart());
 			eventDataEntity.setRank(routeArbitrationPacket.getRank());
@@ -232,8 +231,7 @@ public class EventBO {
 				routeEntrantResult.setTopSpeed(racer.getTopSpeed());
 				routeEntrants.add(routeEntrantResult);
 
-				if (racer.getEventDurationInMS() == 0L && racer.getPersonaId() != personaId
-						&& racer.getPersonaId() > 10) {
+				if (racer.getPersonaId() != personaId) {
 					OpenFireSoapBoxCli.getInstance().send(routeEntrantResultResponse, racer.getPersonaId());
 					if (routeIsFirstPlace) {
 						XMPP_EventTimingOutType eventTimingOut = new XMPP_EventTimingOutType();
