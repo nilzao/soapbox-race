@@ -24,6 +24,7 @@ public class Matchmaking extends Router {
 	}
 
 	public String leavelobby() {
+		setSessionEntry("EventSessionId", 0L);
 		return "";
 	}
 
