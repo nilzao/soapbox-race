@@ -77,7 +77,7 @@ public class EventBO {
 
 		OwnedCarEntity currentCar = personaEntity.getOwnedCarlist().get(personaEntity.getCurCarIndex());
 		Short newCarDurability = 0;
-		if (currentCar.getDurability() >= 0) {
+		if (currentCar.getDurability() > 0) {
 			newCarDurability = (short) (currentCar.getDurability() - 5);
 			currentCar.setDurability(newCarDurability);
 			ownedCarDao.save(currentCar);
