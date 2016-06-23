@@ -57,6 +57,14 @@ public class EventBO {
 	// TODO: add other event results
 	// TODO: actually drop items
 	// TODO: add drop rates
+	// TODO: manage FinishReason
+
+	// TODO: maybe add custom arbitration functions:
+	// -> would make everything easier to read and understand
+	// -> would make it easier to add drop rates
+	// -> would make it easier to calculate exp,cash&drops
+	// -> would make it easier to manage MySQL
+	// -> ex: routeArbitration, teamEscapeArbitration, pursuitArbitration
 	public Object arbitration(Long userId, String arbitrationXml) {
 		HttpSessionVO httpSessionVo = Router.getHttpSessionVo(userId);
 		Long eventSessionId = httpSessionVo.getEventSessionId();
