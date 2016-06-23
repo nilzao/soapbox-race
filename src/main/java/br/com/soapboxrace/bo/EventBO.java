@@ -56,6 +56,7 @@ public class EventBO {
 	// TODO: add drag, pursuit specific entries to MySQL
 	// TODO: add other event results
 	// TODO: actually drop items
+	// TODO: add drop rates
 	public Object arbitration(Long userId, String arbitrationXml) {
 		HttpSessionVO httpSessionVo = Router.getHttpSessionVo(userId);
 		Long eventSessionId = httpSessionVo.getEventSessionId();
