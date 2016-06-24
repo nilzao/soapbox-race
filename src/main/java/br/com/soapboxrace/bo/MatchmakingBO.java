@@ -23,11 +23,11 @@ import br.com.soapboxrace.jpa.LobbyEntity;
 import br.com.soapboxrace.jpa.LobbyEntrantEntity;
 import br.com.soapboxrace.jpa.PersonaEntity;
 import br.com.soapboxrace.xmpp.XmppLobby;
-import br.com.soapboxrace.xmpp.jaxb.CryptoTicketsType;
-import br.com.soapboxrace.xmpp.jaxb.EventSessionType;
-import br.com.soapboxrace.xmpp.jaxb.LobbyInviteType;
-import br.com.soapboxrace.xmpp.jaxb.LobbyLaunchedType;
-import br.com.soapboxrace.xmpp.jaxb.P2PCryptoTicketType;
+import br.com.soapboxrace.xmpp.jaxb.XMPP_CryptoTicketsType;
+import br.com.soapboxrace.xmpp.jaxb.XMPP_EventSessionType;
+import br.com.soapboxrace.xmpp.jaxb.XMPP_LobbyInviteType;
+import br.com.soapboxrace.xmpp.jaxb.XMPP_LobbyLaunchedType;
+import br.com.soapboxrace.xmpp.jaxb.XMPP_P2PCryptoTicketType;
 
 public class MatchmakingBO {
 
@@ -138,13 +138,13 @@ public class MatchmakingBO {
 	}
 
 	private void sendJoinEvent(Long personaId, LobbyEntity lobbyEntity) {
-		LobbyInviteType lobbyInviteType = new LobbyInviteType();
+		XMPP_LobbyInviteType xMPP_LobbyInviteType = new XMPP_LobbyInviteType();
 		Long eventId = lobbyEntity.getEvent().getId();
-		lobbyInviteType.setEventId(eventId);
+		xMPP_LobbyInviteType.setEventId(eventId);
 		Long lobbyId = lobbyEntity.getId();
-		lobbyInviteType.setLobbyInviteId(lobbyId);
+		xMPP_LobbyInviteType.setLobbyInviteId(lobbyId);
 		XmppLobby xmppLobby = new XmppLobby(personaId);
-		xmppLobby.joinQueueEvent(lobbyInviteType);
+		xmppLobby.joinQueueEvent(xMPP_LobbyInviteType);
 	}
 
 	public LobbyInfoType acceptinvite(Long personaId, Long lobbyInviteId) {
@@ -221,11 +221,11 @@ public class MatchmakingBO {
 			Long eventSessionId = eventDataDao.getNextSessionId();
 			LobbyEntity lobbyEntity = lobbyDao.findById(lobbyId);
 			List<LobbyEntrantEntity> entrants = lobbyEntity.getEntrants();
-			LobbyLaunchedType lobbyLaunched = new LobbyLaunchedType();
+			XMPP_LobbyLaunchedType lobbyLaunched = new XMPP_LobbyLaunchedType();
 			EntrantsType entrantsType = new EntrantsType();
 			List<LobbyEntrantInfoType> lobbyEntrantInfo = entrantsType.getLobbyEntrantInfo();
-			CryptoTicketsType cryptoTicketsType = new CryptoTicketsType();
-			List<P2PCryptoTicketType> p2pCryptoTicket = cryptoTicketsType.getP2PCryptoTicket();
+			XMPP_CryptoTicketsType xMPP_CryptoTicketsType = new XMPP_CryptoTicketsType();
+			List<XMPP_P2PCryptoTicketType> p2pCryptoTicket = xMPP_CryptoTicketsType.getP2PCryptoTicket();
 			int i = 0;
 			byte numOfRacers = (byte) entrants.size();
 			for (LobbyEntrantEntity lobbyEntrantEntity : entrants) {
@@ -251,7 +251,7 @@ public class MatchmakingBO {
 					httpSessionVo.setRelayCryptoTicket(cryptoTicketBase64);
 				}
 
-				P2PCryptoTicketType p2pCryptoTicketType = new P2PCryptoTicketType();
+				XMPP_P2PCryptoTicketType p2pCryptoTicketType = new XMPP_P2PCryptoTicketType();
 				p2pCryptoTicketType.setPersonaId(lobbyEntrantEntity.getPersona().getId());
 				p2pCryptoTicketType.setSessionKey("AAAAAAAAAAAAAAAAAAAAAA==");
 				p2pCryptoTicket.add(p2pCryptoTicketType);
@@ -264,16 +264,16 @@ public class MatchmakingBO {
 				lobbyEntrantInfoType.setState("Unknown");
 				lobbyEntrantInfo.add(lobbyEntrantInfoType);
 			}
-			EventSessionType eventSessionType = new EventSessionType();
+			XMPP_EventSessionType xMPP_EventSessionType = new XMPP_EventSessionType();
 			ChallengeType challengeType = new ChallengeType();
 			challengeType.setChallengeId("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 			challengeType.setPattern("FFFFFFFFFFFFFFFF");
 			challengeType.setLeftSize(14);
 			challengeType.setRightSize(50);
 
-			eventSessionType.setEventId(lobbyEntity.getEvent().getId());
-			eventSessionType.setChallenge(challengeType);
-			eventSessionType.setSessionId(eventSessionId);
+			xMPP_EventSessionType.setEventId(lobbyEntity.getEvent().getId());
+			xMPP_EventSessionType.setChallenge(challengeType);
+			xMPP_EventSessionType.setSessionId(eventSessionId);
 			lobbyLaunched.setNewRelayServer(true);
 			lobbyLaunched.setLobbyId(lobbyEntity.getId());
 			lobbyLaunched.setUdpRelayHost(Session.getUdpIp());
@@ -281,8 +281,8 @@ public class MatchmakingBO {
 
 			lobbyLaunched.setEntrants(entrantsType);
 
-			lobbyLaunched.setEventSession(eventSessionType);
-			XmppLobby.sendRelay(lobbyLaunched, cryptoTicketsType);
+			lobbyLaunched.setEventSession(xMPP_EventSessionType);
+			XmppLobby.sendRelay(lobbyLaunched, xMPP_CryptoTicketsType);
 		}
 	}
 

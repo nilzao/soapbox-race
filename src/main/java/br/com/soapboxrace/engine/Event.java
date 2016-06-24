@@ -15,8 +15,11 @@ public class Event extends Router {
 	}
 
 	public String arbitration() {
+		if (getHttpSessionVo(getUserId()).getEventSessionId() == 0L)
+			return "";
 		Object arbitration = eventBO.arbitration(getUserId(), readInputStream());
-		if (arbitration == null) return "";
+		if (arbitration == null)
+			return "";
 		setSessionEntry("EventSessionId", 0L);
 		return MarshalXML.marshal(arbitration);
 	}

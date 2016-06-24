@@ -6,9 +6,9 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "LobbyInviteType", propOrder = { "eventId", "inviteLifetimeInMilliseconds", "invitedByPersonaId",
+@XmlType(name = "XMPP_LobbyInviteType", propOrder = { "eventId", "inviteLifetimeInMilliseconds", "invitedByPersonaId",
 		"isPrivate", "lobbyInviteId" })
-public class LobbyInviteType {
+public class XMPP_LobbyInviteType {
 
 	@XmlElement(name = "EventId")
 	protected long eventId;

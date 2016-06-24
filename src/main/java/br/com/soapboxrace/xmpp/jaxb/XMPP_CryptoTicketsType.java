@@ -9,14 +9,14 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "CryptoTicketsType", propOrder = { "p2PCryptoTicket" })
-public class CryptoTicketsType {
+public class XMPP_CryptoTicketsType {
 
 	@XmlElement(name = "P2PCryptoTicket")
-	protected List<P2PCryptoTicketType> p2PCryptoTicket;
+	protected List<XMPP_P2PCryptoTicketType> p2PCryptoTicket;
 
-	public List<P2PCryptoTicketType> getP2PCryptoTicket() {
+	public List<XMPP_P2PCryptoTicketType> getP2PCryptoTicket() {
 		if (p2PCryptoTicket == null) {
-			p2PCryptoTicket = new ArrayList<P2PCryptoTicketType>();
+			p2PCryptoTicket = new ArrayList<XMPP_P2PCryptoTicketType>();
 		}
 		return this.p2PCryptoTicket;
 	}

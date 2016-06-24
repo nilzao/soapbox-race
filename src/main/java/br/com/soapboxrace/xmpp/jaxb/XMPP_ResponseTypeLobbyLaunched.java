@@ -8,23 +8,22 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ResponseTypeEventTimingOut", propOrder = { "eventTimingOut" })
+@XmlType(name = "XMPP_ResponseTypeLobbyLaunched", propOrder = { "lobbyInvite" })
 @XmlRootElement(name = "response")
-public class ResponseTypeEventTimingOut {
-	@XmlElement(name = "EventTimingOut", required = true)
-	protected EventTimingOutType eventTimingOut;
-
+public class XMPP_ResponseTypeLobbyLaunched {
+	@XmlElement(name = "LobbyLaunched", required = true)
+	protected XMPP_LobbyLaunchedType lobbyInvite;
 	@XmlAttribute(name = "status")
 	protected int status = 1;
 	@XmlAttribute(name = "ticket")
 	protected int ticket = 0;
 
-	public EventTimingOutType getEventTimingOut() {
-		return eventTimingOut;
+	public XMPP_LobbyLaunchedType getLobbyInvite() {
+		return lobbyInvite;
 	}
 
-	public void setEventTimingOut(EventTimingOutType eventTimingOut) {
-		this.eventTimingOut = eventTimingOut;
+	public void setLobbyInvite(XMPP_LobbyLaunchedType lobbyInvite) {
+		this.lobbyInvite = lobbyInvite;
 	}
 
 	public int getStatus() {

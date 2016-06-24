@@ -5,13 +5,13 @@ import java.util.List;
 import br.com.soapboxrace.jaxb.LobbyEntrantInfoType;
 import br.com.soapboxrace.jpa.LobbyEntrantEntity;
 import br.com.soapboxrace.openfire.OpenFireSoapBoxCli;
-import br.com.soapboxrace.xmpp.jaxb.CryptoTicketsType;
-import br.com.soapboxrace.xmpp.jaxb.LobbyInviteType;
-import br.com.soapboxrace.xmpp.jaxb.LobbyLaunchedType;
-import br.com.soapboxrace.xmpp.jaxb.P2PCryptoTicketType;
-import br.com.soapboxrace.xmpp.jaxb.ResponseTypeLobbyInvite;
-import br.com.soapboxrace.xmpp.jaxb.ResponseTypeEntrantAdd;
-import br.com.soapboxrace.xmpp.jaxb.ResponseTypeLobbyLaunched;
+import br.com.soapboxrace.xmpp.jaxb.XMPP_CryptoTicketsType;
+import br.com.soapboxrace.xmpp.jaxb.XMPP_LobbyInviteType;
+import br.com.soapboxrace.xmpp.jaxb.XMPP_LobbyLaunchedType;
+import br.com.soapboxrace.xmpp.jaxb.XMPP_P2PCryptoTicketType;
+import br.com.soapboxrace.xmpp.jaxb.XMPP_ResponseTypeLobbyInvite;
+import br.com.soapboxrace.xmpp.jaxb.XMPP_ResponseTypeEntrantAdded;
+import br.com.soapboxrace.xmpp.jaxb.XMPP_ResponseTypeLobbyLaunched;
 
 public class XmppLobby {
 
@@ -21,9 +21,9 @@ public class XmppLobby {
 		this.personaId = personaId;
 	}
 
-	public void joinQueueEvent(LobbyInviteType lobbyInviteType) {
-		ResponseTypeLobbyInvite responseType = new ResponseTypeLobbyInvite();
-		responseType.setLobbyInvite(lobbyInviteType);
+	public void joinQueueEvent(XMPP_LobbyInviteType xMPP_LobbyInviteType) {
+		XMPP_ResponseTypeLobbyInvite responseType = new XMPP_ResponseTypeLobbyInvite();
+		responseType.setLobbyInvite(xMPP_LobbyInviteType);
 		try {
 			Thread.sleep(1000);
 			OpenFireSoapBoxCli.getInstance().send(responseType, personaId);
@@ -33,7 +33,7 @@ public class XmppLobby {
 	}
 
 	public void sendJoinMsg(LobbyEntrantEntity lobbyEntrantEntity) {
-		ResponseTypeEntrantAdd responseType = new ResponseTypeEntrantAdd();
+		XMPP_ResponseTypeEntrantAdded responseType = new XMPP_ResponseTypeEntrantAdded();
 		responseType.setLobbyInvite(lobbyEntrantEntity);
 		try {
 			Thread.sleep(1000);
@@ -43,19 +43,19 @@ public class XmppLobby {
 		}
 	}
 
-	public static void sendRelay(LobbyLaunchedType lobbyLaunched, CryptoTicketsType cryptoTicketsType) {
+	public static void sendRelay(XMPP_LobbyLaunchedType lobbyLaunched, XMPP_CryptoTicketsType xMPP_CryptoTicketsType) {
 		List<LobbyEntrantInfoType> lobbyEntrantInfo = lobbyLaunched.getEntrants().getLobbyEntrantInfo();
 		for (LobbyEntrantInfoType lobbyEntrantInfoType : lobbyEntrantInfo) {
 			long personaId = lobbyEntrantInfoType.getPersonaId();
-			CryptoTicketsType cryptoTicketsTypeTmp = new CryptoTicketsType();
-			List<P2PCryptoTicketType> p2pCryptoTicket = cryptoTicketsType.getP2PCryptoTicket();
-			for (P2PCryptoTicketType p2pCryptoTicketType : p2pCryptoTicket) {
+			XMPP_CryptoTicketsType cryptoTicketsTypeTmp = new XMPP_CryptoTicketsType();
+			List<XMPP_P2PCryptoTicketType> p2pCryptoTicket = xMPP_CryptoTicketsType.getP2PCryptoTicket();
+			for (XMPP_P2PCryptoTicketType p2pCryptoTicketType : p2pCryptoTicket) {
 				if (personaId != p2pCryptoTicketType.getPersonaId()) {
 					cryptoTicketsTypeTmp.getP2PCryptoTicket().add(p2pCryptoTicketType);
 				}
 			}
 			lobbyLaunched.setCryptoTickets(cryptoTicketsTypeTmp);
-			ResponseTypeLobbyLaunched responseType = new ResponseTypeLobbyLaunched();
+			XMPP_ResponseTypeLobbyLaunched responseType = new XMPP_ResponseTypeLobbyLaunched();
 			responseType.setLobbyInvite(lobbyLaunched);
 			OpenFireSoapBoxCli.getInstance().send(responseType, personaId);
 		}

@@ -8,16 +8,16 @@ import javax.xml.bind.annotation.XmlType;
 import br.com.soapboxrace.jaxb.EntrantsType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "LobbyLaunchedType", propOrder = { "cryptoTickets", "entrants", "eventSession", "isNewRelayServer",
+@XmlType(name = "XMPP_LobbyLaunchedType", propOrder = { "cryptoTickets", "entrants", "eventSession", "isNewRelayServer",
 		"lobbyId", "udpRelayHost", "udpRelayPort" })
-public class LobbyLaunchedType {
+public class XMPP_LobbyLaunchedType {
 
 	@XmlElement(name = "CryptoTickets", required = true)
-	protected CryptoTicketsType cryptoTickets;
+	protected XMPP_CryptoTicketsType cryptoTickets;
 	@XmlElement(name = "Entrants", required = true)
 	protected EntrantsType entrants;
 	@XmlElement(name = "EventSession", required = true)
-	protected EventSessionType eventSession;
+	protected XMPP_EventSessionType eventSession;
 	@XmlElement(name = "IsNewRelayServer", required = true)
 	protected boolean isNewRelayServer;
 	@XmlElement(name = "LobbyId")
@@ -27,11 +27,11 @@ public class LobbyLaunchedType {
 	@XmlElement(name = "UdpRelayPort", required = true)
 	protected int udpRelayPort;
 
-	public CryptoTicketsType getCryptoTickets() {
+	public XMPP_CryptoTicketsType getCryptoTickets() {
 		return cryptoTickets;
 	}
 
-	public void setCryptoTickets(CryptoTicketsType value) {
+	public void setCryptoTickets(XMPP_CryptoTicketsType value) {
 		this.cryptoTickets = value;
 	}
 
@@ -43,11 +43,11 @@ public class LobbyLaunchedType {
 		this.entrants = value;
 	}
 
-	public EventSessionType getEventSession() {
+	public XMPP_EventSessionType getEventSession() {
 		return eventSession;
 	}
 
-	public void setEventSession(EventSessionType value) {
+	public void setEventSession(XMPP_EventSessionType value) {
 		this.eventSession = value;
 	}
 
