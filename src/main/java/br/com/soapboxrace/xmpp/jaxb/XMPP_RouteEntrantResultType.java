@@ -7,79 +7,78 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "RouteEntrantResultTypeXmpp", propOrder = { "eventDurationInMilliseconds", "eventSessionId", "finishReason",
-		"personaId", "ranking", "bestLapDurationInMilliseconds", "topSpeed" })
+@XmlType(name = "XMPP_RouteEntrantResultType", propOrder = { "eventDurationInMilliseconds", "eventSessionId",
+		"finishReason", "personaId", "ranking", "bestLapDurationInMilliseconds", "topSpeed" })
 @XmlRootElement(name = "RouteEntrantResult")
-public class RouteEntrantResultTypeXmpp {
+public class XMPP_RouteEntrantResultType {
 	@XmlElement(name = "EventDurationInMilliseconds")
-	protected long eventDurationInMilliseconds;
+	private Long eventDurationInMilliseconds;
 	@XmlElement(name = "EventSessionId")
-	protected long eventSessionId;
+	private Long eventSessionId;
 	@XmlElement(name = "FinishReason")
-	protected int finishReason;
+	private Integer finishReason;
 	@XmlElement(name = "PersonaId")
-	protected long personaId;
+	private Long personaId;
 	@XmlElement(name = "Ranking")
-	protected int ranking;
+	private Short ranking;
 	@XmlElement(name = "BestLapDurationInMilliseconds")
-	protected long bestLapDurationInMilliseconds;
+	private Long bestLapDurationInMilliseconds;
 	@XmlElement(name = "TopSpeed")
-	protected float topSpeed;
+	private Float topSpeed;
 
-	public long getEventDurationInMilliseconds() {
+	public Long getEventDurationInMilliseconds() {
 		return eventDurationInMilliseconds;
 	}
 
-	public void setEventDurationInMilliseconds(long eventDurationInMilliseconds) {
+	public void setEventDurationInMilliseconds(Long eventDurationInMilliseconds) {
 		this.eventDurationInMilliseconds = eventDurationInMilliseconds;
 	}
 
-	public long getEventSessionId() {
+	public Long getEventSessionId() {
 		return eventSessionId;
 	}
 
-	public void setEventSessionId(long eventSessionId) {
+	public void setEventSessionId(Long eventSessionId) {
 		this.eventSessionId = eventSessionId;
 	}
 
-	public int getFinishReason() {
+	public Integer getFinishReason() {
 		return finishReason;
 	}
 
-	public void setFinishReason(int finishReason) {
+	public void setFinishReason(Integer finishReason) {
 		this.finishReason = finishReason;
 	}
 
-	public long getPersonaId() {
+	public Long getPersonaId() {
 		return personaId;
 	}
 
-	public void setPersonaId(long personaId) {
+	public void setPersonaId(Long personaId) {
 		this.personaId = personaId;
 	}
 
-	public int getRanking() {
+	public Short getRanking() {
 		return ranking;
 	}
 
-	public void setRanking(int ranking) {
+	public void setRanking(Short ranking) {
 		this.ranking = ranking;
 	}
 
-	public long getBestLapDurationInMilliseconds() {
+	public Long getBestLapDurationInMilliseconds() {
 		return bestLapDurationInMilliseconds;
 	}
 
-	public void setBestLapDurationInMilliseconds(long bestLapDurationInMilliseconds) {
+	public void setBestLapDurationInMilliseconds(Long bestLapDurationInMilliseconds) {
 		this.bestLapDurationInMilliseconds = bestLapDurationInMilliseconds;
 	}
 
-	public float getTopSpeed() {
+	public Float getTopSpeed() {
 		return topSpeed;
 	}
 
-	public void setTopSpeed(float topSpeed) {
+	public void setTopSpeed(Float topSpeed) {
 		this.topSpeed = topSpeed;
 	}
-
 }

@@ -8,8 +8,8 @@ import java.net.Socket;
 
 import br.com.soapboxrace.jaxb.util.MarshalXML;
 import br.com.soapboxrace.jaxb.util.UnmarshalXML;
-import br.com.soapboxrace.xmpp.jaxb.IQPingType;
-import br.com.soapboxrace.xmpp.jaxb.IQPongType;
+import br.com.soapboxrace.xmpp.jaxb.XMPP_IQPingType;
+import br.com.soapboxrace.xmpp.jaxb.XMPP_IQPongType;
 
 public class OpenFireTalk {
 
@@ -53,8 +53,8 @@ public class OpenFireTalk {
 		}
 		System.out.println("S->C [" + msg + "]");
 		if (msg.contains("<ping xmlns=\"urn:xmpp:ping\"/>")) {
-			IQPingType openfirePing = (IQPingType) UnmarshalXML.unMarshal(msg, new IQPingType());
-			write(MarshalXML.marshal(new IQPongType(openfirePing.getId())));
+			XMPP_IQPingType openfirePing = (XMPP_IQPingType) UnmarshalXML.unMarshal(msg, new XMPP_IQPingType());
+			write(MarshalXML.marshal(new XMPP_IQPongType(openfirePing.getId())));
 		}
 		return msg;
 	}

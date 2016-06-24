@@ -6,8 +6,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "PowerupActivatedType", propOrder = { "count", "id", "personaId", "targetPersonaId" })
-public class PowerupActivatedType {
+@XmlType(name = "XMPP_PowerupActivatedType", propOrder = { "count", "id", "personaId", "targetPersonaId" })
+public class XMPP_PowerupActivatedType {
 	@XmlElement(name = "Count", required = true)
 	private Integer count = 1;
 	@XmlElement(name = "Id", required = true)

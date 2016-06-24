@@ -18,15 +18,20 @@ import br.com.soapboxrace.jaxb.PursuitEventResultType;
 import br.com.soapboxrace.jaxb.RouteArbitrationPacketType;
 import br.com.soapboxrace.jaxb.RouteEntrantResultType;
 import br.com.soapboxrace.jaxb.RouteEventResultType;
+import br.com.soapboxrace.jaxb.TeamEscapeArbitrationPacketType;
+import br.com.soapboxrace.jaxb.TeamEscapeEntrantResultType;
+import br.com.soapboxrace.jaxb.TeamEscapeEventResultType;
 import br.com.soapboxrace.jaxb.util.UnmarshalXML;
 import br.com.soapboxrace.jpa.EventDataEntity;
 import br.com.soapboxrace.jpa.OwnedCarEntity;
 import br.com.soapboxrace.jpa.PersonaEntity;
 import br.com.soapboxrace.openfire.OpenFireSoapBoxCli;
-import br.com.soapboxrace.xmpp.jaxb.EventTimingOutType;
-import br.com.soapboxrace.xmpp.jaxb.ResponseTypeEntrantResult;
-import br.com.soapboxrace.xmpp.jaxb.ResponseTypeEventTimingOut;
-import br.com.soapboxrace.xmpp.jaxb.RouteEntrantResultTypeXmpp;
+import br.com.soapboxrace.xmpp.jaxb.XMPP_EventTimingOutType;
+import br.com.soapboxrace.xmpp.jaxb.XMPP_ResponseTypeEventTimingOut;
+import br.com.soapboxrace.xmpp.jaxb.XMPP_ResponseTypeRouteEntrantResult;
+import br.com.soapboxrace.xmpp.jaxb.XMPP_ResponseTypeTeamEscapeEntrantResult;
+import br.com.soapboxrace.xmpp.jaxb.XMPP_RouteEntrantResultType;
+import br.com.soapboxrace.xmpp.jaxb.XMPP_TeamEscapeEntrantResultType;
 
 public class EventBO {
 
@@ -38,7 +43,6 @@ public class EventBO {
 		// Router.getHttpSessionVo(userId).getAlternateEventTimer().start();
 		Long personaId = Router.getHttpSessionVo(userId).getPersonaId();
 		EventDataEntity eventDataEntity = eventDataDao.findByEventSessionIdAndPersonaId(eventSessionId, personaId);
-		eventDataEntity.setBestLapTimeInMS(0L);
 		eventDataEntity.setEventDurationInMS(0L);
 		eventDataEntity.setEventLaunched(true);
 		eventDataEntity.setFinishReason(0);
@@ -48,11 +52,19 @@ public class EventBO {
 		return "";
 	}
 
-	// TODO: add instancedaccolades() for correct reward, bonus and drop
-	// calculation
-	// TODO: add team-escape, drag, pursuit specific entries to MySQL
+	// TODO: add instancedaccolades() for team escape
+	// TODO: add drag, pursuit specific entries to MySQL
 	// TODO: add other event results
 	// TODO: actually drop items
+	// TODO: add drop rates
+	// TODO: manage FinishReason
+
+	// TODO: maybe add custom arbitration functions:
+	// -> would make everything easier to read and understand
+	// -> would make it easier to add drop rates
+	// -> would make it easier to calculate exp,cash&drops
+	// -> would make it easier to manage MySQL
+	// -> ex: routeArbitration, teamEscapeArbitration, pursuitArbitration
 	public Object arbitration(Long userId, String arbitrationXml) {
 		HttpSessionVO httpSessionVo = Router.getHttpSessionVo(userId);
 		Long eventSessionId = httpSessionVo.getEventSessionId();
@@ -74,7 +86,7 @@ public class EventBO {
 
 		OwnedCarEntity currentCar = personaEntity.getOwnedCarlist().get(personaEntity.getCurCarIndex());
 		Short newCarDurability = 0;
-		if (currentCar.getDurability() >= 0) {
+		if (currentCar.getDurability() > 0) {
 			newCarDurability = (short) (currentCar.getDurability() - 5);
 			currentCar.setDurability(newCarDurability);
 			ownedCarDao.save(currentCar);
@@ -101,13 +113,82 @@ public class EventBO {
 		accolades.setFinalRewards(finalRewardsType);
 		accolades.setLuckyDrawInfo(luckyDrawInfo);
 
-		switch (EventModes.forId(eventDataEntity.getEventDefinition().getEventModeId())) {
+		Integer eventModeId = eventDataEntity.getEventDefinition().getEventModeId();
+		switch (EventModes.forId(eventModeId)) {
 		case Drag:
 			break;
-		case MeetingPlace:
-			break;
+		// case MeetingPlace:
 		case Pursuit_MP:
-			break;
+			TeamEscapeArbitrationPacketType teamEscapeArbitrationPacket = (TeamEscapeArbitrationPacketType) UnmarshalXML
+					.unMarshal(arbitrationXml, new TeamEscapeArbitrationPacketType());
+			TeamEscapeEventResultType teamEscapeEventResult = new TeamEscapeEventResultType();
+
+			teamEscapeEventResult.setAccolades(null);
+			teamEscapeEventResult.setDurability(newCarDurability);
+			teamEscapeEventResult.setEventId(eventDataEntity.getEventId());
+			teamEscapeEventResult.setEventSessionId(eventSessionId);
+
+			XMPP_TeamEscapeEntrantResultType xmppTeamEscapeResult = new XMPP_TeamEscapeEntrantResultType();
+			xmppTeamEscapeResult.setDistanceToFinish(teamEscapeArbitrationPacket.getDistanceToFinish());
+			xmppTeamEscapeResult
+					.setEventDurationInMilliseconds(teamEscapeArbitrationPacket.getEventDurationInMilliseconds());
+			xmppTeamEscapeResult.setEventSessionId(eventSessionId);
+			xmppTeamEscapeResult.setFinishReason(teamEscapeArbitrationPacket.getFinishReason());
+			xmppTeamEscapeResult.setFractionCompleted(teamEscapeArbitrationPacket.getFractionCompleted());
+			xmppTeamEscapeResult.setPersonaId(personaId);
+			xmppTeamEscapeResult.setRanking(teamEscapeArbitrationPacket.getRank());
+
+			XMPP_ResponseTypeTeamEscapeEntrantResult teamEscapeEntrantResultResponse = new XMPP_ResponseTypeTeamEscapeEntrantResult();
+			teamEscapeEntrantResultResponse.setTeamEscapeEntrantResult(xmppTeamEscapeResult);
+
+			Boolean teamEscapeIsFirstPlace = teamEscapeArbitrationPacket.getRank() == 1;
+
+			eventDataEntity.setBustedCount(teamEscapeArbitrationPacket.getBustedCount());
+			eventDataEntity.setCarId(teamEscapeArbitrationPacket.getCarId());
+			eventDataEntity.setCopsDeployed(teamEscapeArbitrationPacket.getCopsDeployed());
+			eventDataEntity.setCopsDisabled(teamEscapeArbitrationPacket.getCopsDisabled());
+			eventDataEntity.setCopsRammed(teamEscapeArbitrationPacket.getCopsRammed());
+			eventDataEntity.setCostToState(teamEscapeArbitrationPacket.getCostToState());
+			eventDataEntity.setDistanceToFinish(teamEscapeArbitrationPacket.getDistanceToFinish());
+			eventDataEntity.setEventDurationInMS(teamEscapeArbitrationPacket.getEventDurationInMilliseconds());
+			eventDataEntity.setEventModeId(eventModeId);
+			eventDataEntity.setFinishReason(teamEscapeArbitrationPacket.getFinishReason());
+			eventDataEntity.setFractionCompleted(teamEscapeArbitrationPacket.getFractionCompleted());
+			eventDataEntity.setInfractions(teamEscapeArbitrationPacket.getInfractions());
+			eventDataEntity.setPerfectStart(teamEscapeArbitrationPacket.getPerfectStart());
+			eventDataEntity.setRank(teamEscapeArbitrationPacket.getRank());
+			eventDataEntity.setRoadBlocksDodged(teamEscapeArbitrationPacket.getRoadBlocksDodged());
+			eventDataEntity.setSpikeStripsDodged(teamEscapeArbitrationPacket.getSpikeStripsDodged());
+			eventDataEntity.setTopSpeed(teamEscapeArbitrationPacket.getTopSpeed());
+			eventDataDao.save(eventDataEntity);
+
+			List<TeamEscapeEntrantResultType> teamEscapeEntrants = new ArrayList<TeamEscapeEntrantResultType>();
+			for (EventDataEntity racer : eventDataDao.getRacers(eventSessionId)) {
+				TeamEscapeEntrantResultType teamEscapeEntrantResult = new TeamEscapeEntrantResultType();
+				teamEscapeEntrantResult.setDistanceToFinish(racer.getDistanceToFinish());
+				teamEscapeEntrantResult.setEventDurationInMilliseconds(racer.getEventDurationInMS());
+				teamEscapeEntrantResult.setEventSessionId(eventSessionId);
+				teamEscapeEntrantResult.setFinishReason(racer.getFinishReason());
+				teamEscapeEntrantResult.setFractionCompleted(racer.getFractionCompleted());
+				teamEscapeEntrantResult.setPersonaId(racer.getPersonaId());
+				teamEscapeEntrantResult.setRanking(racer.getRank());
+				teamEscapeEntrants.add(teamEscapeEntrantResult);
+
+				if (racer.getPersonaId() != personaId) {
+					OpenFireSoapBoxCli.getInstance().send(teamEscapeEntrantResultResponse, racer.getPersonaId());
+					if (teamEscapeIsFirstPlace) {
+						XMPP_EventTimingOutType eventTimingOut = new XMPP_EventTimingOutType();
+						eventTimingOut.setEventSessionId(eventSessionId);
+						XMPP_ResponseTypeEventTimingOut eventTimingOutResponse = new XMPP_ResponseTypeEventTimingOut();
+						eventTimingOutResponse.setEventTimingOut(eventTimingOut);
+
+						OpenFireSoapBoxCli.getInstance().send(eventTimingOutResponse, racer.getPersonaId());
+					}
+				}
+			}
+			teamEscapeEventResult.setEntrants(teamEscapeEntrants);
+
+			return teamEscapeEventResult;
 		case Pursuit_SP:
 			break;
 		case Circuit:
@@ -123,26 +204,31 @@ public class EventBO {
 			routeEventResult.setEventId(eventDataEntity.getEventId());
 			routeEventResult.setEventSessionId(eventSessionId);
 
-			RouteEntrantResultTypeXmpp xmppResult = new RouteEntrantResultTypeXmpp();
-			xmppResult.setBestLapDurationInMilliseconds(routeArbitrationPacket.getBestLapDurationInMilliseconds());
-			xmppResult.setEventDurationInMilliseconds(routeArbitrationPacket.getEventDurationInMilliseconds());
-			xmppResult.setEventSessionId(eventSessionId);
-			xmppResult.setFinishReason(routeArbitrationPacket.getFinishReason());
-			xmppResult.setPersonaId(personaId);
-			xmppResult.setRanking(routeArbitrationPacket.getRank());
-			xmppResult.setTopSpeed(routeArbitrationPacket.getTopSpeed());
+			XMPP_RouteEntrantResultType xmppRouteResult = new XMPP_RouteEntrantResultType();
+			xmppRouteResult.setBestLapDurationInMilliseconds(routeArbitrationPacket.getBestLapDurationInMilliseconds());
+			xmppRouteResult.setEventDurationInMilliseconds(routeArbitrationPacket.getEventDurationInMilliseconds());
+			xmppRouteResult.setEventSessionId(eventSessionId);
+			xmppRouteResult.setFinishReason(routeArbitrationPacket.getFinishReason());
+			xmppRouteResult.setPersonaId(personaId);
+			xmppRouteResult.setRanking(routeArbitrationPacket.getRank());
+			xmppRouteResult.setTopSpeed(routeArbitrationPacket.getTopSpeed());
 
-			ResponseTypeEntrantResult entrantResultResponse = new ResponseTypeEntrantResult();
-			entrantResultResponse.setRouteEntrantResult(xmppResult);
+			XMPP_ResponseTypeRouteEntrantResult routeEntrantResultResponse = new XMPP_ResponseTypeRouteEntrantResult();
+			routeEntrantResultResponse.setRouteEntrantResult(xmppRouteResult);
 
-			EventTimingOutType eventTimingOut = new EventTimingOutType();
-			eventTimingOut.setEventSessionId(eventSessionId);
-			ResponseTypeEventTimingOut eventTimingOutResponse = new ResponseTypeEventTimingOut();
-			eventTimingOutResponse.setEventTimingOut(eventTimingOut);
+			Boolean routeIsFirstPlace = routeArbitrationPacket.getRank() == 1;
 
-			Boolean isFirstPlace = routeArbitrationPacket.getRank() == 1;
+			eventDataEntity.setBestLapTimeInMS(routeArbitrationPacket.getBestLapDurationInMilliseconds());
+			eventDataEntity.setCarId(routeArbitrationPacket.getCarId());
+			eventDataEntity.setEventDurationInMS(routeArbitrationPacket.getEventDurationInMilliseconds());
+			eventDataEntity.setEventModeId(eventModeId);
+			eventDataEntity.setFinishReason(routeArbitrationPacket.getFinishReason());
+			eventDataEntity.setPerfectStart(routeArbitrationPacket.getPerfectStart());
+			eventDataEntity.setRank(routeArbitrationPacket.getRank());
+			eventDataEntity.setTopSpeed(routeArbitrationPacket.getTopSpeed());
+			eventDataDao.save(eventDataEntity);
 
-			List<RouteEntrantResultType> entrants = new ArrayList<RouteEntrantResultType>();
+			List<RouteEntrantResultType> routeEntrants = new ArrayList<RouteEntrantResultType>();
 			for (EventDataEntity racer : eventDataDao.getRacers(eventSessionId)) {
 				RouteEntrantResultType routeEntrantResult = new RouteEntrantResultType();
 				routeEntrantResult.setBestLapDurationInMilliseconds(racer.getBestLapTimeInMS());
@@ -152,32 +238,27 @@ public class EventBO {
 				routeEntrantResult.setPersonaId(racer.getPersonaId());
 				routeEntrantResult.setRanking(racer.getRank());
 				routeEntrantResult.setTopSpeed(racer.getTopSpeed());
+				routeEntrants.add(routeEntrantResult);
 
-				if (racer.getEventDurationInMS() == 0L && racer.getPersonaId() != personaId
-						&& racer.getPersonaId() > 10) {
-					OpenFireSoapBoxCli.getInstance().send(entrantResultResponse, racer.getPersonaId());
-					if (isFirstPlace) {
+				if (racer.getPersonaId() != personaId) {
+					OpenFireSoapBoxCli.getInstance().send(routeEntrantResultResponse, racer.getPersonaId());
+					if (routeIsFirstPlace) {
+						XMPP_EventTimingOutType eventTimingOut = new XMPP_EventTimingOutType();
+						eventTimingOut.setEventSessionId(eventSessionId);
+						XMPP_ResponseTypeEventTimingOut eventTimingOutResponse = new XMPP_ResponseTypeEventTimingOut();
+						eventTimingOutResponse.setEventTimingOut(eventTimingOut);
+
 						OpenFireSoapBoxCli.getInstance().send(eventTimingOutResponse, racer.getPersonaId());
 					}
 				}
-				entrants.add(routeEntrantResult);
 			}
-			routeEventResult.setEntrants(entrants);
-
-			eventDataEntity.setBestLapTimeInMS(routeArbitrationPacket.getBestLapDurationInMilliseconds());
-			eventDataEntity.setCarId(routeArbitrationPacket.getCarId());
-			eventDataEntity.setEventDurationInMS(routeArbitrationPacket.getEventDurationInMilliseconds());
-			eventDataEntity.setFinishReason(routeArbitrationPacket.getFinishReason());
-			eventDataEntity.setRank(routeArbitrationPacket.getRank());
-			eventDataEntity.setTopSpeed(routeArbitrationPacket.getTopSpeed());
-			eventDataDao.save(eventDataEntity);
+			routeEventResult.setEntrants(routeEntrants);
 
 			return routeEventResult;
 		default:
-			return null;
+			break;
 		}
-		return bust(personaId); // adding it to make the game NOT crash until
-								// someone (or me) adds other event results
+		return bust(personaId); // fake data
 	}
 
 	public PursuitEventResultType bust(Long personaId) {

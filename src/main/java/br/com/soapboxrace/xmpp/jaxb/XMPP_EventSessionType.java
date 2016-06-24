@@ -8,8 +8,8 @@ import javax.xml.bind.annotation.XmlType;
 import br.com.soapboxrace.jaxb.ChallengeType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "EventSessionType", propOrder = { "challenge", "eventId", "sessionId" })
-public class EventSessionType {
+@XmlType(name = "XMPP_EventSessionType", propOrder = { "challenge", "eventId", "sessionId" })
+public class XMPP_EventSessionType {
 
 	@XmlElement(name = "Challenge", required = true)
 	protected ChallengeType challenge;

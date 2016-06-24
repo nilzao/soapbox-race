@@ -6,8 +6,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "P2PCryptoTicketType", propOrder = { "personaId", "sessionKey" })
-public class P2PCryptoTicketType {
+@XmlType(name = "XMPP_P2PCryptoTicketType", propOrder = { "personaId", "sessionKey" })
+public class XMPP_P2PCryptoTicketType {
 
 	@XmlElement(name = "PersonaId")
 	protected long personaId;
