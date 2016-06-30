@@ -85,8 +85,7 @@ public class Router {
 			long jidHash = (long) resHash[0]; // edx:eax
 			// Long jidHash = multiplier * (33L & 0xffffffffL);
 			long hiJidHash = (jidHash >>> 32) & 0xffffffffL; // edi = edx
-			long loJidHash = ((jidHash << 32) >>> 32) & 0xffffffffL; // ecx =
-																		// eax
+			long loJidHash = ((jidHash << 32) >>> 32) & 0xffffffffL; // ecx = eax
 
 			System.out.printf("h: %d,	lo: %d,	hi: %d\r\n", jidHash, loJidHash, hiJidHash);
 			System.out.printf("hex-h: %s,	hex-lo: %s,	hex-hi: %s\r\n", Long.toHexString(jidHash),
@@ -115,8 +114,7 @@ public class Router {
 			long jidHash = (long) resHash[0]; // edx:eax
 			// Long jidHash = multiplier * (33L & 0xffffffffL);
 			long hiJidHash = (jidHash >>> 32) & 0xffffffffL; // edx << edi
-			long loJidHash = ((jidHash << 32) >>> 32) & 0xffffffffL; // eax <<
-																		// ecx
+			long loJidHash = ((jidHash << 32) >>> 32) & 0xffffffffL; // eax << ecx
 
 			System.out.printf("h: %d,	lo: %d,	hi: %d\r\n", jidHash, loJidHash, hiJidHash);
 			System.out.printf("hex-h: %s,	hex-lo: %s,	hex-hi: %s\r\n", Long.toHexString(jidHash),
