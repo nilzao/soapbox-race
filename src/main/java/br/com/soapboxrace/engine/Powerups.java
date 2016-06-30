@@ -1,8 +1,8 @@
 package br.com.soapboxrace.engine;
 
+import br.com.soapboxrace.openfire.OpenFireSoapBoxCli;
 import br.com.soapboxrace.xmpp.jaxb.XMPP_PowerupActivatedType;
 import br.com.soapboxrace.xmpp.jaxb.XMPP_ResponseTypePowerupActivated;
-import br.com.soapboxrace.openfire.OpenFireSoapBoxCli;
 
 public class Powerups extends Router {
 	private Long getPowerupHash() {
