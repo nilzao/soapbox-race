@@ -64,7 +64,7 @@ public class UserBO {
 		}
 		throw new EngineException("Login Error: Email wasn't found!");
 	}
-	
+
 	public String createUser(String email, String passwordHash) throws EngineException {
 		if (userDao.findByEmail(email) != null)
 			throw new EngineException("Registration Error: Email already exists!");
