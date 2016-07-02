@@ -18,16 +18,6 @@ public class Router {
 
 	public static ConcurrentHashMap<Long, HttpSessionVO> activeUsers = new ConcurrentHashMap<Long, HttpSessionVO>();
 	public static SecureRandom random = new SecureRandom();
-
-	public static HttpSessionVO getHttpSessionVo(Long userId) {
-		if (Router.activeUsers.containsKey(userId)) {
-			HttpSessionVO httpSessionVO = Router.activeUsers.get(userId);
-			if (httpSessionVO != null)
-				return httpSessionVO;
-		}
-		return null;
-	}
-
 	private String target;
 	private HttpServletRequest request;
 	private Request baseRequest;
@@ -43,31 +33,17 @@ public class Router {
 		long loMultiplicand = ((multiplicand << 32) >>> 32) & 0xffffffffL;
 
 		long multiplied, loMultiplied, hiMultiplied, oldMultiplied;
-		if (hiMultiplicand == 0 && hiMultiplier == 0) {
+		if (hiMultiplicand == 0 && hiMultiplier == 0)
 			multiplied = loMultiplier * loMultiplicand;
-		} else {/*
-			long hi_lo = 
-				((hiMultiplier * loMultiplicand) >>> 32) & 0xffffffffL;
-			long lo_hi = 
-				((loMultiplier * hiMultiplicand) >>> 32) & 0xffffffffL;
-			long lo_lo = 
-				(loMultiplier * loMultiplicand) & 0xffffffffL;
-			multiplied = 
-				(hi_lo + lo_hi) << 32 | lo_lo;*/
+		else
 			multiplied = multiplier * multiplicand;
-		}
 		oldMultiplied = multiplied;
 		hiMultiplied = (multiplied >>> 32) & 0xffffffffL;
 		loMultiplied = ((multiplied << 32) >>> 32) & 0xffffffffL;
 		do { // modulo wrapper on UInt32
-			if (loMultiplied > 4294967295L)
+			if (loMultiplied < 0L || loMultiplied > 4294967295L)
 				loMultiplied %= 4294967296L;
-			if (hiMultiplied > 4294967295L)
-				hiMultiplied %= 4294967296L;
-
-			if (loMultiplied < 0L)
-				loMultiplied %= 4294967296L;
-			if (hiMultiplied < 0L)
+			if (hiMultiplied < 0L || hiMultiplied > 4294967295L)
 				hiMultiplied %= 4294967296L;
 		} while ((loMultiplied < 0L || hiMultiplied < 0L)
 				&& (loMultiplied > 4294967295L || hiMultiplied > 4294967295L));
@@ -75,78 +51,17 @@ public class Router {
 		return new Object[] { multiplied, oldMultiplied == loMultiplied };
 	}
 
-	public static void main(String[] args) {
-		long multiplier = 4294967295L & 0xffffffffL; // ecx : ??
-		boolean cFlag = true;
-		char[] jid = String.format("nfsw.%d@%s", 101L, "192.168.2.33").toCharArray();
-		for (int i = 0; i < jid.length; i++) {
-			System.out.printf("Char: %s, multiplier: %d, cFlag: %b\r\n", jid[i], multiplier, cFlag);
-			Object[] resHash = __allmul(multiplier, 33L & 0xffffffffL);
-			long jidHash = (long) resHash[0]; // edx:eax
-			// Long jidHash = multiplier * (33L & 0xffffffffL);
-			long hiJidHash = (jidHash >>> 32) & 0xffffffffL; // edi = edx
-			long loJidHash = ((jidHash << 32) >>> 32) & 0xffffffffL; // ecx = eax
-
-			System.out.printf("h: %d,	lo: %d,	hi: %d\r\n", jidHash, loJidHash, hiJidHash);
-			System.out.printf("hex-h: %s,	hex-lo: %s,	hex-hi: %s\r\n", Long.toHexString(jidHash),
-					Long.toHexString(loJidHash), Long.toHexString(hiJidHash));
-
-			long hiCdq = hiJidHash; // edx
-			long loCdq = Long.valueOf(jid[i]) & 0xffffffffL; // eax
-			long cdq = hiCdq << 32 | loCdq; // edx:eax
-
-			long hiMultiplier = (((hiJidHash >>> 32) + hiCdq) + (cFlag == true ? 1L : 0L)) & 0xffffffffL;
-			long loMultiplier = (((loJidHash << 32) >>> 32) + loCdq) & 0xffffffffL;
-
-			multiplier = hiMultiplier << 32 | loMultiplier;
-			cFlag = (boolean) resHash[1];
-
-			System.out.printf("cdq: %d,	loCdq: %d,	hiCdq: %d\r\n", cdq, loCdq, hiCdq);
-			System.out.printf("multiplier: %d,	loMultiplier: %s,	hiMultiplier: %s\r\n\r\n", multiplier,
-					Long.toHexString(loMultiplier), Long.toHexString(hiMultiplier));
-		}
-
-		jid = "<response status=\"1\" ticket=\"0\"><PowerupActivated><Count>1</Count><Id>-1681514783</Id><PersonaId>101</PersonaId><TargetPersonaId>0</TargetPersonaId></PowerupActivated></response>"
-				.toCharArray();
-		for (int i = 0; i < jid.length; i++) {
-			System.out.printf("Char: %s, multiplier: %d, cFlag: %b\r\n", jid[i], multiplier, cFlag);
-			Object[] resHash = __allmul(multiplier, 33L & 0xffffffffL);
-			long jidHash = (long) resHash[0]; // edx:eax
-			// Long jidHash = multiplier * (33L & 0xffffffffL);
-			long hiJidHash = (jidHash >>> 32) & 0xffffffffL; // edx << edi
-			long loJidHash = ((jidHash << 32) >>> 32) & 0xffffffffL; // eax << ecx
-
-			System.out.printf("h: %d,	lo: %d,	hi: %d\r\n", jidHash, loJidHash, hiJidHash);
-			System.out.printf("hex-h: %s,	hex-lo: %s,	hex-hi: %s\r\n", Long.toHexString(jidHash),
-					Long.toHexString(loJidHash), Long.toHexString(hiJidHash));
-
-			long hiCdq = hiJidHash; // edx
-			long loCdq = Long.valueOf(jid[i]) & 0xffffffffL; // eax
-			long cdq = hiCdq << 32 | loCdq; // edx:eax
-
-			long hiMultiplier = (((hiJidHash >>> 32) + hiCdq) + (cFlag == true ? 1L : 0L)) & 0xffffffffL;
-			long loMultiplier = (((loJidHash << 32) >>> 32) + loCdq) & 0xffffffffL;
-
-			multiplier = hiMultiplier << 32 | loMultiplier;
-			cFlag = (boolean) resHash[1];
-
-			System.out.printf("cdq: %d,	loCdq: %d,	hiCdq: %d\r\n", cdq, loCdq, hiCdq);
-			System.out.printf("multiplier: %d,	loMultiplier: %s,	hiMultiplier: %s\r\n\r\n", multiplier,
-					Long.toHexString(loMultiplier), Long.toHexString(hiMultiplier));
-		}
-	}
-
 	public static Long calculateHash(char[] jid, char[] response) {
 		long multiplier = 4294967295L & 0xffffffffL;
 		boolean cFlag = true;
-		for (int i = 0; i < jid.length; i++) {
+		for (char c : jid) {
 			Object[] bHash = __allmul(multiplier, 33L & 0xffffffffL);
 			long jidHash = (long) bHash[0];
 			long hiJidHash = (jidHash >>> 32) & 0xffffffffL;
 			long loJidHash = ((jidHash << 32) >>> 32) & 0xffffffffL;
 
 			long hiCdq = hiJidHash;
-			long loCdq = Long.valueOf(jid[i]) & 0xffffffffL;
+			long loCdq = Long.valueOf(c) & 0xffffffffL;
 
 			long hiMultiplier = (((hiJidHash >>> 32) + hiCdq) + (cFlag == true ? 1L : 0L)) & 0xffffffffL;
 			long loMultiplier = (((loJidHash << 32) >>> 32) + loCdq) & 0xffffffffL;
@@ -155,14 +70,14 @@ public class Router {
 			cFlag = (boolean) bHash[1];
 		}
 
-		for (int i = 0; i < response.length; i++) {
+		for (char c : response) {
 			Object[] bHash = __allmul(multiplier, 33L & 0xffffffffL);
 			long responseHash = (long) bHash[0];
 			long hiJidHash = (responseHash >>> 32) & 0xffffffffL;
 			long loJidHash = ((responseHash << 32) >>> 32) & 0xffffffffL;
 
 			long hiCdq = hiJidHash;
-			long loCdq = Long.valueOf(response[i]) & 0xffffffffL;
+			long loCdq = Long.valueOf(c) & 0xffffffffL;
 
 			long hiMultiplier = (((hiJidHash >>> 32) + hiCdq) + (cFlag == true ? 1L : 0L)) & 0xffffffffL;
 			long loMultiplier = (((loJidHash << 32) >>> 32) + loCdq) & 0xffffffffL;
@@ -194,6 +109,15 @@ public class Router {
 		return request.getHeader(param);
 	}
 
+	public static HttpSessionVO getHttpSessionVo(Long userId) {
+		if (Router.activeUsers.containsKey(userId)) {
+			HttpSessionVO httpSessionVO = Router.activeUsers.get(userId);
+			if (httpSessionVO != null)
+				return httpSessionVO;
+		}
+		return null;
+	}
+
 	protected Long getLoggedPersonaId() {
 		if (Router.activeUsers.containsKey(getUserId())) {
 			try {
@@ -213,8 +137,16 @@ public class Router {
 		return baseRequest.getParameter(param);
 	}
 
+	public void setBaseRequest(Request baseRequest) {
+		this.baseRequest = baseRequest;
+	}
+
 	protected HttpServletRequest getRequest() {
 		return request;
+	}
+
+	public void setRequest(HttpServletRequest request) {
+		this.request = request;
 	}
 
 	protected String getSecureRandomText() {
@@ -229,6 +161,10 @@ public class Router {
 
 	protected String getTarget() {
 		return target;
+	}
+
+	public void setTarget(String target) {
+		this.target = target;
 	}
 
 	protected Long getUserId() {
@@ -256,14 +192,6 @@ public class Router {
 		}
 	}
 
-	public void setBaseRequest(Request baseRequest) {
-		this.baseRequest = baseRequest;
-	}
-
-	public void setRequest(HttpServletRequest request) {
-		this.request = request;
-	}
-
 	protected void setSessionEntry(String toBeModifiedEntry, Object assignedValue) {
 		try {
 			if (getHttpSessionVo(getUserId()) != null) {
@@ -277,10 +205,6 @@ public class Router {
 				| SecurityException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public void setTarget(String target) {
-		this.target = target;
 	}
 
 	protected String shuffleString(String input) {
