@@ -1,16 +1,19 @@
 package br.com.soapboxrace.http;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
+import java.util.zip.GZIPOutputStream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.eclipse.jetty.server.HttpOutput;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.gzip.GzipHandler;
-import org.eclipse.jetty.server.handler.gzip.GzipHttpOutputInterceptor;
 
 import br.com.soapboxrace.db.ConnectionDB;
 import br.com.soapboxrace.engine.Router;
@@ -23,8 +26,9 @@ import br.com.soapboxrace.openfire.RestApiCli;
 public class HttpSrv extends GzipHandler {
 
 	public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) {
-		if ("/favicon.ico".equals(target))
+		if ("/favicon.ico".equals(target)) {
 			return;
+		}
 		System.out.println(baseRequest.toString());
 		String[] targetSplitted = target.split("/");
 		String className = "Default";
@@ -73,32 +77,49 @@ public class HttpSrv extends GzipHandler {
 			System.out.println("generic error");
 		}
 		try {
-			setCompressionLevel(9);
-			HttpOutput out = baseRequest.getResponse().getHttpOutput();
-			out.setInterceptor(new GzipHttpOutputInterceptor(this, GzipHttpOutputInterceptor.VARY_ACCEPT_ENCODING,
-					baseRequest.getHttpChannel(), out.getInterceptor()));
 			response.setContentType("application/xml;charset=utf-8");
+			response.setHeader("Content-Encoding", "gzip");
 			if (target.contains("accept")) {
 				response.addHeader("Keep-Alive", "timeout=70");
 			} else {
 				response.setHeader("connection", "close");
 			}
 			baseRequest.setHandled(true);
-			if (content == null) {
-				content = "";
-				System.err.println("empty response.");
+			if (content != null && !content.trim().isEmpty()) {
+				byte[] bytes = gzip(content.getBytes(StandardCharsets.UTF_8));
+				response.setContentLength(bytes.length);
+				response.getOutputStream().write(bytes);
+				response.getOutputStream().flush();
 			}
-			response.getOutputStream().write(content.getBytes("UTF-8"));
-			response.getOutputStream().flush();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private byte[] gzip(byte[] data) throws IOException {
+		ByteArrayOutputStream byteStream = new ByteArrayOutputStream(data.length);
+		try {
+			OutputStream gzipout = new GZIPOutputStream(byteStream) {
+				{
+					def.setLevel(1);
+				}
+			};
+			try {
+				gzipout.write(data);
+			} finally {
+				gzipout.close();
+			}
+		} finally {
+			byteStream.close();
+		}
+		return byteStream.toByteArray();
 	}
 
 	public static void main(String[] args) {
 		System.setProperty("jsse.enableCBCProtection", "false");
 		if (args.length == 0) {
 			System.err.println("OpenFire Auth Token missing");
+			System.exit(1);
 		}
 		RestApiCli.setOpenFireAuthToken(args[0]);
 		if (args.length > 1) {

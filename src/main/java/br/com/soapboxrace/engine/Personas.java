@@ -21,8 +21,7 @@ public class Personas extends Router {
 		String[] targetSplitted = getTarget().split("/");
 		Long personaId = Long.valueOf(targetSplitted[4]);
 		if (((isBypass || personaId.equals(getLoggedPersonaId()) || getLoggedPersonaId() == -1L)))
-			if (getUserId() != -1L && !getSecurityToken().isEmpty()
-					&& Router.activeUsers.get(getUserId()).getSecurityToken().equals(getSecurityToken()))
+			if (getUserId() != -1L && !getSecurityToken().isEmpty() && Router.activeUsers.get(getUserId()).getSecurityToken().equals(getSecurityToken()))
 				return personaId;
 		throw new ServerExceptions.PersonaIdMismatchException(getLoggedPersonaId(), personaId);
 	}
@@ -215,10 +214,8 @@ public class Personas extends Router {
 	public String commerce() throws PersonaIdMismatchException {
 		String commerceXml = readInputStream();
 		CommerceSessionTransType commerceSessionTransType = new CommerceSessionTransType();
-		commerceSessionTransType = (CommerceSessionTransType) UnmarshalXML.unMarshal(commerceXml,
-				commerceSessionTransType);
-		CommerceSessionResultTransType commerceSessionResultTrans = personaBO.commerce(getPersonaId(),
-				commerceSessionTransType.getUpdatedCar());
+		commerceSessionTransType = (CommerceSessionTransType) UnmarshalXML.unMarshal(commerceXml, commerceSessionTransType);
+		CommerceSessionResultTransType commerceSessionResultTrans = personaBO.commerce(getPersonaId(), commerceSessionTransType.getUpdatedCar());
 		return MarshalXML.marshal(commerceSessionResultTrans);
 	}
 
@@ -239,6 +236,13 @@ public class Personas extends Router {
 				Long carId = Long.valueOf(serialNumber);
 				OwnedCarEntity defaultCar = personaBO.sellCar(personaId, carId);
 				return MarshalXML.marshal(defaultCar);
+			}
+		} else if (getRequest().getMethod().equals("PUT")) {
+			long personaId = getPersonaId();
+			OwnedCarEntity ownedCarEntity = personaBO.defaultcar(personaId);
+			if (ownedCarEntity != null) {
+				ownedCarEntity.setExpirationDate("");
+				return MarshalXML.marshal(ownedCarEntity);
 			}
 		} else { // get cars
 			Long personaId = getPersonaId(true);
