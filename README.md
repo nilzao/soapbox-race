@@ -20,12 +20,13 @@ example:
 
 - Users + Password hashes(SHA-1) (default MySQL entries):
 
-
-    format:
-    email            passwordHash
-    debug@player1    a94a8fe5ccb19ba61c4c0873d391e987982fbbd3
-    debug@player2    a94a8fe5ccb19ba61c4c0873d391e987982fbbd3
-    debug@player3    a94a8fe5ccb19ba61c4c0873d391e987982fbbd3
+```
+format:
+email            passwordHash
+debug@player1    a94a8fe5ccb19ba61c4c0873d391e987982fbbd3
+debug@player2    a94a8fe5ccb19ba61c4c0873d391e987982fbbd3
+debug@player3    a94a8fe5ccb19ba61c4c0873d391e987982fbbd3
+```
 
 - Get loginToken and userID with:
 
