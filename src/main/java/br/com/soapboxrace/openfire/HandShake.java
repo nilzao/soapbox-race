@@ -1,13 +1,17 @@
 package br.com.soapboxrace.openfire;
 
+import br.com.soapboxrace.engine.Session;
+
 public class HandShake {
 
 	private OpenFireTalk openFireTalk;
 
 	public HandShake() {
-		SocketClient socketClient = new SocketClient("127.0.0.1", 5222);
-		socketClient.send(
-				"<?xml version='1.0' ?><stream:stream to='127.0.0.1' xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' version='1.0' xml:lang='en'>");
+		String xmppIp = Session.getXmppIp();
+
+		SocketClient socketClient = new SocketClient(xmppIp, 5222);
+		socketClient.send("<?xml version='1.0' ?><stream:stream to='" + xmppIp
+				+ "' xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' version='1.0' xml:lang='en'>");
 		String receive = socketClient.receive();
 		while (!receive.contains("</stream:features>")) {
 			receive = socketClient.receive();
@@ -16,8 +20,8 @@ public class HandShake {
 		socketClient.receive();
 		openFireTalk = new OpenFireTalk(socketClient.getSocket());
 		TlsWrapper.wrapXmppTalk(openFireTalk);
-		openFireTalk.write(
-				"<?xml version='1.0' ?><stream:stream to='127.0.0.1' xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' version='1.0' xml:lang='en'>");
+		openFireTalk.write("<?xml version='1.0' ?><stream:stream to='" + xmppIp
+				+ "' xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' version='1.0' xml:lang='en'>");
 		openFireTalk.write(
 				"<iq id='EA-Chat-1' type='get'><query xmlns='jabber:iq:auth'><username>nfsw.engine.engine</username></query></iq>");
 		openFireTalk.read();
@@ -26,7 +30,7 @@ public class HandShake {
 		openFireTalk.read();
 		openFireTalk.write("<presence><show>chat</show><status>Online</status><priority>0</priority></presence>");
 		openFireTalk.write(" ");
-		openFireTalk.write("<presence to='channel.EN__1@conference.127.0.0.1/nfsw.engine.engine'/>");
+		openFireTalk.write("<presence to='channel.EN__1@conference." + xmppIp + "/nfsw.engine.engine'/>");
 		openFireTalk.startReader();
 	}
 
