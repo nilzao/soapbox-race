@@ -21,7 +21,7 @@ remove mechanisms tag:
 
 need to remove tag <mechanisms xmlns="urn:ietf:params:xml:ns:xmpp-sasl"> to work with soapbox.exe
 
-- go inside openfire.jar (
+- go inside openfire.jar
 - rename the file  SASLAuthentication.classx to  SASLAuthentication.class and replace the org/jivesoftware/openfire/net/SASLAuthentication.class file
 
 ---
