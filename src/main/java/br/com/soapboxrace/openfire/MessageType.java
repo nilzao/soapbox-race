@@ -15,14 +15,15 @@ import br.com.soapboxrace.engine.Session;
 public class MessageType {
 
 	@XmlElement(required = true)
-	protected String body;
-	protected int subject = 1;
+	private String body;
 	@XmlAttribute(name = "from")
-	protected String from = "";
+	private String from = "";
 	@XmlAttribute(name = "id")
-	protected String id = "JN_1234567";
+	private String id = "JN_1234567";
 	@XmlAttribute(name = "to")
-	protected String to;
+	private String to;
+	@XmlElement(required = true)
+	private Long subject;
 
 	public MessageType() {
 		from = "nfsw.engine.engine@" + Session.getXmppIp();
@@ -36,11 +37,11 @@ public class MessageType {
 		this.body = value;
 	}
 
-	public int getSubject() {
+	public long getSubject() {
 		return subject;
 	}
 
-	public void setSubject(int value) {
+	public void setSubject(long value) {
 		this.subject = value;
 	}
 

@@ -1,5 +1,6 @@
 package br.com.soapboxrace.openfire;
 
+import br.com.soapboxrace.engine.Router;
 import br.com.soapboxrace.jaxb.util.MarshalXML;
 
 public class OpenFireSoapBoxCli {
@@ -24,6 +25,7 @@ public class OpenFireSoapBoxCli {
 		MessageType messageType = new MessageType();
 		messageType.setToPersonaId(to);
 		messageType.setBody(msg);
+		messageType.setSubject(Router.calculateHash(messageType.getTo().toCharArray(), msg.toCharArray()));
 		String packet = MarshalXML.marshal(messageType);
 		xmppTalk.write(packet);
 	}

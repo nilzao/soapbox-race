@@ -11,7 +11,7 @@ public class XMPP_EventTimingOutType {
 	@XmlElement(name = "EventSessionId", required = true)
 	private Long eventSessionId;
 	@XmlElement(name = "TimeInMilliseconds", required = true)
-	private Integer timeInMilliseconds = 30000;
+	private Integer timeInMilliseconds = 60000;
 
 	public Long getEventSessionId() {
 		return eventSessionId;
