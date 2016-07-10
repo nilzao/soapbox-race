@@ -1,11 +1,11 @@
 package br.com.soapboxrace.dao.xml;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import br.com.soapboxrace.dao.factory.IEventDefinitionDao;
+import br.com.soapboxrace.jaxb.EventsPacketType;
+import br.com.soapboxrace.jaxb.util.UnmarshalXML;
 import br.com.soapboxrace.jpa.EventDefinitionEntity;
-import br.com.soapboxrace.jpa.ISoapBoxEntity;
 
 public class EventDefinitionDao extends SoapboxDao implements IEventDefinitionDao {
 
@@ -16,12 +16,9 @@ public class EventDefinitionDao extends SoapboxDao implements IEventDefinitionDa
 	}
 
 	public List<EventDefinitionEntity> getAll() {
-		List<ISoapBoxEntity> find = super.find(new EventDefinitionEntity());
-		ArrayList<EventDefinitionEntity> eventDefinitionList = new ArrayList<EventDefinitionEntity>();
-		for (ISoapBoxEntity eventDefTmp : find) {
-			eventDefinitionList.add((EventDefinitionEntity) eventDefTmp);
-		}
-		return eventDefinitionList;
+		String readFile = readFile("events/availableatlevel.xml");
+		EventsPacketType eventsPacketType = (EventsPacketType) UnmarshalXML.unMarshal(readFile, new EventsPacketType());
+		return eventsPacketType.getEvents().getEventDefinitionList();
 	}
 
 }

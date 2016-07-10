@@ -3,6 +3,8 @@ package br.com.soapboxrace.dao.xml;
 import java.util.List;
 
 import br.com.soapboxrace.dao.factory.IProductDao;
+import br.com.soapboxrace.jaxb.ArrayOfProductTrans;
+import br.com.soapboxrace.jaxb.util.UnmarshalXML;
 import br.com.soapboxrace.jpa.ProductEntity;
 
 public class ProductDao extends SoapboxDao implements IProductDao {
@@ -23,9 +25,10 @@ public class ProductDao extends SoapboxDao implements IProductDao {
 	}
 
 	public ProductEntity findByProductId(String productId) {
-		ProductEntity carSlotProductData = new ProductEntity();
-		carSlotProductData.setProductId(productId);
-		carSlotProductData = (ProductEntity) super.find(carSlotProductData).get(0);
-		return carSlotProductData;
+		String path = findFilePath("catalog", productId + ".xml");
+		String readFile = readAbsoluteFile(path);
+		ArrayOfProductTrans arrayOfProductTrans = (ArrayOfProductTrans) UnmarshalXML.unMarshal(readFile, new ArrayOfProductTrans());
+
+		return arrayOfProductTrans.getProductTransList().get(0);
 	}
 }

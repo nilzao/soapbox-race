@@ -3,6 +3,8 @@ package br.com.soapboxrace.dao.xml;
 import java.util.List;
 
 import br.com.soapboxrace.dao.factory.IOwnedCarDao;
+import br.com.soapboxrace.jaxb.CarSlotInfoTrans;
+import br.com.soapboxrace.jaxb.util.UnmarshalXML;
 import br.com.soapboxrace.jpa.OwnedCarEntity;
 
 public class OwnedCarDao extends SoapboxDao implements IOwnedCarDao {
@@ -14,7 +16,9 @@ public class OwnedCarDao extends SoapboxDao implements IOwnedCarDao {
 	}
 
 	public List<OwnedCarEntity> findByIdPersona(Long idPersona) {
-		return null;
+		String readXml = readFile("personas/" + idPersona + "/carslots.xml");
+		CarSlotInfoTrans carSlotInfoTrans = (CarSlotInfoTrans) UnmarshalXML.unMarshal(readXml, new CarSlotInfoTrans());
+		return carSlotInfoTrans.getCarsOwnedByPersonaList().getOwnedCarList();
 	}
 
 	public void del(Long id) {

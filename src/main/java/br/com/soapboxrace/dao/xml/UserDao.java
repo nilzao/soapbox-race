@@ -12,7 +12,11 @@ public class UserDao extends SoapboxDao implements IUserDao {
 	}
 
 	public UserEntity findByEmail(String email) {
-		return null;
+		UserEntity userEntity = new UserEntity();
+		userEntity.setId(1L);
+		userEntity.setEmail(email);
+		userEntity.setPassword("");
+		return userEntity;
 	}
 
 	public UserEntity save(UserEntity entity) {

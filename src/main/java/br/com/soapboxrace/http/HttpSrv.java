@@ -16,6 +16,7 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.gzip.GzipHandler;
 
 import br.com.soapboxrace.config.Config;
+import br.com.soapboxrace.dao.factory.SaveType;
 import br.com.soapboxrace.db.ConnectionDB;
 import br.com.soapboxrace.engine.Router;
 import br.com.soapboxrace.engine.Session;
@@ -128,7 +129,10 @@ public class HttpSrv extends GzipHandler {
 		RestApiCli.setOpenFireAuthToken(config.getOpenFireToken());
 
 		XmppFactory.getXmppSenderInstance(Session.getXmppServerType());
-		new ConnectionDB();
+		SaveType saveType = config.getSaveType();
+		if (SaveType.DB.equals(saveType)) {
+			new ConnectionDB();
+		}
 		try {
 			Server server = new Server(config.getHttpPort());
 			server.setHandler(new HttpSrv());
