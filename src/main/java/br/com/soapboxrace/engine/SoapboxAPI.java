@@ -3,8 +3,8 @@ package br.com.soapboxrace.engine;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.soapboxrace.dao.db.EventDataDao;
 import br.com.soapboxrace.dao.factory.DaoFactory;
+import br.com.soapboxrace.dao.factory.IEventDataDao;
 import br.com.soapboxrace.dao.factory.IPersonaDao;
 import br.com.soapboxrace.jaxb.APIEventDataType;
 import br.com.soapboxrace.jaxb.APIPersonaDataType;
@@ -17,7 +17,7 @@ import br.com.soapboxrace.jpa.PersonaEntity;
 public class SoapboxAPI extends Router {
 
 	IPersonaDao personaDao = DaoFactory.getPersonaDao();
-	EventDataDao eventDataDao = new EventDataDao();
+	IEventDataDao eventDataDao = DaoFactory.getEventDataDao();
 
 	public String getPersonaData() {
 		Long personaId = Long.valueOf(getParam("personaId"));

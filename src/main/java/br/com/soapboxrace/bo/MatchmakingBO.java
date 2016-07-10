@@ -7,6 +7,7 @@ import java.util.List;
 
 import br.com.soapboxrace.dao.db.EventDataDao;
 import br.com.soapboxrace.dao.factory.DaoFactory;
+import br.com.soapboxrace.dao.factory.IEventDataDao;
 import br.com.soapboxrace.dao.factory.ILobbyDao;
 import br.com.soapboxrace.dao.factory.IPersonaDao;
 import br.com.soapboxrace.engine.Router;
@@ -34,7 +35,7 @@ public class MatchmakingBO {
 
 	private ILobbyDao lobbyDao = DaoFactory.getLobbyDao();
 	private IPersonaDao personaDao = DaoFactory.getPersonaDao();
-	private EventDataDao eventDataDao = new EventDataDao();
+	private IEventDataDao eventDataDao = DaoFactory.getEventDataDao();
 
 	public SessionInfoType launchevent(Long personaId, Long eventId) {
 		ChallengeType challengeType = new ChallengeType();
@@ -207,7 +208,7 @@ public class MatchmakingBO {
 		private Long lobbyId;
 
 		private ILobbyDao lobbyDao = DaoFactory.getLobbyDao();
-		private EventDataDao eventDataDao = new EventDataDao();
+		private IEventDataDao eventDataDao = DaoFactory.getEventDataDao();
 
 		public LobbyCountDown(Long lobbyId) {
 			this.lobbyId = lobbyId;
