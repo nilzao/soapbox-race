@@ -3,10 +3,10 @@ package br.com.soapboxrace.bo;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.soapboxrace.dao.BasketDefinitionDao;
-import br.com.soapboxrace.dao.OwnedCarDao;
-import br.com.soapboxrace.dao.PersonaDao;
-import br.com.soapboxrace.dao.ProductDao;
+import br.com.soapboxrace.dao.db.BasketDefinitionDao;
+import br.com.soapboxrace.dao.db.OwnedCarDao;
+import br.com.soapboxrace.dao.db.PersonaDao;
+import br.com.soapboxrace.dao.db.ProductDao;
 import br.com.soapboxrace.definition.ShoppingCartPurchaseResult;
 import br.com.soapboxrace.jaxb.ArrayOfOwnedCarTransType;
 import br.com.soapboxrace.jaxb.CarSlotInfoTrans;

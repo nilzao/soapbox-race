@@ -3,9 +3,9 @@ package br.com.soapboxrace.bo;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.soapboxrace.dao.EventDataDao;
-import br.com.soapboxrace.dao.OwnedCarDao;
-import br.com.soapboxrace.dao.PersonaDao;
+import br.com.soapboxrace.dao.db.EventDataDao;
+import br.com.soapboxrace.dao.db.OwnedCarDao;
+import br.com.soapboxrace.dao.db.PersonaDao;
 import br.com.soapboxrace.definition.CardDecks;
 import br.com.soapboxrace.definition.EventModes;
 import br.com.soapboxrace.engine.Router;

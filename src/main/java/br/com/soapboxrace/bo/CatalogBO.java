@@ -2,15 +2,16 @@ package br.com.soapboxrace.bo;
 
 import java.util.List;
 
-import br.com.soapboxrace.dao.CategoryDao;
-import br.com.soapboxrace.dao.ProductDao;
+import br.com.soapboxrace.dao.db.CategoryDao;
+import br.com.soapboxrace.dao.factory.DaoFactory;
+import br.com.soapboxrace.dao.factory.IProductDao;
 import br.com.soapboxrace.jaxb.ArrayOfCategoryTrans;
 import br.com.soapboxrace.jaxb.ArrayOfProductTrans;
 import br.com.soapboxrace.jpa.ProductEntity;
 
 public class CatalogBO {
 
-	private ProductDao productDao = new ProductDao();
+	private IProductDao productDao = DaoFactory.getProductDao();
 	private CategoryDao categoryDao = new CategoryDao();
 
 	public ArrayOfProductTrans productsInCategory(String categoryName, String clientProductType) {

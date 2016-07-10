@@ -2,7 +2,7 @@ package br.com.soapboxrace.bo;
 
 import java.util.List;
 
-import br.com.soapboxrace.dao.PersonaDao;
+import br.com.soapboxrace.dao.db.PersonaDao;
 import br.com.soapboxrace.jaxb.ArrayOfPersonaBaseType;
 import br.com.soapboxrace.jaxb.ArrayOfstringType;
 import br.com.soapboxrace.jaxb.PersonaBaseType;

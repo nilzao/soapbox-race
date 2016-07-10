@@ -1,4 +1,4 @@
-package br.com.soapboxrace.dao;
+package br.com.soapboxrace.dao.db;
 
 import br.com.soapboxrace.db.SoapboxDao;
 import br.com.soapboxrace.jpa.CustomCarEntity;

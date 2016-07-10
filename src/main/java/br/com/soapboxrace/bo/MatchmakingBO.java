@@ -5,9 +5,9 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
-import br.com.soapboxrace.dao.EventDataDao;
-import br.com.soapboxrace.dao.LobbyDao;
-import br.com.soapboxrace.dao.PersonaDao;
+import br.com.soapboxrace.dao.db.EventDataDao;
+import br.com.soapboxrace.dao.db.LobbyDao;
+import br.com.soapboxrace.dao.db.PersonaDao;
 import br.com.soapboxrace.engine.Router;
 import br.com.soapboxrace.engine.Session;
 import br.com.soapboxrace.http.HttpSessionVO;

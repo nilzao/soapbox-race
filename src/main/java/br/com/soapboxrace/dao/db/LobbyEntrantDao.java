@@ -1,4 +1,4 @@
-package br.com.soapboxrace.dao;
+package br.com.soapboxrace.dao.db;
 
 import javax.persistence.EntityManager;
 

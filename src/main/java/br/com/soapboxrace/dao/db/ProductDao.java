@@ -1,11 +1,12 @@
-package br.com.soapboxrace.dao;
+package br.com.soapboxrace.dao.db;
 
 import java.util.List;
 
+import br.com.soapboxrace.dao.factory.IProductDao;
 import br.com.soapboxrace.db.SoapboxDao;
 import br.com.soapboxrace.jpa.ProductEntity;
 
-public class ProductDao extends SoapboxDao {
+public class ProductDao extends SoapboxDao implements IProductDao {
 
 	@Override
 	public ProductEntity findById(Long id) {

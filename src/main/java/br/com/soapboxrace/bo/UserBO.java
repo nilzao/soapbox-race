@@ -2,8 +2,9 @@ package br.com.soapboxrace.bo;
 
 import java.util.List;
 
-import br.com.soapboxrace.dao.PersonaDao;
-import br.com.soapboxrace.dao.UserDao;
+import br.com.soapboxrace.dao.db.PersonaDao;
+import br.com.soapboxrace.dao.factory.DaoFactory;
+import br.com.soapboxrace.dao.factory.IUserDao;
 import br.com.soapboxrace.definition.ServerExceptions.EngineException;
 import br.com.soapboxrace.jaxb.PersonasType;
 import br.com.soapboxrace.jaxb.ProfileDataType;
@@ -15,7 +16,7 @@ import br.com.soapboxrace.jpa.UserEntity;
 public class UserBO {
 
 	private PersonaDao personaDao = new PersonaDao();
-	private UserDao userDao = new UserDao();
+	private IUserDao userDao = DaoFactory.getUserDao();
 
 	public UserInfoType getPermanentSession(Long userId, String securityToken) {
 		UserInfoType userInfo = new UserInfoType();

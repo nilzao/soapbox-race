@@ -4,6 +4,8 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Properties;
 
+import br.com.soapboxrace.dao.factory.SaveType;
+
 public class Config {
 
 	private int httpPort;
@@ -16,6 +18,7 @@ public class Config {
 	private String openFireToken;
 	private String xmppServerType;
 	private String dbDriver;
+	private SaveType saveType;
 
 	private static Config instance;
 
@@ -42,6 +45,7 @@ public class Config {
 			openFireToken = prop.getProperty("openFireToken");
 			xmppServerType = prop.getProperty("xmppServerType");
 			dbDriver = prop.getProperty("dbDriver");
+			saveType = SaveType.valueOf(prop.getProperty("saveType"));
 		} catch (Exception e) {
 			System.err.println(e);
 		}
@@ -51,80 +55,44 @@ public class Config {
 		return httpPort;
 	}
 
-	public void setHttpPort(int httpPort) {
-		this.httpPort = httpPort;
-	}
-
 	public String getXmppIp() {
 		return xmppIp;
-	}
-
-	public void setXmppIp(String xmppIp) {
-		this.xmppIp = xmppIp;
 	}
 
 	public int getXmppPort() {
 		return xmppPort;
 	}
 
-	public void setXmppPort(int xmppPort) {
-		this.xmppPort = xmppPort;
-	}
-
 	public String getFreeRoamUdpIp() {
 		return freeRoamUdpIp;
-	}
-
-	public void setFreeRoamUdpIp(String freeRoamUdpIp) {
-		this.freeRoamUdpIp = freeRoamUdpIp;
 	}
 
 	public int getFreeRoamUdpPort() {
 		return freeRoamUdpPort;
 	}
 
-	public void setFreeRoamUdpPort(int freeRoamUdpPort) {
-		this.freeRoamUdpPort = freeRoamUdpPort;
-	}
-
 	public String getRaceUdpIp() {
 		return raceUdpIp;
-	}
-
-	public void setRaceUdpIp(String raceUdpIp) {
-		this.raceUdpIp = raceUdpIp;
 	}
 
 	public int getRaceUdpPort() {
 		return raceUdpPort;
 	}
 
-	public void setRaceUdpPort(int raceUdpPort) {
-		this.raceUdpPort = raceUdpPort;
-	}
-
 	public String getOpenFireToken() {
 		return openFireToken;
-	}
-
-	public void setOpenFireToken(String openFireToken) {
-		this.openFireToken = openFireToken;
 	}
 
 	public String getXmppServerType() {
 		return xmppServerType;
 	}
 
-	public void setXmppServerType(String xmppServerType) {
-		this.xmppServerType = xmppServerType;
-	}
-
 	public String getDbDriver() {
 		return dbDriver;
 	}
 
-	public void setDbDriver(String dbDriver) {
-		this.dbDriver = dbDriver;
+	public SaveType getSaveType() {
+		return saveType;
 	}
 
 }

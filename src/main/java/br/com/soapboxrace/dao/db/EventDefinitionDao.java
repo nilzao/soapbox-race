@@ -1,4 +1,4 @@
-package br.com.soapboxrace.dao;
+package br.com.soapboxrace.dao.db;
 
 import java.util.ArrayList;
 import java.util.List;

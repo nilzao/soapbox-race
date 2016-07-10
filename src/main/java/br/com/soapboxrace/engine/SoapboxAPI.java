@@ -3,8 +3,8 @@ package br.com.soapboxrace.engine;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.soapboxrace.dao.EventDataDao;
-import br.com.soapboxrace.dao.PersonaDao;
+import br.com.soapboxrace.dao.db.EventDataDao;
+import br.com.soapboxrace.dao.db.PersonaDao;
 import br.com.soapboxrace.jaxb.APIEventDataType;
 import br.com.soapboxrace.jaxb.APIPersonaDataType;
 import br.com.soapboxrace.jaxb.ArrayOfOwnedCarTransType;

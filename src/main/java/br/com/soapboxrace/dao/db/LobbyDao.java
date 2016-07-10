@@ -1,4 +1,4 @@
-package br.com.soapboxrace.dao;
+package br.com.soapboxrace.dao.db;
 
 import java.util.Date;
 import java.util.List;
