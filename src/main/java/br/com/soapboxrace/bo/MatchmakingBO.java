@@ -276,8 +276,8 @@ public class MatchmakingBO {
 			xMPP_EventSessionType.setSessionId(eventSessionId);
 			lobbyLaunched.setNewRelayServer(true);
 			lobbyLaunched.setLobbyId(lobbyEntity.getId());
-			lobbyLaunched.setUdpRelayHost(Session.getUdpIp());
-			lobbyLaunched.setUdpRelayPort(9998);
+			lobbyLaunched.setUdpRelayHost(Session.getRaceUdpIp());
+			lobbyLaunched.setUdpRelayPort(Session.getRaceUdpPort());
 
 			lobbyLaunched.setEntrants(entrantsType);
 

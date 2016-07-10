@@ -17,8 +17,7 @@ public class Default extends Router {
 		stringBuilder.append("  <EntitlementsToDownload>true</EntitlementsToDownload>\n");
 		stringBuilder.append("  <ForcePermanentSession>true</ForcePermanentSession>\n");
 		stringBuilder.append("  <JidPrepender>nfsw</JidPrepender>\n");
-		stringBuilder.append(
-				"  <LauncherServiceUrl>http://10.100.15.202/LauncherService/onlineconfig.aspx</LauncherServiceUrl>\n");
+		stringBuilder.append("  <LauncherServiceUrl>http://10.100.15.202/LauncherService/onlineconfig.aspx</LauncherServiceUrl>\n");
 		stringBuilder.append("  <NucleusNamespace>nfsw-live</NucleusNamespace>\n");
 		stringBuilder.append("  <NucleusNamespaceWeb>nfs_web</NucleusNamespaceWeb>\n");
 		stringBuilder.append("  <PersonaCacheTimeout>900</PersonaCacheTimeout>\n");
@@ -75,11 +74,15 @@ public class Default extends Router {
 
 	public String getrebroadcasters() {
 		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("<ArrayOfUdpRelayInfo>\n");
-		stringBuilder.append("  <UdpRelayInfo>\n");
-		stringBuilder.append("    <Host>127.0.0.1</Host>\n");
-		stringBuilder.append("    <Port>9999</Port>\n");
-		stringBuilder.append("  </UdpRelayInfo>\n");
+		stringBuilder.append("<ArrayOfUdpRelayInfo>");
+		stringBuilder.append("<UdpRelayInfo>");
+		stringBuilder.append("<Host>");
+		stringBuilder.append(Session.getFreeRoamUdpIp());
+		stringBuilder.append("</Host>");
+		stringBuilder.append("<Port>");
+		stringBuilder.append(Session.getFreeRoamUdpPort());
+		stringBuilder.append("</Port>");
+		stringBuilder.append("</UdpRelayInfo>");
 		stringBuilder.append("</ArrayOfUdpRelayInfo>");
 		String xmlTmp = stringBuilder.toString();
 		return xmlTmp;

@@ -9,7 +9,7 @@ My advice is to download Eclipse JavaEE, and after that download eGit Maven SCM 
 
 - mysql db server running
 - openfire xmpp server running (try openfire/README.md file)
-- edit soapbox.proerties file 
+- edit soapbox.properties file 
 
     java -jar soapbox-race-version-jarname.jar
     

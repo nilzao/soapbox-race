@@ -120,7 +120,12 @@ public class HttpSrv extends GzipHandler {
 		Config config = Config.getInstance();
 		RestApiCli.setOpenFireAuthToken(config.getOpenFireToken());
 		Session.setXmppIp(config.getXmppIp());
-		Session.setUdpIp(config.getRaceUdpIp());
+		Session.setXmppPort(config.getXmppPort());
+		Session.setRaceUdpIp(config.getRaceUdpIp());
+		Session.setRaceUdpPort(config.getRaceUdpPort());
+		Session.setFreeRoamUdpIp(config.getFreeRoamUdpIp());
+		Session.setFreeRoamUdpPort(config.getFreeRoamUdpPort());
+
 		RestApiCli.createUpdateUser("nfsw.engine.engine", "1234567890123456");
 		OpenFireSoapBoxCli.getInstance();
 		new ConnectionDB();

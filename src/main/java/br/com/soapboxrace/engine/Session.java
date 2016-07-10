@@ -8,7 +8,15 @@ public class Session extends Router {
 
 	private static String xmppIp = "127.0.0.1";
 
-	private static String udpIp = "127.0.0.1";
+	private static int xmppPort = 5222;
+
+	private static String raceUdpIp = "127.0.0.1";
+
+	private static int raceUdpPort = 9998;
+
+	private static String freeRoamUdpIp = "127.0.0.1";
+
+	private static int freeRoamUdpPort = 9999;
 
 	private static long currentMpSessionId = 10000L;
 
@@ -16,6 +24,7 @@ public class Session extends Router {
 		ChatServerType chatServer = new ChatServerType();
 		chatServer.setRooms(getRooms());
 		chatServer.setIp(xmppIp);
+		chatServer.setPort(xmppPort);
 		return MarshalXML.marshal(chatServer);
 	}
 
@@ -27,15 +36,48 @@ public class Session extends Router {
 		Session.xmppIp = xmppIp;
 	}
 
-	public static String getUdpIp() {
-		return udpIp;
-	}
-
-	public static void setUdpIp(String udpIp) {
-		Session.udpIp = udpIp;
-	}
-
 	public static long getNextMpSessionId() {
 		return currentMpSessionId++;
 	}
+
+	public static int getXmppPort() {
+		return xmppPort;
+	}
+
+	public static void setXmppPort(int xmppPort) {
+		Session.xmppPort = xmppPort;
+	}
+
+	public static String getRaceUdpIp() {
+		return raceUdpIp;
+	}
+
+	public static void setRaceUdpIp(String raceUdpIp) {
+		Session.raceUdpIp = raceUdpIp;
+	}
+
+	public static int getRaceUdpPort() {
+		return raceUdpPort;
+	}
+
+	public static void setRaceUdpPort(int raceUdpPort) {
+		Session.raceUdpPort = raceUdpPort;
+	}
+
+	public static String getFreeRoamUdpIp() {
+		return freeRoamUdpIp;
+	}
+
+	public static void setFreeRoamUdpIp(String freeRoamUdpIp) {
+		Session.freeRoamUdpIp = freeRoamUdpIp;
+	}
+
+	public static int getFreeRoamUdpPort() {
+		return freeRoamUdpPort;
+	}
+
+	public static void setFreeRoamUdpPort(int freeRoamUdpPort) {
+		Session.freeRoamUdpPort = freeRoamUdpPort;
+	}
+
 }

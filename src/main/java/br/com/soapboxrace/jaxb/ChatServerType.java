@@ -22,7 +22,7 @@ public class ChatServerType {
 	protected String ip;
 
 	@XmlElement(name = "port", required = true)
-	protected String port = "5222";
+	protected int port = 5222;
 	@XmlElement(name = "prefix", required = true)
 	protected String prefix = "nfsw";
 
@@ -42,11 +42,11 @@ public class ChatServerType {
 		this.ip = ip;
 	}
 
-	public String getPort() {
+	public int getPort() {
 		return port;
 	}
 
-	public void setPort(String port) {
+	public void setPort(int port) {
 		this.port = port;
 	}
 
