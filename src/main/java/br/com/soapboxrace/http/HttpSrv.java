@@ -23,6 +23,8 @@ import br.com.soapboxrace.jaxb.EngineExceptionTrans;
 import br.com.soapboxrace.jaxb.util.MarshalXML;
 import br.com.soapboxrace.openfire.OpenFireSoapBoxCli;
 import br.com.soapboxrace.openfire.RestApiCli;
+import br.com.soapboxrace.xmpp.IXmppSender;
+import br.com.soapboxrace.xmpp.XmppFactory;
 
 public class HttpSrv extends GzipHandler {
 
@@ -125,9 +127,10 @@ public class HttpSrv extends GzipHandler {
 		Session.setRaceUdpPort(config.getRaceUdpPort());
 		Session.setFreeRoamUdpIp(config.getFreeRoamUdpIp());
 		Session.setFreeRoamUdpPort(config.getFreeRoamUdpPort());
+		Session.setXmppServerType(config.getXmppServerType());
 
 		RestApiCli.createUpdateUser("nfsw.engine.engine", "1234567890123456");
-		OpenFireSoapBoxCli.getInstance();
+		XmppFactory.getXmppSenderInstance(Session.getXmppServerType());
 		new ConnectionDB();
 		try {
 			Server server = new Server(config.getHttpPort());

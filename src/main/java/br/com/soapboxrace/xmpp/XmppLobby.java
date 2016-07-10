@@ -2,6 +2,7 @@ package br.com.soapboxrace.xmpp;
 
 import java.util.List;
 
+import br.com.soapboxrace.engine.Session;
 import br.com.soapboxrace.jaxb.LobbyEntrantInfoType;
 import br.com.soapboxrace.jpa.LobbyEntrantEntity;
 import br.com.soapboxrace.openfire.OpenFireSoapBoxCli;
@@ -26,7 +27,8 @@ public class XmppLobby {
 		responseType.setLobbyInvite(xMPP_LobbyInviteType);
 		try {
 			Thread.sleep(1000);
-			OpenFireSoapBoxCli.getInstance().send(responseType, personaId);
+			IXmppSender xmppSenderInstance = XmppFactory.getXmppSenderInstance(Session.getXmppServerType());
+			xmppSenderInstance.send(responseType, personaId);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -37,7 +39,8 @@ public class XmppLobby {
 		responseType.setLobbyInvite(lobbyEntrantEntity);
 		try {
 			Thread.sleep(1000);
-			OpenFireSoapBoxCli.getInstance().send(responseType, personaId);
+			IXmppSender xmppSenderInstance = XmppFactory.getXmppSenderInstance(Session.getXmppServerType());
+			xmppSenderInstance.send(responseType, personaId);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -57,7 +60,8 @@ public class XmppLobby {
 			lobbyLaunched.setCryptoTickets(cryptoTicketsTypeTmp);
 			XMPP_ResponseTypeLobbyLaunched responseType = new XMPP_ResponseTypeLobbyLaunched();
 			responseType.setLobbyInvite(lobbyLaunched);
-			OpenFireSoapBoxCli.getInstance().send(responseType, personaId);
+			IXmppSender xmppSenderInstance = XmppFactory.getXmppSenderInstance(Session.getXmppServerType());
+			xmppSenderInstance.send(responseType, personaId);
 		}
 	}
 

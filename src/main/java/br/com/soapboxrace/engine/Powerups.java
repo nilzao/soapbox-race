@@ -1,6 +1,8 @@
 package br.com.soapboxrace.engine;
 
 import br.com.soapboxrace.openfire.OpenFireSoapBoxCli;
+import br.com.soapboxrace.xmpp.IXmppSender;
+import br.com.soapboxrace.xmpp.XmppFactory;
 import br.com.soapboxrace.xmpp.jaxb.XMPP_PowerupActivatedType;
 import br.com.soapboxrace.xmpp.jaxb.XMPP_ResponseTypePowerupActivated;
 
@@ -25,7 +27,8 @@ public class Powerups extends Router {
 		for (String receiver : getParam("receivers").split("-")) {
 			Long receiverPersonaId = Long.valueOf(receiver);
 			if (receiverPersonaId > 10) {
-				OpenFireSoapBoxCli.getInstance().send(powerupActivatedResponse, receiverPersonaId);
+				IXmppSender xmppSenderInstance = XmppFactory.getXmppSenderInstance(Session.getXmppServerType());
+				xmppSenderInstance.send(powerupActivatedResponse, receiverPersonaId);
 			}
 		}
 		return "";

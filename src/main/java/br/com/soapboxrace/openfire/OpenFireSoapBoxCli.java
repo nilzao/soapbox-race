@@ -2,21 +2,13 @@ package br.com.soapboxrace.openfire;
 
 import br.com.soapboxrace.engine.Router;
 import br.com.soapboxrace.jaxb.util.MarshalXML;
+import br.com.soapboxrace.xmpp.IXmppSender;
 
-public class OpenFireSoapBoxCli {
+public class OpenFireSoapBoxCli implements IXmppSender {
 
 	private OpenFireTalk xmppTalk;
 
-	private static OpenFireSoapBoxCli instance;
-
-	public static OpenFireSoapBoxCli getInstance() {
-		if (instance == null) {
-			instance = new OpenFireSoapBoxCli();
-		}
-		return instance;
-	}
-
-	private OpenFireSoapBoxCli() {
+	public OpenFireSoapBoxCli() {
 		HandShake xmppHandShake = new HandShake();
 		xmppTalk = xmppHandShake.getXmppTalk();
 	}

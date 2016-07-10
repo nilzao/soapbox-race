@@ -18,6 +18,8 @@ public class Session extends Router {
 
 	private static int freeRoamUdpPort = 9999;
 
+	private static String xmppServerType = "OpenFire";
+
 	private static long currentMpSessionId = 10000L;
 
 	public String getChatInfo() {
@@ -78,6 +80,14 @@ public class Session extends Router {
 
 	public static void setFreeRoamUdpPort(int freeRoamUdpPort) {
 		Session.freeRoamUdpPort = freeRoamUdpPort;
+	}
+
+	public static String getXmppServerType() {
+		return xmppServerType;
+	}
+
+	public static void setXmppServerType(String xmppServerType) {
+		Session.xmppServerType = xmppServerType;
 	}
 
 }

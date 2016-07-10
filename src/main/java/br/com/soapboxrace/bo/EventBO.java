@@ -9,6 +9,7 @@ import br.com.soapboxrace.dao.PersonaDao;
 import br.com.soapboxrace.definition.CardDecks;
 import br.com.soapboxrace.definition.EventModes;
 import br.com.soapboxrace.engine.Router;
+import br.com.soapboxrace.engine.Session;
 import br.com.soapboxrace.http.HttpSessionVO;
 import br.com.soapboxrace.jaxb.AccoladesType;
 import br.com.soapboxrace.jaxb.FinalRewardsType;
@@ -26,6 +27,8 @@ import br.com.soapboxrace.jpa.EventDataEntity;
 import br.com.soapboxrace.jpa.OwnedCarEntity;
 import br.com.soapboxrace.jpa.PersonaEntity;
 import br.com.soapboxrace.openfire.OpenFireSoapBoxCli;
+import br.com.soapboxrace.xmpp.IXmppSender;
+import br.com.soapboxrace.xmpp.XmppFactory;
 import br.com.soapboxrace.xmpp.jaxb.XMPP_EventTimingOutType;
 import br.com.soapboxrace.xmpp.jaxb.XMPP_ResponseTypeEventTimingOut;
 import br.com.soapboxrace.xmpp.jaxb.XMPP_ResponseTypeRouteEntrantResult;
@@ -119,8 +122,8 @@ public class EventBO {
 			break;
 		// case MeetingPlace:
 		case Pursuit_MP:
-			TeamEscapeArbitrationPacketType teamEscapeArbitrationPacket = (TeamEscapeArbitrationPacketType) UnmarshalXML
-					.unMarshal(arbitrationXml, new TeamEscapeArbitrationPacketType());
+			TeamEscapeArbitrationPacketType teamEscapeArbitrationPacket = (TeamEscapeArbitrationPacketType) UnmarshalXML.unMarshal(arbitrationXml,
+					new TeamEscapeArbitrationPacketType());
 			TeamEscapeEventResultType teamEscapeEventResult = new TeamEscapeEventResultType();
 
 			teamEscapeEventResult.setAccolades(null);
@@ -130,8 +133,7 @@ public class EventBO {
 
 			XMPP_TeamEscapeEntrantResultType xmppTeamEscapeResult = new XMPP_TeamEscapeEntrantResultType();
 			xmppTeamEscapeResult.setDistanceToFinish(teamEscapeArbitrationPacket.getDistanceToFinish());
-			xmppTeamEscapeResult
-					.setEventDurationInMilliseconds(teamEscapeArbitrationPacket.getEventDurationInMilliseconds());
+			xmppTeamEscapeResult.setEventDurationInMilliseconds(teamEscapeArbitrationPacket.getEventDurationInMilliseconds());
 			xmppTeamEscapeResult.setEventSessionId(eventSessionId);
 			xmppTeamEscapeResult.setFinishReason(teamEscapeArbitrationPacket.getFinishReason());
 			xmppTeamEscapeResult.setFractionCompleted(teamEscapeArbitrationPacket.getFractionCompleted());
@@ -175,14 +177,15 @@ public class EventBO {
 				teamEscapeEntrants.add(teamEscapeEntrantResult);
 
 				if (racer.getPersonaId() != personaId) {
-					OpenFireSoapBoxCli.getInstance().send(teamEscapeEntrantResultResponse, racer.getPersonaId());
+					IXmppSender xmppSenderInstance = XmppFactory.getXmppSenderInstance(Session.getXmppServerType());
+					xmppSenderInstance.send(teamEscapeEntrantResultResponse, racer.getPersonaId());
 					if (teamEscapeIsFirstPlace) {
 						XMPP_EventTimingOutType eventTimingOut = new XMPP_EventTimingOutType();
 						eventTimingOut.setEventSessionId(eventSessionId);
 						XMPP_ResponseTypeEventTimingOut eventTimingOutResponse = new XMPP_ResponseTypeEventTimingOut();
 						eventTimingOutResponse.setEventTimingOut(eventTimingOut);
 
-						OpenFireSoapBoxCli.getInstance().send(eventTimingOutResponse, racer.getPersonaId());
+						xmppSenderInstance.send(eventTimingOutResponse, racer.getPersonaId());
 					}
 				}
 			}
@@ -193,8 +196,8 @@ public class EventBO {
 			break;
 		case Circuit:
 		case Sprint:
-			RouteArbitrationPacketType routeArbitrationPacket = (RouteArbitrationPacketType) UnmarshalXML
-					.unMarshal(arbitrationXml, new RouteArbitrationPacketType());
+			RouteArbitrationPacketType routeArbitrationPacket = (RouteArbitrationPacketType) UnmarshalXML.unMarshal(arbitrationXml,
+					new RouteArbitrationPacketType());
 			RouteEventResultType routeEventResult = new RouteEventResultType();
 
 			luckyDrawInfo.setCardDeck(CardDecks.forRank(routeArbitrationPacket.getRank()));
@@ -241,14 +244,15 @@ public class EventBO {
 				routeEntrants.add(routeEntrantResult);
 
 				if (racer.getPersonaId() != personaId) {
-					OpenFireSoapBoxCli.getInstance().send(routeEntrantResultResponse, racer.getPersonaId());
+					IXmppSender xmppSenderInstance = XmppFactory.getXmppSenderInstance(Session.getXmppServerType());
+					xmppSenderInstance.send(routeEntrantResultResponse, racer.getPersonaId());
 					if (routeIsFirstPlace) {
 						XMPP_EventTimingOutType eventTimingOut = new XMPP_EventTimingOutType();
 						eventTimingOut.setEventSessionId(eventSessionId);
 						XMPP_ResponseTypeEventTimingOut eventTimingOutResponse = new XMPP_ResponseTypeEventTimingOut();
 						eventTimingOutResponse.setEventTimingOut(eventTimingOut);
 
-						OpenFireSoapBoxCli.getInstance().send(eventTimingOutResponse, racer.getPersonaId());
+						xmppSenderInstance.send(eventTimingOutResponse, racer.getPersonaId());
 					}
 				}
 			}
