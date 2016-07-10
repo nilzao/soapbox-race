@@ -216,7 +216,7 @@ public class MatchmakingBO {
 
 		public void run() {
 			try {
-				Thread.sleep(30000);
+				Thread.sleep(60000);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
