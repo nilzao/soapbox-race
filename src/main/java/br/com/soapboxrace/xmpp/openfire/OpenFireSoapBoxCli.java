@@ -10,6 +10,7 @@ public class OpenFireSoapBoxCli implements IXmppSender {
 	private OpenFireTalk xmppTalk;
 
 	public OpenFireSoapBoxCli() {
+		RestApiCli.createUpdateUser("nfsw.engine.engine", "1234567890123456");
 		HandShake xmppHandShake = new HandShake();
 		xmppTalk = xmppHandShake.getXmppTalk();
 	}
@@ -26,6 +27,11 @@ public class OpenFireSoapBoxCli implements IXmppSender {
 	public void send(Object object, Long to) {
 		String responseXmlStr = MarshalXML.marshal(object);
 		this.send(responseXmlStr, to);
+	}
+
+	@Override
+	public void createUpdatePersona(Long id, String password) {
+		RestApiCli.createUpdatePersona(id, password);
 	}
 
 }

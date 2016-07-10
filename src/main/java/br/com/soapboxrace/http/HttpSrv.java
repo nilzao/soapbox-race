@@ -118,7 +118,6 @@ public class HttpSrv extends GzipHandler {
 
 	public static void main(String[] args) {
 		Config config = Config.getInstance();
-		RestApiCli.setOpenFireAuthToken(config.getOpenFireToken());
 		Session.setXmppIp(config.getXmppIp());
 		Session.setXmppPort(config.getXmppPort());
 		Session.setRaceUdpIp(config.getRaceUdpIp());
@@ -126,8 +125,8 @@ public class HttpSrv extends GzipHandler {
 		Session.setFreeRoamUdpIp(config.getFreeRoamUdpIp());
 		Session.setFreeRoamUdpPort(config.getFreeRoamUdpPort());
 		Session.setXmppServerType(config.getXmppServerType());
+		RestApiCli.setOpenFireAuthToken(config.getOpenFireToken());
 
-		RestApiCli.createUpdateUser("nfsw.engine.engine", "1234567890123456");
 		XmppFactory.getXmppSenderInstance(Session.getXmppServerType());
 		new ConnectionDB();
 		try {

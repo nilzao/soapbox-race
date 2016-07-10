@@ -1,5 +1,6 @@
 package br.com.soapboxrace.xmpp;
 
+import br.com.soapboxrace.xmpp.offline.XmppSrv;
 import br.com.soapboxrace.xmpp.openfire.OpenFireSoapBoxCli;
 
 public class XmppFactory {
@@ -17,8 +18,7 @@ public class XmppFactory {
 		if ("OpenFire".equals(xmppServerType)) {
 			return new OpenFireSoapBoxCli();
 		} else if ("Offline".equals(xmppServerType)) {
-			// TODO standalone
-			return null;
+			return new XmppSrv();
 		}
 		return null;
 	}
