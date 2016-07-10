@@ -1,5 +1,11 @@
 package br.com.soapboxrace.config;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.Properties;
+
+import org.apache.log4j.chainsaw.Main;
+
 public class Config {
 
 	private int httpPort;
@@ -10,6 +16,29 @@ public class Config {
 	private String raceUdpIp;
 	private int raceUdpPort;
 	private String openFireToken;
+	private String xmppServerType;
+	private String dbDriver;
+
+	public Config() {
+		Properties prop = new Properties();
+		InputStream input = null;
+		try {
+			input = new FileInputStream("soapbox.properties");
+			prop.load(input);
+			httpPort = Integer.valueOf(prop.getProperty("httpPort"));
+			xmppIp = prop.getProperty("xmppIp");
+			xmppPort = Integer.valueOf(prop.getProperty("xmppPort"));
+			freeRoamUdpIp = prop.getProperty("freeRoamUdpIp");
+			freeRoamUdpPort = Integer.valueOf(prop.getProperty("freeRoamUdpPort"));
+			raceUdpIp = prop.getProperty("raceUdpIp");
+			raceUdpPort = Integer.valueOf(prop.getProperty("raceUdpPort"));
+			openFireToken = prop.getProperty("openFireToken");
+			xmppServerType = prop.getProperty("xmppServerType");
+			dbDriver = prop.getProperty("dbDriver");
+		} catch (Exception e) {
+			System.err.println(e);
+		}
+	}
 
 	public int getHttpPort() {
 		return httpPort;
@@ -73,6 +102,22 @@ public class Config {
 
 	public void setOpenFireToken(String openFireToken) {
 		this.openFireToken = openFireToken;
+	}
+
+	public String getXmppServerType() {
+		return xmppServerType;
+	}
+
+	public void setXmppServerType(String xmppServerType) {
+		this.xmppServerType = xmppServerType;
+	}
+
+	public String getDbDriver() {
+		return dbDriver;
+	}
+
+	public void setDbDriver(String dbDriver) {
+		this.dbDriver = dbDriver;
 	}
 
 }
