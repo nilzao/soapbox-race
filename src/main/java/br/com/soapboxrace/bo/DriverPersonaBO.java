@@ -2,7 +2,8 @@ package br.com.soapboxrace.bo;
 
 import java.util.List;
 
-import br.com.soapboxrace.dao.db.PersonaDao;
+import br.com.soapboxrace.dao.factory.DaoFactory;
+import br.com.soapboxrace.dao.factory.IPersonaDao;
 import br.com.soapboxrace.jaxb.ArrayOfPersonaBaseType;
 import br.com.soapboxrace.jaxb.ArrayOfstringType;
 import br.com.soapboxrace.jaxb.PersonaBaseType;
@@ -15,7 +16,7 @@ import br.com.soapboxrace.xmpp.openfire.RestApiCli;
 
 public class DriverPersonaBO {
 
-	private PersonaDao personaDao = new PersonaDao();
+	private IPersonaDao personaDao = DaoFactory.getPersonaDao();
 
 	public ArrayOfstringType reserveName(String name) {
 		ArrayOfstringType arrayOfstringType = new ArrayOfstringType();
