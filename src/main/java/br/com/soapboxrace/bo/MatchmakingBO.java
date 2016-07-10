@@ -5,7 +5,6 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
-import br.com.soapboxrace.dao.db.EventDataDao;
 import br.com.soapboxrace.dao.factory.DaoFactory;
 import br.com.soapboxrace.dao.factory.IEventDataDao;
 import br.com.soapboxrace.dao.factory.ILobbyDao;

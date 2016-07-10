@@ -15,8 +15,7 @@ public class DaoFactory {
 		if (SaveType.DB.equals(saveType)) {
 			return new br.com.soapboxrace.dao.db.BasketDefinitionDao();
 		} else if (SaveType.XML.equals(saveType)) {
-			// TODO XML Dao Type
-			return null;
+			return new br.com.soapboxrace.dao.xml.BasketDefinitionDao();
 		}
 		return null;
 	}
@@ -25,8 +24,7 @@ public class DaoFactory {
 		if (SaveType.DB.equals(saveType)) {
 			return new br.com.soapboxrace.dao.db.CategoryDao();
 		} else if (SaveType.XML.equals(saveType)) {
-			// TODO XML Dao Type
-			return null;
+			return new br.com.soapboxrace.dao.xml.CategoryDao();
 		}
 		return null;
 	}
@@ -35,8 +33,7 @@ public class DaoFactory {
 		if (SaveType.DB.equals(saveType)) {
 			return new br.com.soapboxrace.dao.db.EventDataDao();
 		} else if (SaveType.XML.equals(saveType)) {
-			// TODO XML Dao Type
-			return null;
+			return new br.com.soapboxrace.dao.xml.EventDataDao();
 		}
 		return null;
 	}
@@ -45,8 +42,7 @@ public class DaoFactory {
 		if (SaveType.DB.equals(saveType)) {
 			return new br.com.soapboxrace.dao.db.EventDefinitionDao();
 		} else if (SaveType.XML.equals(saveType)) {
-			// TODO XML Dao Type
-			return null;
+			return new br.com.soapboxrace.dao.xml.EventDefinitionDao();
 		}
 		return null;
 	}
@@ -55,8 +51,7 @@ public class DaoFactory {
 		if (SaveType.DB.equals(saveType)) {
 			return new br.com.soapboxrace.dao.db.LobbyDao();
 		} else if (SaveType.XML.equals(saveType)) {
-			// TODO XML Dao Type
-			return null;
+			return new br.com.soapboxrace.dao.xml.LobbyDao();
 		}
 		return null;
 	}
@@ -65,8 +60,7 @@ public class DaoFactory {
 		if (SaveType.DB.equals(saveType)) {
 			return new br.com.soapboxrace.dao.db.LobbyEntrantDao();
 		} else if (SaveType.XML.equals(saveType)) {
-			// TODO XML Dao Type
-			return null;
+			return new br.com.soapboxrace.dao.xml.LobbyEntrantDao();
 		}
 		return null;
 	}
@@ -75,8 +69,7 @@ public class DaoFactory {
 		if (SaveType.DB.equals(saveType)) {
 			return new br.com.soapboxrace.dao.db.OwnedCarDao();
 		} else if (SaveType.XML.equals(saveType)) {
-			// TODO XML Dao Type
-			return null;
+			return new br.com.soapboxrace.dao.xml.OwnedCarDao();
 		}
 		return null;
 	}
@@ -85,8 +78,7 @@ public class DaoFactory {
 		if (SaveType.DB.equals(saveType)) {
 			return new br.com.soapboxrace.dao.db.PersonaDao();
 		} else if (SaveType.XML.equals(saveType)) {
-			// TODO XML Dao Type
-			return null;
+			return new br.com.soapboxrace.dao.xml.PersonaDao();
 		}
 		return null;
 	}
@@ -95,8 +87,7 @@ public class DaoFactory {
 		if (SaveType.DB.equals(saveType)) {
 			return new br.com.soapboxrace.dao.db.ProductDao();
 		} else if (SaveType.XML.equals(saveType)) {
-			// TODO XML Dao Type
-			return null;
+			return new br.com.soapboxrace.dao.xml.ProductDao();
 		}
 		return null;
 	}
@@ -105,8 +96,7 @@ public class DaoFactory {
 		if (SaveType.DB.equals(saveType)) {
 			return new br.com.soapboxrace.dao.db.ProductVinylDao();
 		} else if (SaveType.XML.equals(saveType)) {
-			// TODO XML Dao Type
-			return null;
+			return new br.com.soapboxrace.dao.xml.ProductVinylDao();
 		}
 		return null;
 	}
@@ -115,8 +105,7 @@ public class DaoFactory {
 		if (SaveType.DB.equals(saveType)) {
 			return new br.com.soapboxrace.dao.db.UserDao();
 		} else if (SaveType.XML.equals(saveType)) {
-			// TODO XML Dao Type
-			return null;
+			return new br.com.soapboxrace.dao.xml.UserDao();
 		}
 		return null;
 	}
