@@ -12,7 +12,7 @@ public class ConnectionDB {
 
 	static {
 		HibernatePersistenceProvider hibernatePersistenceProvider = new HibernatePersistenceProvider();
-		emf = hibernatePersistenceProvider.createEntityManagerFactory("persistenceUnit", null);
+		emf = hibernatePersistenceProvider.createEntityManagerFactory("persistenceMySql", null);
 		threadLocal = new ThreadLocal<EntityManager>();
 	}
 
