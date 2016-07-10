@@ -23,5 +23,5 @@ www/
 .pydevproject
 
 #local h2 db
-soapbox.mv.db
-soapbox.trace.db
+/soapbox.mv.db
+/soapbox.trace.db
