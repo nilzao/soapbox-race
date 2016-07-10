@@ -15,6 +15,7 @@ import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.gzip.GzipHandler;
 
+import br.com.soapboxrace.config.Config;
 import br.com.soapboxrace.db.ConnectionDB;
 import br.com.soapboxrace.engine.Router;
 import br.com.soapboxrace.engine.Session;
@@ -116,23 +117,15 @@ public class HttpSrv extends GzipHandler {
 	}
 
 	public static void main(String[] args) {
-		System.setProperty("jsse.enableCBCProtection", "false");
-		if (args.length == 0) {
-			System.err.println("OpenFire Auth Token missing");
-			System.exit(1);
-		}
-		RestApiCli.setOpenFireAuthToken(args[0]);
-		if (args.length > 1) {
-			Session.setXmppIp(args[1]);
-			if (args.length > 2) {
-				Session.setUdpIp(args[2]);
-			}
-		}
+		Config config = new Config();
+		RestApiCli.setOpenFireAuthToken(config.getOpenFireToken());
+		Session.setXmppIp(config.getXmppIp());
+		Session.setUdpIp(config.getRaceUdpIp());
 		RestApiCli.createUpdateUser("nfsw.engine.engine", "1234567890123456");
 		OpenFireSoapBoxCli.getInstance();
 		new ConnectionDB();
 		try {
-			Server server = new Server(1337);
+			Server server = new Server(config.getHttpPort());
 			server.setHandler(new HttpSrv());
 			server.start();
 			server.join();
