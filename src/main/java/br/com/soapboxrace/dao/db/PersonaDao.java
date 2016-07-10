@@ -5,6 +5,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
+import br.com.soapboxrace.dao.factory.DaoFactory;
+import br.com.soapboxrace.dao.factory.ILobbyEntrantDao;
 import br.com.soapboxrace.dao.factory.IPersonaDao;
 import br.com.soapboxrace.db.SoapboxDao;
 import br.com.soapboxrace.jpa.ISoapBoxEntity;
@@ -34,7 +36,7 @@ public class PersonaDao extends SoapboxDao implements IPersonaDao {
 	}
 
 	public void del(PersonaEntity entity) {
-		LobbyEntrantDao lobbyEntrantDao = new LobbyEntrantDao();
+		ILobbyEntrantDao lobbyEntrantDao = DaoFactory.getLobbyEntrantDao();
 		lobbyEntrantDao.delByPersona(entity);
 		super.del(entity);
 	}
