@@ -5,12 +5,13 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
+import br.com.soapboxrace.dao.factory.IPersonaDao;
 import br.com.soapboxrace.db.SoapboxDao;
 import br.com.soapboxrace.jpa.ISoapBoxEntity;
 import br.com.soapboxrace.jpa.PersonaEntity;
 import br.com.soapboxrace.jpa.UserEntity;
 
-public class PersonaDao extends SoapboxDao {
+public class PersonaDao extends SoapboxDao implements IPersonaDao {
 
 	@Override
 	public PersonaEntity findById(Long id) {
@@ -40,8 +41,7 @@ public class PersonaDao extends SoapboxDao {
 
 	public List<PersonaEntity> findByUserId(Long userId) {
 		EntityManager manager = getManager();
-		TypedQuery<PersonaEntity> query = manager
-				.createQuery("SELECT obj FROM PersonaEntity obj WHERE obj.user = :user", PersonaEntity.class);
+		TypedQuery<PersonaEntity> query = manager.createQuery("SELECT obj FROM PersonaEntity obj WHERE obj.user = :user", PersonaEntity.class);
 		UserEntity userEntity = new UserEntity();
 		userEntity.setId(userId);
 		query.setParameter("user", userEntity);

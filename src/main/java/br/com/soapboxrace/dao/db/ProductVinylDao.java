@@ -2,10 +2,11 @@ package br.com.soapboxrace.dao.db;
 
 import java.util.List;
 
+import br.com.soapboxrace.dao.factory.IProductVinylDao;
 import br.com.soapboxrace.db.SoapboxDao;
 import br.com.soapboxrace.jpa.VinylProductEntity;
 
-public class ProductVinylDao extends SoapboxDao {
+public class ProductVinylDao extends SoapboxDao implements IProductVinylDao {
 
 	@Override
 	public VinylProductEntity findById(Long id) {
@@ -27,7 +28,7 @@ public class ProductVinylDao extends SoapboxDao {
 		vinylProductData = (VinylProductEntity) super.find(vinylProductData).get(0);
 		return vinylProductData;
 	}
-	
+
 	public VinylProductEntity save(VinylProductEntity entity) {
 		return (VinylProductEntity) super.save(entity);
 	}

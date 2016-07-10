@@ -7,11 +7,12 @@ import javax.persistence.TypedQuery;
 
 import org.hibernate.Hibernate;
 
+import br.com.soapboxrace.dao.factory.IOwnedCarDao;
 import br.com.soapboxrace.db.SoapboxDao;
 import br.com.soapboxrace.jpa.OwnedCarEntity;
 import br.com.soapboxrace.jpa.PersonaEntity;
 
-public class OwnedCarDao extends SoapboxDao {
+public class OwnedCarDao extends SoapboxDao implements IOwnedCarDao {
 
 	@Override
 	public OwnedCarEntity findById(Long id) {
@@ -21,8 +22,7 @@ public class OwnedCarDao extends SoapboxDao {
 
 	public List<OwnedCarEntity> findByIdPersona(Long idPersona) {
 		EntityManager manager = getManager();
-		TypedQuery<OwnedCarEntity> query = manager.createQuery(
-				"SELECT obj FROM OwnedCarEntity obj WHERE obj.persona = :persona order by obj.id",
+		TypedQuery<OwnedCarEntity> query = manager.createQuery("SELECT obj FROM OwnedCarEntity obj WHERE obj.persona = :persona order by obj.id",
 				OwnedCarEntity.class);
 		PersonaEntity personaEntity = new PersonaEntity();
 		personaEntity.setId(idPersona);

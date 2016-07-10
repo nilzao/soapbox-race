@@ -3,11 +3,12 @@ package br.com.soapboxrace.dao.db;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.soapboxrace.dao.factory.IEventDefinitionDao;
 import br.com.soapboxrace.db.SoapboxDao;
 import br.com.soapboxrace.jpa.EventDefinitionEntity;
 import br.com.soapboxrace.jpa.ISoapBoxEntity;
 
-public class EventDefinitionDao extends SoapboxDao {
+public class EventDefinitionDao extends SoapboxDao implements IEventDefinitionDao {
 
 	@Override
 	public EventDefinitionEntity findById(Long id) {

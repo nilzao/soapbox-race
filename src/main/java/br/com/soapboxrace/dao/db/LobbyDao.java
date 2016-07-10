@@ -8,11 +8,12 @@ import javax.persistence.TypedQuery;
 
 import org.hibernate.Hibernate;
 
+import br.com.soapboxrace.dao.factory.ILobbyDao;
 import br.com.soapboxrace.db.SoapboxDao;
 import br.com.soapboxrace.jpa.EventDefinitionEntity;
 import br.com.soapboxrace.jpa.LobbyEntity;
 
-public class LobbyDao extends SoapboxDao {
+public class LobbyDao extends SoapboxDao implements ILobbyDao {
 
 	@Override
 	public LobbyEntity findById(Long id) {
@@ -23,8 +24,7 @@ public class LobbyDao extends SoapboxDao {
 	public List<LobbyEntity> findByEventStarted(Long eventId, Date dateNow, Date datePast) {
 		EntityManager manager = getManager();
 		TypedQuery<LobbyEntity> query = manager.createQuery(
-				"SELECT obj FROM LobbyEntity obj WHERE obj.event = :event and obj.lobbyDateTimeStart between :dateTime1 and :dateTime2",
-				LobbyEntity.class);
+				"SELECT obj FROM LobbyEntity obj WHERE obj.event = :event and obj.lobbyDateTimeStart between :dateTime1 and :dateTime2", LobbyEntity.class);
 		EventDefinitionEntity eventEntity = new EventDefinitionEntity();
 		eventEntity.setId(eventId);
 		query.setParameter("event", eventEntity);

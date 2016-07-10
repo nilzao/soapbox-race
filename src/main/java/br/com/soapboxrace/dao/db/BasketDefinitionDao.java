@@ -2,11 +2,12 @@ package br.com.soapboxrace.dao.db;
 
 import java.util.List;
 
+import br.com.soapboxrace.dao.factory.IBasketDefinitionDao;
 import br.com.soapboxrace.db.SoapboxDao;
 import br.com.soapboxrace.jpa.BasketDefinitionEntity;
 import br.com.soapboxrace.jpa.ISoapBoxEntity;
 
-public class BasketDefinitionDao extends SoapboxDao {
+public class BasketDefinitionDao extends SoapboxDao implements IBasketDefinitionDao {
 
 	@Override
 	public BasketDefinitionEntity findById(Long id) {

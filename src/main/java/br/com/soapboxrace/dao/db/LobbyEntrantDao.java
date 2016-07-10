@@ -5,11 +5,12 @@ import javax.persistence.EntityManager;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import br.com.soapboxrace.dao.factory.ILobbyEntrantDao;
 import br.com.soapboxrace.db.SoapboxDao;
 import br.com.soapboxrace.jpa.LobbyEntrantEntity;
 import br.com.soapboxrace.jpa.PersonaEntity;
 
-public class LobbyEntrantDao extends SoapboxDao {
+public class LobbyEntrantDao extends SoapboxDao implements ILobbyEntrantDao {
 
 	@Override
 	public LobbyEntrantEntity findById(Long id) {
