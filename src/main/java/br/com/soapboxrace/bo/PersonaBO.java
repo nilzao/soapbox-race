@@ -3,9 +3,9 @@ package br.com.soapboxrace.bo;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.soapboxrace.dao.db.BasketDefinitionDao;
-import br.com.soapboxrace.dao.db.OwnedCarDao;
 import br.com.soapboxrace.dao.factory.DaoFactory;
+import br.com.soapboxrace.dao.factory.IBasketDefinitionDao;
+import br.com.soapboxrace.dao.factory.IOwnedCarDao;
 import br.com.soapboxrace.dao.factory.IPersonaDao;
 import br.com.soapboxrace.dao.factory.IProductDao;
 import br.com.soapboxrace.definition.ShoppingCartPurchaseResult;
@@ -30,8 +30,8 @@ import br.com.soapboxrace.jpa.ProductEntity;
 
 public class PersonaBO {
 
-	private OwnedCarDao ownedCarDao = new OwnedCarDao();
-	private BasketDefinitionDao basketDefinitionDao = new BasketDefinitionDao();
+	private IOwnedCarDao ownedCarDao = DaoFactory.getOwnedCarDao();
+	private IBasketDefinitionDao basketDefinitionDao = DaoFactory.getBasketDefinitionDao();
 	private IPersonaDao personaDao = DaoFactory.getPersonaDao();
 	private IProductDao productDao = DaoFactory.getProductDao();
 
