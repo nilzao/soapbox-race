@@ -1,6 +1,7 @@
 package br.com.soapboxrace.jpa;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,9 +30,8 @@ import br.com.soapboxrace.jaxb.convert.VinylsConverter;
 import br.com.soapboxrace.jaxb.convert.VisualPartsConverter;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "CustomCarType", propOrder = { "baseCarId", "carClassHash", "isPreset", "level", "name", "apiId",
-		"paints", "performanceParts", "physicsProfileHash", "rating", "resalePrice", "skillModParts",
-		"skillModSlotCount", "vinyls", "visualParts" })
+@XmlType(name = "CustomCarType", propOrder = { "baseCarId", "carClassHash", "isPreset", "level", "name", "apiId", "paints", "performanceParts",
+		"physicsProfileHash", "rating", "resalePrice", "skillModParts", "skillModSlotCount", "vinyls", "visualParts" })
 @Entity
 @Table(name = "CUSTOMCAR")
 @XmlRootElement(name = "CustomCar")
@@ -53,9 +53,11 @@ public class CustomCarEntity implements ISoapBoxEntity {
 	protected long apiId;
 	@Convert(converter = PaintsConverter.class)
 	@XmlElement(name = "Paints")
+	@Column(length = 20000)
 	protected PaintsType paints;
 	@Convert(converter = PerformancePartsConverter.class)
 	@XmlElement(name = "PerformanceParts")
+	@Column(length = 20000)
 	protected PerformancePartsType performanceParts;
 	@XmlElement(name = "PhysicsProfileHash")
 	protected long physicsProfileHash;
@@ -64,15 +66,18 @@ public class CustomCarEntity implements ISoapBoxEntity {
 	@XmlElement(name = "ResalePrice")
 	protected int resalePrice;
 	@Convert(converter = SkillModPartsConverter.class)
+	@Column(length = 20000)
 	@XmlElement(name = "SkillModParts")
 	protected SkillModPartsType skillModParts;
 	@XmlElement(name = "SkillModSlotCount")
 	protected Short skillModSlotCount;
 	@Convert(converter = VinylsConverter.class)
 	@XmlElement(name = "Vinyls")
+	@Column(length = 20000)
 	protected VinylsType vinyls;
 	@Convert(converter = VisualPartsConverter.class)
 	@XmlElement(name = "VisualParts")
+	@Column(length = 20000)
 	protected VisualPartsType visualParts;
 
 	@XmlTransient

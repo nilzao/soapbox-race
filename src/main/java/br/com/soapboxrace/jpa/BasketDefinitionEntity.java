@@ -34,7 +34,7 @@ public class BasketDefinitionEntity implements ISoapBoxEntity {
 	private String productId;
 
 	@Convert(converter = OwnedCarTransConverter.class)
-	@Column(name = "OwnedCarTrans")
+	@Column(name = "OwnedCarTrans", length = 40000)
 	private OwnedCarTransType ownedCarTrans;
 
 	public String getProductId() {
