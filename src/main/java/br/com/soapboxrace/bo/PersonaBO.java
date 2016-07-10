@@ -5,8 +5,9 @@ import java.util.List;
 
 import br.com.soapboxrace.dao.db.BasketDefinitionDao;
 import br.com.soapboxrace.dao.db.OwnedCarDao;
-import br.com.soapboxrace.dao.db.PersonaDao;
-import br.com.soapboxrace.dao.db.ProductDao;
+import br.com.soapboxrace.dao.factory.DaoFactory;
+import br.com.soapboxrace.dao.factory.IPersonaDao;
+import br.com.soapboxrace.dao.factory.IProductDao;
 import br.com.soapboxrace.definition.ShoppingCartPurchaseResult;
 import br.com.soapboxrace.jaxb.ArrayOfOwnedCarTransType;
 import br.com.soapboxrace.jaxb.CarSlotInfoTrans;
@@ -31,8 +32,8 @@ public class PersonaBO {
 
 	private OwnedCarDao ownedCarDao = new OwnedCarDao();
 	private BasketDefinitionDao basketDefinitionDao = new BasketDefinitionDao();
-	private PersonaDao personaDao = new PersonaDao();
-	private ProductDao productDao = new ProductDao();
+	private IPersonaDao personaDao = DaoFactory.getPersonaDao();
+	private IProductDao productDao = DaoFactory.getProductDao();
 
 	public CarSlotInfoTrans carslots(long idPersona) {
 		List<OwnedCarEntity> ownedCars = ownedCarDao.findByIdPersona(idPersona);
@@ -108,7 +109,7 @@ public class PersonaBO {
 
 		return commerceSessionResultTransType;
 	}
-	
+
 	public CommerceResultTransType basket(long idPersona, String productId) {
 		// TODO: Economy input, currency calculation, and car slot checking.
 		PersonaEntity personaEntity = personaDao.findById(idPersona);
@@ -213,7 +214,7 @@ public class PersonaBO {
 		arrayOfOwnedCarTrans.setOwnedCarTransList(personaEntity.getOwnedCarlist());
 		return arrayOfOwnedCarTrans;
 	}
-	
+
 	public OwnedCarEntity sellCar(long personaId, long carId) {
 		ownedCarDao.del(carId);
 		return defaultcar(personaId);

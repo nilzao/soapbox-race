@@ -7,7 +7,8 @@ import java.util.List;
 
 import br.com.soapboxrace.dao.db.EventDataDao;
 import br.com.soapboxrace.dao.db.LobbyDao;
-import br.com.soapboxrace.dao.db.PersonaDao;
+import br.com.soapboxrace.dao.factory.DaoFactory;
+import br.com.soapboxrace.dao.factory.IPersonaDao;
 import br.com.soapboxrace.engine.Router;
 import br.com.soapboxrace.engine.Session;
 import br.com.soapboxrace.http.HttpSessionVO;
@@ -32,7 +33,7 @@ import br.com.soapboxrace.xmpp.jaxb.XMPP_P2PCryptoTicketType;
 public class MatchmakingBO {
 
 	private LobbyDao lobbyDao = new LobbyDao();
-	private PersonaDao personaDao = new PersonaDao();
+	private IPersonaDao personaDao = DaoFactory.getPersonaDao();
 	private EventDataDao eventDataDao = new EventDataDao();
 
 	public SessionInfoType launchevent(Long personaId, Long eventId) {

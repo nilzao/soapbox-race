@@ -5,7 +5,8 @@ import java.util.List;
 
 import br.com.soapboxrace.dao.db.EventDataDao;
 import br.com.soapboxrace.dao.db.OwnedCarDao;
-import br.com.soapboxrace.dao.db.PersonaDao;
+import br.com.soapboxrace.dao.factory.DaoFactory;
+import br.com.soapboxrace.dao.factory.IPersonaDao;
 import br.com.soapboxrace.definition.CardDecks;
 import br.com.soapboxrace.definition.EventModes;
 import br.com.soapboxrace.engine.Router;
@@ -37,7 +38,7 @@ import br.com.soapboxrace.xmpp.jaxb.XMPP_TeamEscapeEntrantResultType;
 
 public class EventBO {
 
-	private PersonaDao personaDao = new PersonaDao();
+	private IPersonaDao personaDao = DaoFactory.getPersonaDao();
 	private OwnedCarDao ownedCarDao = new OwnedCarDao();
 	private EventDataDao eventDataDao = new EventDataDao();
 
