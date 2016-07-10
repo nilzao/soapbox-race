@@ -17,7 +17,16 @@ public class Config {
 	private String xmppServerType;
 	private String dbDriver;
 
-	public Config() {
+	private static Config instance;
+
+	public static Config getInstance() {
+		if (Config.instance == null) {
+			Config.instance = new Config();
+		}
+		return Config.instance;
+	}
+
+	private Config() {
 		Properties prop = new Properties();
 		InputStream input = null;
 		try {

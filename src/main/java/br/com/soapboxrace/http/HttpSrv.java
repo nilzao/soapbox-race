@@ -117,7 +117,7 @@ public class HttpSrv extends GzipHandler {
 	}
 
 	public static void main(String[] args) {
-		Config config = new Config();
+		Config config = Config.getInstance();
 		RestApiCli.setOpenFireAuthToken(config.getOpenFireToken());
 		Session.setXmppIp(config.getXmppIp());
 		Session.setUdpIp(config.getRaceUdpIp());

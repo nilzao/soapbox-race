@@ -5,14 +5,18 @@ import javax.persistence.EntityManagerFactory;
 
 import org.hibernate.jpa.HibernatePersistenceProvider;
 
+import br.com.soapboxrace.config.Config;
+
 public class ConnectionDB {
 
 	private static final EntityManagerFactory emf;
 	private static final ThreadLocal<EntityManager> threadLocal;
 
 	static {
+		Config config = Config.getInstance();
+		String dbDriver = "persistence".concat(config.getDbDriver());
 		HibernatePersistenceProvider hibernatePersistenceProvider = new HibernatePersistenceProvider();
-		emf = hibernatePersistenceProvider.createEntityManagerFactory("persistenceMySql", null);
+		emf = hibernatePersistenceProvider.createEntityManagerFactory(dbDriver, null);
 		threadLocal = new ThreadLocal<EntityManager>();
 	}
 
