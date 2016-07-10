@@ -1,6 +1,5 @@
 package br.com.soapboxrace.engine;
 
-import br.com.soapboxrace.openfire.OpenFireSoapBoxCli;
 import br.com.soapboxrace.xmpp.IXmppSender;
 import br.com.soapboxrace.xmpp.XmppFactory;
 import br.com.soapboxrace.xmpp.jaxb.XMPP_PowerupActivatedType;

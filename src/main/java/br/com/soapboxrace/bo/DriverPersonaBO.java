@@ -11,7 +11,7 @@ import br.com.soapboxrace.jaxb.PersonaPresenceType;
 import br.com.soapboxrace.jaxb.ProfileDataType;
 import br.com.soapboxrace.jpa.PersonaEntity;
 import br.com.soapboxrace.jpa.UserEntity;
-import br.com.soapboxrace.openfire.RestApiCli;
+import br.com.soapboxrace.xmpp.openfire.RestApiCli;
 
 public class DriverPersonaBO {
 

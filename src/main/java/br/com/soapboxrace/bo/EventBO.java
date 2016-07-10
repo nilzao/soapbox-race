@@ -26,7 +26,6 @@ import br.com.soapboxrace.jaxb.util.UnmarshalXML;
 import br.com.soapboxrace.jpa.EventDataEntity;
 import br.com.soapboxrace.jpa.OwnedCarEntity;
 import br.com.soapboxrace.jpa.PersonaEntity;
-import br.com.soapboxrace.openfire.OpenFireSoapBoxCli;
 import br.com.soapboxrace.xmpp.IXmppSender;
 import br.com.soapboxrace.xmpp.XmppFactory;
 import br.com.soapboxrace.xmpp.jaxb.XMPP_EventTimingOutType;

@@ -1,8 +1,9 @@
-package br.com.soapboxrace.openfire;
+package br.com.soapboxrace.xmpp.openfire;
 
 import br.com.soapboxrace.engine.Router;
 import br.com.soapboxrace.jaxb.util.MarshalXML;
 import br.com.soapboxrace.xmpp.IXmppSender;
+import br.com.soapboxrace.xmpp.jaxb.XMPP_MessageType;
 
 public class OpenFireSoapBoxCli implements IXmppSender {
 
@@ -14,7 +15,7 @@ public class OpenFireSoapBoxCli implements IXmppSender {
 	}
 
 	public void send(String msg, Long to) {
-		MessageType messageType = new MessageType();
+		XMPP_MessageType messageType = new XMPP_MessageType();
 		messageType.setToPersonaId(to);
 		messageType.setBody(msg);
 		messageType.setSubject(Router.calculateHash(messageType.getTo().toCharArray(), msg.toCharArray()));

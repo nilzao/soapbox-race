@@ -1,4 +1,4 @@
-package br.com.soapboxrace.openfire;
+package br.com.soapboxrace.xmpp.openfire;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

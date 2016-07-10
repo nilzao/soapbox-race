@@ -4,7 +4,7 @@ import br.com.soapboxrace.bo.UserBO;
 import br.com.soapboxrace.definition.ServerExceptions.EngineException;
 import br.com.soapboxrace.jaxb.UserInfoType;
 import br.com.soapboxrace.jaxb.util.MarshalXML;
-import br.com.soapboxrace.openfire.RestApiCli;
+import br.com.soapboxrace.xmpp.openfire.RestApiCli;
 
 public class User extends Router {
 

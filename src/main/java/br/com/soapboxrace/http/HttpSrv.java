@@ -21,10 +21,8 @@ import br.com.soapboxrace.engine.Router;
 import br.com.soapboxrace.engine.Session;
 import br.com.soapboxrace.jaxb.EngineExceptionTrans;
 import br.com.soapboxrace.jaxb.util.MarshalXML;
-import br.com.soapboxrace.openfire.OpenFireSoapBoxCli;
-import br.com.soapboxrace.openfire.RestApiCli;
-import br.com.soapboxrace.xmpp.IXmppSender;
 import br.com.soapboxrace.xmpp.XmppFactory;
+import br.com.soapboxrace.xmpp.openfire.RestApiCli;
 
 public class HttpSrv extends GzipHandler {
 

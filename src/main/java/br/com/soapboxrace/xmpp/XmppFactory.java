@@ -1,6 +1,6 @@
 package br.com.soapboxrace.xmpp;
 
-import br.com.soapboxrace.openfire.OpenFireSoapBoxCli;
+import br.com.soapboxrace.xmpp.openfire.OpenFireSoapBoxCli;
 
 public class XmppFactory {
 

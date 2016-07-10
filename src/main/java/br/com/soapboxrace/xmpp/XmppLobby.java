@@ -5,13 +5,12 @@ import java.util.List;
 import br.com.soapboxrace.engine.Session;
 import br.com.soapboxrace.jaxb.LobbyEntrantInfoType;
 import br.com.soapboxrace.jpa.LobbyEntrantEntity;
-import br.com.soapboxrace.openfire.OpenFireSoapBoxCli;
 import br.com.soapboxrace.xmpp.jaxb.XMPP_CryptoTicketsType;
 import br.com.soapboxrace.xmpp.jaxb.XMPP_LobbyInviteType;
 import br.com.soapboxrace.xmpp.jaxb.XMPP_LobbyLaunchedType;
 import br.com.soapboxrace.xmpp.jaxb.XMPP_P2PCryptoTicketType;
-import br.com.soapboxrace.xmpp.jaxb.XMPP_ResponseTypeLobbyInvite;
 import br.com.soapboxrace.xmpp.jaxb.XMPP_ResponseTypeEntrantAdded;
+import br.com.soapboxrace.xmpp.jaxb.XMPP_ResponseTypeLobbyInvite;
 import br.com.soapboxrace.xmpp.jaxb.XMPP_ResponseTypeLobbyLaunched;
 
 public class XmppLobby {

@@ -1,4 +1,4 @@
-package br.com.soapboxrace.openfire;
+package br.com.soapboxrace.xmpp.jaxb;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -12,7 +12,7 @@ import br.com.soapboxrace.engine.Session;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "messageType", propOrder = { "body", "subject" })
 @XmlRootElement(name = "message")
-public class MessageType {
+public class XMPP_MessageType {
 
 	@XmlElement(required = true)
 	private String body;
@@ -25,7 +25,7 @@ public class MessageType {
 	@XmlElement(required = true)
 	private Long subject;
 
-	public MessageType() {
+	public XMPP_MessageType() {
 		from = "nfsw.engine.engine@" + Session.getXmppIp();
 	}
 
