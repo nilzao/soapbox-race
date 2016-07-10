@@ -1,8 +1,8 @@
 #!/bin/bash
 EMAIL=$1
 PASSWD=$2
-URL=http://localhost:1337/soapbox-race/
-SRV_RESPONSE=$(curl -s $URL"nothing/user/authenticateUser?email="$EMAIL"&password="$PASSWD)
+URL=http://localhost:1337/soapbox/
+SRV_RESPONSE=$(curl -s --compressed $URL"nothing/user/authenticateUser?email="$EMAIL"&password="$PASSWD)
 IN=$SRV_RESPONSE
 ARRIN=(${IN//>/ })
 USERID=${ARRIN[2]}
