@@ -30,11 +30,14 @@
       <property name="hibernate.c3p0.max_statements" value="10" />
       <property name="hibernate.c3p0.acquire_increment" value="1" />
 
+      <!-- <property name="hibernate.hbm2ddl.auto" value="create" /> -->
       <property name="hibernate.show_sql" value="false" />
 
       <property name="hibernate.connection.url" value="jdbc:h2:./soapbox" />
+      <!-- <property name="hibernate.connection.url" value="jdbc:h2:tcp://localhost/~/git/soapbox-race/soapbox" /> -->
       <property name="hibernate.connection.driver_class" value="org.h2.Driver" />
       <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
+      <property name="hibernate.default_schema" value="SOAPBOX" />
     </properties>
   </persistence-unit>
 </persistence>
