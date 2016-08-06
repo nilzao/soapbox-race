@@ -25,7 +25,7 @@ public class Default extends Router {
 		stringBuilder.append("  <PortalSecureDomain/>\n");
 		stringBuilder.append("  <PortalStoreFailurePage/>\n");
 		stringBuilder.append("  <PortalTimeOut>60000</PortalTimeOut>\n");
-		stringBuilder.append("  <ShardName>THANKSOBAMA</ShardName>\n");
+		stringBuilder.append("  <ShardName>US</ShardName>\n");
 		stringBuilder.append("  <Time>2010-01-01T12:00:00.0000000+00:00</Time>\n");
 		stringBuilder.append("  <Version>1599</Version>\n");
 		stringBuilder.append("</SystemInfo>\n");

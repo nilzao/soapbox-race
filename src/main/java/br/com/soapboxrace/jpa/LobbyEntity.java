@@ -91,7 +91,7 @@ public class LobbyEntity implements ISoapBoxEntity {
 		if (lobbyDateTimeStart != null) {
 			Date now = new Date();
 			Long time = now.getTime() - lobbyDateTimeStart.getTime();
-			time = 30000L - time;
+			time = 60000L - time;
 			return time;
 		}
 		return lobbyCountdownInMilliseconds;
