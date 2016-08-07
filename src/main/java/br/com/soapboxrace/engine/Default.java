@@ -1,5 +1,8 @@
 package br.com.soapboxrace.engine;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Default extends Router {
 
 	public String getfriendlistfromuserid() {
@@ -7,6 +10,8 @@ public class Default extends Router {
 	}
 
 	public String systeminfo() {
+		String timeString = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSSS+00:00").format(new Date());
+		timeString = timeString.replace(" ", "T");
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("<SystemInfo>\n");
 		stringBuilder.append("  <Branch>debug</Branch>\n");
@@ -26,7 +31,10 @@ public class Default extends Router {
 		stringBuilder.append("  <PortalStoreFailurePage/>\n");
 		stringBuilder.append("  <PortalTimeOut>60000</PortalTimeOut>\n");
 		stringBuilder.append("  <ShardName>US</ShardName>\n");
-		stringBuilder.append("  <Time>2010-01-01T12:00:00.0000000+00:00</Time>\n");
+		stringBuilder.append("  <Time>");
+		// stringBuilder.append("2010-01-01T12:00:00.0000000+00:00");
+		stringBuilder.append(timeString);
+		stringBuilder.append("</Time>\n");
 		stringBuilder.append("  <Version>1599</Version>\n");
 		stringBuilder.append("</SystemInfo>\n");
 		stringBuilder.append("");
