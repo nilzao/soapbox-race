@@ -21,8 +21,9 @@ remove mechanisms tag:
 
 need to remove tag <mechanisms xmlns="urn:ietf:params:xml:ns:xmpp-sasl"> to work with soapbox.exe
 
-- go inside openfire.jar
-- rename the file  SASLAuthentication.classx to  SASLAuthentication.class and replace the org/jivesoftware/openfire/net/SASLAuthentication.class file
+- rename the file  SASLAuthentication.classx to  SASLAuthentication.class
+- go inside openfire.jar (with Winrar for example)
+- replace the org/jivesoftware/openfire/net/SASLAuthentication.class file
 
 ---
 
@@ -76,3 +77,14 @@ go to url:
     
 - Disable
 - Save
+ 
+---
+
+disable disconnect idle client
+
+go to url 
+
+    http://localhost:9090/connection-settings-socket-c2s.jsp
+
+- Do not disconnect clients that are idle.
+- Do not send XMPP Ping requests to idle clients.
