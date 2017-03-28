@@ -262,14 +262,14 @@ public class EventBO {
 		default:
 			break;
 		}
-		return bust(personaId); // fake data
+		return bust(personaId, null); // fake data
 	}
 
-	public PursuitEventResultType bust(Long personaId) {
+	public PursuitEventResultType bust(Long personaId, Long eventSessionId) {
 		PursuitEventResultType pursuitEventResult = new PursuitEventResultType();
 		pursuitEventResult.setDurability(100);
 		pursuitEventResult.setEventId(1);
-		pursuitEventResult.setEventSessionId(1000000000);
+		pursuitEventResult.setEventSessionId( eventSessionId ); 
 		pursuitEventResult.setExitPath("ExitToFreeroam");
 		pursuitEventResult.setInviteLifetimeInMilliseconds(0);
 		pursuitEventResult.setLobbyInviteId(0);
