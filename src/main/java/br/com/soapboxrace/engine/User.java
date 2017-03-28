@@ -7,9 +7,14 @@ import br.com.soapboxrace.jaxb.util.MarshalXML;
 import br.com.soapboxrace.xmpp.IXmppSender;
 import br.com.soapboxrace.xmpp.XmppFactory;
 
+import br.com.soapboxrace.jpa.UserEntity;
+import br.com.soapboxrace.dao.factory.DaoFactory;
+import br.com.soapboxrace.dao.factory.IUserDao;
+
 public class User extends Router {
 
 	private UserBO userBO = new UserBO();
+	private IUserDao userDao = DaoFactory.getUserDao(); 
 
 	public String getPermanentSession() throws EngineException {
 		Long userId = Long.valueOf(getHeader("userId"));
@@ -53,7 +58,13 @@ public class User extends Router {
 		stringBuilder.append("</UserId><LoginToken>");
 		stringBuilder.append(tokenText);
 		stringBuilder.append("</LoginToken></LoginData>");
-		return stringBuilder.toString();
+		
+		UserEntity userEntity = userDao.findByEmail( email );
+		if( userEntity.getBan() != true )
+			return stringBuilder.toString();
+		else
+			throw new EngineException( "Login Error: This account has been banned!" );
+		
 	}
 
 	public String createUser() throws EngineException {

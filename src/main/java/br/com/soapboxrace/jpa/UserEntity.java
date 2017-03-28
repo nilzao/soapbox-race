@@ -27,6 +27,9 @@ public class UserEntity implements ISoapBoxEntity {
 	@Column(name = "PASSWORD", length = 41)
 	private String password;
 
+	@Column( name = "BAN" )
+	private Boolean ban;
+	
 	@OneToMany(mappedBy = "user", targetEntity = PersonaEntity.class)
 	private List<PersonaEntity> listOfPersona;
 
@@ -54,6 +57,9 @@ public class UserEntity implements ISoapBoxEntity {
 		return this.password;
 	}
 
+	public void setBan( Boolean ban ) { this.ban = ban; }
+	public Boolean getBan() { return this.ban; }
+	
 	public void setListOfPersona(List<PersonaEntity> listOfPersona) {
 		this.listOfPersona = listOfPersona;
 	}
